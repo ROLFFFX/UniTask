@@ -1,5 +1,7 @@
 import "../App.css";
-import UniTaskLogo from "../images/Logo.PNG";
+import UniTaskLogo_new from "../images/UniTaskLogo.PNG";
+import UniTaskLogo_old from "../images/Logo_old.PNG";
+
 import LoginSignup from "../pages/LoginSignup";
 import { Link } from "react-router-dom";
 
@@ -7,7 +9,7 @@ function Links() {
   return (
     <div className="App">
       <header className="App-header">
-        <img src={UniTaskLogo} className="App-logo" alt="logo" />
+        <img src={UniTaskLogo_old} className="App-logo" alt="logo" />
         <pre></pre>
         <a
           className="App-link"
