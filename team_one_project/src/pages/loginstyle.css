@@ -1,7 +1,40 @@
+.bg{
+    background: #16162A;
+}
 .container{
+    width: 480px;
+    height: 796px;
+    top: 114px;
+    left: 900px;
+    /*paddings*/
+    border-radius: 20px;
+    border: 1px solid;
+    color: #FFFFFF;
+    /*border-image: linear-gradient(317.92deg, rgba(255, 255, 255, 0.6) 1.48%, rgba(0, 0, 0, 0) 67.95%);*/
+    /*linear-gradient(166.93deg, #AFAFAF 3.24%, rgba(96, 96, 96, 0) 96.43%);*/
     font-family: "Noto Sans Myanmar", sans-serif;
 }
+.uppersect{
+    width: 400px;
+    height: 368px;
+    gap: 14px;
+}
+.lowersect{
+    width: 400px;
+    height: 60px;
+    margin-top:50%;
+    gap: 8px;
+}
+.header{
+    font-size: 36px;
+    font-weight: 600;
+    line-height: 49px;
+    text-align: left;
+    /*width: 98px;
+    height: 49px;*/
+}
 .input{
+    color:#FFFFFF;
     width: 400px;
     height: 55px;
     /*padding: 14px, 16px, 14px, 16px*/
@@ -9,7 +42,17 @@
     border-radius: 12px;
     gap: 10px;
 }
+.submit{
+    color:#FFFFFF;
+    font-family: "Noto Sans Myanmar", sans-serif;
+    font-size: 20px;
+    font-weight: 600;
+    line-height: 27px;
+    /*letter-spacing: 0em;*/
+    text-align: left;
+}
 #submitLG{
+    color:#FFFFFF;
     width: 400px;
     height: 55px;
     /*padding: 14px, 10px, 14px, 10px*/
