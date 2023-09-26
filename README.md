@@ -42,4 +42,9 @@ Team Member: Alec Berger, Eula Wang, Sichen Liu, Yuxuan(ROLF) Shi, Yinshu (Salin
 
 ---
 
-## If you guys have any problems, let me know!
+5. Following Updates
+
+- for MUI
+
+  - npm install @mui/material
+  - npm install @mui/icons-material
