@@ -1,10 +1,10 @@
-import React from 'react'
-import './loginstyle.css'
+import React from 'react';
+import './loginstyle.css';
 
-import nlogo from '/Users/eulawang/Desktop/CS_370_Team_One/team_one_project/src/images/UniTaskLOGO.PNG'
-import gm from '/Users/eulawang/Desktop/CS_370_Team_One/team_one_project/src/images/icons-gmail.png'
-import fb from '/Users/eulawang/Desktop/CS_370_Team_One/team_one_project/src/images/icons-facebook.png'
-import gh from '/Users/eulawang/Desktop/CS_370_Team_One/team_one_project/src/images/icons-github.png'
+import nlogo from '../images/UniTaskLOGO.PNG';
+import gm from '../images/icons-gmail.png';
+import fb from '../images/icons-facebook.png';
+import gh from '../images/icons-github.png';
 
 
 const LoginSignup = () =>{

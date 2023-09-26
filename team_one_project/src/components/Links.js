@@ -1,7 +1,10 @@
 import "../App.css";
 import UniTaskLogo from "../images/Logo.PNG";
+import LoginSignup from "../pages/LoginSignup";
+import {NavLink} from "react-router-dom";
 
 function Links() {
+
   return (
     <div className="App">
       <header className="App-header">
@@ -33,6 +36,9 @@ function Links() {
         >
           GoogleDoc Link
         </a>
+        <NavLink
+            to="../pages/LoginSignup"
+        >Login/Register/FindPW</NavLink>
       </header>
     </div>
   );
