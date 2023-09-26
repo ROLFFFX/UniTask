@@ -1,0 +1,27 @@
+.container{
+    font-family: "Noto Sans Myanmar", sans-serif;
+}
+.input{
+    width: 400px;
+    height: 55px;
+    /*padding: 14px, 16px, 14px, 16px*/
+    border: 1px;
+    border-radius: 12px;
+    gap: 10px;
+}
+#submitLG{
+    width: 400px;
+    height: 55px;
+    /*padding: 14px, 10px, 14px, 10px*/
+    border-radius: 12px;
+    gap: 10px;
+    background: linear-gradient(90.57deg, #628EFF 9.91%, #8740CD 53.29%, #580475 91.56%);
+}
+#submitSU{
+    width: 400px;
+    height: 55px;
+    /*padding: 14px, 10px, 14px, 10px*/
+    border-radius: 12px;
+    gap: 10px;
+    background: linear-gradient(90.57deg, #2E4CEE 9.91%, #221EBF 53.29%, #040F75 91.56%);
+}
