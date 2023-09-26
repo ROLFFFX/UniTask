@@ -10,8 +10,6 @@ import gh from '../images/icons-github.png';
 const LoginSignup = () =>{
 
     const [action,setAction] = useState("Sign Up");
-
-
     return(
         <div className={'bg'}>
             <div className='container'>
@@ -40,9 +38,18 @@ const LoginSignup = () =>{
                     <button className={"submit"} id={"submitLG"}>Login</button>
                 </div>
                 <div className={"lowersect"}>
-                    <button className="switch" id="toLG">Already Registered?Login</button>
-                    <button className="switch" id={"toFPW"}>Forgot Password? </button>
-                    <button className="switch" id={"toSU"}>Don't have an account?Sign up</button>
+                    <button className="switch" id="toLG"
+                            onClick={() => setAction("LogIn")}
+                    >
+                        Already Registered?Login</button>
+                    <button className="switch" id={"toFPW"}
+                            onClick={() => setAction("Forgot Password?")}
+                    >
+                        Forgot Password? </button>
+                    <button className="switch" id={"toSU"}
+                            onClick={() => setAction("Sign Up")}
+                    >
+                        Don't have an account?Sign up</button>
                 </div>
             </div>
         </div>
