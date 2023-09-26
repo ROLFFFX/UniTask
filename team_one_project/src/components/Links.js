@@ -1,7 +1,7 @@
 import "../App.css";
 import UniTaskLogo from "../images/Logo.PNG";
 import LoginSignup from "../pages/LoginSignup";
-import {NavLink} from "react-router-dom";
+import {Link} from "react-router-dom";
 
 function Links() {
 
@@ -36,9 +36,10 @@ function Links() {
         >
           GoogleDoc Link
         </a>
-        <NavLink
+        <Link
             to="../pages/LoginSignup"
-        >Login/Register/FindPW</NavLink>
+            element={<LoginSignup />}
+        >Login/Register/FindPW</Link>
       </header>
     </div>
   );

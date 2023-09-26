@@ -22,6 +22,9 @@ const LoginSignup = () =>{
                     <input type="Username"/>
                 </div>
                 <div className='input'>
+                    <input type="Password"/>
+                </div>
+                <div className='input'>
                     <input type="Email/Phone"/>
                 </div>
                 <div className='input'>
