@@ -6,21 +6,22 @@ import * as React from "react";
 //   Route,
 //   Link,
 // } from "react-router-dom";
-import {BrowserRouter as Router, Route, Routes} from 'react-router-dom';
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Links from "./components/Links";
 import MainSideBar from "./components/MainSideBar";
 import LoginSignup from "./pages/LoginSignup";
-import {BrowserRouter} from "react-router-dom";
+import { BrowserRouter } from "react-router-dom";
 
 function App() {
   return (
-    <div className="App">
-        <Links />
-        <MainSideBar />
-        <LoginSignup />
-        <Routes>
+    <div className="">
+      <Links />
+      <MainSideBar />
+
+      {/* <LoginSignup /> */}
+      {/* <Routes>
             <Route path="/pages/LoginSignup" element={<LoginSignup />}/>
-        </Routes>
+        </Routes> */}
     </div>
   );
 }

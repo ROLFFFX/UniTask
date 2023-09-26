@@ -1,10 +1,9 @@
 import "../App.css";
 import UniTaskLogo from "../images/Logo.PNG";
 import LoginSignup from "../pages/LoginSignup";
-import {Link} from "react-router-dom";
+import { Link } from "react-router-dom";
 
 function Links() {
-
   return (
     <div className="App">
       <header className="App-header">
@@ -36,10 +35,9 @@ function Links() {
         >
           GoogleDoc Link
         </a>
-        <Link
-            to="../pages/LoginSignup"
-            element={<LoginSignup />}
-        >Login/Register/FindPW</Link>
+        <Link to="../pages/LoginSignup" element={<LoginSignup />}>
+          Login/Register/FindPW
+        </Link>
       </header>
     </div>
   );
