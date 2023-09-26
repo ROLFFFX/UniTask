@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import './loginstyle.css';
 
 import nlogo from '../images/UniTaskLOGO.PNG';
@@ -8,10 +8,14 @@ import gh from '../images/icons-github.png';
 
 
 const LoginSignup = () =>{
+
+    const [action,setAction] = useState("Sign Up");
+
+
     return(
         <div className='container'>
             <div className='header'>
-                <div className='text'>Sign up</div>
+                <div className='text'>{action}</div>
             </div>
             <div className='inputs'>
                 <div className='input'>
@@ -27,13 +31,11 @@ const LoginSignup = () =>{
                     <input type="Confirm Password"/>
                 </div>
             </div>
-            <div className='smalltext'>
-                <div className='stxt' id='underheader'>Just some details to get you in!</div>
-                <div className='stxtbn' id='registered'>Already Registered? Login</div>
-                <div className='stxtbn' id='tac'>Terms & Conditions</div>
-                <div className='stxtbn' id='spt'>Support</div>
-                <div className='stxtbn' id='cuscr'>Customer Care</div>
-            </div>
+            <button className="switch" id="toLG">Already Registered?Login</button>
+            <button className="switch" id={"toFPW"}>Forgot Password? </button>
+            <button className="switch" id={"toSU"}>Don't have an account?Sign up</button>
+            <button className={"submit"} id={"submitSU"}>Sign Up</button>
+            <button className={"submit"} id={"submitLG"}>Login</button>
         </div>
     )
 }
