@@ -10,7 +10,7 @@ Team Member: Alec Berger, Eula Wang, Sichen Liu, Yuxuan(ROLF) Shi, Yinshu (Salin
 
 # Onboarding Process!
 
-## Front End: React
+## React.js
 
 *1. Github Desktop*
 
@@ -82,13 +82,14 @@ For Mac: https://www.youtube.com/watch?v=43-AjOT3Hfk
 For Windows: https://www.youtube.com/watch?v=u96rVINbAUI
 Set up your username and password following the guide.
 
-##JDK & Maven
-JDK
+------------------------------------------------------------------------------------------------------------------------------------------------------
+
+## JDK & Maven
+### JDK
 I think everyone have this, but you may want to check this link.
 https://www.youtube.com/watch?v=43-AjOT3Hfk
 
-------------------------------------------------------------------------------------------------------------------------------------------------------
-Maven
+### Maven
 I compared my settings with those on the youtube videos, I am not using the newest version of maven so I think this link should be helpful for macOS users.
 https://www.youtube.com/watch?v=cbhCNjjvGOw&t=100s
 
