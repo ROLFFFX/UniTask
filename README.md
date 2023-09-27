@@ -92,15 +92,18 @@ Maven
 I compared my settings with those on the youtube videos, I am not using the newest version of maven so I think this link should be helpful for macOS users.
 https://www.youtube.com/watch?v=cbhCNjjvGOw&t=100s
 
+
 And for windows,
 https://www.youtube.com/watch?v=3EfvEZ_wThc
 this one may work, but I am not able to check it myself.
 
-You may also need a local repository. To set it up,
+
+You also need a local repository. To set it up,
 Create a directory m2 at where you put your maven package
 Create a directory called repository inside m2
 Go to your setting.xml file, which is in apache-maven-x.x.x -> conf, 
 After this part of code,
+
 
 Add the line:
 <localRepository>/Users/”your_user_name”/m2/repository</localRepository>
