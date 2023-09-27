@@ -8,7 +8,7 @@ Team Member: Alec Berger, Eula Wang, Sichen Liu, Yuxuan(ROLF) Shi, Yinshu (Salin
 
 ---
 
-### Onboarding Process
+# Onboarding Process!
 
 ## Front End: React
 
