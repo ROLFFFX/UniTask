@@ -8,11 +8,11 @@ Team Member: Alec Berger, Eula Wang, Sichen Liu, Yuxuan(ROLF) Shi, Yinshu (Salin
 
 ---
 
-## Onboarding Process
+### Onboarding Process
 
 ## Front End: React
 
-1. Github Desktop
+*1. Github Desktop*
 
 - Please download [Github Desktop], which makes your life a lot easier. After you downloaded it, sign in and clone our repo.
 - Please make sure to clone instead of downloading the zip file. Cloning ensures the connection between your local file and
@@ -20,33 +20,35 @@ Team Member: Alec Berger, Eula Wang, Sichen Liu, Yuxuan(ROLF) Shi, Yinshu (Salin
 - Please open up your github desktop again and click the "current branch" on the top sidebar. Create your own branch and
   select it.
 
-2. Node.js
+*2. Node.js*
 
-- Pull up your terminal, and type "node -v" (no quotation marks). If you are seeing "command not found" or versions lower than 16,
+- Pull up your terminal, and type ```node -v``` (no quotation marks). If you are seeing "command not found" or versions lower than 16,
   please download node from nodejs.org
 - Please make sure to click the green button on your left which says "18.18.0 LTS"
-- Once you are done installing, pull up VSCode again and type "node -v" in the terminal. if you see "v18.18.0", we are good to go!
+- Once you are done installing, pull up VSCode again and type ```node -v``` in the terminal. if you see "v18.18.0", we are good to go!
 
-3. NPM, dependencies
+*3. NPM, dependencies*
 
 - In your terminal, cd to the folder "team_one_project". Make sure it's not our CS_370_TEAM_ONE folder, but "team_one_project"
   folder that's located inside of the CS_370_TEAM_ONE.
-- type in "npm install". this will automatically install all dependencies/node modules according to the package.json.
+- type in "```npm install```". this will automatically install all dependencies/node modules according to the package.json.
 - once you are done, most likely you will see stuff like "high severity vulnerabilities" and stuff. As long as it's not 2000 vulnerabilities,
   we are good to go.
 
-4.  Spin up the local server!
+*4.  Spin up the local server!*
 
-- Open up VSCode and cd to our team_one_project_folder again, type in "npm start". This will spin up our local server on your default browser.
+- Open up VSCode and cd to our team_one_project_folder again, type in "```npm start```". This will spin up our local server on your default browser.
 - If it does not automatically pop up a browser page for you, open a new chrome page and type in "localhost:3000".
 
 ---
 
-5. Following Updates
+*5. Following Updates*
 
+Normally, ```npm install``` will do!
+
+If not, find exact pkg that's giving you squiggly and run following command accordingly.
 - for MUI
-
-  - npm install @mui/material
-  - npm install @mui/icons-material
-
-haha
+  - ```npm install @mui/material```
+  - ```npm install @mui/icons-material```
+-for react-router-dom
+  - ```npm install --save react-router-dom```
