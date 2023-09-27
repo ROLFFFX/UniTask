@@ -54,29 +54,29 @@ If not, find exact pkg that's giving you squiggly and run following command acco
 ------------------------------------------------------------------------------------------------------------------------------------------------------
 ## IntelliJ IDEA
 *1. Install IntelliJ IDEA Ultimate version*
-There’s a helpful [link](https://www.youtube.com/watch?v=U8qqNnBkjAs) that shows how you can use your student emails to get free license.
+  - There’s a helpful [link](https://www.youtube.com/watch?v=U8qqNnBkjAs) that shows how you can use your student emails to get free license.
 
 
 *2. IntelliJ Settings*
-From the top bar, go to settings
-Build, Execution, Deployment
-Build Tools
-Maven
-Check for the maven homepath. This should be where your maven package stores.
-Check your user setting file, it should be the address of your settings.xml file, which is in your maven package -> conf, and select the override box.
-Check the local repository, the path is where you create your repository in m2 locates, which should look like:
-/”where_you_put_your_m2_directory”/m2/repository
-Then select the override box.
+  - From the top bar, go to `Settings`
+    - `Build, Execution, Deployment`
+    - `Build Tools`
+    - `Maven`
+  - Check for the maven homepath. This should be where your maven package stores.
+  - Check your user setting file, it should be the address of your 'settings.xml' file, which is in your maven package -> conf, and select the override box.
+  - Check the local repository, the path is where you create your repository in m2 locates, which should look like:
+  - /”where_you_put_your_m2_directory”/m2/repository
+  - Then select the override box.
 
-Go to:
-Compiler
-Java Compiler
-Check your java version. It should be 1.8
+  - For Maven
+  - Go to: `Compiler`
+  - `Java Compiler`
+  - Check your java version. It should be 1.8
 
-Go to top bar again:
-File
-Project structure
-Check your SDK version, should be 1.8, and language level is 8 - lambdas
+  - For SDK
+  - `File`
+  - `Project structure`
+  - Check your SDK version, should be 1.8, and language level is `8 - lambdas`
 
 ------------------------------------------------------------------------------------------------------------------------------------------------------
 
@@ -92,6 +92,7 @@ JDK
 I think everyone have this, but you may want to check this link.
 https://www.youtube.com/watch?v=43-AjOT3Hfk
 
+------------------------------------------------------------------------------------------------------------------------------------------------------
 Maven
 I compared my settings with those on the youtube videos, I am not using the newest version of maven so I think this link should be helpful for macOS users.
 https://www.youtube.com/watch?v=cbhCNjjvGOw&t=100s
