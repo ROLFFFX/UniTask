@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import "./loginstyle.css";
 
-import nlogo from "../images/UniTaskLogo.PNG";
+import nlogo from "../images/UniTaskLOGO.PNG";
 import gm from "../images/icons-gmail.png";
 import fb from "../images/icons-facebook.png";
 import gh from "../images/icons-github.png";

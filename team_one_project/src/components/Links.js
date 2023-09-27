@@ -1,5 +1,5 @@
 import "../App.css";
-import UniTaskLogo_new from "../images/UniTaskLogo.PNG";
+import UniTaskLogo_new from "../images/UniTaskLOGO.PNG";
 import UniTaskLogo_old from "../images/Logo_old.PNG";
 
 import LoginSignup from "../pages/LoginSignup";
