@@ -16,7 +16,7 @@ function App() {
         <Container maxWidth="xl">
           <Box sx={{ bgcolor: "white", height: "100vh" }}>
             <MainSideBar />
-            {/* <LoginSignup /> */}
+            <LoginSignup />
             <Links />
           </Box>
         </Container>
