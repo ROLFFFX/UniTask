@@ -12,44 +12,78 @@ const LoginSignup = () =>{
     const [action,setAction] = useState("Sign Up");
     return(
         <div className={'bg'}>
+            <div className={"left-wrapper"}>
+                <img id="logo" src={nlogo}></img>
+            </div>
             <div className='container'>
+
                 <div className={"uppersect"}>
                     <div className='header'>
                         <div className='text'>{action}</div>
                     </div>
                     <div className='inputs'>
-                        <div className='input'>
-                            <input type="Username"/>
-                        </div>
-                        <div className='input'>
-                            <input type="Password"/>
-                        </div>
-                        <div className='input'>
-                            <input type="Email/Phone"/>
-                        </div>
-                        <div className='input'>
-                            <input type="Set Password"/>
-                        </div>
-                        <div className='input'>
-                            <input type="Confirm Password"/>
-                        </div>
+                        {(action === "Sign Up"||"LogIn")?
+                            <div className='input' >
+                                <input type="Username" defaultValue="Username"/>
+                            </div>:null
+                        }
+                        {(action === "Sign Up"||"Forgot Password?")?
+                            <div className='input' >
+                                <input type="Email/Phone" defaultValue="Email/Phone"/>
+                            </div>:null
+                        }
+                        {(action === "Sign Up")?
+                            <div>
+                                <div className='input'>
+                                    <input type="Set Password" defaultValue="Set Password"/>
+                                </div>
+                                <div className='input'>
+                                    <input type="Confirm Password" defaultValue="Confirm Password"/>
+                                </div>
+                            </div>
+                            :(action === "LogIn")?
+                            <div className='input'>
+                                <input type="Password" defaultValue="Password"/>
+                            </div>
+                            :null
+                        }
                     </div>
-                    <button className={"submit"} id={"submitSU"}>Sign Up</button>
-                    <button className={"submit"} id={"submitLG"}>Login</button>
-                </div>
-                <div className={"lowersect"}>
-                    <button className="switch" id="toLG"
-                            onClick={() => setAction("LogIn")}
-                    >
-                        Already Registered?Login</button>
-                    <button className="switch" id={"toFPW"}
+                    {(action === "Sign Up")?
+                        <button className={"submit"} id={"submitSU"}>Sign Up</button>
+                        :(action === "LogIn")?
+                            <button className={"submit"} id={"submitLG"}>Login</button>
+                        :<button className={"submit"} id={"submitFPW"}>Reset Password</button>
+                    }
+                    {(action !== "Forgot Password?")?
+                        <button className="switch" id={"toFPW"}
                             onClick={() => setAction("Forgot Password?")}
                     >
                         Forgot Password? </button>
-                    <button className="switch" id={"toSU"}
+                        :null
+                    }
+                </div>
+
+
+                <div className={"midsect"}>
+                    <div>
+                        <img className={"icons"} src={gm}></img>
+                        <img className={"icons"} src={fb}></img>
+                        <img className={"icons"} src={gh}></img>
+                    </div>
+                </div>
+
+
+                <div className={"lowersect"}>
+                    {(action === "Sign Up")?
+                        <button className="switch" id="toLG"
+                            onClick={() => setAction("LogIn")}
+                    >
+                        Already Registered?Login</button>
+                        :<button className="switch" id={"toSU"}
                             onClick={() => setAction("Sign Up")}
                     >
                         Don't have an account?Sign up</button>
+                    }
                 </div>
             </div>
         </div>

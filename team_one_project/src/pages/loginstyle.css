@@ -1,11 +1,21 @@
 .bg{
     background: #16162A;
+    margin: 0;
+    height: 100vh;
+    min-height: 100vh;
+    display:flex;
+    flex-display: row;
 }
 .container{
+    display: flex;
+    flex-direction: column;
+    margin: auto;
+    margin-right: 5%;
+    padding-top: 10%;
+
     width: 480px;
-    height: 796px;
-    top: 114px;
-    left: 900px;
+    height: 730px;
+    align-items: center;
     /*paddings*/
     border-radius: 20px;
     border: 1px solid;
@@ -15,14 +25,16 @@
     font-family: "Noto Sans Myanmar", sans-serif;
 }
 .uppersect{
+    position:center;
     width: 400px;
     height: 368px;
     gap: 14px;
+    margin-bottom: 1%;
 }
 .lowersect{
     width: 400px;
     height: 60px;
-    margin-top:50%;
+    margin-top:10%;
     gap: 8px;
 }
 .header{
@@ -34,6 +46,7 @@
     height: 49px;*/
 }
 .input{
+    /*background: transparent;*/
     color:#FFFFFF;
     /*opacity: 0.0;8?
     width: 400px;
@@ -44,28 +57,40 @@
     gap: 10px;
 }
 .submit{
+    align-content: center;
     color:#FFFFFF;
     font-family: "Noto Sans Myanmar", sans-serif;
     font-size: 20px;
     font-weight: 600;
     line-height: 27px;
+    height: 55px;
+    border-radius: 12px;
+    gap: 10px;
+    width: 400px;
     /*letter-spacing: 0em;*/
     text-align: left;
 }
 #submitLG{
-    color:#FFFFFF;
-    width: 400px;
-    height: 55px;
     /*padding: 14px, 10px, 14px, 10px*/
-    border-radius: 12px;
-    gap: 10px;
     background: linear-gradient(90.57deg, #628EFF 9.91%, #8740CD 53.29%, #580475 91.56%);
 }
 #submitSU{
-    width: 400px;
-    height: 55px;
     /*padding: 14px, 10px, 14px, 10px*/
-    border-radius: 12px;
-    gap: 10px;
     background: linear-gradient(90.57deg, #2E4CEE 9.91%, #221EBF 53.29%, #040F75 91.56%);
+}
+#submitFPW{
+    /*padding: 14px, 10px, 14px, 10px*/
+    background: linear-gradient(90.57deg, #E948C5 9.91%, #CD407B 53.29%, #75042D 91.56%);
+}
+.icons{
+    height: 30px;
+    width: 30px;
+    margin: 10px;
+}
+.left-wrapper{
+    margin: auto;
+}
+#logo{
+    width: 800px;
+    height: 800px;
 }

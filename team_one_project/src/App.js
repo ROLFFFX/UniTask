@@ -15,12 +15,8 @@ import {BrowserRouter} from "react-router-dom";
 function App() {
   return (
     <div className="App">
-        <Links />
-        <MainSideBar />
         <LoginSignup />
-        <Routes>
-            <Route path="/pages/LoginSignup" element={<LoginSignup />}/>
-        </Routes>
+        <style>{'body { background-color: #16162A; }'}</style>
     </div>
   );
 }
