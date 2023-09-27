@@ -40,8 +40,6 @@ Team Member: Alec Berger, Eula Wang, Sichen Liu, Yuxuan(ROLF) Shi, Yinshu (Salin
 - Open up VSCode and cd to our team_one_project_folder again, type in "```npm start```". This will spin up our local server on your default browser.
 - If it does not automatically pop up a browser page for you, open a new chrome page and type in "localhost:3000".
 
----
-
 *5. Following Updates*
 
 Normally, ```npm install``` will do!
@@ -52,3 +50,63 @@ If not, find exact pkg that's giving you squiggly and run following command acco
   - ```npm install @mui/icons-material```
 -for react-router-dom
   - ```npm install --save react-router-dom```
+
+------------------------------------------------------------------------------------------------------------------------------------------------------
+## IntelliJ IDEA
+*1. Install IntelliJ IDEA Ultimate version*
+There’s a helpful [link](https://www.youtube.com/watch?v=U8qqNnBkjAs) that shows how you can use your student emails to get free license.
+
+
+*2. IntelliJ Settings*
+From the top bar, go to settings
+Build, Execution, Deployment
+Build Tools
+Maven
+Check for the maven homepath. This should be where your maven package stores.
+Check your user setting file, it should be the address of your settings.xml file, which is in your maven package -> conf, and select the override box.
+Check the local repository, the path is where you create your repository in m2 locates, which should look like:
+/”where_you_put_your_m2_directory”/m2/repository
+Then select the override box.
+
+Go to:
+Compiler
+Java Compiler
+Check your java version. It should be 1.8
+
+Go to top bar again:
+File
+Project structure
+Check your SDK version, should be 1.8, and language level is 8 - lambdas
+
+------------------------------------------------------------------------------------------------------------------------------------------------------
+
+## MySQL
+Install MySQL
+Download it from official website.
+For Mac: https://www.youtube.com/watch?v=43-AjOT3Hfk
+For Windows: https://www.youtube.com/watch?v=u96rVINbAUI
+Set up your username and password following the guide.
+
+##JDK & Maven
+JDK
+I think everyone have this, but you may want to check this link.
+https://www.youtube.com/watch?v=43-AjOT3Hfk
+
+Maven
+I compared my settings with those on the youtube videos, I am not using the newest version of maven so I think this link should be helpful for macOS users.
+https://www.youtube.com/watch?v=cbhCNjjvGOw&t=100s
+
+And for windows,
+https://www.youtube.com/watch?v=3EfvEZ_wThc
+this one may work, but I am not able to check it myself.
+
+You may also need a local repository. To set it up,
+Create a directory m2 at where you put your maven package
+Create a directory called repository inside m2
+Go to your setting.xml file, which is in apache-maven-x.x.x -> conf, 
+After this part of code,
+
+Add the line:
+<localRepository>/Users/”your_user_name”/m2/repository</localRepository>
+
+
