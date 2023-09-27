@@ -6,17 +6,19 @@ import List from "@mui/material/List";
 import Divider from "@mui/material/Divider";
 import ListItem from "@mui/material/ListItem";
 import ListItemButton from "@mui/material/ListItemButton";
-// import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
-// import InboxIcon from "@mui/icons-material/MoveToInbox";
-// import MailIcon from "@mui/icons-material/Mail";
 import Fab from "@mui/material/Fab";
-
-import { useNavigate } from "react-router-dom";
+import {
+  createBrowserRouter,
+  createRoutesFromElements,
+  Route,
+  Link,
+} from "react-router-dom";
 
 import { Dashboard } from "./main_components/Dashboard";
+import { create } from "@mui/material/styles/createTransitions";
 
-export default function TemporaryDrawer() {
+export default function MainSideBar_pilot() {
   //initialize options for sidebar
   const sidebar_upper = [
     "Dashboard",
@@ -29,10 +31,10 @@ export default function TemporaryDrawer() {
   const [state, setState] = React.useState({
     left: true,
   });
-  //TODO: This handle Click will handle the routing. the identifier can either be text/index
-  const handleClick = (text) => {
-    alert(text);
-  };
+
+  const router = createBrowserRouter(
+    createRoutesFromElements(<Route path="/" element=""></Route>)
+  );
 
   const toggleDrawer = (anchor, open) => (event) => {
     if (
@@ -54,31 +56,23 @@ export default function TemporaryDrawer() {
       onKeyDown={toggleDrawer(anchor, false)}
     >
       <List>
-        {sidebar_upper.map((text, index) => (
+        {/* {sidebar_upper.map((text, index) => (
           <ListItem key={index} disablePadding>
             <ListItemButton onClick={() => handleClick(text)}>
-              {/* TODO: ListItemIcon component is a mui built-in icon API. Need to be updated to our own button */}
-              {/* <ListItemIcon>
-                {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-              </ListItemIcon> */}
               <ListItemText primary={text} />
             </ListItemButton>
           </ListItem>
-        ))}
+        ))} */}
       </List>
       <Divider />
       <List>
-        {sidebar_bottom.map((text, index) => (
+        {/* {sidebar_bottom.map((text, index) => (
           <ListItem key={index} disablePadding>
             <ListItemButton onClick={() => handleClick(text)}>
-              {/* TODO: ListItemIcon component is a mui built-in icon API. Need to be updated to our own button */}
-              {/* <ListItemIcon>
-                {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-              </ListItemIcon> */}
               <ListItemText primary={text} />
             </ListItemButton>
           </ListItem>
-        ))}
+        ))} */}
       </List>
     </Box>
   );
