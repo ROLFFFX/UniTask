@@ -5,7 +5,7 @@ import Links from "./components/Links";
 import MainSideBar from "./components/MainSideBar";
 import LoginSignup from "./components/";
 import { Dashboard } from "./components/main_components/Dashboard";
-// import LoginSignup from "./pages/LoginSignup";
+import LoginSignup from "./pages/LoginSignup";
 // import { BrowserRouter } from "react-router-dom";
 // import { red } from "@mui/material/colors";
 
