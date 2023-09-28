@@ -16,11 +16,11 @@ function App() {
         <Container maxWidth="xl">
           <Box sx={{ bgcolor: "white", height: "100vh" }}>
             <MainSideBar />
-            <LoginSignup />
             <Links />
           </Box>
         </Container>
       </div>
+      <h2>hello</h2>
     </div>
   );
 }
