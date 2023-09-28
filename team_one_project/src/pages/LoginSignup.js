@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 import "./loginstyle.css";
 
-import nlogo from "../images/UniTaskLOGO.PNG";
-import gm from "../images/icons-gmail.png";
-import fb from "../images/icons-facebook.png";
-import gh from "../images/icons-github.png";
+// import nlogo from "../images/UniTaskLOGO.PNG";
+// import gm from "../images/icons-gmail.png";
+// import fb from "../images/icons-facebook.png";
+// import gh from "../images/icons-github.png";
 
 const LoginSignup = () => {
   const [action, setAction] = useState("Sign Up");
