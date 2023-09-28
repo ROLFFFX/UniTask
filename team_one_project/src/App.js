@@ -17,12 +17,12 @@ function App() {
         <Container maxWidth="xl">
           <Box sx={{ bgcolor: "white", height: "100vh" }}>
             <MainSideBar />
-            <LoginSignup />
             <Links />
           </Box>
         </Container>
       </div>
-      <h1>salina test</ h1>
+
+      <h1>salina test</h1>
     </div>
   );
 }
