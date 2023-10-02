@@ -8,7 +8,6 @@ import LoginSignup from "./pages/LoginSignup";
 import { BrowserRouter } from "react-router-dom";
 import { red } from "@mui/material/colors";
 import styled from "@emotion/styled";
- //test
 function App() {
   return (
     <div>
@@ -20,8 +19,6 @@ function App() {
           </Box>
         </Container>
       </div>
-
-      <h1>salina test</h1>
     </div>
   );
 }
