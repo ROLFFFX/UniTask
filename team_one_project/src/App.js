@@ -3,17 +3,11 @@ import { Box, Container, Grid, colors } from "@mui/material";
 import { BrowserRouter as Router, Route, Routes, Link } from "react-router-dom";
 import Links from "./components/Links";
 import MainSideBar from "./components/MainSideBar";
-<<<<<<< Updated upstream
-// import LoginSignup from "./components/";
-=======
-import LoginSignup from "./components/";
->>>>>>> Stashed changes
 import { Dashboard } from "./components/main_components/Dashboard";
 import LoginSignup from "./pages/LoginSignup";
 import { BrowserRouter } from "react-router-dom";
 import { red } from "@mui/material/colors";
 import styled from "@emotion/styled";
-
 function App() {
   return (
     <div>
@@ -25,8 +19,6 @@ function App() {
           </Box>
         </Container>
       </div>
-
-      <h1>salina test</h1>
     </div>
   );
 }
