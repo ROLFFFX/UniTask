@@ -1,11 +1,11 @@
-import "../App.css";
-import UniTaskLogo_new from "../images/UniTaskLOGO.PNG";
-import UniTaskLogo_old from "../images/Logo_old.PNG";
+import "../../App.css";
+// import UniTaskLogo_new from "../images/UniTaskLOGO.PNG";
+import UniTaskLogo_old from "../../images/Logo_old.PNG";
 
-import LoginSignup from "../pages/LoginSignup";
+import LoginSignup from "../../pages/LoginSignup";
 import { Link } from "react-router-dom";
 
-function Links() {
+export function MainHyperLink() {
   return (
     <div className="App">
       <header className="App-header">
@@ -44,5 +44,3 @@ function Links() {
     </div>
   );
 }
-
-export default Links;
