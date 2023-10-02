@@ -7,6 +7,7 @@ import { Dashboard } from "./components/main_components/Dashboard";
 import LoginSignup from "./pages/LoginSignup";
 import { BrowserRouter } from "react-router-dom";
 import { red } from "@mui/material/colors";
+import styled from "@emotion/styled";
 
 function App() {
   return (
@@ -15,7 +16,6 @@ function App() {
         <Container maxWidth="xl">
           <Box sx={{ bgcolor: "white", height: "100vh" }}>
             <MainSideBar />
-            <LoginSignup />
             <Links />
           </Box>
         </Container>
