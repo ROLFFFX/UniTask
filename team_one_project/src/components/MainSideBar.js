@@ -14,7 +14,7 @@ import Fab from "@mui/material/Fab";
 
 import { useNavigate } from "react-router-dom";
 
-import { Dashboard } from "./main_components/Dashboard";
+import { Dashboard } from "./Dashboard/MainDashboard";
 
 export default function TemporaryDrawer() {
   //initialize options for sidebar

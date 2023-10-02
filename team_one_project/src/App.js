@@ -1,25 +1,57 @@
 import * as React from "react";
-import { Box, Container, Grid, colors } from "@mui/material";
-import { BrowserRouter as Router, Route, Routes, Link } from "react-router-dom";
-import Links from "./components/Links";
+import { Route, Routes, Link } from "react-router-dom";
 import MainSideBar from "./components/MainSideBar";
-import { Dashboard } from "./components/main_components/Dashboard";
-import LoginSignup from "./pages/LoginSignup";
-import { BrowserRouter } from "react-router-dom";
-import { red } from "@mui/material/colors";
-import styled from "@emotion/styled";
+import { MainDashboard } from "./components/Dashboard/MainDashboard";
+import { MainSprintBoard } from "./components/SprintBoard/MainSprintBoard";
+import { MainHyperLink } from "./components/HyperLink/MainHyperLink";
+import PageNotFound from "./components/PageNotFound/PageNotFound";
+import { Dashboard } from "@mui/icons-material";
 function App() {
   return (
-    <div>
-      <div>
-        <Container maxWidth="xl">
-          <Box sx={{ bgcolor: "white", height: "100vh" }}>
-            <MainSideBar />
-            <Links />
-          </Box>
-        </Container>
-      </div>
-    </div>
+    <>
+      <nav>
+        <ul>
+          <li>
+            <Link to="/dashboard">Dashboard</Link>
+          </li>
+          <li>
+            <Link to="/sprintboard">Sprint Board</Link>
+          </li>
+          <li>
+            <Link to="/hyperlink">Hyperlink</Link>
+          </li>
+          <li>
+            <Link to="/sidebar">Main Sidebar</Link>
+          </li>
+        </ul>
+      </nav>
+      <Routes>
+        <Route path="/" element={<Dashboard />} />
+
+        <Route path="/dashboard">
+          <Route index element={<MainDashboard />}></Route>
+          {/* nested routes waiting to be populated */}
+        </Route>
+
+        <Route path="/sprintboard">
+          <Route index element={<MainSprintBoard />}>
+            {/* nested routes waiting to be populated */}
+          </Route>
+        </Route>
+
+        <Route path="/hyperlink">
+          <Route index element={<MainHyperLink />}></Route>
+          {/* nested routes waiting to be populated */}
+        </Route>
+
+        <Route path="/sidebar">
+          <Route index element={<MainSideBar />}></Route>
+          {/* nested routes waiting to be populated */}
+        </Route>
+
+        <Route path="*" element={<PageNotFound />}></Route>
+      </Routes>
+    </>
   );
 }
 
