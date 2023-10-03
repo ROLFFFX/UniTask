@@ -1,0 +1,113 @@
+.bg {
+  background: #16162a;
+  margin: 0;
+  height: 100vh;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: row;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  margin: auto;
+  margin-right: 5%;
+  padding-top: 10%;
+
+  width: 480px;
+  height: 730px;
+  align-items: center;
+  /*paddings*/
+  border-radius: 20px;
+  border: 1px solid;
+  color: #ffffff;
+  /*border-image: linear-gradient(317.92deg, rgba(255, 255, 255, 0.6) 1.48%, rgba(0, 0, 0, 0) 67.95%);*/
+  /*linear-gradient(166.93deg, #AFAFAF 3.24%, rgba(96, 96, 96, 0) 96.43%);*/
+  font-family: "Noto Sans Myanmar", sans-serif;
+}
+
+.uppersect {
+  position: center;
+  width: 400px;
+  height: 368px;
+  gap: 14px;
+  margin-bottom: 1%;
+}
+.lowersect {
+  position: center;
+  width: 400px;
+  height: 60px;
+  margin-top: 10%;
+  gap: 8px;
+}
+.header {
+  font-size: 36px;
+  font-weight: 600;
+  line-height: 49px;
+  text-align: left;
+  /*width: 98px;
+    height: 49px;*/
+}
+.input {
+  /*background: transparent;*/
+  color: #ffffff;
+  /*opacity: 0.0;8?
+    width: 400px;
+    height: 55px;
+    /*padding: 14px, 16px, 14px, 16px*/
+  border: 1px;
+  border-radius: 12px;
+  gap: 10px;
+}
+.submit {
+  color: #ffffff;
+  font-family: "Noto Sans Myanmar", sans-serif;
+  font-size: 20px;
+  font-weight: 600;
+  line-height: 27px;
+  height: 55px;
+  border-radius: 12px;
+  gap: 10px;
+  width: 400px;
+  /*letter-spacing: 0em;*/
+  text-align: center;
+}
+#submitLG {
+  /*padding: 14px, 10px, 14px, 10px*/
+  background: linear-gradient(
+    90.57deg,
+    #628eff 9.91%,
+    #8740cd 53.29%,
+    #580475 91.56%
+  );
+}
+#submitSU {
+  /*padding: 14px, 10px, 14px, 10px*/
+  background: linear-gradient(
+    90.57deg,
+    #2e4cee 9.91%,
+    #221ebf 53.29%,
+    #040f75 91.56%
+  );
+}
+#submitFPW {
+  /*padding: 14px, 10px, 14px, 10px*/
+  background: linear-gradient(
+    90.57deg,
+    #e948c5 9.91%,
+    #cd407b 53.29%,
+    #75042d 91.56%
+  );
+}
+.icons {
+  height: 30px;
+  width: 30px;
+  margin: 10px;
+}
+.left-wrapper {
+  margin: auto;
+}
+#logo {
+  width: 800px;
+  height: 800px;
+}

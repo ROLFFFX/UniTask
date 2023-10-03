@@ -6,7 +6,8 @@ import { MainSprintBoard } from "./components/SprintBoard/MainSprintBoard";
 import { MainHyperLink } from "./components/HyperLink/MainHyperLink";
 import PageNotFound from "./components/PageNotFound/PageNotFound";
 import { Dashboard } from "@mui/icons-material";
-import LoginSignup from "./pages/LoginSignup";
+import LoginSignup from "./components/LoginPage/LoginSignup";
+
 function App() {
   return (
     <>
