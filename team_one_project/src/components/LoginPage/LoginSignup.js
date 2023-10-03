@@ -6,7 +6,7 @@ import gm from "../../images/icons-gmail.png";
 import fb from "../../images/icons-facebook.png";
 import gh from "../../images/icons-github.png";
 
-export default function LoginSignup() {
+export function LoginSignup() {
   const [action, setAction] = useState("Sign Up");
   return (
     <>
