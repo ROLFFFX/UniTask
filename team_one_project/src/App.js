@@ -6,6 +6,7 @@ import { MainSprintBoard } from "./components/SprintBoard/MainSprintBoard";
 import { MainHyperLink } from "./components/HyperLink/MainHyperLink";
 import PageNotFound from "./components/PageNotFound/PageNotFound";
 import { Dashboard } from "@mui/icons-material";
+import LoginSignup from "./pages/LoginSignup";
 function App() {
   return (
     <>
@@ -22,6 +23,9 @@ function App() {
           </li>
           <li>
             <Link to="/sidebar">Main Sidebar</Link>
+          </li>
+          <li>
+            <Link to="/login">Login Page</Link>
           </li>
         </ul>
       </nav>
@@ -46,6 +50,11 @@ function App() {
 
         <Route path="/sidebar">
           <Route index element={<MainSideBar />}></Route>
+          {/* nested routes waiting to be populated */}
+        </Route>
+
+        <Route path="/login">
+          <Route index element={<LoginSignup />}></Route>
           {/* nested routes waiting to be populated */}
         </Route>
 
