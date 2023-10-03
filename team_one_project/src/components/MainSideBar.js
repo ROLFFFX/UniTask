@@ -1,20 +1,14 @@
 import * as React from "react";
+import { useNavigate } from "react-router-dom";
+
 import Box from "@mui/material/Box";
 import Drawer from "@mui/material/Drawer";
-import Button from "@mui/material/Button";
 import List from "@mui/material/List";
 import Divider from "@mui/material/Divider";
 import ListItem from "@mui/material/ListItem";
 import ListItemButton from "@mui/material/ListItemButton";
-// import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
-// import InboxIcon from "@mui/icons-material/MoveToInbox";
-// import MailIcon from "@mui/icons-material/Mail";
 import Fab from "@mui/material/Fab";
-
-import { useNavigate } from "react-router-dom";
-
-import { Dashboard } from "./Dashboard/MainDashboard";
 
 export default function TemporaryDrawer() {
   //initialize options for sidebar
@@ -29,9 +23,35 @@ export default function TemporaryDrawer() {
   const [state, setState] = React.useState({
     left: true,
   });
+  const navigate = useNavigate();
   //TODO: This handle Click will handle the routing. the identifier can either be text/index
-  const handleClick = (text) => {
-    alert(text);
+  const handleClick = (index) => {
+    switch (index) {
+      case 0:
+        navigate("../dashboard");
+        break;
+      case 1:
+        navigate("../sprintboard");
+        break;
+      case 2:
+        navigate("../meeting");
+        break;
+      case 3:
+        navigate("../hyperlink");
+        break;
+      case 4:
+        navigate("../review");
+        break;
+      case 5:
+        navigate("../account");
+        break;
+      case 6:
+        navigate("../setting");
+        break;
+      default:
+        navigate("*");
+        break;
+    }
   };
 
   const toggleDrawer = (anchor, open) => (event) => {
@@ -56,11 +76,7 @@ export default function TemporaryDrawer() {
       <List>
         {sidebar_upper.map((text, index) => (
           <ListItem key={index} disablePadding>
-            <ListItemButton onClick={() => handleClick(text)}>
-              {/* TODO: ListItemIcon component is a mui built-in icon API. Need to be updated to our own button */}
-              {/* <ListItemIcon>
-                {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-              </ListItemIcon> */}
+            <ListItemButton onClick={() => handleClick(index)}>
               <ListItemText primary={text} />
             </ListItemButton>
           </ListItem>
@@ -69,12 +85,8 @@ export default function TemporaryDrawer() {
       <Divider />
       <List>
         {sidebar_bottom.map((text, index) => (
-          <ListItem key={index} disablePadding>
-            <ListItemButton onClick={() => handleClick(text)}>
-              {/* TODO: ListItemIcon component is a mui built-in icon API. Need to be updated to our own button */}
-              {/* <ListItemIcon>
-                {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-              </ListItemIcon> */}
+          <ListItem key={index + 5} disablePadding>
+            <ListItemButton onClick={() => handleClick(index + 5)}>
               <ListItemText primary={text} />
             </ListItemButton>
           </ListItem>
