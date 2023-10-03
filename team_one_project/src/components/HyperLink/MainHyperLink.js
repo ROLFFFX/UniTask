@@ -6,8 +6,29 @@ import LoginSignup from "../../pages/LoginSignup";
 import { Link } from "react-router-dom";
 
 export function MainHyperLink() {
-  return (
-    <div className="App">
+    const inputLinks = [];//userinput links
+    const linksLS = (
+        <ul>
+
+        </ul>
+    );//create an ul
+    const linkLI = (
+        <div key={""}>
+
+        </div>
+    );//list items
+    return (
+        //temporary template
+      <div className="linkssect">
+        <ul className={"links"}>
+          <li className={"linkswrap"}>
+              <Link to={""}>
+                  Name of the link
+              </Link>
+          </li>
+        </ul>
+      </div>
+    /*<div className="App">
       <header className="App-header">
         <img src={UniTaskLogo_old} className="App-logo" alt="logo" />
         <pre></pre>
@@ -41,6 +62,6 @@ export function MainHyperLink() {
           Login/Register/FindPW
         </Link>
       </header>
-    </div>
+    </div>*/
   );
 }
