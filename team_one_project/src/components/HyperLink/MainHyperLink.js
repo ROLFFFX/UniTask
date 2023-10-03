@@ -4,64 +4,64 @@ import UniTaskLogo_old from "../../images/Logo_old.PNG";
 
 import LoginSignup from "../../pages/LoginSignup";
 import { Link } from "react-router-dom";
+import React, {useState} from "react";
+import {v4 as uuidv4} from 'uuid';
 
 export function MainHyperLink() {
-    const inputLinks = [];//userinput links
-    const linksLS = (
-        <ul>
+    //const [list, setList] = useState(userlinks);
+    const [action, setAction] = useState("Display");
+    const [name, setName] = useState('');
+    const [link, setLink] = useState('');
 
-        </ul>
-    );//create an ul
-    const linkLI = (
-        <div key={""}>
 
-        </div>
-    );//list items
+    const userlinks = [];
+    const [list, setList] = useState(userlinks);
+    function changeName(event) {
+        setName(event.target.value);
+    }
+    //modify to make it a link!!!!!!!!!!!!!!!!!!!!!!!!!!!
+    function changeLink(event) {
+        setLink(event.target.value);
+    }
+    function addLinks(){
+        const newlist = list.push({
+            Lk: <Link to={link}
+                        title={name}
+                />,
+            id: uuidv4() //to have a stable key attribute for the item
+        });
+
+        setList(newlist);
+
+        setName('');
+    }
+
     return (
-        //temporary template
-      <div className="linkssect">
-        <ul className={"links"}>
-          <li className={"linkswrap"}>
-              <Link to={""}>
-                  Name of the link
-              </Link>
-          </li>
-        </ul>
-      </div>
-    /*<div className="App">
-      <header className="App-header">
-        <img src={UniTaskLogo_old} className="App-logo" alt="logo" />
-        <pre></pre>
-        <a
-          className="App-link"
-          href="https://www.figma.com"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Figma Link
-        </a>
-        <pre></pre>
-        <a
-          className="App-link"
-          href="https://www.google.com/slides"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Powerpoint Link
-        </a>
-        <pre></pre>
-        <a
-          className="App-link"
-          href="https://docs.google.com"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          GoogleDoc Link
-        </a>
-        <Link to="../pages/LoginSignup" element={<LoginSignup />}>
-          Login/Register/FindPW
-        </Link>
-      </header>
-    </div>*/
-  );
+        <div className={"hyperlinks"}>
+            <button
+                id="addlinkbutton"
+                onClick={() => setAction("Add Item")}
+            ></button>
+            {action === "Add Item" ? (
+                <div className="addLink">
+                  <input type="name"
+                         onChange={changeName}
+                         defaultValue="Customize a Name for Your Link"
+                  />
+                  <input type="link"
+                         onChange={changeLink}
+                         defaultValue="Copy Link Here"
+                  />
+                  <button onClick={addLinks}>
+                      Save
+                  </button>
+                </div>
+              ) : null}
+            <ul>
+                {list.map((userlink) =>(
+                    <li key={userlink.id}>{userlink.Lk}</li>
+                ))}
+            </ul>
+        </div>
+    )
 }
