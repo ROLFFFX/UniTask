@@ -1,17 +1,14 @@
 import * as React from "react";
+import { useNavigate } from "react-router-dom";
+
 import Box from "@mui/material/Box";
 import Drawer from "@mui/material/Drawer";
-import Button from "@mui/material/Button";
 import List from "@mui/material/List";
 import Divider from "@mui/material/Divider";
 import ListItem from "@mui/material/ListItem";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemText from "@mui/material/ListItemText";
 import Fab from "@mui/material/Fab";
-
-import { useNavigate } from "react-router-dom";
-
-import { Dashboard } from "./Dashboard/MainDashboard";
 
 export default function TemporaryDrawer() {
   //initialize options for sidebar
