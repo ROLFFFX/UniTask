@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Route, Routes, Link } from "react-router-dom";
+import { Route, Routes } from "react-router-dom";
 
 import { MainDashboard } from "./components/Dashboard/MainDashboard";
 import { MainSprintBoard } from "./components/SprintBoard/MainSprintBoard";
@@ -11,12 +11,12 @@ import { MainReview } from "./components/Review/MainReview";
 import { MainSetting } from "./components/Setting/MainSetting";
 import { MainAccount } from "./components/Account/MainAccount";
 
-import MainSideBar from "./components/MainSideBar";
+import MainSideBar from "./components/Utilities/MainSideBar";
 
 function App() {
   return (
     <>
-      <nav>
+      {/* <nav>
         <ul>
           <li>
             <Link to="/dashboard">Dashboard</Link>
@@ -49,9 +49,9 @@ function App() {
             <Link to="/sidebar">Main Sidebar</Link>
           </li>
         </ul>
-      </nav>
+      </nav> */}
       <Routes>
-        <Route path="/" element={<MainSideBar />} />
+        <Route path="/" element={<MainDashboard />} />
 
         <Route path="/dashboard">
           <Route index element={<MainDashboard />}></Route>
