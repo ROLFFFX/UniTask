@@ -3,7 +3,6 @@ import * as React from "react";
 import PermanentDrawer from "../Utilities/PermanentDrawer";
 import { TopAppBar } from "../Utilities/TopNavBar";
 import { DashboardContent } from "./DashboardContent";
-import zIndex from "@mui/material/styles/zIndex";
 
 export function MainDashboard() {
   return (
