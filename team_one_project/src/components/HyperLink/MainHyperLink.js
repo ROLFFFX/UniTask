@@ -14,7 +14,7 @@ export function MainHyperLink() {
     const [link, setLink] = useState('');
 
 
-    const userlinks = [];
+    var userlinks = [{Lk:"xxx", id:"xxx"}];
     const [list, setList] = useState(userlinks);
     function changeName(event) {
         setName(event.target.value);
@@ -24,16 +24,16 @@ export function MainHyperLink() {
         setLink(event.target.value);
     }
     function addLinks(){
-        const newlist = list.push({
+        const newlist = list.concat([{
             Lk: <Link to={link}
-                        title={name}
-                />,
+                      title={name}
+            />,
             id: uuidv4() //to have a stable key attribute for the item
-        });
+        }]);
 
         setList(newlist);
 
-        setName('');
+        setName('new item');//modify----------------
     }
 
     return (
@@ -52,7 +52,11 @@ export function MainHyperLink() {
                          onChange={changeLink}
                          defaultValue="Copy Link Here"
                   />
-                  <button onClick={addLinks}>
+                  <button onClick={() => {
+                      addLinks();
+                      setAction("Display");
+                    }
+                  }>
                       Save
                   </button>
                 </div>
