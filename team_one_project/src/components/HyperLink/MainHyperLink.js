@@ -2,9 +2,6 @@ import "../../App.css";
 // import UniTaskLogo_new from "../images/UniTaskLOGO.PNG";
 import UniTaskLogo_old from "../../images/Logo_old.PNG";
 
-import LoginSignup from "../../pages/LoginSignup";
-import { Link } from "react-router-dom";
-
 export function MainHyperLink() {
   return (
     <div className="App">
@@ -37,9 +34,6 @@ export function MainHyperLink() {
         >
           GoogleDoc Link
         </a>
-        <Link to="../pages/LoginSignup" element={<LoginSignup />}>
-          Login/Register/FindPW
-        </Link>
       </header>
     </div>
   );
