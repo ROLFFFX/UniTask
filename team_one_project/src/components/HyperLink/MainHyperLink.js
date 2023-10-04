@@ -22,7 +22,11 @@ export function MainHyperLink() {
         Lk: (
           <a
             className="App-link"
-            href={link}
+            href={
+              link.startsWith("http://") || link.startsWith("https://")
+                ? link
+                : `http://${link}`
+            }
             target="_blank"
             rel="noopener noreferrer"
           >
