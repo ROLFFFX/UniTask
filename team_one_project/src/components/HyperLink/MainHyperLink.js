@@ -38,7 +38,6 @@ export function MainHyperLink() {
     ]);
     setList(newlist);
   }
-
   function removeLinks(id) {
     const newlist = list.filter((userlink) => userlink.id !== id);
     setList(newlist);
