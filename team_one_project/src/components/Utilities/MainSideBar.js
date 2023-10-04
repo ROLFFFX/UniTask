@@ -8,7 +8,7 @@ import Divider from "@mui/material/Divider";
 import ListItem from "@mui/material/ListItem";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemText from "@mui/material/ListItemText";
-import Fab from "@mui/material/Fab";
+import { Grid, Button, Paper } from "@mui/material";
 
 export default function TemporaryDrawer() {
   //initialize options for sidebar
@@ -24,6 +24,12 @@ export default function TemporaryDrawer() {
     left: true,
   });
   const navigate = useNavigate();
+  const SideBarContainerStyles = {
+    display: "flex",
+    justifyContent: "center", // Center horizontally
+    alignItems: "center", // Center vertically
+    height: "100vh", // Set the container height to 100% of the viewport height
+  };
   //TODO: This handle Click will handle the routing. the identifier can either be text/index
   const handleClick = (index) => {
     switch (index) {
@@ -99,20 +105,28 @@ export default function TemporaryDrawer() {
     <div>
       {["left"].map((anchor) => (
         <React.Fragment key={anchor}>
-          <Fab
-            variant="extended"
-            color="info"
-            onClick={toggleDrawer(anchor, true)}
-          >
-            ≡
-          </Fab>
-          <Drawer
-            anchor={anchor}
-            open={state[anchor]}
-            onClose={toggleDrawer(anchor, false)}
-          >
-            {list(anchor)}
-          </Drawer>
+          <Grid container direction="column">
+            <Grid item xs={2} style={SideBarContainerStyles}>
+              <Paper>
+                <Button
+                  variant="extended"
+                  color="info"
+                  onClick={toggleDrawer(anchor, true)}
+                >
+                  ...
+                </Button>
+              </Paper>
+            </Grid>
+            <Grid item xs={10}>
+              <Drawer
+                anchor={anchor}
+                open={state[anchor]}
+                onClose={toggleDrawer(anchor, false)}
+              >
+                {list(anchor)}
+              </Drawer>
+            </Grid>
+          </Grid>
         </React.Fragment>
       ))}
     </div>
