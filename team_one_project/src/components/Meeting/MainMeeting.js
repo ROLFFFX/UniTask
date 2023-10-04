@@ -1,7 +1,6 @@
 import { Grid } from "@mui/material";
 import * as React from "react";
 import PermanentDrawer from "../Utilities/PermanentDrawer";
-import { TopAppBar } from "../Utilities/TopNavBar";
 import { MeetingContent } from "./MeetingContent";
 
 export function MainMeeting() {
