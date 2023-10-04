@@ -1,39 +1,40 @@
 import "../../App.css";
-// import UniTaskLogo_new from "../images/UniTaskLOGO.PNG";
-import UniTaskLogo_old from "../../images/Logo_old.PNG";
-
-import LoginSignup from "../../pages/LoginSignup";
-import { Link } from "react-router-dom";
 import React, {useState} from "react";
 import {v4 as uuidv4} from 'uuid';
 
 export function MainHyperLink() {
-    //const [list, setList] = useState(userlinks);
-    const [action, setAction] = useState("Display");
+    const [action, setAction] = useState("Display");//actions on add new hyperlink
     const [name, setName] = useState('');
     const [link, setLink] = useState('');
+    const [itAction, setitAction] = useState("Static");//actions on changing/deleting list items
 
 
-    var userlinks = [{Lk:"xxx", id:"xxx"}];
+    var userlinks = [];
     const [list, setList] = useState(userlinks);
     function changeName(event) {
         setName(event.target.value);
     }
-    //modify to make it a link!!!!!!!!!!!!!!!!!!!!!!!!!!!
     function changeLink(event) {
         setLink(event.target.value);
     }
     function addLinks(){
         const newlist = list.concat([{
-            Lk: <Link to={link}
-                      title={name}
-            />,
+            Lk:
+            <a
+              className="App-link"
+              href={link}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+                {name}
+            </a>,
             id: uuidv4() //to have a stable key attribute for the item
         }]);
-
         setList(newlist);
-
-        setName('new item');//modify----------------
+    }
+    function removeLinks(id){
+        const newlist = list.filter((userlink) =>userlink.id !== id);
+        setList(newlist);
     }
 
     return (
@@ -41,17 +42,27 @@ export function MainHyperLink() {
             <button
                 id="addlinkbutton"
                 onClick={() => setAction("Add Item")}
-            ></button>
+            >
+                Add a New Hyperlink
+            </button>
             {action === "Add Item" ? (
                 <div className="addLink">
-                  <input type="name"
-                         onChange={changeName}
-                         defaultValue="Customize a Name for Your Link"
-                  />
-                  <input type="link"
-                         onChange={changeLink}
-                         defaultValue="Copy Link Here"
-                  />
+                  <label className={"input"}
+                         style={{color: 'black'}} //temporary for display, delete after creating css file
+                  >
+                      Customize a Name for Your Hyperlink
+                      <input type="name"
+                             onChange={changeName}
+                      />
+                  </label>
+                  <label className={"input"}
+                         style={{color: 'black'}} //^
+                  >
+                      Copy Link Here
+                      <input type="link"
+                             onChange={changeLink}
+                      />
+                  </label>
                   <button onClick={() => {
                       addLinks();
                       setAction("Display");
@@ -63,7 +74,18 @@ export function MainHyperLink() {
               ) : null}
             <ul>
                 {list.map((userlink) =>(
-                    <li key={userlink.id}>{userlink.Lk}</li>
+                    <li key={userlink.id}
+                        onMouseOver={()=>setitAction("Remove or Change?")}
+                        onMouseOut={()=>setitAction("Static")}
+                    >
+                        {itAction === "Remove or Change?"?
+                            <button onClick={() => removeLinks(userlink.id)}>
+                                Remove
+                            </button>
+                            :null
+                        }
+                        {userlink.Lk}
+                    </li>
                 ))}
             </ul>
         </div>
