@@ -22,11 +22,7 @@ export function MainHyperLink() {
         Lk: (
           <a
             className="App-link"
-            href={
-              link.startsWith("http://") || link.startsWith("https://")
-                ? link
-                : `http://${link}`
-            }
+            href={link}
             target="_blank"
             rel="noopener noreferrer"
           >
@@ -38,7 +34,6 @@ export function MainHyperLink() {
     ]);
     setList(newlist);
   }
-
   function removeLinks(id) {
     const newlist = list.filter((userlink) => userlink.id !== id);
     setList(newlist);
