@@ -82,10 +82,10 @@ export function MainHyperLink() {
             onMouseOver={() => setitAction("Remove or Change?")}
             onMouseOut={() => setitAction("Static")}
           >
+            {userlink.Lk}
             {itAction === "Remove or Change?" ? (
               <button onClick={() => removeLinks(userlink.id)}>Remove</button>
             ) : null}
-            {userlink.Lk}
           </li>
         ))}
       </ul>
