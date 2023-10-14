@@ -18,40 +18,6 @@ import { SignUp } from "./components/LoginPage/SignUp";
 function App() {
   return (
     <>
-      {/* <nav>
-        <ul>
-          <li>
-            <Link to="/dashboard">Dashboard</Link>
-          </li>
-          <li>
-            <Link to="/sprintboard">Sprint Board</Link>
-          </li>
-          <li>
-            <Link to="/meeting">Meeting</Link>
-          </li>
-          <li>
-            <Link to="/hyperlink">Hyperlink</Link>
-          </li>
-          <li>
-            <Link to="/review">Review</Link>
-          </li>
-          <li>
-            <Link to="/account">Account</Link>
-          </li>
-          <li>
-            <Link to="/setting">Setting</Link>
-          </li>
-
-          <pre>--------</pre>
-
-          <li>
-            <Link to="/login">Login Page</Link>
-          </li>
-          <li>
-            <Link to="/sidebar">Main Sidebar</Link>
-          </li>
-        </ul>
-      </nav> */}
       <Routes>
         <Route path="/" element={<MainDashboard />} />
 
