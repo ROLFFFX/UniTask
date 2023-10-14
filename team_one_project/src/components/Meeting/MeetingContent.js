@@ -71,7 +71,7 @@ export function MeetingContent() {
   };
 
   return (
-    <div className="container">
+    <div className="mainMeetingContainer">
       <div className="calendar">
         <h1>Select Time Slot</h1>
         <div className="week-navigation">
