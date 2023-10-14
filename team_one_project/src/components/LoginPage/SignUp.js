@@ -32,6 +32,7 @@ export function SignUp() {
   const onSubmit = async (e) => {
     e.preventDefault();
     if (!user.firstName || !user.lastName || !user.email || !user.password) {
+      //alert when user didn't complete every mandatory field
       alert("Please fill in all fields");
     } else {
       //   console.log({
@@ -40,7 +41,8 @@ export function SignUp() {
       //     email: user.email,
       //     password: user.password,
       //   });
-      await axios.post("http://localhost:8080/postuser", user);
+      await axios.post("http://localhost:8080/postUser", user);
+      //will navigate back to dashboard once finished
       navigate("/");
     }
   };

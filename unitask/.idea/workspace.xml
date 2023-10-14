@@ -5,8 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="94e22b41-55fe-4436-8cfe-1c1de9be7852" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/../team_one_project/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/../team_one_project/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../team_one_project/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/../team_one_project/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../team_one_project/src/components/LoginPage/SignUp.js" beforeDir="false" afterPath="$PROJECT_DIR$/../team_one_project/src/components/LoginPage/SignUp.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -43,16 +42,11 @@
   <component name="MavenImportPreferences">
     <option name="generalSettings">
       <MavenGeneralSettings>
-        <option name="localRepository" value="$USER_HOME$/m2/repository" />
+        <option name="localRepository" value="$PROJECT_DIR$/../../m2/repository" />
         <option name="mavenHome" value="Use Maven wrapper" />
         <option name="useMavenConfig" value="true" />
-        <option name="userSettingsFile" value="$USER_HOME$/apache-maven-3.6.3/conf/settings.xml" />
+        <option name="userSettingsFile" value="$PROJECT_DIR$/../../apache-maven-3.6.3/conf/settings.xml" />
       </MavenGeneralSettings>
-    </option>
-    <option name="importingSettings">
-      <MavenImportingSettings>
-        <option name="workspaceImportEnabled" value="true" />
-      </MavenImportingSettings>
     </option>
   </component>
   <component name="ProjectId" id="2WivsWYB70Jb7L0WdBojOcF0i4a" />
@@ -110,6 +104,7 @@
       <workItem from="1697229451535" duration="3667000" />
       <workItem from="1697233693305" duration="2130000" />
       <workItem from="1697240776819" duration="4000" />
+      <workItem from="1697247739746" duration="99000" />
     </task>
     <servers />
   </component>
