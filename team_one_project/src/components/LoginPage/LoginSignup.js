@@ -1,107 +1,108 @@
-import React, { useState } from "react";
-import "./loginstyle.css";
+// import nlogo from "../../images/UniTaskLOGO.PNG";
+// import gm from "../../images/icons-gmail.png";
+// import fb from "../../images/icons-facebook.png";
+// import gh from "../../images/icons-github.png";
 
-import nlogo from "../../images/UniTaskLOGO.PNG";
-import gm from "../../images/icons-gmail.png";
-import fb from "../../images/icons-facebook.png";
-import gh from "../../images/icons-github.png";
+import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
+import Avatar from "@mui/material/Avatar";
+import Box from "@mui/material/Box";
+import Button from "@mui/material/Button";
+import Container from "@mui/material/Container";
+import CssBaseline from "@mui/material/CssBaseline";
+import Grid from "@mui/material/Grid";
+import Link from "@mui/material/Link";
+import { createTheme, ThemeProvider } from "@mui/material/styles";
+import TextField from "@mui/material/TextField";
+import Typography from "@mui/material/Typography";
+import * as React from "react";
+
+const defaultTheme = createTheme();
 
 export function LoginSignup() {
-  const [action, setAction] = useState("Sign Up");
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    const data = new FormData(event.currentTarget);
+    console.log({
+      email: data.get("email"),
+      password: data.get("password"),
+    });
+  };
+
   return (
-    <>
-      <div className={"bg"}>
-        <div className="left-wrapper">
-          <img id="logo" src={nlogo} alt=""></img>
-        </div>
-
-        <div className="container">
-          <div className={"uppersect"}>
-            <div className="header">
-              <div className="text">{action}</div>
-            </div>
-            <div className="inputs">
-              {action === "Sign Up" || "LogIn" ? (
-                <div className="input">
-                  <input type="Username" defaultValue="Username" />
-                </div>
-              ) : null}
-              {action === "Sign Up" || "Forgot Password?" ? (
-                <div className="input">
-                  <input type="Email/Phone" defaultValue="Email/Phone" />
-                </div>
-              ) : null}
-              {action === "Sign Up" ? (
-                <div>
-                  <div className="input">
-                    <input type="Set Password" defaultValue="Set Password" />
-                  </div>
-                  <div className="input">
-                    <input
-                      type="Confirm Password"
-                      defaultValue="Confirm Password"
-                    />
-                  </div>
-                </div>
-              ) : action === "LogIn" ? (
-                <div className="input">
-                  <input type="Password" defaultValue="Password" />
-                </div>
-              ) : null}
-            </div>
-            {action === "Sign Up" ? (
-              <button className={"submit"} id={"submitSU"}>
-                Sign Up
-              </button>
-            ) : action === "LogIn" ? (
-              <button className={"submit"} id={"submitLG"}>
-                Login
-              </button>
-            ) : (
-              <button className={"submit"} id={"submitFPW"}>
-                Reset Password
-              </button>
-            )}
-            {action !== "Forgot Password?" ? (
-              <button
-                className="switch"
-                id={"toFPW"}
-                onClick={() => setAction("Forgot Password?")}
-              >
-                Forgot Password?{" "}
-              </button>
-            ) : null}
-          </div>
-
-          <div className={"midsect"}>
-            <div>
-              <img className={"icons"} src={gm} alt=""></img>
-              <img className={"icons"} src={fb} alt=""></img>
-              <img className={"icons"} src={gh} alt=""></img>
-            </div>
-          </div>
-
-          <div className={"lowersect"}>
-            {action === "Sign Up" ? (
-              <button
-                className="switch"
-                id="toLG"
-                onClick={() => setAction("LogIn")}
-              >
-                Already Registered?Login
-              </button>
-            ) : (
-              <button
-                className="switch"
-                id={"toSU"}
-                onClick={() => setAction("Sign Up")}
-              >
-                Don't have an account?Sign up
-              </button>
-            )}
-          </div>
-        </div>
-      </div>
-    </>
+    <ThemeProvider theme={defaultTheme}>
+      <Container component="main" maxWidth="xs">
+        <CssBaseline />
+        <Box
+          sx={{
+            marginTop: 20,
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+          }}
+        >
+          <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
+            <LockOutlinedIcon />
+          </Avatar>
+          <Typography component="h1" variant="h5">
+            Sign in
+          </Typography>
+          <Box
+            component="form"
+            onSubmit={handleSubmit}
+            noValidate
+            sx={{ mt: 1 }}
+          >
+            <TextField
+              margin="normal"
+              required
+              fullWidth
+              id="email"
+              label="Email Address"
+              name="email"
+              autoComplete="email"
+              autoFocus
+            />
+            <TextField
+              margin="normal"
+              required
+              fullWidth
+              name="password"
+              label="Password"
+              type="password"
+              id="password"
+              autoComplete="current-password"
+            />
+            <Button
+              type="submit"
+              fullWidth
+              variant="contained"
+              sx={{ mt: 3, mb: 2 }}
+            >
+              Sign In
+            </Button>
+            <Grid container>
+              <Grid item xs>
+                {/* <Button
+                  type="submit"
+                  fullWidth
+                  variant="contained"
+                  sx={{ mt: 3, mb: 2 }}
+                >
+                  Sign In
+                </Button> */}
+                <Link href="login/forgotpassword" variant="body2">
+                  {"Forgot password?"}
+                </Link>
+              </Grid>
+              <Grid item>
+                <Link href="login/signup" variant="body2">
+                  {"Don't have an account? Sign Up!"}
+                </Link>
+              </Grid>
+            </Grid>
+          </Box>
+        </Box>
+      </Container>
+    </ThemeProvider>
   );
 }

@@ -12,6 +12,8 @@ import { MainSetting } from "./components/Setting/MainSetting";
 import { MainAccount } from "./components/Account/MainAccount";
 
 import MainSideBar from "./components/Utilities/MainSideBar";
+import { ForgotPassword } from "./components/LoginPage/ForgotPassword";
+import { SignUp } from "./components/LoginPage/SignUp";
 
 function App() {
   return (
@@ -96,6 +98,9 @@ function App() {
 
         <Route path="/login">
           <Route index element={<LoginSignup />}></Route>
+          <Route path="forgotpassword" element={<ForgotPassword />}></Route>
+          <Route path="signup" element={<SignUp />}></Route>
+
           {/* nested routes waiting to be populated */}
         </Route>
 
