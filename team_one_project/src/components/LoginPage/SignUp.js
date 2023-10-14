@@ -35,13 +35,20 @@ export function SignUp() {
       //alert when user didn't complete every mandatory field
       alert("Please fill in all fields");
     } else {
-      //   console.log({
-      //     firstName: user.firstName,
-      //     lastName: user.lastName,
-      //     email: user.email,
-      //     password: user.password,
-      //   });
-      await axios.post("http://localhost:8080/postUserSignin", user);
+      // console.log({
+      //   firstName: user.firstName,
+      //   lastName: user.lastName,
+      //   email: user.email,
+      //   password: user.password,
+      // });
+      try {
+        await axios.post("http://localhost:8080/postUserSignin", user);
+        // navigate to home page after successful submission
+        navigate("/");
+      } catch (error) {
+        console.error("ROLF says Error Caught: ", error);
+        // handle the error (e.g., show an error message to the user)
+      }
       //will navigate back to dashboard once finished
       navigate("/");
     }
