@@ -17,14 +17,22 @@ public class UserController {
     private UserRepository userRepository;
 
     // get a single user object from front end and store in the database unitask-user;
-    @PostMapping("/postUser")
-    User postNewUser(@RequestBody User newUser) {
-        return userRepository.save(newUser);
-    }
+//    @PostMapping("/postUser")
+//    User postNewUser(@RequestBody User newUser) {
+//        return userRepository.save(newUser);
+//    }
 
     //
     @GetMapping("/getAllUsers")
     List<User> getAllUsers() {
         return userRepository.findAll();
     }
+
+    @PostMapping("/postUserSignin")
+    User postUserSignin(@RequestBody User newUser) {
+        return userRepository.save(newUser);
+    }
+
+//    @GetMapping("/collectLogin")
+//    List<String> getLoginInfo()
 }
