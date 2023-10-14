@@ -41,7 +41,7 @@ export function SignUp() {
       //     email: user.email,
       //     password: user.password,
       //   });
-      await axios.post("http://localhost:8080/postUser", user);
+      await axios.post("http://localhost:8080/postUserSignin", user);
       //will navigate back to dashboard once finished
       navigate("/");
     }
