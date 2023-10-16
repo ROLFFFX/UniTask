@@ -69,6 +69,10 @@ export function SignUp() {
           <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
             <LockOutlinedIcon />
           </Avatar>
+          {/* <Avatar
+            src={UniTaskLogo_new}
+            sx={{ display: { xs: "none", md: "flex" }, mr: 2 }}
+          /> */}
           <Typography component="h1" variant="h5">
             Sign up
           </Typography>
