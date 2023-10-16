@@ -13,7 +13,6 @@ import * as React from "react";
 import { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import SHA256 from "crypto-js/sha256";
 
 const defaultTheme = createTheme();
 
@@ -36,8 +35,6 @@ export function SignUp() {
       //alert when user didn't complete every mandatory field
       alert("Please fill in all fields");
     } else {
-      // encrypt user password using sha-256 algo and update user
-      user.password = SHA256(user.password).toString();
       // console.log({
       //   firstName: user.firstName,
       //   lastName: user.lastName,
@@ -52,7 +49,6 @@ export function SignUp() {
         console.error("ROLF says Error Caught: ", error);
         // handle the error (e.g., show an error message to the user)
       }
-
       //will navigate back to dashboard once finished
       navigate("/");
     }
