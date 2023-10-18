@@ -42,7 +42,7 @@ export function SignUp() {
       //   password: user.password,
       // });
       try {
-        await axios.post("http://localhost:8080/postUserSignin", user);
+        await axios.post("http://localhost:8080/postUserSignup", user);
         // navigate to home page after successful submission
         navigate("/");
       } catch (error) {

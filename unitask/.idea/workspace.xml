@@ -5,11 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="94e22b41-55fe-4436-8cfe-1c1de9be7852" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/../team_one_project/src/components/LoginPage/LoginSignup.js" beforeDir="false" afterPath="$PROJECT_DIR$/../team_one_project/src/components/LoginPage/LoginSignup.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../team_one_project/src/components/LoginPage/SignUp.js" beforeDir="false" afterPath="$PROJECT_DIR$/../team_one_project/src/components/LoginPage/SignUp.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/teamone/unitask/controller/UserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/teamone/unitask/controller/UserController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/teamone/unitask/repository/UserRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/teamone/unitask/repository/UserRepository.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -111,7 +109,7 @@
       <workItem from="1697247739746" duration="99000" />
       <workItem from="1697252148142" duration="305000" />
       <workItem from="1697339216608" duration="166000" />
-      <workItem from="1697569145536" duration="2258000" />
+      <workItem from="1697569145536" duration="2656000" />
     </task>
     <servers />
   </component>
