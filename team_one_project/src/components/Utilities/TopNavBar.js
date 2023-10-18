@@ -38,7 +38,7 @@ export function TopAppBar() {
   return (
     <AppBar
       position="relative"
-      sx={{ backgroundColor: "#A6ABC8", zIndex: 1201 }}
+      sx={{ backgroundColor: "#A6ABC8", zIndex: 1201, height: "64px" }}
     >
       <Container maxWidth="xl">
         <Toolbar disableGutters>
@@ -116,7 +116,7 @@ export function TopAppBar() {
               textDecoration: "none",
             }}
           >
-            LOGO
+            UniTask
           </Typography>
           <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
             {pages.map((page) => (

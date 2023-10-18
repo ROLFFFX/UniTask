@@ -1,119 +1,113 @@
-/* MainMeeting.css */
-/* .container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    background-color: black;
-  } */
-  
+.mainMeetingContainer {
+  /* .container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      background-color: black;
+    } */
+
   .calendar {
     width: 90%;
-    border: 1px solid #eee;  /* Light border for better contrast on black */
+    border: 1px solid #eee;
     padding: 20px;
-    background-color: #16162A
-    /* #5d8dc7; */
-    
+    background-color: #16162a;
   }
-  
+
   .grid {
     display: grid;
-    grid-template-columns: 60px repeat(7, 1fr); /* 60px for time label, rest equally divided for days */
-    max-height: 400px;   /* or any other height that you find suitable */
-    overflow-y: auto;    /* enable vertical scrolling */
+    grid-template-columns: 60px repeat(7, 1fr);
+    max-height: 400px;
+    overflow-y: auto;
   }
-  
+
   .cell {
     padding: 10px;
-    border: 1px solid #eee; /* Light border for better contrast on black */
+    border: 1px solid #eee;
     text-align: center;
-    color: white;           /* Text color changed to white for better readability on black */
+    color: white;
   }
-  
+
   .day {
-    background-color: #5C7AE5;  /* Slightly lighter than black for contrast */
+    background-color: #5c7ae5;
     font-weight: bold;
   }
-  
+
   .timeSlot {
-    background-color: white;  /* Slightly lighter than black for contrast */
+    background-color: white;
     cursor: pointer;
   }
-  
+
   .timeSlot.selected {
-    background-color: #D27EEF;  /* Different shade to highlight selected slot */
-  } 
-  /* rgb(81, 51, 230) */
-  
+    background-color: #d27eef;
+  }
+
   .timeLabel {
     font-weight: bold;
-    background-color: #5C7AE5;  /* Slightly lighter than black for contrast */
+    background-color: #5c7ae5;
   }
-  
+
   .headerRow {
     display: contents;
   }
-  
+
   .row {
     display: contents;
   }
 
-  /* Button to navigate to the previous week */
-.button-prev {
-    background-color: #5C7AE5;   /* Light Blue */
-    color: white;                /* Text color */
-    border: none;
-    padding: 10px 15px;
-    cursor: pointer;
-    transition: background-color 0.3s;
-}
-
-.button-prev:hover {
-    background-color: #4a63c9;  /* Darker shade for hover effect */
-}
-
-/* Button to navigate to the next week */
-.button-next {
-    background-color: #D27EEF;  /* Purple */
+  .button-prev {
+    background-color: #5c7ae5;
     color: white;
     border: none;
     padding: 10px 15px;
     cursor: pointer;
     transition: background-color 0.3s;
-}
-
-.button-next:hover {
-    background-color: #bb68d8;  /* Darker shade for hover effect */
-}
-
-/* Button to clear the selection */
-.button-clear {
-    background-color: #FF6B6B;  /* Red-ish */
-    color: white;
-    border: none;
-    padding: 10px 15px;
-    cursor: pointer;
-    transition: background-color 0.3s;
-}
-
-.button-clear:hover {
-    background-color: #e55959;  /* Darker shade for hover effect */
-}
-
-/* Button to confirm the selection */
-.button-confirm {
-    background-color: #4CAF50;  /* Green */
-    color: white;
-    border: none;
-    padding: 10px 15px;
-    cursor: pointer;
-    transition: background-color 0.3s;
-}
-
-.button-confirm:hover {
-    background-color: #45a049;  /* Darker shade of green for hover effect */
-}
-
-.timeSlot:hover {
-    background-color: grey;  /* Slightly lighter than black for contrast */
   }
+
+  .button-prev:hover {
+    background-color: #4a63c9;
+  }
+
+  .button-next {
+    background-color: #d27eef;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+
+  .button-next:hover {
+    background-color: #bb68d8;
+  }
+
+  .button-clear {
+    background-color: #ff6b6b;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+
+  .button-clear:hover {
+    background-color: #e55959;
+  }
+
+  .button-confirm {
+    background-color: #4caf50;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+
+  .button-confirm:hover {
+    background-color: #45a049;
+  }
+
+  .timeSlot:hover {
+    background-color: grey;
+  }
+}

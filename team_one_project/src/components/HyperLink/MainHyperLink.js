@@ -1,4 +1,5 @@
 import "../../App.css";
+import "./MainHyperLink.css";
 import React, { useState } from "react";
 import { v4 as uuidv4 } from "uuid";
 
@@ -44,21 +45,21 @@ export function MainHyperLink() {
   }
 
   return (
-    <div className={"hyperlinks"}>
+    <div className={"main-hyperlinks hyperlinks"}>
       <button id="addlinkbutton" onClick={() => setAction("Add Item")}>
         Add a New Hyperlink
       </button>
       {action === "Add Item" ? (
-        <div className="addLink">
+        <div className="main-hyperlinks addLink">
           <label
-            className={"input"}
+            className={"main-hyperlinks input"}
             style={{ color: "black" }} //temporary for display, delete after creating css file
           >
             Customize a Name for Your Hyperlink
             <input type="name" onChange={changeName} />
           </label>
           <label
-            className={"input"}
+            className={"main-hyperlinks input"}
             style={{ color: "black" }} //^
           >
             Copy Link Here
@@ -81,10 +82,10 @@ export function MainHyperLink() {
             onMouseOver={() => setitAction("Remove or Change?")}
             onMouseOut={() => setitAction("Static")}
           >
+            {userlink.Lk}
             {itAction === "Remove or Change?" ? (
               <button onClick={() => removeLinks(userlink.id)}>Remove</button>
             ) : null}
-            {userlink.Lk}
           </li>
         ))}
       </ul>
