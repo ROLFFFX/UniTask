@@ -14,6 +14,23 @@ public class User {
     private String lastName;
     private String email;
     private String password;
+    private Boolean isMaster;
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public Boolean getMaster() {
+        return isMaster;
+    }
+
+    public void setMaster(Boolean master) {
+        isMaster = master;
+    }
 
     public Long getId() {
         return id;

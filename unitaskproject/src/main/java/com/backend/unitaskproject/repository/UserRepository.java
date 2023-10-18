@@ -1,9 +1,8 @@
-package com.teamone.unitask.repository;
+package com.backend.unitaskproject.repository;
 
-
-import com.teamone.unitask.model.User;
+import com.backend.unitaskproject.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface UserRepository extends JpaRepository<User, Long> {
-
+    
 }

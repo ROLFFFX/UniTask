@@ -28,7 +28,7 @@ public class UserController {
         return userRepository.findAll();
     }
 
-    @PostMapping("/postUserSignin")
+    @PostMapping("/postUserSignup")
     User postUserSignin(@RequestBody User newUser) {
         return userRepository.save(newUser);
     }
