@@ -41,22 +41,20 @@ export function MeetingContent() {
     "16:00",
     "17:00",
     "18:00",
-    "19:00",
-    "20:00",
-    "21:00",
-    "22:00",
-    "23:00",
   ];
   const [selectedSlots, setSelectedSlots] = useState([]);
 
   const toggleSlotSelection = (day, time) => {
-    const slotKey = `${day}-${time}`;
+    const startDate = new Date(referenceDate);
+    startDate.setDate(referenceDate.getDate() - (referenceDate.getDay() === 0 ? 6 : referenceDate.getDay() - 1));
+    const slotKey = `${startDate.toISOString().slice(0, 10)}-${day}-${time}`;
     setSelectedSlots((prevSlots) =>
       prevSlots.includes(slotKey)
         ? prevSlots.filter((slot) => slot !== slotKey)
         : [...prevSlots, slotKey]
     );
   };
+
 
   const moveToPreviousWeek = () => {
     const newDate = new Date(referenceDate);
@@ -93,20 +91,25 @@ export function MeetingContent() {
             ))}
           </div>
           {times.map((time) => (
-            <div className="row" key={time}>
-              <div className="cell timeLabel">{time}</div>
-              {days.map((day) => (
+    <div className="row" key={time}>
+        <div className="cell timeLabel">{time}</div>
+        {days.map((day) => {
+            const startDate = new Date(referenceDate);
+            startDate.setDate(referenceDate.getDate() - (referenceDate.getDay() === 0 ? 6 : referenceDate.getDay() - 1));
+            const slotKey = `${startDate.toISOString().slice(0, 10)}-${day}-${time}`;
+            return (
                 <button
-                  aria-label={`Select ${time} on ${day}`}
-                  className={`cell timeSlot ${
-                    selectedSlots.includes(`${day}-${time}`) ? "selected" : ""
-                  }`}
-                  key={day}
-                  onClick={() => toggleSlotSelection(day, time)}
+                    aria-label={`Select ${time} on ${day}`}
+                    className={`cell timeSlot ${
+                        selectedSlots.includes(slotKey) ? "selected" : ""
+                    }`}
+                    key={day}
+                    onClick={() => toggleSlotSelection(day, time)}
                 ></button>
-              ))}
-            </div>
-          ))}
+            );
+        })}
+    </div>
+))}
         </div>
         <div className="selectedSlots">
           <h3>Selected Times:</h3>
