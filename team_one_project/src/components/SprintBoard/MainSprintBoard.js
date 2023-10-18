@@ -11,7 +11,7 @@ import {v4 as uuidv4} from "uuid";
 export function MainSprintBoard() {
 
   const [AddSub, setAddSub] = useState("idle");
-  const [ShowSub, setShowSub] = useState("collapse");
+  const [ShowSub, setShowSub] = useState("expand");
 
   var emptysubtasks = [];
   const [listSub, setlistSub] = useState(emptysubtasks);
