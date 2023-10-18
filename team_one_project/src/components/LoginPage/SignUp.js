@@ -13,6 +13,7 @@ import * as React from "react";
 import { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import SHA256 from "crypto-js/sha256";
 
 const defaultTheme = createTheme();
 
@@ -35,6 +36,7 @@ export function SignUp() {
       //alert when user didn't complete every mandatory field
       alert("Please fill in all fields");
     } else {
+      user.password = SHA256(user.password).toString();
       // console.log({
       //   firstName: user.firstName,
       //   lastName: user.lastName,
@@ -42,7 +44,7 @@ export function SignUp() {
       //   password: user.password,
       // });
       try {
-        await axios.post("http://localhost:8080/postUserSignin", user);
+        await axios.post("http://localhost:8080/postUserSignup", user);
         // navigate to home page after successful submission
         navigate("/");
       } catch (error) {
@@ -66,11 +68,11 @@ export function SignUp() {
             alignItems: "center",
           }}
         >
-          <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
+          <Avatar sx={{ m: 1 }}>
             <LockOutlinedIcon />
           </Avatar>
           <Typography component="h1" variant="h5">
-            Sign up
+            Sign Up
           </Typography>
           <Box component="form" noValidate onSubmit={onSubmit} sx={{ mt: 3 }}>
             <Grid container spacing={2}>
