@@ -149,15 +149,19 @@ html, body {
   padding-right: 5px;
 }
 
-.addSubtaskButton {
+#addSubtaskButton {
   float: right;
   padding-right: 10px;
   cursor: pointer;
+  background: none;
+  border: none;
 }
 
-.showSubtaskButton {
+#showSubtaskButton {
   float: right;
   cursor: pointer;
+  background: none;
+  border: none;
 }
 
 .subtaskList {
