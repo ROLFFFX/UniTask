@@ -1,22 +1,19 @@
-import { Grid } from "@mui/material";
+import { Box, Grid } from "@mui/material";
 import * as React from "react";
-import PermanentDrawer from "../Utilities/PermanentDrawer";
 import { MeetingContent } from "./MeetingContent";
+import { WeeklyCalendar } from "./WeeklyCalendar"; 
 
 export function MainMeeting() {
   return (
-    <Grid container direction="column" style={{ height: "100vh" }}>
-      {/* <Grid item>
-        <TopAppBar />
-      </Grid> */}
-      <Grid item container>
-        <Grid item xs={2} style={{ overflow: "auto" }}>
-          <PermanentDrawer />
+    <Box style={{ marginLeft: "240px" }}>
+      <Grid container spacing={2}>
+        <Grid item xs={6}>
+          <WeeklyCalendar />
         </Grid>
-        <Grid item xs={10} style={{ overflow: "auto" }}>
+        <Grid item xs={6}>
           <MeetingContent />
         </Grid>
       </Grid>
-    </Grid>
+    </Box>
   );
 }

@@ -1,3 +1,4 @@
+import { Box } from "@mui/material";
 import "../../App.css";
 import "./MainHyperLink.css";
 import React, { useState } from "react";
@@ -45,50 +46,52 @@ export function MainHyperLink() {
   }
 
   return (
-    <div className={"main-hyperlinks hyperlinks"}>
-      <button id="addlinkbutton" onClick={() => setAction("Add Item")}>
-        Add a New Hyperlink
-      </button>
-      {action === "Add Item" ? (
-        <div className="main-hyperlinks addLink">
-          <label
-            className={"main-hyperlinks input"}
-            style={{ color: "black" }} //temporary for display, delete after creating css file
-          >
-            Customize a Name for Your Hyperlink
-            <input type="name" onChange={changeName} />
-          </label>
-          <label
-            className={"main-hyperlinks input"}
-            style={{ color: "black" }} //^
-          >
-            Copy Link Here
-            <input type="link" onChange={changeLink} />
-          </label>
-          <button
-            onClick={() => {
-              addLinks();
-              setAction("Display");
-            }}
-          >
-            Save
-          </button>
-        </div>
-      ) : null}
-      <ul>
-        {list.map((userlink) => (
-          <li
-            key={userlink.id}
-            onMouseOver={() => setitAction("Remove or Change?")}
-            onMouseOut={() => setitAction("Static")}
-          >
-            {userlink.Lk}
-            {itAction === "Remove or Change?" ? (
-              <button onClick={() => removeLinks(userlink.id)}>Remove</button>
-            ) : null}
-          </li>
-        ))}
-      </ul>
-    </div>
+    <Box sx={{ marginLeft: "240px" }}>
+      <div className={"main-hyperlinks hyperlinks"}>
+        <button id="addlinkbutton" onClick={() => setAction("Add Item")}>
+          Add a New Hyperlink
+        </button>
+        {action === "Add Item" ? (
+          <div className="main-hyperlinks addLink">
+            <label
+              className={"main-hyperlinks input"}
+              style={{ color: "black" }} //temporary for display, delete after creating css file
+            >
+              Customize a Name for Your Hyperlink
+              <input type="name" onChange={changeName} />
+            </label>
+            <label
+              className={"main-hyperlinks input"}
+              style={{ color: "black" }} //^
+            >
+              Copy Link Here
+              <input type="link" onChange={changeLink} />
+            </label>
+            <button
+              onClick={() => {
+                addLinks();
+                setAction("Display");
+              }}
+            >
+              Save
+            </button>
+          </div>
+        ) : null}
+        <ul>
+          {list.map((userlink) => (
+            <li
+              key={userlink.id}
+              onMouseOver={() => setitAction("Remove or Change?")}
+              onMouseOut={() => setitAction("Static")}
+            >
+              {userlink.Lk}
+              {itAction === "Remove or Change?" ? (
+                <button onClick={() => removeLinks(userlink.id)}>Remove</button>
+              ) : null}
+            </li>
+          ))}
+        </ul>
+      </div>
+    </Box>
   );
 }

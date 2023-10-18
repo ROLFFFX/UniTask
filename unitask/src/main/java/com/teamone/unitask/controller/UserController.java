@@ -7,6 +7,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
+//1017
+//import org.springframework.http.ResponseEntity;
+//import java.util.Optional;
 
 import java.util.List;
 
@@ -35,4 +38,21 @@ public class UserController {
 
 //    @GetMapping("/collectLogin")
 //    List<String> getLoginInfo()
+
+//    @PostMapping("/verifyUserSignin")
+//    ResponseEntity<String> verifyUserSignin(@RequestBody User user) {
+//        Optional<User> foundUser = userRepository.findByEmail(user.getEmail());
+//
+//        if(foundUser.isPresent()){
+//            if(foundUser.get().getPassword().equals(user.getPassword())){
+//                return ResponseEntity.ok("User successfully logged in");
+//            }
+//            else{
+//                return ResponseEntity.status(403).body("Invalid password");
+//            }
+//        }
+//        else{
+//            return ResponseEntity.status(404).body("User not found");
+//        }
+//    }
 }

@@ -14,64 +14,69 @@ import { MainAccount } from "./components/Account/MainAccount";
 import MainSideBar from "./components/Utilities/MainSideBar";
 import { ForgotPassword } from "./components/LoginPage/ForgotPassword";
 import { SignUp } from "./components/LoginPage/SignUp";
+import PermanentDrawer from "./components/Utilities/PermanentDrawer";
+import { TopAppBar } from "./components/Utilities/TopNavBar";
 
 function App() {
   return (
     <>
-      <Routes>
-        <Route path="/" element={<MainDashboard />} />
+      <div>
+        <TopAppBar />
+        <PermanentDrawer />
+        <Routes>
+          <Route path="/" element={<MainDashboard />} />
 
-        <Route path="/dashboard">
-          <Route index element={<MainDashboard />}></Route>
-          {/* nested routes waiting to be populated */}
-        </Route>
-
-        <Route path="/sprintboard">
-          <Route index element={<MainSprintBoard />}>
+          <Route path="/dashboard">
+            <Route index element={<MainDashboard />}></Route>
             {/* nested routes waiting to be populated */}
           </Route>
-        </Route>
 
-        <Route path="/meeting">
-          <Route index element={<MainMeeting />}></Route>
-          {/* nested routes waiting to be populated */}
-        </Route>
+          <Route path="/sprintboard">
+            <Route index element={<MainSprintBoard />}>
+              {/* nested routes waiting to be populated */}
+            </Route>
+          </Route>
 
-        <Route path="/hyperlink">
-          <Route index element={<MainHyperLink />}></Route>
-          {/* nested routes waiting to be populated */}
-        </Route>
+          <Route path="/meeting">
+            <Route index element={<MainMeeting />}></Route>
+            {/* nested routes waiting to be populated */}
+          </Route>
 
-        <Route path="/review">
-          <Route index element={<MainReview />}></Route>
-          {/* nested routes waiting to be populated */}
-        </Route>
+          <Route path="/hyperlink">
+            <Route index element={<MainHyperLink />}></Route>
+            {/* nested routes waiting to be populated */}
+          </Route>
 
-        <Route path="/account">
-          <Route index element={<MainAccount />}></Route>
-          {/* nested routes waiting to be populated */}
-        </Route>
+          <Route path="/review">
+            <Route index element={<MainReview />}></Route>
+            {/* nested routes waiting to be populated */}
+          </Route>
 
-        <Route path="/setting">
-          <Route index element={<MainSetting />}></Route>
-          {/* nested routes waiting to be populated */}
-        </Route>
+          <Route path="/account">
+            <Route index element={<MainAccount />}></Route>
+            {/* nested routes waiting to be populated */}
+          </Route>
 
-        <Route path="/sidebar">
-          <Route index element={<MainSideBar />}></Route>
-          {/* nested routes waiting to be populated */}
-        </Route>
+          <Route path="/setting">
+            <Route index element={<MainSetting />}></Route>
+            {/* nested routes waiting to be populated */}
+          </Route>
 
-        <Route path="/login">
-          <Route index element={<LoginSignup />}></Route>
-          <Route path="forgotpassword" element={<ForgotPassword />}></Route>
-          <Route path="signup" element={<SignUp />}></Route>
+          <Route path="/sidebar">
+            <Route index element={<MainSideBar />}></Route>
+            {/* nested routes waiting to be populated */}
+          </Route>
 
-          {/* nested routes waiting to be populated */}
-        </Route>
+          <Route path="/login">
+            <Route index element={<LoginSignup />}></Route>
+            <Route path="forgotpassword" element={<ForgotPassword />}></Route>
+            <Route path="signup" element={<SignUp />}></Route>
+            {/* nested routes waiting to be populated */}
+          </Route>
 
-        <Route path="*" element={<PageNotFound />}></Route>
-      </Routes>
+          <Route path="*" element={<PageNotFound />}></Route>
+        </Routes>
+      </div>
     </>
   );
 }
