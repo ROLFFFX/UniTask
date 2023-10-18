@@ -16,7 +16,6 @@
     "@testing-library/user-event": "^13.5.0",
     "axios": "^1.5.1",
     "crypto-js": "^4.1.1",
-    "daypilot-pro-react": "^0.0.0",
     "eslint": "8.22.0",
     "mdb-react-ui-kit": "^6.3.0",
     "react": "^18.2.0",
