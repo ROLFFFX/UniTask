@@ -13,6 +13,7 @@ import * as React from "react";
 import { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import SHA256 from "crypto-js/sha256";
 
 const defaultTheme = createTheme();
 
@@ -35,22 +36,23 @@ export function SignUp() {
       //alert when user didn't complete every mandatory field
       alert("Please fill in all fields");
     } else {
-      // console.log({
-      //   firstName: user.firstName,
-      //   lastName: user.lastName,
-      //   email: user.email,
-      //   password: user.password,
-      // });
-      try {
-        await axios.post("http://localhost:8080/postUserSignup", user);
-        // navigate to home page after successful submission
-        navigate("/");
-      } catch (error) {
-        console.error("ROLF says Error Caught: ", error);
-        // handle the error (e.g., show an error message to the user)
-      }
-      //will navigate back to dashboard once finished
-      navigate("/");
+      user.password = SHA256(user.password).toString();
+      console.log({
+        firstName: user.firstName,
+        lastName: user.lastName,
+        email: user.email,
+        password: user.password,
+      });
+      // try {
+      //   await axios.post("http://localhost:8080/postUserSignup", user);
+      //   // navigate to home page after successful submission
+      //   navigate("/");
+      // } catch (error) {
+      //   console.error("ROLF says Error Caught: ", error);
+      //   // handle the error (e.g., show an error message to the user)
+      // }
+      // //will navigate back to dashboard once finished
+      // navigate("/");
     }
   };
 
@@ -69,12 +71,8 @@ export function SignUp() {
           <Avatar sx={{ m: 1 }}>
             <LockOutlinedIcon />
           </Avatar>
-          {/* <Avatar
-            src={UniTaskLogo_new}
-            sx={{ display: { xs: "none", md: "flex" }, mr: 2 }}
-          /> */}
           <Typography component="h1" variant="h5">
-            Sign up
+            Sign Up
           </Typography>
           <Box component="form" noValidate onSubmit={onSubmit} sx={{ mt: 3 }}>
             <Grid container spacing={2}>

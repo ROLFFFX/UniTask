@@ -71,8 +71,7 @@ function App() {
             <Route index element={<LoginSignup />}></Route>
             <Route path="forgotpassword" element={<ForgotPassword />}></Route>
             <Route path="signup" element={<SignUp />}></Route>
-
-            {/* nested routes waiting to be populated */}
+            nested routes waiting to be populated
           </Route>
 
           <Route path="*" element={<PageNotFound />}></Route>
