@@ -5,8 +5,6 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="94e22b41-55fe-4436-8cfe-1c1de9be7852" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/../team_one_project/src/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/../team_one_project/src/App.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../team_one_project/src/components/Utilities/TopNavBar.js" beforeDir="false" afterPath="$PROJECT_DIR$/../team_one_project/src/components/Utilities/TopNavBar.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />

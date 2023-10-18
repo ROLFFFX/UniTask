@@ -1,5 +1,4 @@
-html,
-body {
+html, body {
   margin: 0;
   height: 100%;
   font-family: sans-serif;
@@ -8,7 +7,7 @@ body {
 /*Navbar styling: */
 
 #navbarContainer {
-  border-bottom: 1px solid #cccccc;
+  border-bottom: 1px solid #CCCCCC;
   padding-right: 20px;
   overflow: hidden;
 }
@@ -32,7 +31,7 @@ body {
 }
 
 .navtab:hover {
-  background-color: #dddddd;
+  background-color: #DDDDDD;
   cursor: pointer;
 }
 
@@ -75,7 +74,7 @@ body {
 }
 
 .popupContent {
-  background-color: #ffffff;
+  background-color: #FFFFFF;
   margin: 10% auto;
   padding: 20px;
   border: 1px solid #888888;
@@ -83,7 +82,7 @@ body {
 }
 
 .show {
-  display: block;
+    display: block;
 }
 
 /* Task grid */
@@ -98,7 +97,8 @@ body {
 .grid-item {
   padding: 20px;
   font-size: 15px;
-  border-right: 1px solid #cccccc;
+  border-right: 1px solid #CCCCCC;
+
 }
 
 #board {
@@ -136,7 +136,7 @@ body {
   font-size: 15px;
   padding-top: 10px;
   padding-bottom: 10px;
-  border-top: 1px solid #cccccc;
+  border-top: 1px solid #CCCCCC;
 }
 
 .taskLabel {
@@ -174,13 +174,13 @@ body {
 .subtask {
   padding: 10px;
   font-size: 13px;
-  border-top: 1px solid #cccccc;
+  border-top: 1px solid #CCCCCC;
 }
 
 #todoHeader {
   grid-column: 2;
   grid-row: 1;
-  border-bottom: 1px solid #cccccc;
+  border-bottom: 1px solid #CCCCCC;
 }
 
 #todoColumn {
@@ -191,7 +191,7 @@ body {
 #doingHeader {
   grid-column: 3;
   grid-row: 1;
-  border-bottom: 1px solid #cccccc;
+  border-bottom: 1px solid #CCCCCC;
 }
 
 #doingColumn {
@@ -203,7 +203,7 @@ body {
   grid-column: 4;
   grid-row: 1;
   border-right: 0;
-  border-bottom: 1px solid #cccccc;
+  border-bottom: 1px solid #CCCCCC;
 }
 
 #doneColumn {
