@@ -54,7 +54,7 @@ export function SignUp() {
         // handle the error (e.g., show an error message to the user)
       }
       //will navigate back to dashboard once finished
-      // navigate("/");
+      navigate("/");
     }
   };
 
