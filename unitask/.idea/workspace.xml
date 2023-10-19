@@ -6,6 +6,18 @@
   <component name="ChangeListManager">
     <list default="true" id="94e22b41-55fe-4436-8cfe-1c1de9be7852" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../unitaskproject/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../unitaskproject/.mvn/wrapper/maven-wrapper.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../unitaskproject/.mvn/wrapper/maven-wrapper.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../unitaskproject/mvnw" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../unitaskproject/mvnw.cmd" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../unitaskproject/pom.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../unitaskproject/src/main/java/com/backend/unitaskproject/UnitaskprojectApplication.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../unitaskproject/src/main/java/com/backend/unitaskproject/controller/UserController.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../unitaskproject/src/main/java/com/backend/unitaskproject/entity/User.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../unitaskproject/src/main/java/com/backend/unitaskproject/repository/UserRepository.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../unitaskproject/src/main/resources/application.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../unitaskproject/src/test/java/com/backend/unitaskproject/UnitaskprojectApplicationTests.java" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -74,7 +86,7 @@
     "project.structure.last.edited": "Libraries",
     "project.structure.proportion": "0.0",
     "project.structure.side.proportion": "0.2",
-    "settings.editor.selected.configurable": "reference.projectsettings.compiler.javacompiler",
+    "settings.editor.selected.configurable": "MavenSettings",
     "spring.configuration.checksum": "5bd8ae6911dd17af44d58d35ae83a432",
     "vue.rearranger.settings.migration": "true"
   }
