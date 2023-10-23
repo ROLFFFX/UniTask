@@ -5,7 +5,25 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="94e22b41-55fe-4436-8cfe-1c1de9be7852" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/teamone/unitask/model/Project.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/teamone/unitask/repository/HyperlinkRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/teamone/unitask/repository/MeetingRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/teamone/unitask/repository/ProjectRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/teamone/unitask/repository/TaskRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/teamone/unitask/repository/TimeSlotRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/teamone/unitask/service/HyperlinkService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/teamone/unitask/service/MeetingService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/teamone/unitask/service/ProjectService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/teamone/unitask/service/TaskService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/teamone/unitask/service/TimeSlotService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/teamone/unitask/service/UserService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/teamone/unitask/controller/UserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/teamone/unitask/controller/UserController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/teamone/unitask/model/Hyperlink.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/teamone/unitask/model/Hyperlink.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/teamone/unitask/model/Meeting.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/teamone/unitask/model/Meeting.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/teamone/unitask/model/Task.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/teamone/unitask/model/Task.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/teamone/unitask/model/TimeSlot.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/teamone/unitask/model/TimeSlot.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/teamone/unitask/model/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/teamone/unitask/model/User.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -43,7 +61,7 @@
     <option name="generalSettings">
       <MavenGeneralSettings>
         <option name="localRepository" value="$PROJECT_DIR$/../../m2/repository" />
-        <option name="mavenHome" value="Use Maven wrapper" />
+        <option name="mavenHome" value="$USER_HOME$/apache-maven-3.6.3" />
         <option name="useMavenConfig" value="true" />
         <option name="userSettingsFile" value="$PROJECT_DIR$/../../apache-maven-3.6.3/conf/settings.xml" />
       </MavenGeneralSettings>
@@ -71,10 +89,10 @@
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
     &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;Project&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Libraries&quot;,
     &quot;project.structure.proportion&quot;: &quot;0.0&quot;,
-    &quot;project.structure.side.proportion&quot;: &quot;0.0&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;vcs.Git&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;MavenSettings&quot;,
     &quot;spring.configuration.checksum&quot;: &quot;5bd8ae6911dd17af44d58d35ae83a432&quot;,
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
@@ -106,9 +124,7 @@
       <workItem from="1697240776819" duration="4000" />
       <workItem from="1697247739746" duration="99000" />
       <workItem from="1697252148142" duration="305000" />
-      <workItem from="1697339216608" duration="166000" />
-      <workItem from="1697569145536" duration="3254000" />
-      <workItem from="1697600411564" duration="612000" />
+      <workItem from="1697606606999" duration="9326000" />
     </task>
     <servers />
   </component>
