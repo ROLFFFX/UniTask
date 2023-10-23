@@ -1,18 +1,22 @@
 package com.teamone.unitask.model;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.time.LocalDateTime;
 
 @Entity
+@Table(name = "meeting")
 public class Meeting {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "meeting_id")
     private Long meetingId;
-    private String title;
-    private String startTime;
-    private String endTime;
+    @Column(name = "title", nullable = false)
+    private String title = "New Meeting";
+    @Column(name = "start_time", nullable = false)
+    private LocalDateTime startTime;
+    @Column(name = "end_time", nullable = false)
+    private LocalDateTime endTime;
 
     public Long getMeetingId() {
         return meetingId;
@@ -30,19 +34,19 @@ public class Meeting {
         this.title = title;
     }
 
-    public String getStartTime() {
+    public LocalDateTime getStartTime() {
         return startTime;
     }
 
-    public void setStartTime(String startTime) {
+    public void setStartTime(LocalDateTime startTime) {
         this.startTime = startTime;
     }
 
-    public String getEndTime() {
+    public LocalDateTime getEndTime() {
         return endTime;
     }
 
-    public void setEndTime(String endTime) {
+    public void setEndTime(LocalDateTime endTime) {
         this.endTime = endTime;
     }
 }
