@@ -40,22 +40,16 @@ export function SignUp() {
 
   const onSubmit = async (e) => {
     e.preventDefault();
-    if (!user.firstName || !user.lastName || !user.email || !user.password) {
-      //alert when user didn't complete every mandatory field
-      alert("Please fill in all fields");
-    } else if (!isPasswordValid) {
-      alert("invalid password"); // check password validity
-    } else {
-      user.password = SHA256(user.password).toString();
-      try {
-        await axios.post("http://localhost:8080/user/postUserSignup", user, {
-          headers: { "Content-Type": "application/json" },
-        });
-      } catch (error) {
-        console.error("Error Caught on Sign Up: ", error);
-      }
-      navigate("/");
+    // TODO: check user email.
+    user.password = SHA256(user.password).toString();
+    try {
+      await axios.post("http://localhost:8080/user/postUserSignup", user, {
+        headers: { "Content-Type": "application/json" },
+      });
+    } catch (error) {
+      console.error("Error Caught on Sign Up: ", error);
     }
+    // navigate("/");
   };
 
   return (
