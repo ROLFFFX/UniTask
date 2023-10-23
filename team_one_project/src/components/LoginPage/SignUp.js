@@ -9,11 +9,11 @@ import Link from "@mui/material/Link";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
+import axios from "axios";
+import SHA256 from "crypto-js/sha256";
 import * as React from "react";
 import { useState } from "react";
-import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import SHA256 from "crypto-js/sha256";
 import { PasswordInput } from "./PasswordInput";
 
 const defaultTheme = createTheme();
@@ -27,6 +27,10 @@ export function SignUp() {
     password: "",
   });
   const [isPasswordValid, setIsPasswordValid] = React.useState(false);
+  const allFieldsComplete =
+    user.firstName && user.lastName && user.email && user.password;
+  const isSignUpEnabled = allFieldsComplete && isPasswordValid;
+
   const handlePasswordCriteriaMetChange = (criteriaMet) => {
     setIsPasswordValid(criteriaMet);
   };
@@ -120,6 +124,7 @@ export function SignUp() {
               fullWidth
               variant="contained"
               sx={{ mt: 3, mb: 2 }}
+              disabled={!isSignUpEnabled}
             >
               Sign Up
             </Button>
