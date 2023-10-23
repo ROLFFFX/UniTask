@@ -12,6 +12,7 @@ import java.util.List;
 
 @RestController
 @CrossOrigin
+@RequestMapping("/user")
 public class UserController {
 
     @Autowired
@@ -51,6 +52,9 @@ public class UserController {
 //        }
 //        else{
 //            return ResponseEntity.status(404).body("User not found");
-//        }
+//        }R
 //    }
+    //
+
+    // forget password (tbd)
 }

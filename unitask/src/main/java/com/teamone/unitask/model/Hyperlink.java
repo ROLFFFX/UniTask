@@ -1,17 +1,20 @@
 package com.teamone.unitask.model;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity
+@Table(name = "hyperlink")
 public class Hyperlink {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "hyperlink_id")
     private Long hyperlinkId;
+    @Column(name = "title", nullable = false)
     private String title;
+    @Column(name = "url", nullable = false, length = 500)
     private String url;
+
 
     public Long getHyperlinkId() {
         return hyperlinkId;

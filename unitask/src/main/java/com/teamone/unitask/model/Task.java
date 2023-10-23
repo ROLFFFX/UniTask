@@ -1,22 +1,36 @@
 package com.teamone.unitask.model;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
+@Table(name = "task")
 public class Task {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "task_id")
     private Long taskId;
-    private String title;
-    private String status;
-    private String parentTaskId;
-    private Integer num_layers;
-    private String expectedCompleteTime;
-    private Integer taskPoints;
-    private Long assignedMemberId;
+    @Column(name = "title", nullable = false)
+    private String title = "New Task";
+    @Column(name = "status", nullable = false)
+    private String status = "To Do";
+    // one to one relation;
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JoinColumn(name = "parent_task_Id")
+    private Task parentTaskId;
+    @Column(name = "num_layers", nullable = false)
+    private Integer numLayers = 0;
+    @Column(name = "expected_complete_time")
+    private LocalDateTime expectedCompleteTime;
+    @Column(name = "task_points", nullable = false)
+    private Integer taskPoints = 1;
+    // one to many relation;
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JoinColumn(name = "assigned_member_id")
+    private List<User> assignedMemberId;
+
 
     public Long getTaskId() {
         return taskId;
@@ -42,27 +56,23 @@ public class Task {
         this.status = status;
     }
 
-    public String getParentTaskId() {
-        return parentTaskId;
+    public Integer getNumLayers() {
+        return numLayers;
     }
 
-    public void setParentTaskId(String parentTaskId) {
+    public void setNumLayers(Integer numLayers) {
+        this.numLayers = numLayers;
+    }
+
+    public void setParentTaskId(Task parentTaskId) {
         this.parentTaskId = parentTaskId;
     }
 
-    public Integer getNum_layers() {
-        return num_layers;
-    }
-
-    public void setNum_layers(Integer num_layers) {
-        this.num_layers = num_layers;
-    }
-
-    public String getExpectedCompleteTime() {
+    public LocalDateTime getExpectedCompleteTime() {
         return expectedCompleteTime;
     }
 
-    public void setExpectedCompleteTime(String expectedCompleteTime) {
+    public void setExpectedCompleteTime(LocalDateTime expectedCompleteTime) {
         this.expectedCompleteTime = expectedCompleteTime;
     }
 
@@ -74,11 +84,15 @@ public class Task {
         this.taskPoints = taskPoints;
     }
 
-    public Long getAssignedMemberId() {
+    public List<User> getAssignedMemberId() {
         return assignedMemberId;
     }
 
-    public void setAssignedMemberId(Long assignedMemberId) {
+    public void setAssignedMemberId(List<User> assignedMemberId) {
         this.assignedMemberId = assignedMemberId;
+    }
+
+    public Task getParentTaskId() {
+        return parentTaskId;
     }
 }
