@@ -37,14 +37,15 @@ export function SignUp() {
       alert("Please fill in all fields");
     } else {
       user.password = SHA256(user.password).toString();
-      console.log({
-        firstName: user.firstName,
-        lastName: user.lastName,
-        email: user.email,
-        password: user.password,
-      });
+      // console.log({
+      //   firstName: user.firstName,
+      //   lastName: user.lastName,
+      //   email: user.email,
+      //   password: user.password,
+      // });
+
       try {
-        await axios.post("http://localhost:8080/postUserSignup", user, {
+        await axios.post("http://localhost:8080/user/postUserSignup", user, {
           headers: { "Content-Type": "application/json" },
         });
         // navigate to home page after successful submission
@@ -54,7 +55,7 @@ export function SignUp() {
         // handle the error (e.g., show an error message to the user)
       }
       //will navigate back to dashboard once finished
-      navigate("/");
+      // navigate("/");
     }
   };
 
