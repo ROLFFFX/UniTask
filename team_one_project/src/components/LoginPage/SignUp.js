@@ -14,6 +14,7 @@ import { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import SHA256 from "crypto-js/sha256";
+import { PasswordInput } from "./PasswordInput";
 
 const defaultTheme = createTheme();
 
@@ -25,7 +26,10 @@ export function SignUp() {
     email: "",
     password: "",
   });
-
+  const [isPasswordValid, setIsPasswordValid] = React.useState(false);
+  const handlePasswordCriteriaMetChange = (criteriaMet) => {
+    setIsPasswordValid(criteriaMet);
+  };
   const onInputChange = (e) => {
     setUser({ ...user, [e.target.name]: e.target.value });
   };
@@ -35,27 +39,18 @@ export function SignUp() {
     if (!user.firstName || !user.lastName || !user.email || !user.password) {
       //alert when user didn't complete every mandatory field
       alert("Please fill in all fields");
+    } else if (!isPasswordValid) {
+      alert("invalid password"); // check password validity
     } else {
       user.password = SHA256(user.password).toString();
-      // console.log({
-      //   firstName: user.firstName,
-      //   lastName: user.lastName,
-      //   email: user.email,
-      //   password: user.password,
-      // });
-
       try {
         await axios.post("http://localhost:8080/user/postUserSignup", user, {
           headers: { "Content-Type": "application/json" },
         });
-        // navigate to home page after successful submission
-        // navigate("/");
       } catch (error) {
-        console.error("ROLF says Error Caught: ", error);
-        // handle the error (e.g., show an error message to the user)
+        console.error("Error Caught on Sign Up: ", error);
       }
-      //will navigate back to dashboard once finished
-      // navigate("/");
+      navigate("/");
     }
   };
 
@@ -114,15 +109,9 @@ export function SignUp() {
                 />
               </Grid>
               <Grid item xs={12}>
-                <TextField
-                  required
-                  fullWidth
-                  name="password"
-                  label="Password"
-                  type="password"
-                  id="password"
-                  autoComplete="new-password"
-                  onChange={onInputChange}
+                <PasswordInput
+                  onInputChange={onInputChange}
+                  onCriteriaMetChange={handlePasswordCriteriaMetChange}
                 />
               </Grid>
             </Grid>
