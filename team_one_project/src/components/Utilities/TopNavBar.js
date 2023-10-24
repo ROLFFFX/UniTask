@@ -182,10 +182,10 @@ export function TopAppBar() {
                 aria-label="account of current user"
                 aria-controls="menu-appbar"
                 aria-haspopup="true"
-                onClick={()=>toggleDrawer(true)}
+                onClick={handleOpenNavMenu}
                 color="inherit"
               >
-                <LinkIcon fontsize={"large"}/>
+                <MenuIcon />
               </IconButton>
               <Menu
                 id="menu-appbar"
@@ -242,14 +242,15 @@ export function TopAppBar() {
             </Box>
 
             <Box sx={{ flexGrow: 0 }}>
-              <Tooltip title="Open settings">
+              <Tooltip title="See Your Hyperlinks">
                 <IconButton
-                  style={{ color: "black" }}
-                  onClick={handleOpenUserMenu}
+                  style={{ color: "white" }}
+                  onClick={()=>toggleDrawer(true)}
                   sx={{ p: 0 }}
                 >
+                  <LinkIcon />
                   {/* For Top Right Button / User */}
-                  <Avatar src={UniTaskLogo_new} alt="Remy Sharp" />
+                  {/*<Avatar src={UniTaskLogo_new} alt="Remy Sharp" />*/}
                 </IconButton>
               </Tooltip>
               <Menu
