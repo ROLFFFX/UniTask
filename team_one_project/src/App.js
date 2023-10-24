@@ -3,7 +3,8 @@ import { Route, Routes } from "react-router-dom";
 
 import { MainDashboard } from "./components/Dashboard/MainDashboard";
 import { MainSprintBoard } from "./components/SprintBoard/MainSprintBoard";
-import { MainHyperLink } from "./components/HyperLink/MainHyperLink";
+// import { MainHyperLink } from "./components/HyperLink/MainHyperLink";
+import { HyperlinkDrawer } from "./components/HyperLink/HyperlinkDrawer.js"
 import { PageNotFound } from "./components/PageNotFound/PageNotFound";
 import { MainMeeting } from "./components/Meeting/MainMeeting";
 import { LoginSignup } from "./components/LoginPage/LoginSignup";
@@ -69,7 +70,7 @@ function App() {
           path="/hyperlink"
           element={
             <Layout>
-              <MainHyperLink />
+              <HyperlinkDrawer />
             </Layout>
           }
         />
