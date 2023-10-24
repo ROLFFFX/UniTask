@@ -34,9 +34,6 @@ export function LoginSignup() {
           alignItems: "center",
         }}
       >
-        <Avatar sx={{ m: 1 }}>
-          <LockOutlinedIcon />
-        </Avatar>
         <Typography component="h1" variant="h5">
           Sign In
         </Typography>
