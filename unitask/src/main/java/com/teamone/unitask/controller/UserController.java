@@ -14,7 +14,6 @@ import java.util.List;
 @CrossOrigin
 @RequestMapping("/user")
 public class UserController {
-
     @Autowired
     private UserRepository userRepository;
 
@@ -31,6 +30,7 @@ public class UserController {
     }
 
     @PostMapping("/postUserSignup")
+    
     User postUserSignup(@RequestBody User newUser) {
         return userRepository.save(newUser);
     }
