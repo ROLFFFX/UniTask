@@ -9,12 +9,18 @@ import Link from "@mui/material/Link";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
+import ImageList from "@mui/material";
 import axios from "axios";
 import SHA256 from "crypto-js/sha256";
 import * as React from "react";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { PasswordInput } from "./PasswordInput";
+import { Paper } from "@mui/material";
+import { TopSVG } from "./LoginStyling/TopSVG";
+import { BottomSVG } from "./LoginStyling/BottomSVG";
+import theme from "./LoginStyling/theme";
+import Logo from "../../images/UniTaskLOGO.PNG";
 
 const defaultTheme = createTheme();
 
@@ -53,7 +59,8 @@ export function SignUp() {
   };
 
   return (
-    <ThemeProvider theme={defaultTheme}>
+    <ThemeProvider theme={theme}>
+      <TopSVG />
       <Container component="main" maxWidth="xs">
         <CssBaseline />
         <Box
@@ -62,13 +69,24 @@ export function SignUp() {
             display: "flex",
             flexDirection: "column",
             alignItems: "center",
+            width: "100%", // Set width to 100% or another desired value
+            maxWidth: "lg", // Or another desired value, or remove maxWidth
+            padding: "40px",
+            backgroundColor: "#F1F2F7",
+            borderRadius: "16px", // Adjust this value for more or less rounded corners
+            boxShadow: "0 3px 5px rgba(0, 0, 0, 0.3)", // Adjust values and color for desired shadow effect
           }}
+          // border={4}
         >
-          <Avatar sx={{ m: 1 }}>
+          {/* <Avatar sx={{ m: 1 }}>
             <LockOutlinedIcon />
-          </Avatar>
-          <Typography component="h1" variant="h5">
-            Sign Up
+          </Avatar> */}
+          <Typography
+            component="h1"
+            variant="h5"
+            sx={{ paddingTop: "30px", paddingBottom: "15px" }}
+          >
+            Sign Up To UniTask
           </Typography>
           <Box component="form" noValidate onSubmit={onSubmit} sx={{ mt: 3 }}>
             <Grid container spacing={2}>
@@ -132,6 +150,7 @@ export function SignUp() {
           </Box>
         </Box>
       </Container>
+      <BottomSVG sx={{ margin: 0, padding: 0 }} />
     </ThemeProvider>
   );
 }
