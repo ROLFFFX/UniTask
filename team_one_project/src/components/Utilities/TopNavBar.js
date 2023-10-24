@@ -13,6 +13,19 @@ import Typography from "@mui/material/Typography";
 import * as React from "react";
 import barTheme from "./barTheme";
 
+import Drawer from '@mui/material/Drawer';
+import List from '@mui/material/List';
+import ListItem from '@mui/material/ListItem';
+import ListItemButton from '@mui/material/ListItemButton';
+import ListItemIcon from '@mui/material/ListItemIcon';
+import ListItemText from '@mui/material/ListItemText';
+import TextField from '@mui/material/TextField';
+import AddLinkIcon from '@mui/icons-material/AddLink';
+import LinkIcon from '@mui/icons-material/Link';
+
+import {useState} from "react";
+import {v4 as uuidv4} from "uuid";
+
 import UniTaskLogo_new from "../../images/UniTaskLOGO.PNG";
 import { ThemeProvider } from "@mui/material";
 
@@ -21,6 +34,13 @@ export function TopAppBar() {
   const [anchorElUser, setAnchorElUser] = React.useState(null);
   const pages = [];
   const settings = ["Option to be determined"];
+
+  const [state, setState] = useState(false);//drawer state
+
+  const [action, setAction] = useState("Static"); //actions on add new hyperlink
+  const [itAction, setitAction] = useState("Static"); //actions on change/remove list items
+  const [linkName, setLinkName] = useState("");
+  const [link, setLink] = useState("");
 
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
@@ -36,6 +56,96 @@ export function TopAppBar() {
   const handleCloseUserMenu = () => {
     setAnchorElUser(null);
   };
+
+  var userlinks = [];
+  const [linksList, setLinksList] = useState(userlinks); //json file
+  function changeName(event) {
+    setLinkName(event.target.value);
+  }
+  function changeLink(event) {
+    setLink(event.target.value);
+  }
+
+  function addLinks() {
+    const newlist = linksList.concat([
+      {
+        Lk: (link.startsWith("http://") || link.startsWith("https://")
+                ? link
+                : `http://${link}`
+        ),
+        name: linkName,
+        id: uuidv4(), //to have a stable key attribute for the item
+        icon: null,
+      },
+    ]);
+    setLinksList(newlist);
+  }
+  function removeLinks(id) {
+    const newlist = linksList.filter((userlink) => userlink.id !== id);
+    setLinksList(newlist);
+  }
+
+  const toggleDrawer = (event) =>  {
+    setState(event);
+  };
+
+  const list = () => (
+    <Box
+      sx={{ width: 'auto',
+            marginTop: "70px",
+      }}
+      role="presentation"
+      onClick={()=>toggleDrawer(true)}
+      // onKeyDown={toggleDrawer(anchor, false)}
+    >
+      <ListItemButton id="addlinkbutton" onClick={() => setAction("Add Item")}>
+              <ListItemIcon>
+                  <AddLinkIcon />
+              </ListItemIcon>
+              <ListItemText primary={"Add a New Hyperlink"} />
+      </ListItemButton>
+      <form noValidate autoComplete={"off"}>
+        {linksList.map((userlink) => (
+          <ListItem key={userlink.id}
+                      onMouseOver={() => setitAction("Remove or Change?")}
+                      onMouseOut={() => setitAction("Static")}
+                    disablePadding>
+            <ListItemButton
+                href={userlink.Lk}
+                target="_blank"
+                rel="noopener noreferrer"
+            >
+              <ListItemIcon>
+                {userlink.icon}
+              </ListItemIcon>
+              <ListItemText primary={userlink.name} />
+            </ListItemButton>
+            {itAction === "Remove or Change?" ? (
+                <Button onClick={() => removeLinks(userlink.id)}>Remove</Button>
+              ) : null}
+          </ListItem>
+        ))}
+      {action==="Add Item"?
+          <ListItem>
+              <TextField label="Customize a Name" variant="outlined"
+                         onChange={(event) => changeName(event)}
+              />
+              <TextField label="Copy Link Here" variant="outlined"
+                         onChange={(event) => changeLink(event)}
+              />
+              <Button
+                  onClick={() => {
+                    addLinks();
+                    setAction("Display");
+                  }}
+              >
+                  Save
+              </Button>
+          </ListItem>
+      :null}
+      </form>
+    </Box>
+  );
 
   return (
     <ThemeProvider theme={barTheme}>
@@ -72,10 +182,10 @@ export function TopAppBar() {
                 aria-label="account of current user"
                 aria-controls="menu-appbar"
                 aria-haspopup="true"
-                onClick={handleOpenNavMenu}
+                onClick={()=>toggleDrawer(true)}
                 color="inherit"
               >
-                <MenuIcon />
+                <LinkIcon fontsize={"large"}/>
               </IconButton>
               <Menu
                 id="menu-appbar"
@@ -168,6 +278,13 @@ export function TopAppBar() {
           </Toolbar>
         </Container>
       </AppBar>
+      <Drawer
+          anchor='top'
+          open={state}
+          onClose={()=>toggleDrawer(false)}
+      >
+        {list()}
+      </Drawer>
     </ThemeProvider>
   );
 }
