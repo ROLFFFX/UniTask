@@ -1,7 +1,7 @@
 import { Box, Grid } from "@mui/material";
 import * as React from "react";
 import { MeetingContent } from "./MeetingContent";
-import { WeeklyCalendar } from "./WeeklyCalendar"; 
+import { WeeklyCalendar } from "./WeeklyCalendar";
 
 export function MainMeeting() {
   return (

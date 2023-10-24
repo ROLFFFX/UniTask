@@ -17,6 +17,9 @@ import { SignUp } from "./components/LoginPage/SignUp";
 import MainSideBar from "./components/Utilities/MainSideBar";
 import PermanentDrawer from "./components/Utilities/PermanentDrawer";
 import { TopAppBar } from "./components/Utilities/TopNavBar";
+import { SelectMeeting } from "./components/Meeting/SelectMeeting";
+import { Skeleton } from "@mui/material";
+import { MeetingContent } from "./components/Meeting/MeetingContent";
 
 function Layout({ children }) {
   return (
@@ -58,14 +61,34 @@ function App() {
             </Layout>
           }
         />
-        <Route
+        {/* <Route
           path="/meeting"
           element={
             <Layout>
               <MainMeeting />
             </Layout>
           }
-        />
+        /> */}
+        <Route path="/meeting">
+          <Route
+            index
+            element={
+              <Layout>
+                <MainMeeting />
+              </Layout>
+            }
+          ></Route>
+          <Route
+            path="selectmeeting"
+            element={
+              <Layout>
+                <SelectMeeting />
+              </Layout>
+            }
+          ></Route>
+
+          {/* nested routes waiting to be populated */}
+        </Route>
         <Route
           path="/hyperlink"
           element={
