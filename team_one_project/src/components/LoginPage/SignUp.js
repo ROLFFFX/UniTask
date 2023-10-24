@@ -26,7 +26,7 @@ export function SignUp() {
     email: "",
     password: "",
   });
-  const [isPasswordValid, setIsPasswordValid] = React.useState(false);
+  const [isPasswordValid, setIsPasswordValid] = useState(false);
   const allFieldsComplete =
     user.firstName && user.lastName && user.email && user.password;
   const isSignUpEnabled = allFieldsComplete && isPasswordValid;
