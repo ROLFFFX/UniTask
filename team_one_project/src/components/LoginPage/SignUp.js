@@ -49,7 +49,7 @@ export function SignUp() {
     } catch (error) {
       console.error("Error Caught on Sign Up: ", error);
     }
-    navigate("/");
+    // navigate("/");
   };
 
   return (
