@@ -77,7 +77,6 @@ export function PasswordInput({ onInputChange, onCriteriaMetChange }) {
               variant="determinate"
               size="sm"
               value={Math.min((value.length * 100) / maxLength, 100)}
-              sx={{ bgcolor: criteriaMet ? "red" : "transparent" }}
             />
             <FormHelperText
               sx={{

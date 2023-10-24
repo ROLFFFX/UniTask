@@ -72,11 +72,7 @@ export function SignUp() {
           }}
           // border={4}
         >
-          <Typography
-            component="h1"
-            variant="h5"
-            sx={{ paddingTop: "30px", paddingBottom: "15px" }}
-          >
+          <Typography component="h1" variant="h5">
             Sign Up
           </Typography>
           <Box component="form" noValidate onSubmit={onSubmit} sx={{ mt: 3 }}>
