@@ -42,6 +42,7 @@ export function SignUp() {
     e.preventDefault();
     // TODO: check user email.
     user.password = SHA256(user.password).toString();
+    console.log(user);
     try {
       await axios.post("http://localhost:8080/user/postUserSignup", user, {
         headers: { "Content-Type": "application/json" },
