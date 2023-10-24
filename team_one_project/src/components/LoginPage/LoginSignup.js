@@ -1,8 +1,3 @@
-// import nlogo from "../../images/UniTaskLOGO.PNG";
-// import gm from "../../images/icons-gmail.png";
-// import fb from "../../images/icons-facebook.png";
-// import gh from "../../images/icons-github.png";
-
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Avatar from "@mui/material/Avatar";
 import Box from "@mui/material/Box";
@@ -11,7 +6,7 @@ import Container from "@mui/material/Container";
 import CssBaseline from "@mui/material/CssBaseline";
 import Grid from "@mui/material/Grid";
 import Link from "@mui/material/Link";
-import { createTheme, ThemeProvider } from "@mui/material/styles";
+import { createTheme } from "@mui/material/styles";
 import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
 import * as React from "react";
@@ -39,9 +34,6 @@ export function LoginSignup() {
           alignItems: "center",
         }}
       >
-        <Avatar sx={{ m: 1 }}>
-          <LockOutlinedIcon />
-        </Avatar>
         <Typography component="h1" variant="h5">
           Sign In
         </Typography>
