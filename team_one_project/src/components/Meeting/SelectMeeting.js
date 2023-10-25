@@ -1,6 +1,7 @@
 import { Box, Grid } from "@mui/material";
 import * as React from "react";
-import SelectMeetingContent from "./SelectMeetingContent";
+import { SelectMeetingContent } from "./SelectMeetingContent";
+
 
 export function SelectMeeting() {
   return (
