@@ -32,10 +32,10 @@ export default function PermanentDrawer() {
       case 2:
         navigate("../meeting");
         break;
+      // case 3:
+      //   navigate("../hyperlink");
+      //   break;
       case 3:
-        navigate("../hyperlink");
-        break;
-      case 4:
         navigate("../review");
         break;
       case 5:

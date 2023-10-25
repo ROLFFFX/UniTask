@@ -5,7 +5,7 @@ import { MainDashboard } from "./components/Dashboard/MainDashboard";
 import { MainSprintBoard } from "./components/SprintBoard/MainSprintBoard";
 // import { MainHyperLink } from "./components/HyperLink/MainHyperLink";
 import { MainAccount } from "./components/Account/MainAccount";
-import { HyperlinkDrawer } from "./components/HyperLink/HyperlinkDrawer.js";
+//import { HyperlinkDrawer } from "./components/HyperLink/HyperlinkDrawer.js";
 import { LoginSignup } from "./components/LoginPage/LoginSignup";
 import { MainMeeting } from "./components/Meeting/MainMeeting";
 import { PageNotFound } from "./components/PageNotFound/PageNotFound";
@@ -89,14 +89,14 @@ function App() {
 
           {/* nested routes waiting to be populated */}
         </Route>
-        <Route
+        {/*<Route
           path="/hyperlink"
           element={
             <Layout>
               <HyperlinkDrawer />
             </Layout>
           }
-        />
+        />*/}
         <Route
           path="/review"
           element={
