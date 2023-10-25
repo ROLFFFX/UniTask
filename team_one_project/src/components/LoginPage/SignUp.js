@@ -4,19 +4,18 @@ import Container from "@mui/material/Container";
 import CssBaseline from "@mui/material/CssBaseline";
 import Grid from "@mui/material/Grid";
 import Link from "@mui/material/Link";
-import { ThemeProvider } from "@mui/material/styles";
 import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
+import { ThemeProvider } from "@mui/material/styles";
 import axios from "axios";
 import SHA256 from "crypto-js/sha256";
 import * as React from "react";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { BottomSVG } from "./LoginStyling/BottomSVG";
-import theme from "./LoginStyling/theme";
 import { TopSVG } from "./LoginStyling/TopSVG";
+import theme from "./LoginStyling/theme";
 import { PasswordInput } from "./PasswordInput";
-import styled from "@emotion/styled";
 
 export function SignUp() {
   const navigate = useNavigate();
@@ -42,7 +41,7 @@ export function SignUp() {
     e.preventDefault();
     // TODO: check user email.
     user.password = SHA256(user.password).toString();
-    console.log(user);
+    // console.log(user);
     try {
       await axios.post("http://localhost:8080/user/postUserSignup", user, {
         headers: { "Content-Type": "application/json" },
