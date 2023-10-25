@@ -25,31 +25,6 @@ export function MainSprintBoard() {
     ]);
     setlistSub(newlist);
   }
-  function deleteSubtaskButton(subtaskID) {
-    const updatedList = listSub.filter((subtask) => subtask.id !== subtaskID);
-    setlistSub(updatedList);
-  }
-  {ShowSub === "expand" ? (
-    <ul className={"subtaskList"}>
-      {listSub.map((subtask) => (
-        <li className={"subtask"} key={subtask.id}>
-          <img
-            className="subtaskIcon"
-            src={circle_blue_favicon}
-            alt={""}
-          ></img>
-          {subtask.description}
-          <button
-            className="deleteSubtaskButton"
-            onClick={() => deleteSubtaskButton(subtask.id)}
-          >
-            Delete Subtask
-          </button>
-        </li>
-      ))}
-    </ul>
-  ) : null}
-    
 
   return (
     <Box sx={{ marginLeft: "240px" }}>
