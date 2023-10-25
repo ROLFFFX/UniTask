@@ -1,28 +1,22 @@
-import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
-import Avatar from "@mui/material/Avatar";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Container from "@mui/material/Container";
 import CssBaseline from "@mui/material/CssBaseline";
 import Grid from "@mui/material/Grid";
 import Link from "@mui/material/Link";
-import { createTheme, ThemeProvider } from "@mui/material/styles";
+import { ThemeProvider } from "@mui/material/styles";
 import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
-import ImageList from "@mui/material";
 import axios from "axios";
 import SHA256 from "crypto-js/sha256";
 import * as React from "react";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { PasswordInput } from "./PasswordInput";
-import { Paper } from "@mui/material";
-import { TopSVG } from "./LoginStyling/TopSVG";
 import { BottomSVG } from "./LoginStyling/BottomSVG";
 import theme from "./LoginStyling/theme";
-import Logo from "../../images/UniTaskLOGO.PNG";
-
-const defaultTheme = createTheme();
+import { TopSVG } from "./LoginStyling/TopSVG";
+import { PasswordInput } from "./PasswordInput";
+import styled from "@emotion/styled";
 
 export function SignUp() {
   const navigate = useNavigate();
@@ -48,6 +42,7 @@ export function SignUp() {
     e.preventDefault();
     // TODO: check user email.
     user.password = SHA256(user.password).toString();
+    console.log(user);
     try {
       await axios.post("http://localhost:8080/user/postUserSignup", user, {
         headers: { "Content-Type": "application/json" },
@@ -55,7 +50,7 @@ export function SignUp() {
     } catch (error) {
       console.error("Error Caught on Sign Up: ", error);
     }
-    // navigate("/");
+    navigate("/");
   };
 
   return (
@@ -72,21 +67,14 @@ export function SignUp() {
             width: "100%", // Set width to 100% or another desired value
             maxWidth: "lg", // Or another desired value, or remove maxWidth
             padding: "40px",
-            backgroundColor: "#F1F2F7",
+            backgroundColor: "#F6F7FC",
             borderRadius: "16px", // Adjust this value for more or less rounded corners
             boxShadow: "0 3px 5px rgba(0, 0, 0, 0.3)", // Adjust values and color for desired shadow effect
           }}
           // border={4}
         >
-          {/* <Avatar sx={{ m: 1 }}>
-            <LockOutlinedIcon />
-          </Avatar> */}
-          <Typography
-            component="h1"
-            variant="h5"
-            sx={{ paddingTop: "30px", paddingBottom: "15px" }}
-          >
-            Sign Up To UniTask
+          <Typography component="h1" variant="h5">
+            Sign Up
           </Typography>
           <Box component="form" noValidate onSubmit={onSubmit} sx={{ mt: 3 }}>
             <Grid container spacing={2}>
@@ -100,6 +88,7 @@ export function SignUp() {
                   label="First Name"
                   autoFocus
                   onChange={onInputChange}
+                  InputLabelProps={{ style: { fontSize: 14 } }}
                 />
               </Grid>
               <Grid item xs={12} sm={6}>
@@ -111,6 +100,7 @@ export function SignUp() {
                   name="lastName"
                   autoComplete="family-name"
                   onChange={onInputChange}
+                  InputLabelProps={{ style: { fontSize: 14 } }}
                 />
               </Grid>
               <Grid item xs={12}>
@@ -122,6 +112,7 @@ export function SignUp() {
                   name="email"
                   autoComplete="email"
                   onChange={onInputChange}
+                  InputLabelProps={{ style: { fontSize: 14 } }}
                 />
               </Grid>
               <Grid item xs={12}>
