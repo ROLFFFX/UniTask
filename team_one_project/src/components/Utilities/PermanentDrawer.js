@@ -14,9 +14,9 @@ const drawerWidth = 200;
 export default function PermanentDrawer() {
   const sidebar_upper = [
     "Dashboard",
-    "Sprint Board",
+    "Task Board",
     "Meeting Schedule",
-    "Hyperlink Section",
+    // "Hyperlink Section",
     "Inspect & Adapt",
   ];
   const sidebar_lower = ["Account", "Settings"];

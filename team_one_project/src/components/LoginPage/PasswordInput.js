@@ -9,27 +9,25 @@ import theme from "./LoginStyling/theme";
 import { ThemeProvider } from "@mui/material/styles";
 
 export function PasswordInput({ onInputChange, onCriteriaMetChange }) {
-  const [value, setValue] = React.useState("");
-  const [focused, setFocused] = React.useState(false);
   const minLength = 8;
   const maxLength = 16;
+
+  const [value, setValue] = React.useState("");
+  const [focused, setFocused] = React.useState(false);
+  const handleFocus = () => {
+    setFocused(true);
+  };
+  const handleBlur = () => {
+    setFocused(false);
+  };
+  const hasNumber = /\d/.test(value);
+  const hasUppercase = /[A-Z]/.test(value);
+  const isLengthValid = value.length >= minLength && value.length <= maxLength;
 
   const handleInputChange = (event) => {
     setValue(event.target.value);
     onInputChange(event); // pass the event to the provided onInputChange handler
   };
-
-  const handleFocus = () => {
-    setFocused(true);
-  };
-
-  const handleBlur = () => {
-    setFocused(false);
-  };
-
-  const hasNumber = /\d/.test(value);
-  const hasUppercase = /[A-Z]/.test(value);
-  const isLengthValid = value.length >= minLength && value.length <= maxLength;
 
   const criteriaMet = hasNumber && hasUppercase && isLengthValid;
   React.useEffect(() => {
