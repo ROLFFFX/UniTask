@@ -1,4 +1,5 @@
 import { Box } from "@mui/material";
+import Popper from '@mui/material/Popper';
 import React, {useState} from "react";
 import "../../App.css";
 import add_button_favicon from "../../images/add_button_favicon.png";
@@ -26,6 +27,49 @@ export function MainSprintBoard() {
     setlistSub(newlist);
   }
 
+  // From MUI Popper.js tutorial:
+  const [anchorEl, setAnchorEl] = React.useState(null);
+  const open = Boolean(anchorEl);
+
+  const handleClick = (event) => {
+    setAnchorEl(anchorEl ? null : event.currentTarget);
+  };
+
+
+  // Close popup menu and submit data
+  const [teamName, setTeamName] = useState("Team 1");
+  const [tasks, setTasks] = useState([]);
+  const [taskNameInput, setTaskNameInput] = useState("");
+
+  const closeTaskPopup = () => {
+   // if (taskNameInput) {
+        // TODO: get info from user
+        // TODO: send data to backend
+        const taskData = {
+          taskID: 0,  // Do I need to set taskID or will SQL do this?
+          title: taskNameInput.value,
+          //assignee: assigneeInput.value,
+          expectedCompleteTime: 0,  // TODO: get from user
+          numLayers: 1, // TODO: calculate layer count
+          status: "Not Started", // TODO: get from user
+          //taskPoints: taskPointsInput.value,
+          parentTaskID: null  // TODO: set parent ID if applicable
+        }
+        createTask(taskData);
+        displayTask(taskData);
+        setTaskNameInput(""); // Reset input field
+   // }
+  };
+
+  const createTask = (taskData) => {
+    console.log(taskData);
+    // TODO: insert data into database
+  };
+
+  const displayTask = (taskData) => {
+    setTasks([...tasks, taskData]);
+  };
+
   return (
     <Box sx={{ marginLeft: "240px" }}>
       <title>Taskboard</title>
@@ -33,8 +77,29 @@ export function MainSprintBoard() {
         <div className="grid-container" id="board">
           <div className="grid-item" id="tasksHeader">
             Tasks
-            <img id="addTaskButton" src={add_button_favicon} alt=""></img>
+              <img id="addTaskButton" aria-describedby={"createTaskMenu"} onClick={handleClick} src={add_button_favicon} alt=""></img>
           </div>
+          <Popper id={"createTaskMenu"} open={open} anchorEl={anchorEl}>
+            <Box className="popupContent">
+              <span>Title: </span>
+              <input type='text'
+                        id='taskNameInput'
+                        value={taskNameInput}
+                        onChange={e => setTaskNameInput(e.target.value)}
+              ></input>
+              
+              <span>Assigned to: </span>
+              <select name="assigneeInput" id="assigneeInput"></select>
+              
+              <span>Due date: </span>
+              <input type="date" id="dueDateInput"></input>
+              
+              <span>Task Points: </span>
+              <input type="number" id="taskPointsInput" value="1"></input>
+              
+              <button id="closeTaskPopupButton" onClick={closeTaskPopup}>Submit</button>
+            </Box>
+          </Popper>
           <div className="grid-item" id="tasks">
             <ul id="taskList">
               <li className="task">
@@ -100,23 +165,10 @@ export function MainSprintBoard() {
   /*const [] = useState("");
     const [] = useState("");
 
-    function bellButton()
-    {
-      alert("Bell button clicked");
-    }
-
-    function teamSelectButton()
-    {
-      alert("Team select button clicked");
-    }*/
+    
   /*const [teamName, setTeamName] = useState("Team 1");
     const [tasks, setTasks] = useState([]);
     const [taskNameInput, setTaskNameInput] = useState("");
-
-    const bellButton = () => alert("Bell button clicked");
-    const teamSelectButton = () => alert("Team select button clicked");
-    const addSubtaskButton = () => alert("Add Subtask button clicked");
-    const showSubtasksButton = () => alert("Show Subtasks button clicked");
 
     const closeTaskPopup = () => {
         if (taskNameInput) {
