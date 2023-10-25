@@ -211,3 +211,17 @@ html, body {
   grid-row: 2;
   border-right: 0;
 }
+
+/* Styling for the "Delete Subtask" button */
+.deleteSubtaskButton {
+  background-color: #ff5733; /* Background color */
+  color: #fff; /* Text color */
+  border: none; /* No border */
+  padding: 5px 10px; /* Padding */
+  cursor: pointer; /* Cursor on hover */
+  margin-left: 10px; /* Adjust as needed */
+}
+
+.deleteSubtaskButton:hover {
+  background-color: #ff0000; /* Background color on hover */
+}
