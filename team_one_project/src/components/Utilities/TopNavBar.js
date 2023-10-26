@@ -70,9 +70,9 @@ export function TopAppBar() {
     const newlist = linksList.concat([
       {
         Lk:
-          link.startsWith("http://") || link.startsWith("https://")
+            (link.startsWith("http://") || link.startsWith("https://")
             ? link
-            : `http://${link}`,
+            : `http://${link}`),
         name: linkName,
         id: uuidv4(), //to have a stable key attribute for the item
         icon: null,
@@ -93,8 +93,6 @@ export function TopAppBar() {
     <Box
       sx={{ width: "auto", marginTop: "70px" }}
       role="presentation"
-      onClick={() => toggleDrawer(true)}
-      // onKeyDown={toggleDrawer(anchor, false)}
     >
       <ListItemButton id="addlinkbutton" onClick={() => setAction("Add Item")}>
         <ListItemIcon>
