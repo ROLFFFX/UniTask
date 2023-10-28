@@ -32,7 +32,6 @@ public class UserController {
     }
 
     @PostMapping("/postUserSignup")
-    
     User postUserSignup(@RequestBody User newUser) {
         return userRepository.save(newUser);
     }
