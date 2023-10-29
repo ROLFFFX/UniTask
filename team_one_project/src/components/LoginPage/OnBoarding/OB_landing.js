@@ -54,7 +54,7 @@ export function OB_landing() {
   };
 
   const handleToRoot = () => {
-    navigate("/");
+    navigate("/dashboard");
   };
 
   return (

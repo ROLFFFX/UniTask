@@ -36,14 +36,7 @@ function App() {
   return (
     <div>
       <Routes>
-        <Route
-          path="/"
-          element={
-            <Layout>
-              <MainDashboard />
-            </Layout>
-          }
-        />
+        <Route path="/" element={<LoginSignup />} />
 
         <Route
           path="/dashboard"
