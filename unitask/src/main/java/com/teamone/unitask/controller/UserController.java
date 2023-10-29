@@ -30,15 +30,15 @@ public class UserController {
 //    }
 
     //
-    @GetMapping("/getAllUsers")
-    List<User> getAllUsers() {
-        return userRepository.findAll();
-    }
-
-    @PostMapping("/postUserSignup")
-    User postUserSignup(@RequestBody User newUser) {
-        return userRepository.save(newUser);
-    }
+//    @GetMapping("/getAllUsers")
+//    List<User> getAllUsers() {
+//
+//    }
+//
+//    @PostMapping("/postUserSignup")
+//    User postUserSignup(@RequestBody User newUser) {
+//        return userRepository.save(newUser);
+//    }
 
 //    @GetMapping("/collectLogin")
 //    List<String> getLoginInfo()
