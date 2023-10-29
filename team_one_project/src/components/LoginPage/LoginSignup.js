@@ -11,8 +11,10 @@ import * as React from "react";
 import theme from "./LoginStyling/theme";
 import { TopSVG } from "./LoginStyling/TopSVG";
 import { BottomSVG } from "./LoginStyling/BottomSVG";
+import { useNavigate } from "react-router-dom";
 
 export function LoginSignup() {
+  const navigate = useNavigate();
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
@@ -20,6 +22,8 @@ export function LoginSignup() {
       email: data.get("email"),
       password: data.get("password"),
     });
+    alert("To be deleted. Compare user input");
+    navigate("/login/ob_landing"); //goes to onboarding process without checking if user info is complete.
   };
 
   return (
@@ -82,19 +86,6 @@ export function LoginSignup() {
               Sign In
             </Button>
             <Grid container>
-              <Grid item xs>
-                {/* <Button
-                  type="submit"
-                  fullWidth
-                  variant="contained"
-                  sx={{ mt: 3, mb: 2 }}
-                >
-                  Sign In
-                </Button> */}
-                {/* <Link href="login/forgotpassword" variant="body2">
-                  {"Forgot password?"}
-                </Link> */}
-              </Grid>
               <Grid item>
                 <Link href="login/signup" variant="body2" color="inherit">
                   {"Don't have an account? Sign Up!"}

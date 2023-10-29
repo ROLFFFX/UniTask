@@ -20,6 +20,7 @@ import { TopAppBar } from "./components/Utilities/TopNavBar";
 import { SelectMeeting } from "./components/Meeting/SelectMeeting";
 import { Skeleton } from "@mui/material";
 import { MeetingContent } from "./components/Meeting/MeetingContent";
+import { OB_landing } from "./components/LoginPage/OnBoarding/OB_landing";
 
 function Layout({ children }) {
   return (
@@ -134,6 +135,7 @@ function App() {
           <Route index element={<LoginSignup />}></Route>
           <Route path="forgotpassword" element={<ForgotPassword />}></Route>
           <Route path="signup" element={<SignUp />}></Route>
+          <Route path="ob_landing" element={<OB_landing />}></Route>
           {/* nested routes waiting to be populated */}
         </Route>
 
