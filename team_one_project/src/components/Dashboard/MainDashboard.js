@@ -4,7 +4,7 @@ import { DashboardContent } from "./DashboardContent";
 
 export function MainDashboard() {
   return (
-    <Box style={{ marginLeft: "240px" }}>
+    <Box style={{ marginLeft: "200px" }}>
       <DashboardContent />
     </Box>
   );
