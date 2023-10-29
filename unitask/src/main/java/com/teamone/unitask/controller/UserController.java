@@ -2,6 +2,7 @@ package com.teamone.unitask.controller;
 
 import com.teamone.unitask.model.User;
 import com.teamone.unitask.repository.UserRepository;
+import com.teamone.unitask.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 //1017
@@ -15,8 +16,12 @@ import java.util.List;
 @RequestMapping("/user")
 public class UserController {
 
+    private final UserService userService;
+
     @Autowired
-    private UserRepository userRepository;
+    public UserController(UserService userService) {
+        this.userService = userService;
+    }
 
     // get a single user object from front end and store in the database unitask-user;
 //    @PostMapping("/postUser")

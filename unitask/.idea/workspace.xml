@@ -6,7 +6,19 @@
   <component name="ChangeListManager">
     <list default="true" id="94e22b41-55fe-4436-8cfe-1c1de9be7852" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/teamone/unitask/model/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/teamone/unitask/model/User.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/teamone/unitask/controller/UserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/teamone/unitask/controller/UserController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/teamone/unitask/repository/HyperlinkRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/teamone/unitask/repository/HyperlinkRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/teamone/unitask/repository/MeetingRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/teamone/unitask/repository/MeetingRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/teamone/unitask/repository/ProjectRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/teamone/unitask/repository/ProjectRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/teamone/unitask/repository/TaskRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/teamone/unitask/repository/TaskRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/teamone/unitask/repository/TimeSlotRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/teamone/unitask/repository/TimeSlotRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/teamone/unitask/repository/UserRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/teamone/unitask/repository/UserRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/teamone/unitask/service/HyperlinkService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/teamone/unitask/service/HyperlinkService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/teamone/unitask/service/MeetingService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/teamone/unitask/service/MeetingService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/teamone/unitask/service/ProjectService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/teamone/unitask/service/ProjectService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/teamone/unitask/service/TaskService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/teamone/unitask/service/TaskService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/teamone/unitask/service/TimeSlotService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/teamone/unitask/service/TimeSlotService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/teamone/unitask/service/UserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/teamone/unitask/service/UserService.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -58,28 +70,28 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RequestMappingsPanelOrder0": "0",
-    "RequestMappingsPanelOrder1": "1",
-    "RequestMappingsPanelWidth0": "75",
-    "RequestMappingsPanelWidth1": "75",
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "WebServerToolWindowFactoryState": "false",
-    "last_opened_file_path": "/Users/macbookpro/Desktop/CS_370_Team_One/unitask",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "project.structure.last.edited": "Modules",
-    "project.structure.proportion": "0.0",
-    "project.structure.side.proportion": "0.2",
-    "settings.editor.selected.configurable": "MavenSettings",
-    "spring.configuration.checksum": "5bd8ae6911dd17af44d58d35ae83a432",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RequestMappingsPanelOrder0&quot;: &quot;0&quot;,
+    &quot;RequestMappingsPanelOrder1&quot;: &quot;1&quot;,
+    &quot;RequestMappingsPanelWidth0&quot;: &quot;75&quot;,
+    &quot;RequestMappingsPanelWidth1&quot;: &quot;75&quot;,
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/Users/macbookpro/Desktop/CS_370_Team_One/unitask&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.0&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;MavenSettings&quot;,
+    &quot;spring.configuration.checksum&quot;: &quot;5bd8ae6911dd17af44d58d35ae83a432&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RunManager">
     <configuration name="UnitaskApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
       <module name="unitask" />
@@ -109,7 +121,10 @@
       <workItem from="1697252148142" duration="305000" />
       <workItem from="1697606606999" duration="9326000" />
       <workItem from="1698080614004" duration="230000" />
-      <workItem from="1698089442408" duration="1141000" />
+      <workItem from="1698089442408" duration="3466000" />
+      <workItem from="1698182070218" duration="1371000" />
+      <workItem from="1698237941407" duration="1495000" />
+      <workItem from="1698370210166" duration="521000" />
     </task>
     <servers />
   </component>
