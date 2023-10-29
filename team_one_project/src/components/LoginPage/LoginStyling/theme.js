@@ -3,7 +3,7 @@ import { createTheme } from "@mui/material/styles";
 const theme = createTheme({
   palette: {
     background: {
-      default: "#F1F2F7",
+      default: "#E9ECEF",
     },
   },
   typography: {
@@ -31,7 +31,7 @@ const theme = createTheme({
     MuiFormHelperText: {
       styleOverrides: {
         root: {
-          color: "#5A67BA", // This sets the color of the helper text to #5A67BA
+          color: "#343A40", // This sets the color of the helper text to #5A67BA
         },
       },
     },
@@ -39,10 +39,10 @@ const theme = createTheme({
       styleOverrides: {
         root: {
           "&:hover .MuiOutlinedInput-notchedOutline": {
-            borderColor: "#5A67BA", // Color when hover
+            borderColor: "#343A40", // Color when hover
           },
           "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
-            borderColor: "#5A67BA", // Color when focused
+            borderColor: "#343A40", // Color when focused
           },
         },
       },
@@ -58,9 +58,9 @@ const theme = createTheme({
       styleOverrides: {
         // This targets the root of the MuiButton component
         root: {
-          backgroundColor: "#5A67BA", // This sets the background color of the button to red
+          backgroundColor: "#343A40", // This sets the background color of the button to red
           "&:hover": {
-            backgroundColor: "#50589E", // This sets the hover color of the button to a darker red
+            backgroundColor: "#6C757D", // This sets the hover color of the button to a darker red
           },
         },
       },
@@ -68,7 +68,18 @@ const theme = createTheme({
     MuiLink: {
       styleOverrides: {
         root: {
-          color: "#5A67BA", // This sets the text color of the link to red
+          color: "#343A40", // This sets the text color of the link to red
+        },
+      },
+    },
+    MuiInputLabel: {
+      styleOverrides: {
+        root: {
+          // ... your existing styles for 'root' if any
+          "&.Mui-focused": {
+            // targeting the focused state of the label
+            color: "#343A40", // change this color to your preferred 'red' hex code or other color
+          },
         },
       },
     },

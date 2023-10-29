@@ -75,6 +75,15 @@ export function PasswordInput({ onInputChange, onCriteriaMetChange }) {
               variant="determinate"
               size="sm"
               value={Math.min((value.length * 100) / maxLength, 100)}
+              sx={{
+                backgroundColor: "#DEE2E6", // setting the background color of the container to yellow
+                "& .MuiLinearProgress-determinate": {
+                  backgroundColor: "#DEE2E6", // ensuring the determinate variant also has a yellow background
+                },
+                "& .MuiLinearProgress-bar": {
+                  backgroundColor: "#212529", // setting the color of the progress bar to black
+                },
+              }}
             />
             <FormHelperText
               sx={{
