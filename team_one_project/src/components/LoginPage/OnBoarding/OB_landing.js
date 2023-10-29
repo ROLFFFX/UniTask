@@ -13,11 +13,13 @@ import { TopSVG } from "../LoginStyling/TopSVG";
 import theme from "../LoginStyling/theme";
 import ChooseName from "./Steps/ChooseName";
 import ChooseRole from "./Steps/ChooseRole";
+import { useNavigate } from "react-router-dom";
 
 export function OB_landing() {
   const [activeStep, setActiveStep] = React.useState(0);
   const [workspaceName, setWorkspaceName] = React.useState(""); // new state for storing the workspace name
   const [role, setRole] = React.useState("");
+  const navigate = useNavigate();
 
   const steps = ["Choose Name", "Choose Role"];
 
@@ -49,6 +51,10 @@ export function OB_landing() {
 
   const handleBack = () => {
     setActiveStep((prevActiveStep) => prevActiveStep - 1);
+  };
+
+  const handleToRoot = () => {
+    navigate("/");
   };
 
   return (
@@ -126,6 +132,13 @@ export function OB_landing() {
                     Congratulations! You just created your workspace. Let's go
                     to your workspace now!
                   </Typography>
+                  <Button
+                    variant="contained"
+                    onClick={handleToRoot}
+                    sx={{ mt: 3, ml: 1 }}
+                  >
+                    Go To My Workspace
+                  </Button>
                 </React.Fragment>
               ) : (
                 <React.Fragment>
