@@ -66,13 +66,13 @@ export function SignUp() {
             width: "100%", // Set width to 100% or another desired value
             maxWidth: "lg", // Or another desired value, or remove maxWidth
             padding: "40px",
-            backgroundColor: "#F6F7FC",
+            backgroundColor: "white",
             borderRadius: "16px", // Adjust this value for more or less rounded corners
             boxShadow: "0 3px 5px rgba(0, 0, 0, 0.3)", // Adjust values and color for desired shadow effect
           }}
           // border={4}
         >
-          <Typography component="h1" variant="h5">
+          <Typography component="h1" variant="h5" sx={{ color: "#343A40" }}>
             Sign Up
           </Typography>
           <Box component="form" noValidate onSubmit={onSubmit} sx={{ mt: 3 }}>
