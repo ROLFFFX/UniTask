@@ -5,20 +5,20 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="94e22b41-55fe-4436-8cfe-1c1de9be7852" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/teamone/unitask/model/ConfirmationToken.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/teamone/unitask/repository/ConfirmationTokenRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/teamone/unitask/service/ConfirmationTokenService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/teamone/unitask/service/EmailValidator.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/teamone/unitask/service/email/EmailSender.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/teamone/unitask/service/email/EmailService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/teamone/unitask/service/email/MailConfiguration.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/teamone/unitask/controller/UserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/teamone/unitask/controller/UserController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/teamone/unitask/repository/HyperlinkRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/teamone/unitask/repository/HyperlinkRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/teamone/unitask/repository/MeetingRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/teamone/unitask/repository/MeetingRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/teamone/unitask/repository/ProjectRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/teamone/unitask/repository/ProjectRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/teamone/unitask/repository/TaskRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/teamone/unitask/repository/TaskRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/teamone/unitask/repository/TimeSlotRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/teamone/unitask/repository/TimeSlotRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/teamone/unitask/repository/UserRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/teamone/unitask/repository/UserRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/teamone/unitask/service/HyperlinkService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/teamone/unitask/service/HyperlinkService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/teamone/unitask/service/MeetingService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/teamone/unitask/service/MeetingService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/teamone/unitask/service/ProjectService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/teamone/unitask/service/ProjectService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/teamone/unitask/service/TaskService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/teamone/unitask/service/TaskService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/teamone/unitask/service/TimeSlotService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/teamone/unitask/service/TimeSlotService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/teamone/unitask/service/UserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/teamone/unitask/service/UserService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/teamone/unitask/controller/RegistrationController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/teamone/unitask/controller/RegistrationController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/teamone/unitask/model/AppUser.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/teamone/unitask/model/AppUser.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/teamone/unitask/model/RegistrationRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/teamone/unitask/model/RegistrationRequest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/teamone/unitask/repository/AppUserRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/teamone/unitask/repository/AppUserRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/teamone/unitask/service/AppUserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/teamone/unitask/service/AppUserService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/teamone/unitask/service/RegistrationService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/teamone/unitask/service/RegistrationService.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -92,6 +92,11 @@
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
 }</component>
+  <component name="RecentsManager">
+    <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
+      <recent name="com.teamone.unitask.service.email" />
+    </key>
+  </component>
   <component name="RunManager">
     <configuration name="UnitaskApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
       <module name="unitask" />
