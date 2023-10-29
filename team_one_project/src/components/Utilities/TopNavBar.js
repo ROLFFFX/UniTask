@@ -333,7 +333,13 @@ export function TopAppBar() {
               <Tooltip title="See Your Hyperlinks">
                 <IconButton
                   style={{ color: "white" }}
-                  onClick={() => toggleDrawer(true)}
+                  onClick={() => {
+                    (state === false) ?
+                      toggleDrawer(true)
+                    :
+                      toggleDrawer(false)
+                      cancelAction()
+                  }}
                   sx={{ p: 0 }}
                 >
                   <LinkIcon />
