@@ -8,7 +8,8 @@ import Divider from "@mui/material/Divider";
 import ListItem from "@mui/material/ListItem";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemText from "@mui/material/ListItemText";
-import { Grid, Button, Paper } from "@mui/material";
+import { Grid, Button, Paper, ThemeProvider } from "@mui/material";
+import barTheme from "./barTheme";
 
 export default function TemporaryDrawer() {
   //initialize options for sidebar
@@ -42,10 +43,10 @@ export default function TemporaryDrawer() {
       case 2:
         navigate("../meeting");
         break;
+      // case 3:
+      //   navigate("../hyperlink");
+      //   break;
       case 3:
-        navigate("../hyperlink");
-        break;
-      case 4:
         navigate("../review");
         break;
       case 5:
@@ -102,7 +103,7 @@ export default function TemporaryDrawer() {
   );
 
   return (
-    <div>
+    <ThemeProvider theme={barTheme}>
       {["left"].map((anchor) => (
         <React.Fragment key={anchor}>
           <Grid container direction="column">
@@ -129,6 +130,6 @@ export default function TemporaryDrawer() {
           </Grid>
         </React.Fragment>
       ))}
-    </div>
+    </ThemeProvider>
   );
 }
