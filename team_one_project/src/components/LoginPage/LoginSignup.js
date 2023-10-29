@@ -96,7 +96,7 @@ export function LoginSignup() {
                 </Link> */}
               </Grid>
               <Grid item>
-                <Link href="login/signup" variant="body2">
+                <Link href="login/signup" variant="body2" color="inherit">
                   {"Don't have an account? Sign Up!"}
                 </Link>
               </Grid>
