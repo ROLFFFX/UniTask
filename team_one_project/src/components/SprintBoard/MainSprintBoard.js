@@ -1,18 +1,18 @@
 import { Box } from "@mui/material";
-import Popper from '@mui/material/Popper';
-import React, {useState} from "react";
+import Popper from "@mui/material/Popper";
+import React, { useState } from "react";
 import "../../App.css";
 import add_button_favicon from "../../images/add_button_favicon.png";
 import chevron_favicon from "../../images/chevron_favicon.png";
 import circle_blue_favicon from "../../images/circle_blue_favicon.png";
 import circle_orange_favicon from "../../images/circle_orange_favicon.png";
 import "./MainSprintBoard.css";
-import {v4 as uuidv4} from "uuid";
+import { v4 as uuidv4 } from "uuid";
 
 export function MainSprintBoard() {
-
   const [AddSub, setAddSub] = useState("idle");
   const [ShowSub, setShowSub] = useState("expand");
+  const rotation = ShowSub === "expand" ? "0deg" : "90deg";
 
   var emptysubtasks = [];
   const [listSub, setlistSub] = useState(emptysubtasks);
@@ -21,7 +21,7 @@ export function MainSprintBoard() {
     const newlist = listSub.concat([
       {
         id: uuidv4(), //to have a stable key attribute for the item
-        description: "Subtask"
+        description: "Subtask",
       },
     ]);
     setlistSub(newlist);
@@ -35,30 +35,29 @@ export function MainSprintBoard() {
     setAnchorEl(anchorEl ? null : event.currentTarget);
   };
 
-
   // Close popup menu and submit data
   const [teamName, setTeamName] = useState("Team 1");
   const [tasks, setTasks] = useState([]);
   const [taskNameInput, setTaskNameInput] = useState("");
 
   const closeTaskPopup = () => {
-   // if (taskNameInput) {
-        // TODO: get info from user
-        // TODO: send data to backend
-        const taskData = {
-          taskID: 0,  // Do I need to set taskID or will SQL do this?
-          title: taskNameInput.value,
-          //assignee: assigneeInput.value,
-          expectedCompleteTime: 0,  // TODO: get from user
-          numLayers: 1, // TODO: calculate layer count
-          status: "Not Started", // TODO: get from user
-          //taskPoints: taskPointsInput.value,
-          parentTaskID: null  // TODO: set parent ID if applicable
-        }
-        createTask(taskData);
-        displayTask(taskData);
-        setTaskNameInput(""); // Reset input field
-   // }
+    // if (taskNameInput) {
+    // TODO: get info from user
+    // TODO: send data to backend
+    const taskData = {
+      taskID: 0, // Do I need to set taskID or will SQL do this?
+      title: taskNameInput.value,
+      //assignee: assigneeInput.value,
+      expectedCompleteTime: 0, // TODO: get from user
+      numLayers: 1, // TODO: calculate layer count
+      status: "Not Started", // TODO: get from user
+      //taskPoints: taskPointsInput.value,
+      parentTaskID: null, // TODO: set parent ID if applicable
+    };
+    createTask(taskData);
+    displayTask(taskData);
+    setTaskNameInput(""); // Reset input field
+    // }
   };
 
   const createTask = (taskData) => {
@@ -77,27 +76,36 @@ export function MainSprintBoard() {
         <div className="grid-container" id="board">
           <div className="grid-item" id="tasksHeader">
             Tasks
-              <img id="addTaskButton" aria-describedby={"createTaskMenu"} onClick={handleClick} src={add_button_favicon} alt=""></img>
+            <img
+              id="addTaskButton"
+              aria-describedby={"createTaskMenu"}
+              onClick={handleClick}
+              src={add_button_favicon}
+              alt=""
+            ></img>
           </div>
           <Popper id={"createTaskMenu"} open={open} anchorEl={anchorEl}>
             <Box className="popupContent">
               <span>Title: </span>
-              <input type='text'
-                        id='taskNameInput'
-                        value={taskNameInput}
-                        onChange={e => setTaskNameInput(e.target.value)}
+              <input
+                type="text"
+                id="taskNameInput"
+                value={taskNameInput}
+                onChange={(e) => setTaskNameInput(e.target.value)}
               ></input>
-              
+
               <span>Assigned to: </span>
               <select name="assigneeInput" id="assigneeInput"></select>
-              
+
               <span>Due date: </span>
               <input type="date" id="dueDateInput"></input>
-              
+
               <span>Task Points: </span>
               <input type="number" id="taskPointsInput" value="1"></input>
-              
-              <button id="closeTaskPopupButton" onClick={closeTaskPopup}>Submit</button>
+
+              <button id="closeTaskPopupButton" onClick={closeTaskPopup}>
+                Submit
+              </button>
             </Box>
           </Popper>
           <div className="grid-item" id="tasks">
@@ -106,20 +114,31 @@ export function MainSprintBoard() {
                 <div className="taskLabel">
                   <img src={circle_orange_favicon} alt=""></img>
                   Task 1
-                  <button id="showSubtaskButton" onClick={() => setShowSub(ShowSub==="collapse"?
-                                                                                ("expand")
-                                                                                :("collapse") )}>
+                  <button
+                    id="showSubtaskButton"
+                    onClick={() =>
+                      setShowSub(ShowSub === "collapse" ? "expand" : "collapse")
+                    }
+                  >
                     <img
                       className="showSubtaskButtonImg"
                       src={chevron_favicon}
                       alt=""
+                      style={{
+                        transform: `rotate(${rotation})`,
+                        transition: "transform 0.3s ease-in-out", // This makes the rotation animate smoothly
+                        transformOrigin: "center", // Ensures the image rotates around its center
+                        display: "block", // Ensures the image takes up the full space of its container.
+                        margin: "auto",
+                      }}
                     ></img>
                   </button>
-                  <button id="addSubtaskButton"
-                          onClick={() => {
-                                      addSubtaskButton();
-                                      setAddSub("activated");
-                                    }}
+                  <button
+                    id="addSubtaskButton"
+                    onClick={() => {
+                      addSubtaskButton();
+                      setAddSub("activated");
+                    }}
                   >
                     <img
                       className="addSubtaskButtonImg"
@@ -128,20 +147,20 @@ export function MainSprintBoard() {
                     ></img>
                   </button>
                 </div>
-                {ShowSub === "expand" ?
-                    (<ul className={"subtaskList"}>
-                      {listSub.map((subtask) => (
-                        <li
-                            className={"subtask"}
-                            key={subtask.id}
-                        >
-                          <img className="subtaskIcon" src={circle_blue_favicon} alt={""}></img>
-                          {subtask.description}
-                        </li>
-                      ))}
-                    </ul>)
-                    : null
-                }
+                {ShowSub === "expand" ? (
+                  <ul className={"subtaskList"}>
+                    {listSub.map((subtask) => (
+                      <li className={"subtask"} key={subtask.id}>
+                        <img
+                          className="subtaskIcon"
+                          src={circle_blue_favicon}
+                          alt={""}
+                        ></img>
+                        {subtask.description}
+                      </li>
+                    ))}
+                  </ul>
+                ) : null}
               </li>
             </ul>
           </div>
