@@ -21,6 +21,7 @@ import { SelectMeeting } from "./components/Meeting/SelectMeeting";
 import { Skeleton } from "@mui/material";
 import { MeetingContent } from "./components/Meeting/MeetingContent";
 import { OB_landing } from "./components/LoginPage/OnBoarding/OB_landing";
+import { ManageTeam } from "./components/ManageTeam/ManageTeam";
 
 function Layout({ children }) {
   return (
@@ -96,6 +97,14 @@ function App() {
           element={
             <Layout>
               <MainReview />
+            </Layout>
+          }
+        />
+        <Route
+          path="/manageteam"
+          element={
+            <Layout>
+              <ManageTeam />
             </Layout>
           }
         />
