@@ -1,6 +1,6 @@
 import { Box } from "@mui/material";
 import Popper from '@mui/material/Popper';
-import React, {useState, useEffect} from "react";
+import React, {useState} from "react";
 import "../../App.css";
 import add_button_favicon from "../../images/add_button_favicon.png";
 import chevron_favicon from "../../images/chevron_favicon.png";
@@ -27,17 +27,6 @@ export function MainSprintBoard() {
     setlistSub(newlist);
   }
 
-  // Populate assignee list
-  const [users, setUsers] = useState([]);
-  //const [selectedUser, setSelectedUser] = useState('');
-
-  // Simulate fetching the list of users from a database
-  useEffect(() => {
-    // Hard code user names for now
-    const tempUsers = ["Alec", "Daniel", "Eula", "Francis", "Rolf", "Salina", "Sichen"];
-    setUsers(tempUsers);
-  }, []);
-
   // From MUI Popper.js tutorial:
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
@@ -51,28 +40,24 @@ export function MainSprintBoard() {
   const [teamName, setTeamName] = useState("Team 1");
   const [tasks, setTasks] = useState([]);
   const [taskNameInput, setTaskNameInput] = useState("");
-  const [assigneeInput, setAssigneeInput] = useState("");
-  const [dueDateInput, setDueDateInput] = useState("");
-  const [taskPointsInput, setTaskPointsInput] = useState(1);
 
   const closeTaskPopup = () => {
    // if (taskNameInput) {
+        // TODO: get info from user
         // TODO: send data to backend
         const taskData = {
-          title: taskNameInput.valueOf(),
-          assignee: assigneeInput.valueOf(),
-          expectedCompleteTime: dueDateInput.valueOf(),
+          taskID: 0,  // Do I need to set taskID or will SQL do this?
+          title: taskNameInput.value,
+          //assignee: assigneeInput.value,
+          expectedCompleteTime: 0,  // TODO: get from user
+          numLayers: 1, // TODO: calculate layer count
           status: "Not Started", // TODO: get from user
-          taskPoints: taskPointsInput.valueOf(),
-          parentTaskID: null,  // TODO: set parent ID if applicable
-          numLayers: 1 // TODO: calculate layer count
+          //taskPoints: taskPointsInput.value,
+          parentTaskID: null  // TODO: set parent ID if applicable
         }
         createTask(taskData);
         displayTask(taskData);
-
-        // Reset input fields
-        setTaskNameInput("");
-        setTaskPointsInput(1);
+        setTaskNameInput(""); // Reset input field
    // }
   };
 
@@ -102,33 +87,15 @@ export function MainSprintBoard() {
                         value={taskNameInput}
                         onChange={e => setTaskNameInput(e.target.value)}
               ></input>
-              <br></br><br></br>
+              
               <span>Assigned to: </span>
-              <select name="assigneeInput" 
-                      id="assigneeInput"
-                      value={assigneeInput}
-                      onChange={e => setAssigneeInput(e.target.value)}
-              ><option value="">Select User</option>
-                {users.map((user, index) => (
-                  <option key={index} value={user}>
-                    {user}
-                  </option>
-                ))}
-              </select>
-              <br></br><br></br>
+              <select name="assigneeInput" id="assigneeInput"></select>
+              
               <span>Due date: </span>
-              <input type='date'
-                        id='dueDateInput'
-                        value={dueDateInput}
-                        onChange={e => setDueDateInput(e.target.value)}
-              ></input>
-              <br></br><br></br>
+              <input type="date" id="dueDateInput"></input>
+              
               <span>Task Points: </span>
-              <input type='number'
-                        id='taskPointsInput'
-                        value={taskPointsInput}
-                        onChange={e => setTaskPointsInput(e.target.value)}
-              ></input>
+              <input type="number" id="taskPointsInput" value="1"></input>
               
               <button id="closeTaskPopupButton" onClick={closeTaskPopup}>Submit</button>
             </Box>
