@@ -137,7 +137,7 @@ export function TopAppBar() {
             <ListItem key={userlink.id} disablePadding>
               <TextField
                 label="Edit Name"
-                variant="outlined"
+                variant="inherit"
                 defaultValue={userlink.name}
                 onChange={(event) => changeName(event)}
                 error={!linkName}
@@ -145,7 +145,7 @@ export function TopAppBar() {
               />
               <TextField
                 label="Edit Link"
-                variant="outlined"
+                variant="inherit"
                 defaultValue={userlink.Lk}
                 onChange={(event) => changeLink(event)}
                 error={!link}

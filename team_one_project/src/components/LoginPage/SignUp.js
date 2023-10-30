@@ -39,17 +39,16 @@ export function SignUp() {
 
   const onSubmit = async (e) => {
     e.preventDefault();
-    // TODO: check user email.
-    user.password = SHA256(user.password).toString();
-    // console.log(user);
+    // user.password = SHA256(user.password).toString();
+    console.log(user);
     try {
-      await axios.post("http://localhost:8080/user/postUserSignup", user, {
+      await axios.post("http://localhost:8080/api/v1/registration", user, {
         headers: { "Content-Type": "application/json" },
       });
     } catch (error) {
       console.error("Error Caught on Sign Up: ", error);
     }
-    navigate("/");
+    // navigate("/login");
   };
 
   return (

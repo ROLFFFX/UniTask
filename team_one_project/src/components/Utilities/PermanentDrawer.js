@@ -16,10 +16,9 @@ export default function PermanentDrawer() {
     "Dashboard",
     "Task Board",
     "Meeting Schedule",
-    // "Hyperlink Section",
     "Inspect & Adapt",
   ];
-  const sidebar_lower = ["Account", "Settings"];
+  const sidebar_lower = ["Manage Workspace", "Account", "Settings"];
   const navigate = useNavigate();
   const handleClick = (index) => {
     switch (index) {
@@ -32,16 +31,16 @@ export default function PermanentDrawer() {
       case 2:
         navigate("../meeting");
         break;
-      // case 3:
-      //   navigate("../hyperlink");
-      //   break;
       case 3:
         navigate("../review");
         break;
       case 5:
-        navigate("../account");
+        navigate("../manageteam");
         break;
       case 6:
+        navigate("../account");
+        break;
+      case 7:
         navigate("../setting");
         break;
       default:
