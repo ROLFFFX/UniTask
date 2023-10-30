@@ -12,18 +12,44 @@ import theme from "./LoginStyling/theme";
 import { TopSVG } from "./LoginStyling/TopSVG";
 import { BottomSVG } from "./LoginStyling/BottomSVG";
 import { useNavigate } from "react-router-dom";
+import { useContext } from "react";
+import AuthContext from "../../context/AuthProvider";
+import axios from "axios";
 
 export function LoginSignup() {
+  const { setAuth } = useContext(AuthContext);
   const navigate = useNavigate();
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get("email"),
-      password: data.get("password"),
-    });
-    alert("To be deleted. Compare user input");
-    navigate("/login/ob_landing"); //goes to onboarding process without checking if user info is complete.
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const data = new FormData(e.currentTarget);
+    const userEmail = data.get("email");
+    const userPassword = data.get("password");
+    alert(
+      "userEmail: " +
+        userEmail +
+        ", userPassword: " +
+        userPassword +
+        ". This msg is for testing purpose, should be deleted later."
+    );
+    // @todo: implement login process URL
+    try {
+      const response = await axios.post("URL For Endpoint", data, {
+        headers: { "Content-Type": "application/json" },
+        withCredentials: true,
+      });
+      //@todo: if success, save access token that is sent from backend
+      const userJWT = response.data;
+      setAuth({ userEmail, userPassword, userJWT });
+      navigate("/login/ob_landing"); //goes to onboarding process without checking if user info is complete.
+    } catch (error) {
+      if (error) {
+        if (!error?.response) {
+          alert("No Server Response!");
+        }
+        //@todo: implement more custom error messages.
+        console.error("Error Caught on Sign In: ", error);
+      }
+    }
   };
 
   return (
