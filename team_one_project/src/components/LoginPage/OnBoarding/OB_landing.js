@@ -74,7 +74,7 @@ export function OB_landing() {
         <Container component="main" maxWidth="sm" sx={{ mt: 2, mb: 4 }}>
           <Box
             sx={{
-              marginTop: 18,
+              marginTop: 15,
               display: "flex",
               flexDirection: "column",
               alignItems: "center",
@@ -116,7 +116,7 @@ export function OB_landing() {
             </Stepper>
             <Divider
               sx={{
-                my: 1,
+                // my: 1,
                 height: "5px",
 
                 width: "100%",
