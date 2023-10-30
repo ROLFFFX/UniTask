@@ -40,12 +40,21 @@ export function SignUp() {
   const onSubmit = async (e) => {
     e.preventDefault();
     // user.password = SHA256(user.password).toString();
-    console.log(user);
+    // console.log(user);
     try {
-      await axios.post("http://localhost:8080/api/v1/registration", user, {
-        headers: { "Content-Type": "application/json" },
-      });
+      const response = await axios.post(
+        "http://localhost:8080/api/v1/registration",
+        user,
+        {
+          headers: { "Content-Type": "application/json" },
+          withCredentials: true,
+        }
+      );
+      // console.log(JSON.stringify(response));   NOTE: response.data contains the JWT token.
     } catch (error) {
+      if (!error?.response) {
+        alert("No Server Response!");
+      }
       console.error("Error Caught on Sign Up: ", error);
     }
     // navigate("/login");

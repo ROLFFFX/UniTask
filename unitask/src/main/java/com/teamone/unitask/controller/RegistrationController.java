@@ -14,7 +14,7 @@ public class RegistrationController {
     private final RegistrationService registrationService;
 
     @PostMapping
-    @CrossOrigin(origins = "http://localhost:3000") //TODO: url to be udpated before deployment
+    @CrossOrigin(origins = "http://localhost:3000", allowCredentials = "true") //TODO: url to be udpated before deployment
     public String register(@RequestBody RegistrationRequest request) {
         return registrationService.register(request);
     }
