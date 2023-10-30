@@ -48,7 +48,7 @@ export function SignUp() {
     } catch (error) {
       console.error("Error Caught on Sign Up: ", error);
     }
-    navigate("/login");
+    // navigate("/login");
   };
 
   return (

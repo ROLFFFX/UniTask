@@ -15,8 +15,8 @@ spring:
     mail:
         host: smtp.gmail.com
         port: 587
-        username: unitask370@gmail.com
-        password: dxecgnicicrgsosy
+#        username: TODO: to be filled
+#        password: TODO: to be filled
         properties:
             mail:
                 smtp:
