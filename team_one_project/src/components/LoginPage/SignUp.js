@@ -42,7 +42,7 @@ export function SignUp() {
     // user.password = SHA256(user.password).toString();
     console.log(user);
     try {
-      await axios.post("http://localhost:8080/user/postUserSignup", user, {
+      await axios.post("http://localhost:8080/api/v1/registration", user, {
         headers: { "Content-Type": "application/json" },
       });
     } catch (error) {
