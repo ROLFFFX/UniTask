@@ -7,9 +7,19 @@ import java.time.LocalDateTime;
 @Table(name = "meeting")
 public class Meeting {
 
+//    @Id
+//    @GeneratedValue(strategy = GenerationType.IDENTITY)
+//    @Column(name = "meeting_id")
+    @SequenceGenerator(
+            name = "meeting_sequence",
+            sequenceName = "meeting_sequence",
+            allocationSize = 1
+    )
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "meeting_id")
+    @GeneratedValue(
+            strategy = GenerationType.SEQUENCE,
+            generator = "meeting_sequence"
+    )
     private Long meetingId;
     @Column(name = "title", nullable = false)
     private String title = "New Meeting";
@@ -17,6 +27,9 @@ public class Meeting {
     private LocalDateTime startTime;
     @Column(name = "end_time", nullable = false)
     private LocalDateTime endTime;
+    @ManyToOne
+    @JoinColumn(name = "project_id")
+    private Project projectId;
 
     public Long getMeetingId() {
         return meetingId;
@@ -48,5 +61,13 @@ public class Meeting {
 
     public void setEndTime(LocalDateTime endTime) {
         this.endTime = endTime;
+    }
+
+    public Project getProjectId() {
+        return projectId;
+    }
+
+    public void setProjectId(Project projectId) {
+        this.projectId = projectId;
     }
 }

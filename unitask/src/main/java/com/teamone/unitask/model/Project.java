@@ -2,21 +2,33 @@ package com.teamone.unitask.model;
 
 import javax.persistence.*;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "project")
 public class Project {
 
+//    @Id
+//    @GeneratedValue(strategy = GenerationType.IDENTITY)
+//    @Column(name = "project_id")
+    @SequenceGenerator(
+            name = "project_sequence",
+            sequenceName = "project_sequence",
+            allocationSize = 1
+    )
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "project_id")
+    @GeneratedValue(
+            strategy = GenerationType.SEQUENCE,
+            generator = "project_sequence"
+    )
     private Long projectId;
-    @Column(name = "project_title", nullable = false, length = 255)
+    @Column(name = "project_title", nullable = false)
     private String projectTitle = "New Project";
-    // one to many relation;
-//    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-//    @JoinColumn(name = "project_members")
-//    private List<User> projectMembers;
+    @ManyToOne
+    @JoinColumn(name = "master_user_id")
+    private AppUser masterUserId;
+    @ManyToMany(mappedBy = "participatedProjectsId")
+    private Set<AppUser> listMemberId;
 
 
     public Long getProjectId() {
@@ -42,4 +54,19 @@ public class Project {
 //    public void setProjectMembers(List<User> projectMembers) {
 //        this.projectMembers = projectMembers;
 //    }
+    public AppUser getMasterUserId() {
+        return masterUserId;
+    }
+
+    public void setMasterUserId(AppUser masterUserId) {
+        this.masterUserId = masterUserId;
+    }
+
+    public Set<AppUser> getListMemberId() {
+        return listMemberId;
+    }
+
+    public void setListMemberId(Set<AppUser> listMemberId) {
+        this.listMemberId = listMemberId;
+    }
 }
