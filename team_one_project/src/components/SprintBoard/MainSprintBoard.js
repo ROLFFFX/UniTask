@@ -74,7 +74,6 @@ export function MainSprintBoard() {
         displayTask(taskData);
 
         // Reset input fields
-        // TODO: reset all fields
         setTaskNameInput("");
         setTaskPointsInput(1);
    // }
@@ -146,54 +145,52 @@ export function MainSprintBoard() {
             </Box>
           </Popper>
           <div className="grid-item" id="tasks">
-            <ul id={"taskList"}>
-              {listTask.map((task) => (
-                <li
-                    className={"task"}
-                    key={task.id}
-                >
-                  <div className="taskLabel">
-                    <img src={circle_orange_favicon} alt=""></img>
-                    {task.title}
-                    <button id="showSubtaskButton" onClick={() => setShowSub(ShowSub==="collapse"?
-                                                                                  ("expand")
-                                                                                  :("collapse") )}>
-                      <img
-                        className="showSubtaskButtonImg"
-                        src={chevron_favicon}
-                        alt=""
-                      ></img>
-                    </button>
-                    <button id="addSubtaskButton"
-                            onClick={() => {
-                                        addSubtaskButton();
-                                        setAddSub("activated");
-                                      }}
-                    >
-                      <img
-                        className="addSubtaskButtonImg"
-                        src={add_button_favicon}
-                        alt={""}
-                      ></img>
-                    </button>
-                  </div>
-                
-                  {ShowSub === "expand" ?
-                      (<ul className={"subtaskList"}>
-                        {listSub.map((subtask) => (
-                          <li
-                              className={"subtask"}
-                              key={subtask.id}
-                          >
-                            <img className="subtaskIcon" src={circle_blue_favicon} alt={""}></img>
-                            {subtask.description}
-                          </li>
-                        ))}
-                      </ul>)
-                      : null
-                  }
-                </li>
-              ))}
+          <ul id="taskList">
+              <li className="task">
+                <div className="taskLabel">
+                  <img src={circle_orange_favicon} alt=""></img>
+                  Task 1
+                  <button
+                    id="showSubtaskButton"
+                    onClick={() =>
+                      setShowSub(ShowSub === "collapse" ? "expand" : "collapse")
+                    }
+                  >
+                    <img
+                      className="showSubtaskButtonImg"
+                      src={chevron_favicon}
+                      alt=""
+                    ></img>
+                  </button>
+                  <button
+                    id="addSubtaskButton"
+                    onClick={() => {
+                      addSubtaskButton();
+                      setAddSub("activated");
+                    }}
+                  >
+                    <img
+                      className="addSubtaskButtonImg"
+                      src={add_button_favicon}
+                      alt={""}
+                    ></img>
+                  </button>
+                </div>
+                {ShowSub === "expand" ? (
+                  <ul className={"subtaskList"}>
+                    {listSub.map((subtask) => (
+                      <li className={"subtask"} key={subtask.id}>
+                        <img
+                          className="subtaskIcon"
+                          src={circle_blue_favicon}
+                          alt={""}
+                        ></img>
+                        {subtask.description}
+                      </li>
+                    ))}
+                  </ul>
+                ) : null}
+              </li>
             </ul>
             
           </div>
