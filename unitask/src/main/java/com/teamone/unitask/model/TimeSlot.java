@@ -8,9 +8,19 @@ import java.util.List;
 @Table(name = "time_slot")
 public class TimeSlot {
 
+//    @Id
+//    @GeneratedValue(strategy = GenerationType.IDENTITY)
+//    @Column(name = "timeslot_id")
+    @SequenceGenerator(
+            name = "timeslot_sequence",
+            sequenceName = "timeslot_sequence",
+            allocationSize = 1
+    )
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "timeslot_id")
+    @GeneratedValue(
+            strategy = GenerationType.SEQUENCE,
+            generator = "timeslot_sequence"
+    )
     private Long timeSlotId;
     @Column(name = "start_time", nullable = false)
     private LocalDateTime startTime;
@@ -20,6 +30,10 @@ public class TimeSlot {
 //    @JoinTable(name = "tbl_timeslot_user", joinColumns = {@JoinColumn(name = "user_id")},
 //            inverseJoinColumns = {@JoinColumn(name = "timeslot_id")})
 //    private List<User> usersAvailable;
+    @ManyToOne
+    @JoinColumn(name = "project_id")
+    private Project projectId;
+
 
     public Long getTimeSlotId() {
         return timeSlotId;
@@ -52,4 +66,12 @@ public class TimeSlot {
 //    public void setUsersAvailable(List<User> usersAvailable) {
 //        this.usersAvailable = usersAvailable;
 //    }
+
+    public Project getProjectId() {
+        return projectId;
+    }
+
+    public void setProjectId(Project projectId) {
+        this.projectId = projectId;
+    }
 }

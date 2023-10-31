@@ -11,6 +11,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import javax.persistence.*;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.Set;
 
 
 @Getter
@@ -39,6 +40,13 @@ public class AppUser implements UserDetails {
     private AppUserRole appUserRole;
     private Boolean locked = false;
     private Boolean enabled = false;
+    @ManyToMany
+    @JoinTable(
+            name = "appuserids_to_projectids",
+            joinColumns = @JoinColumn(name = "appuser_id"),
+            inverseJoinColumns = @JoinColumn(name = "prject_id")
+    )
+    private Set<Project> participatedProjectsId;
 
 
     public AppUser(String firstName, String lastName, String email, String password,
