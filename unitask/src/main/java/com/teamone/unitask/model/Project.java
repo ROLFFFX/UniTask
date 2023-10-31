@@ -26,9 +26,9 @@ public class Project {
     private String projectTitle = "New Project";
     @ManyToOne
     @JoinColumn(name = "master_user_id")
-    private AppUser masterUserId;
-    @ManyToMany(mappedBy = "participatedProjectsId")
-    private Set<AppUser> listMemberId;
+    private User masterUserId;
+//    @ManyToMany(mappedBy = "participatedProjectsId")
+//    private Set<User> listMemberId;
 
 
     public Long getProjectId() {
@@ -54,19 +54,19 @@ public class Project {
 //    public void setProjectMembers(List<User> projectMembers) {
 //        this.projectMembers = projectMembers;
 //    }
-    public AppUser getMasterUserId() {
+    public User getMasterUserId() {
         return masterUserId;
     }
 
-    public void setMasterUserId(AppUser masterUserId) {
+    public void setMasterUserId(User masterUserId) {
         this.masterUserId = masterUserId;
     }
 
-    public Set<AppUser> getListMemberId() {
-        return listMemberId;
-    }
-
-    public void setListMemberId(Set<AppUser> listMemberId) {
-        this.listMemberId = listMemberId;
-    }
+//    public Set<User> getListMemberId() {
+//        return listMemberId;
+//    }
+//
+//    public void setListMemberId(Set<User> listMemberId) {
+//        this.listMemberId = listMemberId;
+//    }
 }

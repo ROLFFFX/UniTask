@@ -1,11 +1,14 @@
 package com.teamone.unitask.repository;
 
-import com.teamone.unitask.model.AppRole;
-import com.teamone.unitask.model.EAppUserRole;
+
+import com.teamone.unitask.model.ERole;
+import com.teamone.unitask.model.Role;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
 import java.util.Optional;
 
-public interface RoleRepository extends JpaRepository<AppRole, Long> {
-    Optional<EAppUserRole> findByName(EAppUserRole name);
+@Repository
+public interface RoleRepository extends JpaRepository<Role, Long> {
+    Optional<Role> findByName(ERole name);
 }

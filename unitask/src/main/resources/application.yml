@@ -23,3 +23,9 @@ spring:
                     auth: true
                     starttls:
                         enable: true
+
+# App Properties
+unitask:
+    app:
+        jwtSecret: "======================unitask=Spring==========================="
+        jwtExpirationMs: 86400000
