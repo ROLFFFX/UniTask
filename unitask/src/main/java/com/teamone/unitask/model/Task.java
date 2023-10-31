@@ -8,9 +8,19 @@ import java.util.List;
 @Table(name = "task")
 public class Task {
 
+//    @Id
+//    @GeneratedValue(strategy = GenerationType.IDENTITY)
+//    @Column(name = "task_id")
+    @SequenceGenerator(
+            name = "task_sequence",
+            sequenceName = "task_sequence",
+            allocationSize = 1
+    )
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "task_id")
+    @GeneratedValue(
+            strategy = GenerationType.SEQUENCE,
+            generator = "task_sequence"
+    )
     private Long taskId;
     @Column(name = "title", nullable = false)
     private String title = "New Task";
@@ -30,6 +40,10 @@ public class Task {
 //    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 //    @JoinColumn(name = "assigned_member_id")
 //    private List<User> assignedMemberId;
+    @ManyToOne
+    @JoinColumn(name = "project_id")
+    private Project projectId;
+    //TODO: USER ASSIGNED
 
 
     public Long getTaskId() {
@@ -94,5 +108,13 @@ public class Task {
 
     public Task getParentTaskId() {
         return parentTaskId;
+    }
+
+    public Project getProjectId() {
+        return projectId;
+    }
+
+    public void setProjectId(Project projectId) {
+        this.projectId = projectId;
     }
 }
