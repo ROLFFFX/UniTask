@@ -27,9 +27,9 @@ public class Task {
     @Column(name = "task_points", nullable = false)
     private Integer taskPoints = 1;
     // one to many relation;
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    @JoinColumn(name = "assigned_member_id")
-    private List<User> assignedMemberId;
+//    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+//    @JoinColumn(name = "assigned_member_id")
+//    private List<User> assignedMemberId;
 
 
     public Long getTaskId() {
@@ -84,13 +84,13 @@ public class Task {
         this.taskPoints = taskPoints;
     }
 
-    public List<User> getAssignedMemberId() {
-        return assignedMemberId;
-    }
-
-    public void setAssignedMemberId(List<User> assignedMemberId) {
-        this.assignedMemberId = assignedMemberId;
-    }
+//    public List<User> getAssignedMemberId() {
+//        return assignedMemberId;
+//    }
+//
+//    public void setAssignedMemberId(List<User> assignedMemberId) {
+//        this.assignedMemberId = assignedMemberId;
+//    }
 
     public Task getParentTaskId() {
         return parentTaskId;

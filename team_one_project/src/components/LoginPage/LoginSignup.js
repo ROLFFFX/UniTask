@@ -11,15 +11,41 @@ import * as React from "react";
 import theme from "./LoginStyling/theme";
 import { TopSVG } from "./LoginStyling/TopSVG";
 import { BottomSVG } from "./LoginStyling/BottomSVG";
+import { useNavigate } from "react-router-dom";
+import { useContext } from "react";
+import AuthContext from "../../context/AuthProvider";
+import axios from "axios";
 
 export function LoginSignup() {
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get("email"),
-      password: data.get("password"),
-    });
+  const { setAuth } = useContext(AuthContext);
+  const navigate = useNavigate();
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    var data = new FormData(e.currentTarget);
+    const userEmail = data.get("email");
+    const userPassword = data.get("password");
+    data = { userEmail, userPassword };
+    console.log(" This is data: ");
+    console.log(data);
+    // @todo: implement login process URL
+    try {
+      const response = await axios.post("URL For Endpoint", data, {
+        headers: { "Content-Type": "application/json" },
+        withCredentials: true,
+      });
+      //@todo: if success, save access token that is sent from backend
+      const userJWT = response.data;
+      setAuth({ userEmail, userPassword, userJWT });
+      navigate("/login/ob_landing"); //goes to onboarding process without checking if user info is complete.
+    } catch (error) {
+      if (error) {
+        if (!error?.response) {
+          alert("No Server Response!");
+        }
+        //@todo: implement more custom error messages.
+        console.error("Error Caught on Sign In: ", error);
+      }
+    }
   };
 
   return (
@@ -82,19 +108,6 @@ export function LoginSignup() {
               Sign In
             </Button>
             <Grid container>
-              <Grid item xs>
-                {/* <Button
-                  type="submit"
-                  fullWidth
-                  variant="contained"
-                  sx={{ mt: 3, mb: 2 }}
-                >
-                  Sign In
-                </Button> */}
-                {/* <Link href="login/forgotpassword" variant="body2">
-                  {"Forgot password?"}
-                </Link> */}
-              </Grid>
               <Grid item>
                 <Link href="login/signup" variant="body2" color="inherit">
                   {"Don't have an account? Sign Up!"}

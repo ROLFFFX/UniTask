@@ -8,7 +8,6 @@ import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
 import { ThemeProvider } from "@mui/material/styles";
 import axios from "axios";
-import SHA256 from "crypto-js/sha256";
 import * as React from "react";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
@@ -39,17 +38,26 @@ export function SignUp() {
 
   const onSubmit = async (e) => {
     e.preventDefault();
-    // TODO: check user email.
-    user.password = SHA256(user.password).toString();
+    // user.password = SHA256(user.password).toString();
     // console.log(user);
     try {
-      await axios.post("http://localhost:8080/user/postUserSignup", user, {
-        headers: { "Content-Type": "application/json" },
-      });
+      const response = await axios.post(
+        "http://localhost:8080/api/v1/registration",
+        user,
+        {
+          headers: { "Content-Type": "application/json" },
+          withCredentials: true,
+        }
+      );
+      // console.log(JSON.stringify(response));   NOTE: response.data contains the JWT token.
+      navigate("/login");
     } catch (error) {
+      if (!error?.response) {
+        alert("No Server Response!");
+      }
+      //@todo: implement more custom error messages.
       console.error("Error Caught on Sign Up: ", error);
     }
-    navigate("/");
   };
 
   return (

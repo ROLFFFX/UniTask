@@ -1,18 +1,6 @@
 import { createTheme } from "@mui/material/styles";
 
-const theme = createTheme({
-  palette: {
-    background: {
-      default: "#E9ECEF",
-    },
-  },
-  typography: {
-    fontFamily: "'Inter', sans-serif", // Specify the Inter font here
-    h5: {
-      color: "#50589E",
-    },
-  },
-
+const hyperlinkTheme = createTheme({
   components: {
     MuiCssBaseline: {
       styleOverrides: {
@@ -48,13 +36,6 @@ const theme = createTheme({
         },
       },
     },
-    MuiTypography: {
-      styleOverrides: {
-        root: {
-          fontFamily: '"Inter", sans-serif',
-        },
-      },
-    },
     MuiButton: {
       styleOverrides: {
         // This targets the root of the MuiButton component
@@ -63,13 +44,6 @@ const theme = createTheme({
           "&:hover": {
             backgroundColor: "#6C757D", // This sets the hover color of the button to a darker red
           },
-        },
-      },
-    },
-    MuiLink: {
-      styleOverrides: {
-        root: {
-          color: "#343A40",
         },
       },
     },
@@ -87,4 +61,4 @@ const theme = createTheme({
   },
 });
 
-export default theme;
+export default hyperlinkTheme;
