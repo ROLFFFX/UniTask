@@ -23,13 +23,33 @@ import TextField from "@mui/material/TextField";
 import AddLinkIcon from "@mui/icons-material/AddLink";
 import LinkIcon from "@mui/icons-material/Link";
 
-import { useState } from "react";
+import {useEffect, useState} from "react";
 import { v4 as uuidv4 } from "uuid";
 
 import UniTaskLogo_new from "../../images/UniTaskLOGO.PNG";
 import { ButtonGroup, ThemeProvider } from "@mui/material";
 
+import axios from "axios";
+
 export function TopAppBar() {
+
+  //const userlinks = {user.hyperlinks? user.hyperlinks :[]}; //depends on the structure of the object, it should be a list of hyperlinks
+  const [linksList, setLinksList] = useState([]); //TODO: change to userlinks
+  //TODO
+  const fetchLinksList=async()=>{
+    await axios.get("")//接口 url
+        .then(response => {
+          setLinksList(response.data); // depends on the structure of the object, this is supposed to be a list of hyperlinks
+        })
+        .catch(error => {
+          console.error('Error fetching data:', error);
+        });
+  }
+
+  useEffect(() => {
+        fetchLinksList()
+  }, []);
+
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
   const pages = [];
@@ -41,6 +61,32 @@ export function TopAppBar() {
   const [itAction, setitAction] = useState("Static"); //actions on change/remove list items
   const [linkName, setLinkName] = useState("");
   const [link, setLink] = useState("");
+
+  //TODO: update
+  const updateLinksList=async(linksList)=>{
+    await axios.post("", linksList)//接口 url
+          .then(promise => {
+
+          })
+          .catch(error => {
+            console.error('Error posting data:', error);
+          });
+  }
+
+  //TODO: delete
+
+
+  const submitLinksList = async (e) => {
+    e.preventDefault();
+    console.log(linksList);
+    try {
+      await axios.post("", linksList, {
+        headers: { "Content-Type": "application/json" },
+      });
+    } catch (error) {
+      console.error("Error Caught on Sign Up: ", error);
+    }
+  };
 
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
@@ -57,8 +103,6 @@ export function TopAppBar() {
     setAnchorElUser(null);
   };
 
-  var userlinks = [];
-  const [linksList, setLinksList] = useState(userlinks); //json file
   function changeName(event) {
     setLinkName(event.target.value);
   }
@@ -82,6 +126,11 @@ export function TopAppBar() {
         icon: null,
       },
     ]);
+    if(linksList===[]){//if linksList before adding is empty
+        submitLinksList();
+    }else{
+        updateLinksList();
+    }
     setLinksList(newlist);
   }
 
@@ -101,11 +150,17 @@ export function TopAppBar() {
     const index = linksList.findIndex((item) => item.id === thisid);
     const newlist = linksList.with(index, editedItem);
     setLinksList(newlist);
+    updateLinksList(linksList);
   }
 
   function removeLinks(id) {
     const newlist = linksList.filter((userlink) => userlink.id !== id);
     setLinksList(newlist);
+    if(linksList===[]){//if linksList after remove is empty
+        submitLinksList();
+    }else{
+        updateLinksList();
+    }
   }
 
   const toggleDrawer = (event) => {
