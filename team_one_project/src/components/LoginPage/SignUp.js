@@ -38,12 +38,17 @@ export function SignUp() {
 
   const onSubmit = async (e) => {
     e.preventDefault();
-    // user.password = SHA256(user.password).toString();
-    // console.log(user);
+
+    const modifyUser = {
+      username: `${user.firstName} ${user.lastName}`,
+      email: user.email,
+      password: user.password,
+    };
+    console.log(modifyUser);
     try {
       const response = await axios.post(
         "http://localhost:8080/api/v1/registration",
-        user,
+        modifyUser,
         {
           headers: { "Content-Type": "application/json" },
           withCredentials: true,
