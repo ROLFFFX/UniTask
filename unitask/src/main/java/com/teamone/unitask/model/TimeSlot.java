@@ -16,10 +16,10 @@ public class TimeSlot {
     private LocalDateTime startTime;
     @Column(name = "end_time", nullable = false)
     private LocalDateTime endTime;
-    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @JoinTable(name = "tbl_timeslot_user", joinColumns = {@JoinColumn(name = "user_id")},
-            inverseJoinColumns = {@JoinColumn(name = "timeslot_id")})
-    private List<User> usersAvailable;
+//    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+//    @JoinTable(name = "tbl_timeslot_user", joinColumns = {@JoinColumn(name = "user_id")},
+//            inverseJoinColumns = {@JoinColumn(name = "timeslot_id")})
+//    private List<User> usersAvailable;
 
     public Long getTimeSlotId() {
         return timeSlotId;
@@ -45,11 +45,11 @@ public class TimeSlot {
         this.endTime = endTime;
     }
 
-    public List<User> getUsersAvailable() {
-        return usersAvailable;
-    }
-
-    public void setUsersAvailable(List<User> usersAvailable) {
-        this.usersAvailable = usersAvailable;
-    }
+//    public List<User> getUsersAvailable() {
+//        return usersAvailable;
+//    }
+//
+//    public void setUsersAvailable(List<User> usersAvailable) {
+//        this.usersAvailable = usersAvailable;
+//    }
 }

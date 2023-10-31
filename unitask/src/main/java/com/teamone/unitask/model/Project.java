@@ -14,9 +14,9 @@ public class Project {
     @Column(name = "project_title", nullable = false, length = 255)
     private String projectTitle = "New Project";
     // one to many relation;
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    @JoinColumn(name = "project_members")
-    private List<User> projectMembers;
+//    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+//    @JoinColumn(name = "project_members")
+//    private List<User> projectMembers;
 
 
     public Long getProjectId() {
@@ -35,11 +35,11 @@ public class Project {
         this.projectTitle = projectTitle;
     }
 
-    public List<User> getProjectMembers() {
-        return projectMembers;
-    }
-
-    public void setProjectMembers(List<User> projectMembers) {
-        this.projectMembers = projectMembers;
-    }
+//    public List<User> getProjectMembers() {
+//        return projectMembers;
+//    }
+//
+//    public void setProjectMembers(List<User> projectMembers) {
+//        this.projectMembers = projectMembers;
+//    }
 }
