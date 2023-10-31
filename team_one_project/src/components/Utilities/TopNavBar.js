@@ -23,13 +23,86 @@ import TextField from "@mui/material/TextField";
 import AddLinkIcon from "@mui/icons-material/AddLink";
 import LinkIcon from "@mui/icons-material/Link";
 
-import { useState } from "react";
+import {useEffect, useState} from "react";
 import { v4 as uuidv4 } from "uuid";
 
 import UniTaskLogo_new from "../../images/UniTaskLOGO.PNG";
 import { ButtonGroup, ThemeProvider } from "@mui/material";
 
+import axios from "axios";
+
 export function TopAppBar() {
+
+
+
+  const [linksList, setLinksList] = useState([]);
+  async function getLinksList() {
+    try{
+      const response = await axios.get('endpoint URL', {
+        params: {
+          //to be filled if any
+        }
+      });
+      console.log(response.data);
+      setLinksList(response.data);
+    }
+    catch(error){
+      console.error("Error getting list", error);
+    }
+  }
+
+  useEffect(() => {
+        getLinksList()
+  }, []);
+
+  const updateLinksList = async(e) => {
+    e.preventDefault();
+    console.log(linksList);
+    try{
+      const response = await axios.put("endpoint URL", linksList, {
+            params: {
+              //to be filled if any
+            },
+            headers: { "Content-Type": "application/json" },
+          });
+    } catch (error){
+      console.error("Error updating list:", error);
+    }
+  }
+
+
+  const deleteLinksList = async(e) => {
+    try{
+      const response = await axios.delete("endpoint URL", {
+        params: {
+          //to be filled if any
+        }
+      })
+    }
+    catch(error){
+      console.error("Error deleting list", error);
+    }
+  }
+
+  const submitLinksList = async (e) => {
+    e.preventDefault();
+    console.log(linksList);
+    try {
+      const response = await axios.post(
+          "endpoint URL",
+          linksList,
+          {
+            params: {
+              //to be filled if any
+            },
+            headers: { "Content-Type": "application/json" },
+          }
+      );
+    } catch (error) {
+      console.error("Error submitting list", error);
+    }
+  };
+
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
   const pages = [];
@@ -57,8 +130,6 @@ export function TopAppBar() {
     setAnchorElUser(null);
   };
 
-  var userlinks = [];
-  const [linksList, setLinksList] = useState(userlinks); //json file
   function changeName(event) {
     setLinkName(event.target.value);
   }
@@ -82,6 +153,11 @@ export function TopAppBar() {
         icon: null,
       },
     ]);
+    if(linksList===[]){//if linksList before adding is empty
+        submitLinksList();
+    }else{
+        updateLinksList();
+    }
     setLinksList(newlist);
   }
 
@@ -101,11 +177,17 @@ export function TopAppBar() {
     const index = linksList.findIndex((item) => item.id === thisid);
     const newlist = linksList.with(index, editedItem);
     setLinksList(newlist);
+    updateLinksList(linksList);
   }
 
   function removeLinks(id) {
     const newlist = linksList.filter((userlink) => userlink.id !== id);
     setLinksList(newlist);
+    if(linksList===[]){//if linksList after remove is empty
+        deleteLinksList();
+    }else{
+        updateLinksList();
+    }
   }
 
   const toggleDrawer = (event) => {
@@ -351,7 +433,13 @@ export function TopAppBar() {
               <Tooltip title="See Your Hyperlinks">
                 <IconButton
                   style={{ color: "white" }}
-                  onClick={() => toggleDrawer(true)}
+                  onClick={() => {
+                    (state === false) ?
+                      toggleDrawer(true)
+                    :
+                      toggleDrawer(false)
+                      cancelAction()
+                  }}
                   sx={{ p: 0 }}
                 >
                   <LinkIcon />
