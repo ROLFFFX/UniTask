@@ -21,16 +21,12 @@ export function LoginSignup() {
   const navigate = useNavigate();
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const data = new FormData(e.currentTarget);
+    var data = new FormData(e.currentTarget);
     const userEmail = data.get("email");
     const userPassword = data.get("password");
-    alert(
-      "userEmail: " +
-        userEmail +
-        ", userPassword: " +
-        userPassword +
-        ". This msg is for testing purpose, should be deleted later."
-    );
+    data = { userEmail, userPassword };
+    console.log(" This is data: ");
+    console.log(data);
     // @todo: implement login process URL
     try {
       const response = await axios.post("URL For Endpoint", data, {
