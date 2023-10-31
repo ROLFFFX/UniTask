@@ -9,6 +9,9 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Set;
@@ -32,12 +35,21 @@ public class AppUser implements UserDetails {
             generator = "appUser_sequence"
     )
     private Long id;
+    @NotBlank
+    @Size(max = 20)
     private String firstName;
+    @NotBlank
+    @Size(max = 20)
     private String lastName;
+    @Email
+    @NotBlank
+    @Size(max = 50)
     private String email;
+    @NotBlank
+    @Size(max = 120)
     private String password;
     @Enumerated(EnumType.STRING)
-    private AppUserRole appUserRole;
+    private EAppUserRole eAppUserRole;
     private Boolean locked = false;
     private Boolean enabled = false;
     @ManyToMany
@@ -50,17 +62,17 @@ public class AppUser implements UserDetails {
 
 
     public AppUser(String firstName, String lastName, String email, String password,
-                   AppUserRole appUserRole) {
+                   EAppUserRole eAppUserRole) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
         this.password = password;
-        this.appUserRole = appUserRole;
+        this.eAppUserRole = eAppUserRole;
     }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        SimpleGrantedAuthority authority = new SimpleGrantedAuthority(appUserRole.name());
+        SimpleGrantedAuthority authority = new SimpleGrantedAuthority(eAppUserRole.name());
         return Collections.singletonList(authority);
     }
 

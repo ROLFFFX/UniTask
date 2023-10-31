@@ -1,6 +1,7 @@
 package com.teamone.unitask.model;
 
-public enum AppUserRole {
+public enum EAppUserRole {
     USER,
+    MODERATOR,
     ADMIN
 }

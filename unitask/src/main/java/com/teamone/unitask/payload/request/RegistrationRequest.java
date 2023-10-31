@@ -1,4 +1,4 @@
-package com.teamone.unitask.model;
+package com.teamone.unitask.payload.request;
 
 
 import lombok.AllArgsConstructor;

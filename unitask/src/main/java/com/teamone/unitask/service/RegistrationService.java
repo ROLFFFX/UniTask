@@ -1,9 +1,9 @@
 package com.teamone.unitask.service;
 
 import com.teamone.unitask.model.AppUser;
-import com.teamone.unitask.model.AppUserRole;
+import com.teamone.unitask.model.EAppUserRole;
 import com.teamone.unitask.model.ConfirmationToken;
-import com.teamone.unitask.model.RegistrationRequest;
+import com.teamone.unitask.payload.request.RegistrationRequest;
 import com.teamone.unitask.service.email.EmailSender;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -36,7 +36,7 @@ public class RegistrationService {
                         request.getLastName(),
                         request.getEmail(),
                         request.getPassword(),
-                        AppUserRole.USER
+                        EAppUserRole.USER
 
                 )
         );
