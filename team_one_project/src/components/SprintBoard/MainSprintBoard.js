@@ -1,4 +1,5 @@
 import { Box } from "@mui/material";
+import Task from './Task';
 import Popper from "@mui/material/Popper";
 import React, { useState, useEffect } from "react";
 import "../../App.css";
@@ -10,26 +11,8 @@ import "./MainSprintBoard.css";
 import { v4 as uuidv4 } from "uuid";
 
 export function MainSprintBoard() {
-  const [AddSub, setAddSub] = useState("idle");
-  const [ShowSub, setShowSub] = useState("expand");
 
-  var emptytasks = [];
-  const [listTask, setlistTask] = useState(emptytasks);
-  
-  var emptysubtasks = [];
-  const [listSub, setlistSub] = useState(emptysubtasks);
-
-  function addSubtaskButton() {
-    const newlist = listSub.concat([
-      {
-        id: uuidv4(), //to have a stable key attribute for the item
-        description: "Subtask",
-      },
-    ]);
-    setlistSub(newlist);
-  }
-
-  // Populate assignee list
+  // List of users (for assignee list)
   const [users, setUsers] = useState([]);
   //const [selectedUser, setSelectedUser] = useState('');
 
@@ -49,7 +32,7 @@ export function MainSprintBoard() {
   }, []);
 
   // From MUI Popper.js tutorial:
-  const [anchorEl, setAnchorEl] = React.useState(null);
+  const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
 
   const handleClick = (event) => {
@@ -57,7 +40,7 @@ export function MainSprintBoard() {
   };
 
   // Close popup menu and submit data
-  const [teamName, setTeamName] = useState("Team 1");
+  //const [teamName, setTeamName] = useState("Team 1");
   const [tasks, setTasks] = useState([]);
   const [taskNameInput, setTaskNameInput] = useState("");
   const [assigneeInput, setAssigneeInput] = useState("");
@@ -65,6 +48,7 @@ export function MainSprintBoard() {
   const [taskPointsInput, setTaskPointsInput] = useState(1);
 
   const closeTaskPopup = () => {
+
     // if (taskNameInput) {
     // TODO: send data to backend
     const taskData = {
@@ -73,8 +57,9 @@ export function MainSprintBoard() {
       expectedCompleteTime: dueDateInput.valueOf(),
       status: "Not Started", // TODO: get from user
       taskPoints: taskPointsInput.valueOf(),
-      parentTaskID: null, // TODO: set parent ID if applicable
-      numLayers: 1, // TODO: calculate layer count
+      //parentTaskID: null, // TODO: set parent ID if applicable
+      //numLayers: 1, // TODO: calculate layer count
+      subtaskList: []
     };
     createTask(taskData);
     displayTask(taskData);
@@ -92,15 +77,7 @@ export function MainSprintBoard() {
   };
 
   const displayTask = (taskData) => {
-    //setTasks([...tasks, taskData]);
-    // Use same logic from addSubtask
-    const newlist = listTask.concat([
-      {
-        id: uuidv4(), //to have a stable key attribute for the item
-        title: taskData.title
-      },
-    ]);
-    setlistTask(newlist);
+    setTasks([...tasks, taskData]);
   };
 
   return (
@@ -136,7 +113,7 @@ export function MainSprintBoard() {
                 value={assigneeInput}
                 onChange={(e) => setAssigneeInput(e.target.value)}
               >
-                <option value="">Select User</option>
+                <option value="Unassigned">Unassigned</option>
                 {users.map((user, index) => (
                   <option key={index} value={user}>
                     {user}
@@ -168,57 +145,9 @@ export function MainSprintBoard() {
             </Box>
           </Popper>
           <div className="grid-item" id="tasks">
-          <ul id={"taskList"}>
-              {listTask.map((task) => (
-                <li className={"task"} key={task.id}>
-                  <div className="taskLabel">
-                    <img src={circle_orange_favicon} alt=""></img>
-                    {task.title}
-                    <button 
-                      id="showSubtaskButton" 
-                      onClick={() => 
-                        setShowSub(ShowSub==="collapse"? ("expand") :("collapse") )
-                      }
-                    >
-                      <img
-                        className="showSubtaskButtonImg"
-                        src={chevron_favicon}
-                        alt=""
-                      ></img>
-                    </button>
-                    <button 
-                      id="addSubtaskButton"
-                      onClick={() => {
-                        addSubtaskButton();
-                        setAddSub("activated");
-                      }}
-                    >
-                      <img
-                        className="addSubtaskButtonImg"
-                        src={add_button_favicon}
-                        alt={""}
-                      ></img>
-                    </button>
-                  </div>
-                
-                  {ShowSub === "expand" ?
-                      (<ul className={"subtaskList"}>
-                        {listSub.map((subtask) => (
-                          <li
-                              className={"subtask"}
-                              key={subtask.id}
-                          >
-                            <img className="subtaskIcon" src={circle_blue_favicon} alt={""}></img>
-                            {subtask.description}
-                          </li>
-                        ))}
-                      </ul>)
-                      : null
-                  }
-                </li>
-              ))}
-            </ul>
-            
+            {tasks.map((task, index) => (
+              <Task key={index} taskData={task} />
+            ))}
           </div>
           <div className="grid-item" id="todoHeader">
             TO DO
