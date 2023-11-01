@@ -105,6 +105,7 @@ public class AuthController {
                     .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
             roles.add(userRole);
         } else {
+            //TODO: fix default;
             strRoles.forEach(role -> {
                 switch (role) {
                     case "admin":
