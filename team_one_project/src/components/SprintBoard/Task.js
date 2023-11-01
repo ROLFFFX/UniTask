@@ -7,17 +7,21 @@ import add_button_favicon from "../../images/add_button_favicon.png";
 function Task({ taskData }) {
   const [subtasks, setSubtasks] = useState([]);
   const [newSubtask, setNewSubtask] = useState('');
+  const [isAddingSubtask, setIsAddingSubtask] = useState(false);
 
   const [AddSub, setAddSub] = useState("idle");
   const [ShowSub, setShowSub] = useState("expand");
 
   const addSubtask = () => {
     setSubtasks([...subtasks, newSubtask]);
+    taskData.subtaskList = subtasks;
+    console.log(taskData);  // TODO: Fix bug where the last subtask is not visible in list
     setNewSubtask('');
+    setIsAddingSubtask(false);
   };
 
   return (
-    <div className={"task"} key={taskData.id}>
+    <div className={"task"} key={taskData.id} draggable="true" ondragstart="drag(event)">
         <div className="taskLabel">
         <img src={circle_orange_favicon} alt=""></img>
         {taskData.title}
@@ -35,19 +39,15 @@ function Task({ taskData }) {
         </button>
         <button 
             id="addSubtaskButton"
-            onClick={addSubtask}
+            onClick={() => setIsAddingSubtask(true)}
         >
             <img
-            className="addSubtaskButtonImg"
-            src={add_button_favicon}
-            alt={""}
+                className="addSubtaskButtonImg"
+                src={add_button_favicon}
+                alt={""}
             ></img>
         </button>
-        <input
-        type="text"
-        value={newSubtask}
-        onChange={(e) => setNewSubtask(e.target.value)}
-      />
+        
         </div>
         {ShowSub === "expand" ?
             (<ul className={"subtaskList"}>
@@ -56,30 +56,26 @@ function Task({ taskData }) {
                     className={"subtask"}
                     key={index}
                 >
-                <img className="subtaskIcon" src={circle_blue_favicon} alt={""}></img>
+                <input type="checkbox"/>
                 {subtask}
                 </li>
             ))}
             </ul>)
             : null
         }
-    </div>
-    
-        /*{ShowSub === "expand" ?
-            (<ul className={"subtaskList"}>
-            {listSub.map((subtask, index) => (
-                <li
-                    className={"subtask"}
-                    key={index}
-                >
-                <img className="subtaskIcon" src={circle_blue_favicon} alt={""}></img>
-                {subtask.description}
-                </li>
-            ))}
-            </ul>)
-            : null
-        }*/
-    
+        {isAddingSubtask ? (
+        <div>
+          <input
+            type="text"
+            value={newSubtask}
+            onChange={(e) => setNewSubtask(e.target.value)}
+          />
+          <button onClick={addSubtask}>Add Subtask</button>
+        </div>
+      ) : (
+        null
+      )}
+    </div>    
   );
 }
 
