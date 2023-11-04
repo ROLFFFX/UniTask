@@ -1,4 +1,4 @@
-package com.teamone.unitask.service.email;
+package com.teamone.unitask.email;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

@@ -3,8 +3,11 @@ package com.teamone.unitask.controller;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
+import com.teamone.unitask.email.EmailSender;
+import com.teamone.unitask.email.EmailService;
 import com.teamone.unitask.model.ERole;
 import com.teamone.unitask.model.Role;
 import com.teamone.unitask.model.User;
@@ -16,24 +19,17 @@ import com.teamone.unitask.repository.RoleRepository;
 import com.teamone.unitask.repository.UserRepository;
 import com.teamone.unitask.security.jwt.JwtUtils;
 import com.teamone.unitask.security.services.UserDetailsImpl;
+import com.teamone.unitask.email.EmailValidator;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.validation.annotation.Validated;
-import org.springframework.validation.beanvalidation.MethodValidationPostProcessor;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import javax.validation.constraints.Email;
 
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
@@ -54,6 +50,12 @@ public class AuthController {
 
     @Autowired
     JwtUtils jwtUtils;
+
+    @Autowired
+    EmailValidator emailValidator;
+
+    @Autowired
+    EmailService emailService;
 
     @PostMapping("/signin")
     public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginRequest loginRequest) {
@@ -78,17 +80,18 @@ public class AuthController {
 
     @PostMapping("/signup")
     public ResponseEntity<?> registerUser(@Valid @RequestBody SignupRequest signUpRequest) {
-        // check if duplicate username or email;
+        // check if duplicate username;
         if (userRepository.existsByUsername(signUpRequest.getUsername())) {
-            return ResponseEntity
-                    .badRequest()
-                    .body(new MessageResponse("Error: Username is already taken!"));
+            return ResponseEntity.badRequest().body(new MessageResponse("Error: Username is already taken!"));
         }
-
+        // check if duplicate email;
         if (userRepository.existsByEmail(signUpRequest.getEmail())) {
-            return ResponseEntity
-                    .badRequest()
-                    .body(new MessageResponse("Error: Email is already in use!"));
+            return ResponseEntity.badRequest().body(new MessageResponse("Error: Email is already in use!"));
+        }
+        // check if valid email;
+        boolean isValidEmail = emailValidator.test(signUpRequest.getEmail());
+        if (!isValidEmail) {
+            return ResponseEntity.badRequest().body((new MessageResponse("Error: Email not valid!")));
         }
 
         // Create new user's account
@@ -98,7 +101,6 @@ public class AuthController {
 
         Set<String> strRoles = signUpRequest.getRole();
         Set<Role> roles = new HashSet<>();
-
         //strRoles == null
         if (strRoles.isEmpty()) {
             Role userRole = roleRepository.findByName(ERole.ROLE_USER)
@@ -127,11 +129,23 @@ public class AuthController {
                 }
             });
         }
-
         user.setRoles(roles);
         userRepository.save(user);
 
-        return ResponseEntity.ok(new MessageResponse("User registered successfully!"));
+        // generate register token;
+        String signupToken = UUID.randomUUID().toString();
+        // create email link and send email;
+        //TODO: need to modify when deploy;
+        String link = "http://localhost:8080/api/v1/registration/confirm?token=" + signupToken;
+        emailService.send(signUpRequest.getEmail(),
+                emailService.buildEmail(signUpRequest.getUsername(), link));
+        // return generated token;
+        return ResponseEntity.ok(new MessageResponse("Email sent!"));
     }
+
+//    @GetMapping(path = "confirmSignUp")
+//    public ResponseEntity<?> confirmSignUp(@RequestParam("token") String token) {
+//
+//    }
 
 }

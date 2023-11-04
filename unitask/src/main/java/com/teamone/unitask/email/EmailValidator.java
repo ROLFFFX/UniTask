@@ -1,4 +1,4 @@
-package com.teamone.unitask.service;
+package com.teamone.unitask.email;
 
 
 import org.springframework.stereotype.Service;

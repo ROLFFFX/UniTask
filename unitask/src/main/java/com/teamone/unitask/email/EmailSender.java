@@ -1,4 +1,4 @@
-package com.teamone.unitask.service.email;
+package com.teamone.unitask.email;
 
 public interface EmailSender {
 
