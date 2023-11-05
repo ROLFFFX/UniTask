@@ -23,6 +23,7 @@ import com.teamone.unitask.onboard.security.jwt.JwtUtils;
 import com.teamone.unitask.onboard.security.services.UserDetailsImpl;
 import com.teamone.unitask.onboard.email.EmailValidator;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -34,7 +35,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
-@CrossOrigin(origins = "*", maxAge = 3600)
+@CrossOrigin(origins = "", maxAge = 3600)
 @RestController
 @RequestMapping("/api/auth")
 public class AuthController {
@@ -63,6 +64,7 @@ public class AuthController {
     @Autowired
     ConfirmationTokenService confirmationTokenService;
 
+    @CrossOrigin(origins = "http://localhost:3000", allowCredentials = "true")
     @PostMapping("/signin")
     public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginRequest loginRequest) {
 
@@ -84,13 +86,29 @@ public class AuthController {
                 roles));
     }
 
+    @DeleteMapping("deleteInvalidUser/{email}")
+    public ResponseEntity<?> deleteInvalidUser(@PathVariable("email") String email) {
+        try {
+            userRepository.deleteById(userRepository.getByEmail(email).getId());
+            return ResponseEntity.ok(new MessageResponse("Invalid user is deleted"));
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(new MessageResponse("Error: Cannot delete invalid user column."));
+        }
+    }
+
+    @CrossOrigin(origins = "http://localhost:3000", allowCredentials = "true")
     @PostMapping("/signup")
     public ResponseEntity<?> registerUser(@Valid @RequestBody SignupRequest signUpRequest) {
         //TODO: check if is enabled;
         if (userRepository.existsByEmail(signUpRequest.getEmail()) &&
                 !userRepository.getByEmail(signUpRequest.getEmail()).isEnabled()) {
-            
+            return ResponseEntity.badRequest().body(new MessageResponse("Error: User registered but is disabled"));
         }
+//        if (userRepository.existsByEmail(signUpRequest.getEmail()) &&
+//                !userRepository.getByEmail(signUpRequest.getEmail()).isEnabled()) {
+//            Long id = userRepository.getByEmail(signUpRequest.getEmail()).getId();
+//            userRepository.deleteById(userRepository.getByEmail(signUpRequest.getEmail()).getId());
+//        }
 
         // check if duplicate username;
         if (userRepository.existsByUsername(signUpRequest.getUsername())) {

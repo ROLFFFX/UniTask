@@ -6,9 +6,9 @@ server:
 spring:
     jpa:
         hibernate:
-            ddl-auto: create
+            ddl-auto: update
     datasource:
-        url: jdbc:mysql://unitask-mysql.mysql.database.azure.com/jwt_impl
+        url: jdbc:mysql://unitask-mysql.mysql.database.azure.com/jwt_impl2
         username: TeamOneMySQL
         password: Un1taskerz
         driver-class-name: com.mysql.cj.jdbc.Driver
