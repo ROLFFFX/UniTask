@@ -43,11 +43,12 @@ export function SignUp() {
       username: `${user.firstName} ${user.lastName}`,
       email: user.email,
       password: user.password,
+      role: [],
     };
     console.log(modifyUser);
     try {
       const response = await axios.post(
-        "http://localhost:8080/api/v1/registration",
+        "http://localhost:8080/api/auth/signup",
         modifyUser,
         {
           headers: { "Content-Type": "application/json" },

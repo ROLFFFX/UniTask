@@ -14,31 +14,44 @@ import { BottomSVG } from "./LoginStyling/BottomSVG";
 import { useNavigate } from "react-router-dom";
 import { useContext } from "react";
 import AuthContext from "../../context/AuthProvider";
+import { useEffect } from "react";
 import axios from "axios";
 import useAuth from "../../hooks/useAuth";
 
 export function LoginSignup() {
-  // const { setAuth } = useContext(AuthContext);
-  const { setAuth } = useAuth();
+  const { auth, setAuth } = useAuth();
   const navigate = useNavigate();
+  useEffect(() => {
+    if (auth?.user) {
+      navigate("/dashboard"); //goes to onboarding process after checking if user info is complete.
+    }
+  }, [auth, navigate]);
   const handleSubmit = async (e) => {
     e.preventDefault();
     var data = new FormData(e.currentTarget);
     const userEmail = data.get("email");
     const userPassword = data.get("password");
-    data = { userEmail, userPassword };
-    console.log(" This is data: ");
-    console.log(data);
-    // @todo: implement login process URL
+    data = { email: userEmail, password: userPassword };
+    // console.log(" This is data: ");
+    // console.log(data);
     try {
-      const response = await axios.post("URL For Endpoint", data, {
-        headers: { "Content-Type": "application/json" },
-        withCredentials: true,
-      });
-      //@todo: if success, save access token that is sent from backend
-      const userJWT = response.data;
-      setAuth({ userEmail, userPassword, userJWT });
-      navigate("/login/ob_landing"); //goes to onboarding process without checking if user info is complete.
+      const response = await axios.post(
+        "http://localhost:8080/api/auth/signin",
+        data,
+        {
+          headers: { "Content-Type": "application/json" },
+          withCredentials: true,
+        }
+      );
+      const userJWT = response.data.accessToken;
+      localStorage.setItem("accessToken", userJWT); //save JWT to local storage. To retrieve this in other components, const accessToken = localStorage.getItem('accessToken');
+      setAuth({ user: { userEmail, userPassword, userJWT } });
+      console.log(
+        "You have been logged in successfully! Here are some of your credentials:"
+      );
+      console.log(data);
+      console.log({ userEmail, userPassword, userJWT });
+      console.log(userJWT);
     } catch (error) {
       if (error) {
         if (!error?.response) {

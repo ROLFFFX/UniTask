@@ -12,17 +12,13 @@ import { PageNotFound } from "./components/PageNotFound/PageNotFound";
 import { MainReview } from "./components/Review/MainReview";
 import { MainSetting } from "./components/Setting/MainSetting";
 
-import { ForgotPassword } from "./components/LoginPage/ForgotPassword";
+import { OB_landing } from "./components/LoginPage/OnBoarding/OB_landing";
 import { SignUp } from "./components/LoginPage/SignUp";
-import MainSideBar from "./components/Utilities/MainSideBar";
+import { ManageTeam } from "./components/ManageTeam/ManageTeam";
+import { SelectMeeting } from "./components/Meeting/SelectMeeting";
+import RequireAuth from "./components/RequireAuth";
 import PermanentDrawer from "./components/Utilities/PermanentDrawer";
 import { TopAppBar } from "./components/Utilities/TopNavBar";
-import { SelectMeeting } from "./components/Meeting/SelectMeeting";
-import { Skeleton } from "@mui/material";
-import { MeetingContent } from "./components/Meeting/MeetingContent";
-import { OB_landing } from "./components/LoginPage/OnBoarding/OB_landing";
-import { ManageTeam } from "./components/ManageTeam/ManageTeam";
-import RequireAuth from "./components/RequireAuth";
 
 function Layout({ children }) {
   return (
@@ -37,7 +33,7 @@ function CustomLayout({ children }) {
     <>
       <TopAppBar />
       <PermanentDrawer />
-      {children}
+      <Outlet />
     </>
   );
 }
@@ -53,8 +49,7 @@ function App() {
           {/* Protected Routes */}
           <Route element={<RequireAuth />}>
             <Route element={<CustomLayout />}>
-              <Route path="/login/ob_landing" element={<OB_landing />} />
-              <Route path="/" element={<MainDashboard />} />
+              <Route path="/dashboard" element={<MainDashboard />} />
               <Route path="/sprintboard" element={<MainSprintBoard />} />
               <Route path="/meeting">
                 <Route index element={<MainMeeting />} />
