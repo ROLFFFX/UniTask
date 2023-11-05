@@ -8,6 +8,8 @@ import ListItemText from "@mui/material/ListItemText";
 import * as React from "react";
 import { useNavigate } from "react-router-dom";
 import barTheme from "./barTheme";
+import LogOutButton from "./LogOutButton";
+import { Box } from "@mui/material";
 
 const drawerWidth = 200;
 
@@ -87,6 +89,9 @@ export default function PermanentDrawer() {
             </ListItem>
           ))}
         </List>
+        {/* spacer used to align logout button with bottom of drawer */}
+        <Box style={{ flexGrow: 1 }} />
+        <LogOutButton></LogOutButton>
       </Drawer>
     </ThemeProvider>
   );
