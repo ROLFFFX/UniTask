@@ -44,7 +44,6 @@ export function LoginSignup() {
         }
       );
       const userJWT = response.data.accessToken;
-      localStorage.setItem("accessToken", userJWT); //save JWT to local storage. To retrieve this in other components, const accessToken = localStorage.getItem('accessToken');
       setAuth({ user: { userEmail, userPassword, userJWT } });
       console.log(
         "You have been logged in successfully! Here are some of your credentials:"
