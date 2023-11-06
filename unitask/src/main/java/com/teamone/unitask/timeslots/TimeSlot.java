@@ -1,40 +1,48 @@
 package com.teamone.unitask.timeslots;
 
+import com.teamone.unitask.onboard.usermodels.User;
 import com.teamone.unitask.projects.Project;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
 import java.time.LocalDateTime;
+import java.util.Set;
 
 @Entity
-@Table(name = "time_slot")
+@Table(name = "timeslot")
 public class TimeSlot {
 
-//    @Id
-//    @GeneratedValue(strategy = GenerationType.IDENTITY)
-//    @Column(name = "timeslot_id")
-    @SequenceGenerator(
-            name = "timeslot_sequence",
-            sequenceName = "timeslot_sequence",
-            allocationSize = 1
-    )
-    @Id
-    @GeneratedValue(
-            strategy = GenerationType.SEQUENCE,
-            generator = "timeslot_sequence"
-    )
-    private Long timeSlotId;
-    @Column(name = "start_time", nullable = false)
-    private LocalDateTime startTime;
-    @Column(name = "end_time", nullable = false)
-    private LocalDateTime endTime;
-//    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-//    @JoinTable(name = "tbl_timeslot_user", joinColumns = {@JoinColumn(name = "user_id")},
-//            inverseJoinColumns = {@JoinColumn(name = "timeslot_id")})
-//    private List<User> usersAvailable;
-    @ManyToOne
-    @JoinColumn(name = "project_id")
-    private Project projectId;
+    /**
+     * fields
+     */
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "timeslot_id")
+    private Long timeSlotId;
+
+    @NotBlank
+    private LocalDateTime startTime;
+
+    @NotBlank
+    private LocalDateTime endTime;
+
+    /**
+     * foreign keys
+     */
+
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn(name = "user_id")
+    private User userAssigned;
+
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn(name = "project_id")
+    private Project projectBelonged;
+
+
+    /**
+     * methods
+     */
 
     public Long getTimeSlotId() {
         return timeSlotId;
@@ -60,19 +68,4 @@ public class TimeSlot {
         this.endTime = endTime;
     }
 
-//    public List<User> getUsersAvailable() {
-//        return usersAvailable;
-//    }
-//
-//    public void setUsersAvailable(List<User> usersAvailable) {
-//        this.usersAvailable = usersAvailable;
-//    }
-
-    public Project getProjectId() {
-        return projectId;
-    }
-
-    public void setProjectId(Project projectId) {
-        this.projectId = projectId;
-    }
 }

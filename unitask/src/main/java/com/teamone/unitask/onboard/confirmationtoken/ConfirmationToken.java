@@ -7,35 +7,41 @@ import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
+@Table(name = "confirmation_token")
 @NoArgsConstructor
 public class ConfirmationToken {
 
-    @SequenceGenerator(
-            name = "confirmation_token_sequence",
-            sequenceName = "confirmation_token_sequence",
-            allocationSize = 1
-    )
+    /**
+     * fields
+     */
+
     @Id
-    @GeneratedValue(
-            strategy = GenerationType.SEQUENCE,
-            generator = "confirmation_token_sequence"
-    )
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     @Column(nullable = false)
     private String token;
+
     @Column(nullable = false)
     private LocalDateTime createdAt;
+
     @Column(nullable = false)
     private LocalDateTime expiredAt;
+
     private LocalDateTime confirmedAt;
 
+    /**
+     * foreign keys
+     */
 
-    @ManyToOne
-    @JoinColumn(
-            nullable = false,
-            name = "user_id"
-    )
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn(nullable = false, name = "user_id")
     private User user;
+
+
+    /**
+     * methods
+     */
 
     public ConfirmationToken(String token, LocalDateTime createdAt, LocalDateTime expiredAt, User user) {
         this.token = token;

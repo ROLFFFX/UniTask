@@ -1,12 +1,18 @@
 package com.teamone.unitask.onboard.usermodels;
 
+import com.teamone.unitask.onboard.confirmationtoken.ConfirmationToken;
 import com.teamone.unitask.onboard.usermodels.Role;
+import com.teamone.unitask.projects.Project;
+import com.teamone.unitask.tasks.Task;
+import com.teamone.unitask.timeslots.TimeSlot;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
+import java.util.Collection;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 
@@ -17,6 +23,11 @@ import java.util.Set;
                 @UniqueConstraint(columnNames = "email")
         })
 public class User {
+
+    /**
+     * fields
+     */
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -34,13 +45,43 @@ public class User {
     @Size(max = 120)
     private String password;
 
-    @ManyToMany(fetch = FetchType.LAZY)
-    @JoinTable(  name = "user_roles",
+    private boolean enabled;
+
+    /**
+     * foreign keys
+     */
+
+    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinTable(name = "user_roles",
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Set<Role> roles = new HashSet<>();
 
-    private boolean enabled;
+    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinTable(name = "user_projects",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "project_id"))
+    private List<Project> projectsJoined;
+
+    /**
+     * mapped by
+     */
+    @OneToMany(mappedBy = "user")
+    private Collection<ConfirmationToken> confirmationTokens;
+
+    @OneToMany(mappedBy = "masterUserId")
+    private Collection<Project> mastered_projects;
+
+    @OneToMany(mappedBy = "userAssigned")
+    private Collection<TimeSlot> has_timeslots;
+
+    @OneToMany(mappedBy = "taskMemberAssigned")
+    private Collection<Task> tasks;
+
+
+    /**
+     * methods
+     */
 
     public User() {
     }

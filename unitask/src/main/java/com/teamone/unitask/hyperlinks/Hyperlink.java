@@ -3,32 +3,40 @@ package com.teamone.unitask.hyperlinks;
 import com.teamone.unitask.projects.Project;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 
 @Entity
 @Table(name = "hyperlink")
 public class Hyperlink {
 
-//    @Id
-//    @GeneratedValue(strategy = GenerationType.IDENTITY)
-//    @Column(name = "hyperlink_id")
-    @SequenceGenerator(
-            name = "hyperlink_sequence",
-            sequenceName = "hyperlink_sequence",
-            allocationSize = 1
-    )
+    /**
+     * fields
+     */
+
     @Id
-    @GeneratedValue(
-            strategy = GenerationType.SEQUENCE,
-            generator = "hyperlink_sequence"
-    )
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "hyperlink_id")
     private Long hyperlinkId;
-    @Column(name = "title", nullable = false)
+
+    @NotBlank
     private String title;
-    @Column(name = "url", nullable = false, length = 500)
+
+    @NotBlank
+    @Size(max = 500)
     private String url;
-    @ManyToOne
+
+    /**
+     * foreign keys
+     */
+
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "project_id")
     private Project projectId;
+
+    /**
+     * methods
+     */
 
 
     public Long getHyperlinkId() {

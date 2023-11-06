@@ -68,6 +68,11 @@ public class AuthController {
     @PostMapping("/signin")
     public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginRequest loginRequest) {
 
+        if (userRepository.existsByEmail(loginRequest.getEmail()) &&
+                !userRepository.getByEmail(loginRequest.getEmail()).isEnabled()) {
+            return ResponseEntity.badRequest().body(new MessageResponse("Error: User need to re-register."));
+        }
+
         Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(loginRequest.getEmail(), loginRequest.getPassword()));
         // Generate token
@@ -86,100 +91,133 @@ public class AuthController {
                 roles));
     }
 
-    @DeleteMapping("deleteInvalidUser/{email}")
-    public ResponseEntity<?> deleteInvalidUser(@PathVariable("email") String email) {
-        try {
-            userRepository.deleteById(userRepository.getByEmail(email).getId());
-            return ResponseEntity.ok(new MessageResponse("Invalid user is deleted"));
-        } catch (Exception e) {
-            return ResponseEntity.badRequest().body(new MessageResponse("Error: Cannot delete invalid user column."));
-        }
-    }
+//    @DeleteMapping("deleteInvalidUser/{email}")
+//    public ResponseEntity<?> deleteInvalidUser(@PathVariable("email") String email) {
+//        try {
+//            userRepository.deleteById(userRepository.getByEmail(email).getId());
+//            return ResponseEntity.ok(new MessageResponse("Invalid user is deleted"));
+//        } catch (Exception e) {
+//            return ResponseEntity.badRequest().body(new MessageResponse("Error: Cannot delete invalid user column."));
+//        }
+//    }
 
     @CrossOrigin(origins = "http://localhost:3000", allowCredentials = "true")
     @PostMapping("/signup")
     public ResponseEntity<?> registerUser(@Valid @RequestBody SignupRequest signUpRequest) {
-        //TODO: check if is enabled;
-        if (userRepository.existsByEmail(signUpRequest.getEmail()) &&
-                !userRepository.getByEmail(signUpRequest.getEmail()).isEnabled()) {
-            return ResponseEntity.badRequest().body(new MessageResponse("Error: User registered but is disabled"));
-        }
-//        if (userRepository.existsByEmail(signUpRequest.getEmail()) &&
-//                !userRepository.getByEmail(signUpRequest.getEmail()).isEnabled()) {
-//            Long id = userRepository.getByEmail(signUpRequest.getEmail()).getId();
-//            userRepository.deleteById(userRepository.getByEmail(signUpRequest.getEmail()).getId());
-//        }
 
-        // check if duplicate username;
-        if (userRepository.existsByUsername(signUpRequest.getUsername())) {
-            return ResponseEntity.badRequest().body(new MessageResponse("Error: Username is already taken!"));
-        }
-        // check if duplicate email;
-        if (userRepository.existsByEmail(signUpRequest.getEmail())) {
-            return ResponseEntity.badRequest().body(new MessageResponse("Error: Email is already in use!"));
-        }
-        // check if valid email;
-        boolean isValidEmail = emailValidator.test(signUpRequest.getEmail());
-        if (!isValidEmail) {
-            return ResponseEntity.badRequest().body((new MessageResponse("Error: Email not valid!")));
-        }
+        if (!(userRepository.existsByEmail(signUpRequest.getEmail()) &&
+                !userRepository.getByEmail(signUpRequest.getEmail()).isEnabled())) {
+            // check if duplicate username;
+            if (userRepository.existsByUsername(signUpRequest.getUsername())) {
+                return ResponseEntity.badRequest().body(new MessageResponse("Error: Username is already taken!"));
+            }
+            // check if duplicate email;
+            if (userRepository.existsByEmail(signUpRequest.getEmail())) {
+                return ResponseEntity.badRequest().body(new MessageResponse("Error: Email is already in use!"));
+            }
+            // check if valid email;
+            boolean isValidEmail = emailValidator.test(signUpRequest.getEmail());
+            if (!isValidEmail) {
+                return ResponseEntity.badRequest().body((new MessageResponse("Error: Email not valid!")));
+            }
 
-        // Create new user's account
-        User user = new User(signUpRequest.getUsername(),
-                signUpRequest.getEmail(),
-                encoder.encode(signUpRequest.getPassword()));
+            // Create new user's account
+            User user = new User(signUpRequest.getUsername(),
+                    signUpRequest.getEmail(),
+                    encoder.encode(signUpRequest.getPassword()));
 
-        Set<String> strRoles = signUpRequest.getRole();
-        Set<Role> roles = new HashSet<>();
-        //strRoles == null
-        if (strRoles.isEmpty()) {
-            Role userRole = roleRepository.findByName(ERole.ROLE_USER)
-                    .orElseThrow(() -> new RuntimeException("Error: Role is not found empty."));
-            roles.add(userRole);
+            Set<String> strRoles = signUpRequest.getRole();
+            Set<Role> roles = new HashSet<>();
+            //strRoles == null
+            if (strRoles.isEmpty()) {
+                Role userRole = roleRepository.findByName(ERole.ROLE_USER)
+                        .orElseThrow(() -> new RuntimeException("Error: Role is not found empty."));
+                roles.add(userRole);
+            } else {
+                //TODO: fix default;
+                strRoles.forEach(role -> {
+                    switch (role) {
+                        case "admin":
+                            Role adminRole = roleRepository.findByName(ERole.ROLE_ADMIN)
+                                    .orElseThrow(() -> new RuntimeException("Error: Role is not found admin."));
+                            roles.add(adminRole);
+
+                            break;
+                        case "mod":
+                            Role modRole = roleRepository.findByName(ERole.ROLE_MODERATOR)
+                                    .orElseThrow(() -> new RuntimeException("Error: Role is not found mod."));
+                            roles.add(modRole);
+
+                            break;
+                        default:
+                            Role userRole = roleRepository.findByName(ERole.ROLE_USER)
+                                    .orElseThrow(() -> new RuntimeException("Error: Role is not found default."));
+                            roles.add(userRole);
+                    }
+                });
+            }
+            user.setRoles(roles);
+            userRepository.save(user);
+
+            // generate register token;
+            String signupToken = UUID.randomUUID().toString();
+            // save token;
+            ConfirmationToken confirmationToken = new ConfirmationToken(
+                    signupToken,
+                    LocalDateTime.now(),
+                    LocalDateTime.now().plusMinutes(15),
+                    user
+            );
+            confirmationTokenService.saveConfirmationToken(confirmationToken);
+            // create email link and send email;
+            //TODO: need to modify when deploy;
+            String link = "http://localhost:8080/api/auth/confirmSignUp?token=" + signupToken;
+            emailService.send(signUpRequest.getEmail(),
+                    emailService.buildEmail(signUpRequest.getUsername(), link));
+
+            // return generated token;
+            return ResponseEntity.ok(new MessageResponse("Email sent!"));
         } else {
-            //TODO: fix default;
-            strRoles.forEach(role -> {
-                switch (role) {
-                    case "admin":
-                        Role adminRole = roleRepository.findByName(ERole.ROLE_ADMIN)
-                                .orElseThrow(() -> new RuntimeException("Error: Role is not found admin."));
-                        roles.add(adminRole);
+            User user = userRepository.getByEmail(signUpRequest.getEmail());
 
-                        break;
-                    case "mod":
-                        Role modRole = roleRepository.findByName(ERole.ROLE_MODERATOR)
-                                .orElseThrow(() -> new RuntimeException("Error: Role is not found mod."));
-                        roles.add(modRole);
+            // generate register token;
+            String signupToken = UUID.randomUUID().toString();
+            // save token;
+            ConfirmationToken confirmationToken = new ConfirmationToken(
+                    signupToken,
+                    LocalDateTime.now(),
+                    LocalDateTime.now().plusMinutes(15),
+                    user
+            );
+            confirmationTokenService.saveConfirmationToken(confirmationToken);
+            // create email link and send email;
+            //TODO: need to modify when deploy;
+            String link = "http://localhost:8080/api/auth/confirmSignUp?token=" + signupToken;
+            emailService.send(signUpRequest.getEmail(),
+                    emailService.buildEmail(signUpRequest.getUsername(), link));
 
-                        break;
-                    default:
-                        Role userRole = roleRepository.findByName(ERole.ROLE_USER)
-                                .orElseThrow(() -> new RuntimeException("Error: Role is not found default."));
-                        roles.add(userRole);
-                }
-            });
+            // return generated token;
+            return ResponseEntity.ok(new MessageResponse("Email sent again!"));
         }
-        user.setRoles(roles);
-        userRepository.save(user);
 
-        // generate register token;
-        String signupToken = UUID.randomUUID().toString();
-        // save token;
-        ConfirmationToken confirmationToken = new ConfirmationToken(
-                signupToken,
-                LocalDateTime.now(),
-                LocalDateTime.now().plusMinutes(15),
-                user
-        );
-        confirmationTokenService.saveConfirmationToken(confirmationToken);
-        // create email link and send email;
-        //TODO: need to modify when deploy;
-        String link = "http://localhost:8080/api/auth/confirmSignUp?token=" + signupToken;
-        emailService.send(signUpRequest.getEmail(),
-                emailService.buildEmail(signUpRequest.getUsername(), link));
-
-        // return generated token;
-        return ResponseEntity.ok(new MessageResponse("Email sent!"));
+//        // generate register token;
+//        String signupToken = UUID.randomUUID().toString();
+//        // save token;
+//        ConfirmationToken confirmationToken = new ConfirmationToken(
+//                signupToken,
+//                LocalDateTime.now(),
+//                LocalDateTime.now().plusMinutes(15),
+//                user
+//        );
+//        confirmationTokenService.saveConfirmationToken(confirmationToken);
+//        // create email link and send email;
+//        //TODO: need to modify when deploy;
+//        String link = "http://localhost:8080/api/auth/confirmSignUp?token=" + signupToken;
+//        emailService.send(signUpRequest.getEmail(),
+//                emailService.buildEmail(signUpRequest.getUsername(), link));
+//
+//        // return generated token;
+//        return ResponseEntity.ok(new MessageResponse("Email sent!"));
     }
 
     @GetMapping(path = "confirmSignUp")

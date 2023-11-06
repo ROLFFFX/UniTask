@@ -1,51 +1,69 @@
 package com.teamone.unitask.tasks;
 
+import com.teamone.unitask.onboard.usermodels.User;
 import com.teamone.unitask.projects.Project;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
 import java.time.LocalDateTime;
+import java.util.Collection;
+import java.util.Set;
 
 @Entity
 @Table(name = "task")
 public class Task {
 
-//    @Id
-//    @GeneratedValue(strategy = GenerationType.IDENTITY)
-//    @Column(name = "task_id")
-    @SequenceGenerator(
-            name = "task_sequence",
-            sequenceName = "task_sequence",
-            allocationSize = 1
-    )
-    @Id
-    @GeneratedValue(
-            strategy = GenerationType.SEQUENCE,
-            generator = "task_sequence"
-    )
-    private Long taskId;
-    @Column(name = "title", nullable = false)
-    private String title = "New Task";
-    @Column(name = "status", nullable = false)
-    private String status = "To Do";
-    // one to one relation;
-    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @JoinColumn(name = "parent_task_Id")
-    private Task parentTaskId;
-    @Column(name = "num_layers", nullable = false)
-    private Integer numLayers = 0;
-    @Column(name = "expected_complete_time")
-    private LocalDateTime expectedCompleteTime;
-    @Column(name = "task_points", nullable = false)
-    private Integer taskPoints = 1;
-    // one to many relation;
-//    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-//    @JoinColumn(name = "assigned_member_id")
-//    private List<User> assignedMemberId;
-    @ManyToOne
-    @JoinColumn(name = "project_id")
-    private Project projectId;
-    //TODO: USER ASSIGNED
+    /**
+     * fields
+     */
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "task_id")
+    private Long taskId;
+
+    @NotBlank
+    private String title;
+
+    @NotBlank
+    private String status;
+
+    @NotBlank
+    private boolean isChildrenTask;
+
+    private LocalDateTime expectedCompleteTime;
+
+    @NotBlank
+    private Integer taskPoints;
+
+    /**
+     * foreign keys
+     */
+
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn(name = "parentTask_Id")
+    private Task parentTaskId;
+
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn(name = "project_id")
+    private Project projectBelonged;
+
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn(name = "user_id")
+    private User taskMemberAssigned;
+
+    /**
+     * mapped by
+     */
+
+    @OneToMany(mappedBy = "parentTaskId")
+    private Collection<Task> childrenTasks;
+
+
+    /**
+     * methods
+     */
 
     public Long getTaskId() {
         return taskId;
@@ -71,14 +89,6 @@ public class Task {
         this.status = status;
     }
 
-    public Integer getNumLayers() {
-        return numLayers;
-    }
-
-    public void setNumLayers(Integer numLayers) {
-        this.numLayers = numLayers;
-    }
-
     public void setParentTaskId(Task parentTaskId) {
         this.parentTaskId = parentTaskId;
     }
@@ -99,23 +109,8 @@ public class Task {
         this.taskPoints = taskPoints;
     }
 
-//    public List<User> getAssignedMemberId() {
-//        return assignedMemberId;
-//    }
-//
-//    public void setAssignedMemberId(List<User> assignedMemberId) {
-//        this.assignedMemberId = assignedMemberId;
-//    }
-
     public Task getParentTaskId() {
         return parentTaskId;
     }
 
-    public Project getProjectId() {
-        return projectId;
-    }
-
-    public void setProjectId(Project projectId) {
-        this.projectId = projectId;
-    }
 }
