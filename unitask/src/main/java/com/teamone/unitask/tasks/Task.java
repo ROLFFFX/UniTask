@@ -89,8 +89,12 @@ public class Task {
         this.status = status;
     }
 
-    public void setParentTaskId(Task parentTaskId) {
-        this.parentTaskId = parentTaskId;
+    public boolean isChildrenTask() {
+        return isChildrenTask;
+    }
+
+    public void setChildrenTask(boolean childrenTask) {
+        isChildrenTask = childrenTask;
     }
 
     public LocalDateTime getExpectedCompleteTime() {
@@ -113,4 +117,31 @@ public class Task {
         return parentTaskId;
     }
 
+    public void setParentTaskId(Task parentTaskId) {
+        this.parentTaskId = parentTaskId;
+    }
+
+    public Project getProjectBelonged() {
+        return projectBelonged;
+    }
+
+    public void setProjectBelonged(Project projectBelonged) {
+        this.projectBelonged = projectBelonged;
+    }
+
+    public User getTaskMemberAssigned() {
+        return taskMemberAssigned;
+    }
+
+    public void setTaskMemberAssigned(User taskMemberAssigned) {
+        this.taskMemberAssigned = taskMemberAssigned;
+    }
+
+    public Collection<Task> getChildrenTasks() {
+        return childrenTasks;
+    }
+
+    public void setChildrenTasks(Collection<Task> childrenTasks) {
+        this.childrenTasks = childrenTasks;
+    }
 }

@@ -12,7 +12,10 @@ import java.util.Collection;
 import java.util.List;
 
 @Entity
-@Table(name = "project")
+@Table(name = "project",
+        uniqueConstraints = {
+        @UniqueConstraint(columnNames = "projectTitle")
+        })
 public class Project {
 
     /**
@@ -24,7 +27,7 @@ public class Project {
     @Column(name = "project_id")
     private Long projectId;
 
-    @NotBlank
+    @Column(nullable = false)
     private String projectTitle;
 
     /**
@@ -74,4 +77,51 @@ public class Project {
         this.projectTitle = projectTitle;
     }
 
+    public User getMasterUserId() {
+        return masterUserId;
+    }
+
+    public void setMasterUserId(User masterUserId) {
+        this.masterUserId = masterUserId;
+    }
+
+    public Collection<User> getUsers_participated() {
+        return users_participated;
+    }
+
+    public void setUsers_participated(Collection<User> users_participated) {
+        this.users_participated = users_participated;
+    }
+
+    public Collection<TimeSlot> getTimeSlots() {
+        return timeSlots;
+    }
+
+    public void setTimeSlots(Collection<TimeSlot> timeSlots) {
+        this.timeSlots = timeSlots;
+    }
+
+    public Collection<Task> getTasks() {
+        return tasks;
+    }
+
+    public void setTasks(Collection<Task> tasks) {
+        this.tasks = tasks;
+    }
+
+    public Collection<Meeting> getMeetings() {
+        return meetings;
+    }
+
+    public void setMeetings(Collection<Meeting> meetings) {
+        this.meetings = meetings;
+    }
+
+    public Collection<Hyperlink> getHyperlinks() {
+        return hyperlinks;
+    }
+
+    public void setHyperlinks(Collection<Hyperlink> hyperlinks) {
+        this.hyperlinks = hyperlinks;
+    }
 }

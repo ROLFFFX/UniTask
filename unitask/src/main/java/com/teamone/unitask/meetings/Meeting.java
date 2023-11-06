@@ -1,6 +1,7 @@
 package com.teamone.unitask.meetings;
 
 import com.teamone.unitask.projects.Project;
+import net.bytebuddy.asm.Advice;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
@@ -39,6 +40,16 @@ public class Meeting {
     /**
      * methods
      */
+
+    public Meeting() {
+
+    }
+
+    public Meeting(String title, LocalDateTime startTime, LocalDateTime endTime) {
+        this.title = title;
+        this.startTime = startTime;
+        this.endTime = endTime;
+    }
 
     public Long getMeetingId() {
         return meetingId;

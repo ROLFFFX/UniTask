@@ -38,6 +38,14 @@ public class Hyperlink {
      * methods
      */
 
+    public Hyperlink() {
+
+    }
+
+    public Hyperlink(String title, String url) {
+        this.title = title;
+        this.url = url;
+    }
 
     public Long getHyperlinkId() {
         return hyperlinkId;

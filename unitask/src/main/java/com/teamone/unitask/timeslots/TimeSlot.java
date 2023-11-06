@@ -2,6 +2,8 @@ package com.teamone.unitask.timeslots;
 
 import com.teamone.unitask.onboard.usermodels.User;
 import com.teamone.unitask.projects.Project;
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
@@ -9,6 +11,7 @@ import java.time.LocalDateTime;
 import java.util.Set;
 
 @Entity
+@NoArgsConstructor
 @Table(name = "timeslot")
 public class TimeSlot {
 
@@ -44,6 +47,8 @@ public class TimeSlot {
      * methods
      */
 
+
+
     public Long getTimeSlotId() {
         return timeSlotId;
     }
@@ -68,4 +73,19 @@ public class TimeSlot {
         this.endTime = endTime;
     }
 
+    public User getUserAssigned() {
+        return userAssigned;
+    }
+
+    public void setUserAssigned(User userAssigned) {
+        this.userAssigned = userAssigned;
+    }
+
+    public Project getProjectBelonged() {
+        return projectBelonged;
+    }
+
+    public void setProjectBelonged(Project projectBelonged) {
+        this.projectBelonged = projectBelonged;
+    }
 }

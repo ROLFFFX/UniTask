@@ -125,6 +125,14 @@ public class User {
         this.password = password;
     }
 
+    public boolean isEnabled() {
+        return enabled;
+    }
+
+    public void setEnabled(boolean enabled) {
+        this.enabled = enabled;
+    }
+
     public Set<Role> getRoles() {
         return roles;
     }
@@ -133,11 +141,43 @@ public class User {
         this.roles = roles;
     }
 
-    public boolean isEnabled() {
-        return enabled;
+    public List<Project> getProjectsJoined() {
+        return projectsJoined;
     }
 
-    public void setEnabled(boolean enabled) {
-        this.enabled = enabled;
+    public void setProjectsJoined(List<Project> projectsJoined) {
+        this.projectsJoined = projectsJoined;
+    }
+
+    public Collection<ConfirmationToken> getConfirmationTokens() {
+        return confirmationTokens;
+    }
+
+    public void setConfirmationTokens(Collection<ConfirmationToken> confirmationTokens) {
+        this.confirmationTokens = confirmationTokens;
+    }
+
+    public Collection<Project> getMastered_projects() {
+        return mastered_projects;
+    }
+
+    public void setMastered_projects(Collection<Project> mastered_projects) {
+        this.mastered_projects = mastered_projects;
+    }
+
+    public Collection<TimeSlot> getHas_timeslots() {
+        return has_timeslots;
+    }
+
+    public void setHas_timeslots(Collection<TimeSlot> has_timeslots) {
+        this.has_timeslots = has_timeslots;
+    }
+
+    public Collection<Task> getTasks() {
+        return tasks;
+    }
+
+    public void setTasks(Collection<Task> tasks) {
+        this.tasks = tasks;
     }
 }
