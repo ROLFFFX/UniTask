@@ -7,44 +7,87 @@ import Link from "@mui/material/Link";
 import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
 import { ThemeProvider } from "@mui/material/styles";
-import * as React from "react";
-import theme from "./LoginStyling/theme";
-import { TopSVG } from "./LoginStyling/TopSVG";
-import { BottomSVG } from "./LoginStyling/BottomSVG";
-import { useNavigate } from "react-router-dom";
-import { useContext } from "react";
-import AuthContext from "../../context/AuthProvider";
 import axios from "axios";
+import * as React from "react";
+import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import useAuth from "../../hooks/useAuth";
+import { BottomSVG } from "./LoginStyling/BottomSVG";
+import { TopSVG } from "./LoginStyling/TopSVG";
+import theme from "./LoginStyling/theme";
+import { useState } from "react";
+import { Modal } from "@mui/material";
+import { useCookies } from "react-cookie";
+
+const modalStyle = {
+  position: "absolute",
+  top: "50%",
+  left: "50%",
+  transform: "translate(-50%, -50%)",
+  width: 400,
+  bgcolor: "background.paper",
+  border: "2px solid #000",
+  boxShadow: 24,
+  p: 4,
+};
 
 export function LoginSignup() {
-  const { setAuth } = useContext(AuthContext);
+  const [cookies, setCookie, removeCookie] = useCookies(["auth"]);
+  const { auth, setAuth } = useAuth();
+  const [showFailureAlert, setShowFailureAlert] = useState(false);
+  const handleClose = () => {
+    setShowFailureAlert(false);
+    //@todo: jwt-test: delete current user info
+  };
   const navigate = useNavigate();
+  useEffect(() => {
+    if (auth?.user) {
+      navigate("/dashboard"); //goes to onboarding process after checking if user info is complete.
+    }
+  }, [auth, navigate]);
   const handleSubmit = async (e) => {
     e.preventDefault();
     var data = new FormData(e.currentTarget);
     const userEmail = data.get("email");
     const userPassword = data.get("password");
-    data = { userEmail, userPassword };
-    console.log(" This is data: ");
-    console.log(data);
-    // @todo: implement login process URL
+    data = { email: userEmail, password: userPassword };
+    // console.log(" This is data: ");
+    // console.log(data);
     try {
-      const response = await axios.post("URL For Endpoint", data, {
-        headers: { "Content-Type": "application/json" },
-        withCredentials: true,
-      });
-      //@todo: if success, save access token that is sent from backend
-      const userJWT = response.data;
-      setAuth({ userEmail, userPassword, userJWT });
-      navigate("/login/ob_landing"); //goes to onboarding process without checking if user info is complete.
+      const response = await axios.post(
+        "http://localhost:8080/api/auth/signin",
+        data,
+        {
+          headers: { "Content-Type": "application/json" },
+          withCredentials: true,
+        }
+      );
+      const userJWT = response.data.accessToken;
+      setAuth({ user: { userEmail, userPassword, userJWT } });
+      setCookie(
+        "auth",
+        { user: { userEmail, userPassword, userJWT } },
+        { path: "/", maxAge: 1800 }
+      );
+      // console.log(
+      //   "You have been logged in successfully! Here are some of your credentials:"
+      // );
+      // console.log(data);
+      // console.log({ userEmail, userPassword, userJWT });
+      // console.log(userJWT);
     } catch (error) {
       if (error) {
         if (!error?.response) {
           alert("No Server Response!");
+        } else if (error.response.status === 401) {
+          alert("Invalid email and password!");
+        } else {
+          setShowFailureAlert(true);
         }
         //@todo: implement more custom error messages.
         console.error("Error Caught on Sign In: ", error);
       }
+      navigate("/login/signup");
     }
   };
 
@@ -53,6 +96,30 @@ export function LoginSignup() {
       <TopSVG></TopSVG>
       <Container component="main" maxWidth="xs">
         <CssBaseline />
+        <Modal
+          open={showFailureAlert}
+          onClose={handleClose}
+          aria-labelledby="error-modal-title"
+          aria-describedby="error-modal-description"
+        >
+          <Box sx={modalStyle}>
+            <Typography id="error-modal-title" variant="h6" component="h2">
+              Sign In Error
+            </Typography>
+            <Typography id="error-modal-description" sx={{ mt: 2 }}>
+              Your credentials are correct, but your accout is currently
+              disabled. Please sign up again and check your email inbox.
+            </Typography>
+            <Button
+              onClick={handleClose}
+              color="inherit"
+              autoFocus
+              sx={{ mt: 2, color: "white" }}
+            >
+              Close
+            </Button>
+          </Box>
+        </Modal>
         <Box
           sx={{
             marginTop: 25,
@@ -86,7 +153,7 @@ export function LoginSignup() {
               name="email"
               autoComplete="email"
               autoFocus
-              InputLabelProps={{ style: { fontSize: 14 } }}
+              InputLabelProps={{ style: { fontSize: "14px" } }}
             />
             <TextField
               margin="normal"
@@ -97,7 +164,7 @@ export function LoginSignup() {
               type="password"
               id="password"
               autoComplete="current-password"
-              InputLabelProps={{ style: { fontSize: 14 } }}
+              InputLabelProps={{ style: { fontSize: "14px" } }}
             />
             <Button
               type="submit"

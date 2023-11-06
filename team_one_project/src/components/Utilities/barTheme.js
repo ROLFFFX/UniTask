@@ -3,7 +3,7 @@ import { createTheme } from "@mui/material/styles";
 const barTheme = createTheme({
   typography: {
     fontFamily: "'Poppins', sans-serif",
-    fontSize: "13px",
+    fontSize: 13,
   },
   components: {
     MuiCssBaseline: {
@@ -17,7 +17,7 @@ const barTheme = createTheme({
     MuiTypography: {
       styleOverrides: {
         root: {
-          fontSize: "13px",
+          fontSize: 13,
           color: "#333333", // Set text color to #2E2E2E
         },
       },
@@ -25,7 +25,7 @@ const barTheme = createTheme({
     MuiButton: {
       styleOverrides: {
         root: {
-          fontSize: "13px",
+          fontSize: 13,
           color: "#2E2E2E", // Set text color to #2E2E2E
         },
       },

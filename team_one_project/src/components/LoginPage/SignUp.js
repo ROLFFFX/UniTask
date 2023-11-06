@@ -6,6 +6,7 @@ import Grid from "@mui/material/Grid";
 import Link from "@mui/material/Link";
 import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
+import { Modal } from "@mui/material";
 import { ThemeProvider } from "@mui/material/styles";
 import axios from "axios";
 import * as React from "react";
@@ -15,9 +16,28 @@ import { BottomSVG } from "./LoginStyling/BottomSVG";
 import { TopSVG } from "./LoginStyling/TopSVG";
 import theme from "./LoginStyling/theme";
 import { PasswordInput } from "./PasswordInput";
+import { Alert } from "@mui/material";
+import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
+
+const modalStyle = {
+  position: "absolute",
+  top: "50%",
+  left: "50%",
+  transform: "translate(-50%, -50%)",
+  width: 400,
+  bgcolor: "background.paper",
+  border: "2px solid #000",
+  boxShadow: 24,
+  p: 4,
+};
 
 export function SignUp() {
   const navigate = useNavigate();
+  const [showSuccessAlert, setShowSuccessAlert] = useState(false);
+  const [showFailureAlert, setShowFailureAlert] = useState(false);
+  const handleClose = () => {
+    setShowFailureAlert(false);
+  };
   const [user, setUser] = useState({
     firstName: "",
     lastName: "",
@@ -38,22 +58,34 @@ export function SignUp() {
 
   const onSubmit = async (e) => {
     e.preventDefault();
-    // user.password = SHA256(user.password).toString();
-    // console.log(user);
+
+    const modifyUser = {
+      username: `${user.firstName} ${user.lastName}`,
+      email: user.email,
+      password: user.password,
+      role: [],
+    };
+    console.log(modifyUser);
     try {
       const response = await axios.post(
-        "http://localhost:8080/api/v1/registration",
-        user,
+        "http://localhost:8080/api/auth/signup",
+        modifyUser,
         {
           headers: { "Content-Type": "application/json" },
           withCredentials: true,
         }
       );
+      setShowSuccessAlert(true);
       // console.log(JSON.stringify(response));   NOTE: response.data contains the JWT token.
-      navigate("/login");
+      // success alert on succesfully registered
+      setTimeout(() => {
+        navigate("/login");
+      }, 3000);
     } catch (error) {
       if (!error?.response) {
         alert("No Server Response!");
+      } else {
+        setShowFailureAlert(true);
       }
       //@todo: implement more custom error messages.
       console.error("Error Caught on Sign Up: ", error);
@@ -84,6 +116,40 @@ export function SignUp() {
             Sign Up
           </Typography>
           <Box component="form" noValidate onSubmit={onSubmit} sx={{ mt: 3 }}>
+            <Modal
+              open={showFailureAlert}
+              onClose={handleClose}
+              aria-labelledby="error-modal-title"
+              aria-describedby="error-modal-description"
+            >
+              <Box sx={modalStyle}>
+                <Typography id="error-modal-title" variant="h6" component="h2">
+                  Sign Up Error
+                </Typography>
+                <Typography id="error-modal-description" sx={{ mt: 2 }}>
+                  We encountered an error while processing your sign-up request.
+                  <pre></pre>
+                  Possible Causes:
+                  <br></br>
+                  1. There is a typo in your email.
+                  <br></br>
+                  2. This email is taken.
+                  <br></br>
+                  3. This Firstname and Lastname is taken.
+                  <br></br>
+                  4. This email is registered, but currently disabled. Please
+                  sign up again and check your email inbox and spam inbox.
+                </Typography>
+                <Button
+                  onClick={handleClose}
+                  color="inherit"
+                  autoFocus
+                  sx={{ mt: 2, color: "white" }}
+                >
+                  Close
+                </Button>
+              </Box>
+            </Modal>
             <Grid container spacing={2}>
               <Grid item xs={12} sm={6}>
                 <TextField
@@ -129,6 +195,7 @@ export function SignUp() {
                 />
               </Grid>
             </Grid>
+
             <Button
               type="submit"
               fullWidth
@@ -138,6 +205,16 @@ export function SignUp() {
             >
               Sign Up
             </Button>
+            {showSuccessAlert && (
+              <Alert
+                severity="success"
+                iconMapping={{
+                  success: <CheckCircleOutlineIcon fontSize="inherit" />,
+                }}
+              >
+                Registration successful! Redirecting to login...
+              </Alert>
+            )}
             <Grid container justifyContent="flex-end">
               <Grid item>
                 <Link href="/login" variant="body2" color="inherit">

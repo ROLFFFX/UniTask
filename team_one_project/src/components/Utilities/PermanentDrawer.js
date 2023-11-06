@@ -8,10 +8,46 @@ import ListItemText from "@mui/material/ListItemText";
 import * as React from "react";
 import { useNavigate } from "react-router-dom";
 import barTheme from "./barTheme";
+import LogOutButton from "./LogOutButton";
+import { Box } from "@mui/material";
+import DashboardIcon from "@mui/icons-material/Dashboard";
+import AssignmentIcon from "@mui/icons-material/Assignment";
+import MeetingRoomIcon from "@mui/icons-material/MeetingRoom";
+import RateReviewIcon from "@mui/icons-material/RateReview";
+import GroupsIcon from "@mui/icons-material/Groups";
+import AccountCircleIcon from "@mui/icons-material/AccountCircle";
+import SettingsApplicationsIcon from "@mui/icons-material/SettingsApplications";
 
 const drawerWidth = 200;
 
 export default function PermanentDrawer() {
+  const displayIcon = (index) => {
+    switch (index) {
+      case 0:
+        return <DashboardIcon sx={{ marginLeft: 1, color: "#495057" }} />;
+        break;
+      case 1:
+        return <AssignmentIcon sx={{ marginLeft: 1, color: "#495057" }} />;
+        break;
+      case 2:
+        return <MeetingRoomIcon sx={{ marginLeft: 1, color: "#495057" }} />;
+        break;
+      case 3:
+        return <RateReviewIcon sx={{ marginLeft: 1, color: "#495057" }} />;
+        break;
+      case 5:
+        return <GroupsIcon sx={{ marginLeft: 1, color: "#495057" }} />;
+        break;
+      case 6:
+        return <AccountCircleIcon sx={{ marginLeft: 1, color: "#495057" }} />;
+        break;
+      case 7:
+        return (
+          <SettingsApplicationsIcon sx={{ marginLeft: 1, color: "#495057" }} />
+        );
+        break;
+    }
+  };
   const sidebar_upper = [
     "Dashboard",
     "Task Board",
@@ -71,6 +107,7 @@ export default function PermanentDrawer() {
         <List>
           {sidebar_upper.map((text, index) => (
             <ListItem key={index} disablePadding>
+              {displayIcon(index)}
               <ListItemButton onClick={() => handleClick(index)}>
                 <ListItemText primary={text} />
               </ListItemButton>
@@ -81,12 +118,16 @@ export default function PermanentDrawer() {
         <List>
           {sidebar_lower.map((text, index) => (
             <ListItem key={index} disablePadding>
+              {displayIcon(index + 5)}
               <ListItemButton onClick={() => handleClick(index + 5)}>
                 <ListItemText primary={text} />
               </ListItemButton>
             </ListItem>
           ))}
         </List>
+        {/* spacer used to align logout button with bottom of drawer */}
+        <Box style={{ flexGrow: 1 }} />
+        <LogOutButton></LogOutButton>
       </Drawer>
     </ThemeProvider>
   );
