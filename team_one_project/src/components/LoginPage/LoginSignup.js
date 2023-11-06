@@ -153,7 +153,7 @@ export function LoginSignup() {
               name="email"
               autoComplete="email"
               autoFocus
-              InputLabelProps={{ style: { fontSize: 14 } }}
+              InputLabelProps={{ style: { fontSize: "14px" } }}
             />
             <TextField
               margin="normal"
@@ -164,7 +164,7 @@ export function LoginSignup() {
               type="password"
               id="password"
               autoComplete="current-password"
-              InputLabelProps={{ style: { fontSize: 14 } }}
+              InputLabelProps={{ style: { fontSize: "14px" } }}
             />
             <Button
               type="submit"
