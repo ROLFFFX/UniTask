@@ -82,22 +82,12 @@ export function MainSprintBoard() {
   // Handle drag and drop
   // TODO: Don't hard code column names, instead select all columns via class
   // (sloppy temp solution implemented because don't know how to add multiple classes in React)
-  const draggables = document.querySelectorAll(".task");
   const tasksColumn = document.getElementById("tasksColumn");
   const todoColumn = document.getElementById("todoColumn");
   const doingColumn = document.getElementById("doingColumn");
   const doneColumn = document.getElementById("doneColumn");
   const columns = [tasksColumn, todoColumn, doingColumn, doneColumn]
 
-  
-  draggables.forEach((task) => {
-    task.addEventListener("dragstart", () => {
-      task.classList.add("dragging");
-    });
-    task.addEventListener("dragend", () => {
-      task.classList.remove("dragging");
-    });
-  });
 
   columns.forEach((column) => {
     if (column) {

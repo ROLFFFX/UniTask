@@ -62,7 +62,7 @@ html, body {
 .grid-item {
   padding: 20px;
   font-size: 15px;
-  border-right: 1px solid #CCCCCC;
+  border-right: 1px solid #6C757D;
   /*max-width: 200px;*/
 }
 
@@ -75,7 +75,7 @@ html, body {
 #tasksHeader {
   grid-column: 1;
   grid-row: 1;
-  border-bottom: 1px solid #CCCCCC;
+  border-bottom: 1px solid #6C757D;
   height: 20px;
 }
 
@@ -171,7 +171,7 @@ html, body {
 #todoHeader {
   grid-column: 2;
   grid-row: 1;
-  border-bottom: 1px solid #CCCCCC;
+  border-bottom: 1px solid #6C757D;
   height: 20px;
 }
 
@@ -183,7 +183,7 @@ html, body {
 #doingHeader {
   grid-column: 3;
   grid-row: 1;
-  border-bottom: 1px solid #CCCCCC;
+  border-bottom: 1px solid #6C757D;
   height: 20px;
 }
 
@@ -196,7 +196,7 @@ html, body {
   grid-column: 4;
   grid-row: 1;
   border-right: 0;
-  border-bottom: 1px solid #CCCCCC;
+  border-bottom: 1px solid #6C757D;
   height: 20px;
 }
 

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import chevron_favicon from "../../images/chevron_favicon.png";
 import circle_blue_favicon from "../../images/circle_blue_favicon.png";
 import circle_orange_favicon from "../../images/circle_orange_favicon.png";
@@ -12,6 +12,9 @@ function Task({ taskData }) {
   const [AddSub, setAddSub] = useState("idle");
   const [ShowSub, setShowSub] = useState("expand");
 
+  // Used to reference the current task being dragged
+  const elementRef = useRef(null);
+
   const addSubtask = () => {
     setSubtasks([...subtasks, newSubtask]);
     taskData.subtaskList = subtasks;
@@ -20,8 +23,30 @@ function Task({ taskData }) {
     setIsAddingSubtask(false);
   };
 
+  // Add dragging capability
+  // When item is dragged, give it the dragging class
+  const addDrag = () => {
+    if (elementRef.current) {
+      elementRef.current.classList.add('dragging');
+    }
+  }
+
+  const removeDrag = () => {
+    if (elementRef.current) {
+      elementRef.current.classList.remove('dragging');
+    }
+  }
+
+
   return (
-    <div className={"task"} key={taskData.id} draggable="true">
+    <div 
+      className={"task"}
+      key={taskData.id}
+      draggable="true"
+      ref={elementRef}
+      onDragStart={addDrag}
+      onDragEnd={removeDrag}
+    >
         <div className="taskLabel">
         <img src={circle_orange_favicon} alt=""></img>
         {taskData.title}
