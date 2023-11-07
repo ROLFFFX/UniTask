@@ -20,6 +20,7 @@ import RequireAuth from "./components/RequireAuth";
 import PermanentDrawer from "./components/Utilities/PermanentDrawer";
 import { TopAppBar } from "./components/Utilities/TopNavBar";
 import LoginWithGroup from "./components/LoginPage/LoginWithGroup/LoginWithGroup";
+import WelcomePage from "./components/Utilities/WelcomePage";
 
 function Layout({ children }) {
   return (
@@ -45,6 +46,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Layout />}>
           {/* Public Routes */}
+          <Route path="/" element={<WelcomePage />} />
           <Route path="/login" element={<LoginSignup />} />
           <Route path="/login/signup" element={<SignUp />} />
           {/* Protected Routes */}
