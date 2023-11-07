@@ -8,7 +8,7 @@ import LoginIcon from "@mui/icons-material/Login";
 export default function LoginWithGroup() {
   const navigate = useNavigate();
   const handleNavigate = () => {
-    navigate("/login/ob_landing");
+    navigate("/dashboard");
   };
   return (
     <div>
@@ -41,6 +41,17 @@ export default function LoginWithGroup() {
           click the one you want to log in with. <br />
           <pre />
         </Typography>
+        <Button
+          variant="contained"
+          style={{
+            backgroundColor: "#343A40",
+            color: "#E9ECEF",
+            fontSize: "11px",
+          }}
+          onClick={handleNavigate}
+        >
+          Tester Login
+        </Button>
       </Box>
     </div>
   );
