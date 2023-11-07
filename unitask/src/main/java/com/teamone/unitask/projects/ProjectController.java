@@ -46,6 +46,8 @@ public class ProjectController {
         return projectRepository.findAll();
     }
 
+
+
     private String extractTokenFromAuthorizationHeader(String authorizationHeader) {
 
         if (authorizationHeader != null && authorizationHeader.startsWith("Bearer ")) {
