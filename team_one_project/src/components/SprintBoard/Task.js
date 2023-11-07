@@ -28,15 +28,17 @@ function Task({ taskData }) {
   const drag = (e, containerId) => {
     if (elementRef.current) {
       elementRef.current.classList.add('dragging');
-
-      e.dataTransfer.setData('application/json', JSON.stringify(taskData)); // Set data to enable drag
-      e.dataTransfer.setData('containerId', containerId); // Set the container identifier
+      
+      //e.dataTransfer.setData('application/json', JSON.stringify(taskData)); // Set data to enable drag
+      //e.dataTransfer.setData('containerId', containerId); // Send the id of the container
     }
   }
 
   const endDrag = () => {
     if (elementRef.current) {
       elementRef.current.classList.remove('dragging');
+      taskData.status = elementRef.current.parentElement.id;
+      console.log(taskData);
     }
   }
 

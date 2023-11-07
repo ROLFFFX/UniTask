@@ -74,7 +74,7 @@ export function MainSprintBoard() {
   const createTask = (taskData) => {
     // Add task into tasks array
     setTasks([...tasks, taskData]);
-    console.log(tasks);
+    console.log(tasks);   // Task list is always out of sync, need useEffect
     // TODO: insert data into database
   };
 
@@ -106,12 +106,17 @@ export function MainSprintBoard() {
 
   const onDrop = (e, targetContainerId) => {
     e.preventDefault();
+    /*
     const jsonDataString = e.dataTransfer.getData('application/json'); // Retrieve the JSON string
     const data = JSON.parse(jsonDataString); // Parse the JSON string into an object
     const sourceContainerId = e.dataTransfer.getData('containerId'); // Retrieve the source container identifier
     // Source container id isn't working properly but it might not matter?
     console.log(`Dropped into container ${targetContainerId} from ${sourceContainerId}`); // Can identify the target column
-    console.log(data);  // Can receive all the task data (note: this is a copy of the JSON data, not a reference to the original)
+    //console.log(data);  // Can receive all the task data (note: this is a copy of the JSON data, not a reference to the original)
+    */
+    const currentTask = document.querySelector(".dragging");
+    document.getElementById(targetContainerId).appendChild(currentTask);
+    
   };
 
 
@@ -191,11 +196,11 @@ export function MainSprintBoard() {
           <div className="grid-item" id="doingHeader">
             DOING
           </div>
-          <div className="grid-item" id="doingColumn"></div>
+          <div className="grid-item" id="doingColumn" onDragOver={onDragOver} onDrop={(e) => onDrop(e, 'doingColumn')}></div>
           <div className="grid-item" id="doneHeader">
             DONE
           </div>
-          <div className="grid-item" id="doneColumn"></div>
+          <div className="grid-item" id="doneColumn" onDragOver={onDragOver} onDrop={(e) => onDrop(e, 'doneColumn')}></div>
         </div>
       </div>
     </Box>
