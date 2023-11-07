@@ -19,6 +19,7 @@ import { SelectMeeting } from "./components/Meeting/SelectMeeting";
 import RequireAuth from "./components/RequireAuth";
 import PermanentDrawer from "./components/Utilities/PermanentDrawer";
 import { TopAppBar } from "./components/Utilities/TopNavBar";
+import LoginWithGroup from "./components/LoginPage/LoginWithGroup/LoginWithGroup";
 
 function Layout({ children }) {
   return (
@@ -62,6 +63,10 @@ function App() {
             </Route>
             {/* Protected Pages without Custom Layout */}
             <Route path="/login/ob_landing" element={<OB_landing />} />
+            <Route
+              path="/login/login_with_group"
+              element={<LoginWithGroup />}
+            />
             <Route path="*" element={<PageNotFound />} />
           </Route>
         </Route>

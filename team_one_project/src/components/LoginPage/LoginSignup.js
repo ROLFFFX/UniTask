@@ -42,7 +42,7 @@ export function LoginSignup() {
   const navigate = useNavigate();
   useEffect(() => {
     if (auth?.user) {
-      navigate("/dashboard"); //goes to onboarding process after checking if user info is complete.
+      navigate("/login/login_with_group"); //goes to onboarding process after checking if user info is complete.
     }
   }, [auth, navigate]);
   const handleSubmit = async (e) => {
@@ -66,7 +66,7 @@ export function LoginSignup() {
       setAuth({ user: { userEmail, userPassword, userJWT } });
       setCookie(
         "auth",
-        { user: { userEmail, userPassword, userJWT } },
+        { user: { userEmail, userJWT } },
         { path: "/", maxAge: 1800 }
       );
       // console.log(
@@ -86,8 +86,10 @@ export function LoginSignup() {
         }
         //@todo: implement more custom error messages.
         console.error("Error Caught on Sign In: ", error);
+        // setTimeout(() => {
+        //   navigate("/login/signup");
+        // }, 3000);
       }
-      navigate("/login/signup");
     }
   };
 
@@ -108,7 +110,8 @@ export function LoginSignup() {
             </Typography>
             <Typography id="error-modal-description" sx={{ mt: 2 }}>
               Your credentials are correct, but your accout is currently
-              disabled. Please sign up again and check your email inbox.
+              disabled. Please check your email inbox and click the link in your
+              email.
             </Typography>
             <Button
               onClick={handleClose}
