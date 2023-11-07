@@ -14,14 +14,6 @@ const theme = createTheme({
   },
 
   components: {
-    MuiCssBaseline: {
-      styleOverrides: {
-        "@global": {
-          "@import":
-            'url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;700&display=swap")', // Import the Inter font from Google Fonts
-        },
-      },
-    },
     MuiTextField: {
       styleOverrides: {
         root: {

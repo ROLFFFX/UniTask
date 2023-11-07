@@ -23,13 +23,85 @@ import TextField from "@mui/material/TextField";
 import AddLinkIcon from "@mui/icons-material/AddLink";
 import LinkIcon from "@mui/icons-material/Link";
 
-import { useState } from "react";
+import {useEffect, useState} from "react";
 import { v4 as uuidv4 } from "uuid";
 
 import UniTaskLogo_new from "../../images/UniTaskLOGO.PNG";
 import { ButtonGroup, ThemeProvider } from "@mui/material";
 
+import axios from "axios";
+
 export function TopAppBar() {
+
+
+  const [linksList, setLinksList] = useState([]);
+  async function getLinksList() {
+    try{
+      const response = await axios.get('endpoint URL', {
+        params: {
+          //to be filled if any
+        }
+      });
+      console.log(response.data);
+      setLinksList(response.data);
+    }
+    catch(error){
+      console.error("Error getting list", error);
+    }
+  }
+
+  useEffect(() => {
+        getLinksList()
+  }, []);
+
+  async function updateLinksList(newlist) {
+    /*e.preventDefault();*/
+    console.log("updated list",newlist);
+    try{
+      const response = await axios.put("endpoint URL", newlist, {
+            params: {
+              //to be filled if any
+            },
+            headers: { "Content-Type": "application/json" },
+          });
+    } catch (error){
+      console.error("Error updating list:", error);
+    }
+  }
+
+
+  async function deleteLinksList(){
+    try{
+      const response = await axios.delete("endpoint URL", {
+        params: {
+          //to be filled if any
+        }
+      })
+    }
+    catch(error){
+      console.error("Error deleting list", error);
+    }
+  }
+
+  async function submitLinksList(newlist) {
+    // e.preventDefault();
+    console.log("submitted linkslist",newlist);
+    try {
+      const response = await axios.post(
+          "endpoint URL",
+          newlist,
+          {
+            params: {
+              //to be filled if any
+            },
+            headers: { "Content-Type": "application/json" },
+          }
+      );
+    } catch (error) {
+      console.error("Error submitting list", error);
+    }
+  };
+
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
   const pages = [];
@@ -57,8 +129,6 @@ export function TopAppBar() {
     setAnchorElUser(null);
   };
 
-  var userlinks = [];
-  const [linksList, setLinksList] = useState(userlinks); //json file
   function changeName(event) {
     setLinkName(event.target.value);
   }
@@ -68,11 +138,11 @@ export function TopAppBar() {
 
   function addLinks() {
     //console.log("!linkName", !linkName, !link);
+
     if (!linkName || !link) {
       return;
     }
-    const newlist = linksList.concat([
-      {
+    const newlist = [...linksList, {
         Lk:
           link.startsWith("http://") || link.startsWith("https://")
             ? link
@@ -80,9 +150,15 @@ export function TopAppBar() {
         name: linkName,
         id: uuidv4(), //to have a stable key attribute for the item
         icon: null,
-      },
-    ]);
+    }]
     setLinksList(newlist);
+    if(linksList.length===0){//if the list is empty before updating
+      console.log("current usestate list:", linksList);
+      submitLinksList(newlist);
+    }else{
+      console.log("current usestate list:", linksList);
+      updateLinksList(newlist);
+    }
   }
 
   function editLinks(thisid) {
@@ -101,11 +177,20 @@ export function TopAppBar() {
     const index = linksList.findIndex((item) => item.id === thisid);
     const newlist = linksList.with(index, editedItem);
     setLinksList(newlist);
+    console.log("current usestate list:", linksList);
+    updateLinksList(newlist);
   }
 
   function removeLinks(id) {
     const newlist = linksList.filter((userlink) => userlink.id !== id);
     setLinksList(newlist);
+    if(newlist.length===0){//if linksList after remove is empty
+        console.log("current usestate list:", linksList);
+        deleteLinksList(newlist);
+    }else{
+        console.log("current usestate list:", linksList);
+        updateLinksList(newlist);
+    }
   }
 
   const toggleDrawer = (event) => {
@@ -134,22 +219,22 @@ export function TopAppBar() {
       <form noValidate autoComplete={"off"}>
         {linksList.map((userlink) =>
           itAction === userlink.id ? (
-            <ListItem key={userlink.id} disablePadding>
+            <ListItem>
               <TextField
-                label="Edit Name"
-                variant="inherit"
-                defaultValue={userlink.name}
-                onChange={(event) => changeName(event)}
-                error={!linkName}
-                helperText={() => (!linkName ? "Name Cannot Be Empty" : null)}
+                 label="Edit Name"
+                 variant="outlined"
+                 defaultValue={userlink.name}
+                 onChange={(event) => changeName(event)}
+                 error={!linkName}
+                 helperText={!linkName ? "Name Cannot Be Empty" : null}
               />
               <TextField
-                label="Edit Link"
-                variant="inherit"
-                defaultValue={userlink.Lk}
-                onChange={(event) => changeLink(event)}
-                error={!link}
-                helperText={() => (!link ? "Link Cannot Be Empty" : null)}
+                 label="Edit Link"
+                 variant="outlined"
+                 defaultValue={userlink.Lk}
+                 onChange={(event) => changeLink(event)}
+                 error={!link}
+                 helperText={!link ? "Link Cannot Be Empty" : null}
               />
               <ButtonGroup>
                 <Button
@@ -351,7 +436,13 @@ export function TopAppBar() {
               <Tooltip title="See Your Hyperlinks">
                 <IconButton
                   style={{ color: "white" }}
-                  onClick={() => toggleDrawer(true)}
+                  onClick={() => {
+                    (state === false) ?
+                      toggleDrawer(true)
+                    :
+                      toggleDrawer(false)
+                      cancelAction()
+                  }}
                   sx={{ p: 0 }}
                 >
                   <LinkIcon />

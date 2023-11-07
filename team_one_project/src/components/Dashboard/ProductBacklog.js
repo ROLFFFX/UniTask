@@ -1,3 +1,4 @@
+import AddIcon from "@mui/icons-material/Add";
 import {
   Container,
   Divider,
@@ -13,7 +14,6 @@ import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 import ListItemAvatar from "@mui/material/ListItemAvatar";
 import { green, grey } from "@mui/material/colors";
-import AddIcon from "@mui/icons-material/Add";
 import React from "react";
 
 export function ProductBacklog() {
@@ -101,7 +101,7 @@ export function ProductBacklog() {
                             bgcolor:
                               data.status === "Doing" ? green[300] : grey[500],
                           }}
-                          alt={index + 1}
+                          alt={"alt"}
                         >
                           {" "}
                         </Avatar>
