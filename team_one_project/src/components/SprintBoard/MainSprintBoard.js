@@ -49,7 +49,7 @@ export function MainSprintBoard() {
 
   // Close task popup menu and submit data
   const closeTaskPopup = () => {
-    setAnchorEl(null);
+    setAnchorEl(null);  // Close popup window
     // if (taskNameInput) {
     // TODO: send data to backend
     const taskData = {
@@ -63,7 +63,6 @@ export function MainSprintBoard() {
       subtaskList: []
     };
     createTask(taskData);
-    displayTask(taskData);
 
     // Reset input fields
     // TODO: add more fields
@@ -73,13 +72,12 @@ export function MainSprintBoard() {
   };
 
   const createTask = (taskData) => {
-    console.log(taskData);
+    // Add task into tasks array
+    setTasks([...tasks, taskData]);
+    console.log(tasks);
     // TODO: insert data into database
   };
 
-  const displayTask = (taskData) => {
-    setTasks([...tasks, taskData]);
-  };
 
   // Handle drag and drop
   // TODO: Don't hard code column names, instead select all columns via class
@@ -91,6 +89,7 @@ export function MainSprintBoard() {
   const doneColumn = document.getElementById("doneColumn");
   const columns = [tasksColumn, todoColumn, doingColumn, doneColumn]
 
+  
   draggables.forEach((task) => {
     task.addEventListener("dragstart", () => {
       task.classList.add("dragging");
@@ -182,15 +181,15 @@ export function MainSprintBoard() {
           <div className="grid-item" id="todoHeader">
             TO DO
           </div>
-          <div className="grid-item" id="todoColumn" ondragover="allowDrop(event)" ondrop="drop(event)"></div>
+          <div className="grid-item" id="todoColumn"></div>
           <div className="grid-item" id="doingHeader">
             DOING
           </div>
-          <div className="grid-item" id="doingColumn" ondragover="allowDrop(event)" ondrop="drop(event)"></div>
+          <div className="grid-item" id="doingColumn"></div>
           <div className="grid-item" id="doneHeader">
             DONE
           </div>
-          <div className="grid-item" id="doneColumn" ondragover="allowDrop(event)" ondrop="drop(event)"></div>
+          <div className="grid-item" id="doneColumn"></div>
         </div>
       </div>
     </Box>

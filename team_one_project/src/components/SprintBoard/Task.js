@@ -21,12 +21,12 @@ function Task({ taskData }) {
   };
 
   return (
-    <div className={"task"} key={taskData.id} draggable="true" ondragstart="drag(event)">
+    <div className={"task"} key={taskData.id} draggable="true">
         <div className="taskLabel">
         <img src={circle_orange_favicon} alt=""></img>
         {taskData.title}
         <button 
-            id="showSubtaskButton" 
+            className="showSubtaskButton" 
             onClick={() => 
             setShowSub(ShowSub==="collapse"? ("expand") :("collapse") )
             }
@@ -38,11 +38,11 @@ function Task({ taskData }) {
             ></img>
         </button>
         <button 
-            id="addSubtaskButton"
+            className="newSubtaskButton"
             onClick={() => setIsAddingSubtask(true)}
         >
             <img
-                className="addSubtaskButtonImg"
+                className="newSubtaskButtonImg"
                 src={add_button_favicon}
                 alt={""}
             ></img>
@@ -70,7 +70,12 @@ function Task({ taskData }) {
             value={newSubtask}
             onChange={(e) => setNewSubtask(e.target.value)}
           />
-          <button onClick={addSubtask}>Add Subtask</button>
+          <button 
+            className="addSubtaskButton"
+            onClick={addSubtask}
+          >
+            Add Subtask
+          </button>
         </div>
       ) : (
         null
