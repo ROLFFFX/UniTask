@@ -1,0 +1,211 @@
+html, body {
+  margin: 0;
+  height: 100%;
+  font-family: sans-serif;
+}
+
+/*Navbar styling: */
+
+#navbarContainer {
+  border-bottom: 1px solid #CCCCCC;
+  padding-right: 20px;
+  overflow: hidden;
+}
+
+#navbar {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+}
+
+.navtab {
+  float: right;
+  display: block;
+  color: #222222;
+  font-size: 15px;
+  text-align: center;
+  padding: 15px 15px;
+  text-decoration: none;
+  overflow: hidden;
+}
+
+.navtab:hover {
+  background-color: #DDDDDD;
+  cursor: pointer;
+}
+
+.navtab img {
+  height: 15px;
+}
+
+/* main content */
+#main {
+  margin-left: 50px;
+  margin-right: 50px;
+}
+
+/* Page header */
+#teamNameTag {
+  padding-right: 10px;
+}
+
+/* Taskboard content: */
+
+#taskboardHeader {
+  padding-top: 40px;
+  padding-bottom: 40px;
+  font-size: 25px;
+}
+
+/* Popup window */
+
+.popup {
+  position: fixed;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0, 0, 0, 0.2);
+  display: none;
+}
+
+.popupContent {
+  background-color: #EEEEEE;
+  margin: 10% auto;
+  padding: 20px;
+  border: 1px solid #888888;
+  width: 250px;
+}
+
+.show {
+    display: block;
+}
+
+/* Task grid */
+
+.grid-container {
+  display: grid;
+  grid-template-columns: auto auto auto;
+  padding: 10px;
+  /*column-gap: 20px;*/
+}
+
+.grid-item {
+  padding: 20px;
+  font-size: 15px;
+  border-right: 1px solid #CCCCCC;
+
+}
+
+#board {
+  /*border: 1px solid red;*/
+  height: 100%;
+}
+
+#tasksHeader {
+  grid-column: 1;
+  grid-row: 1;
+  border-bottom: 1px solid #CCCCCC;
+}
+
+#addTaskButton {
+  height: 20px;
+  float: right;
+  cursor: pointer;
+}
+
+#tasksColumn {
+  grid-column: 1;
+  grid-row: 2;
+}
+
+#taskList {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+}
+
+.task {
+  display: block;
+  color: #222222;
+  font-size: 15px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #CCCCCC;
+}
+
+.taskLabel {
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+
+.task img {
+  height: 20px;
+  padding-right: 5px;
+}
+
+#addSubtaskButton {
+  float: right;
+  padding-right: 10px;
+  cursor: pointer;
+  background: none;
+  border: none;
+}
+
+#showSubtaskButton {
+  float: right;
+  cursor: pointer;
+  background: none;
+  border: none;
+}
+
+.subtaskList {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+}
+
+.subtask {
+  padding: 10px;
+  font-size: 13px;
+}
+
+#todoHeader {
+  grid-column: 2;
+  grid-row: 1;
+  border-bottom: 1px solid #CCCCCC;
+}
+
+#todoColumn {
+  grid-column: 2;
+  grid-row: 2;
+}
+
+#doingHeader {
+  grid-column: 3;
+  grid-row: 1;
+  border-bottom: 1px solid #CCCCCC;
+}
+
+#doingColumn {
+  grid-column: 3;
+  grid-row: 2;
+}
+
+#doneHeader {
+  grid-column: 4;
+  grid-row: 1;
+  border-right: 0;
+  border-bottom: 1px solid #CCCCCC;
+}
+
+#doneColumn {
+  grid-column: 4;
+  grid-row: 2;
+  border-right: 0;
+}
