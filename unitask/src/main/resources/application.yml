@@ -8,7 +8,7 @@ spring:
         hibernate:
             ddl-auto: update
     datasource:
-        url: jdbc:mysql://unitask-mysql.mysql.database.azure.com/jwt_impl2
+        url: jdbc:mysql://unitask-mysql.mysql.database.azure.com/unitask_db1
         username: TeamOneMySQL
         password: Un1taskerz
         driver-class-name: com.mysql.cj.jdbc.Driver
