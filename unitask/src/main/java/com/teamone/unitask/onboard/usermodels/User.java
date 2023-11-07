@@ -10,10 +10,7 @@ import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 
 @Entity
@@ -61,7 +58,7 @@ public class User {
     @JoinTable(name = "user_projects",
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "project_id"))
-    private List<Project> projectsJoined;
+    private List<Project> projectsJoined = new ArrayList<>();
 
     /**
      * mapped by

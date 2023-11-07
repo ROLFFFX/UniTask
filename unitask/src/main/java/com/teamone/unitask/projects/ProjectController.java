@@ -1,6 +1,9 @@
 package com.teamone.unitask.projects;
 
 import com.teamone.unitask.onboard.payload.response.MessageResponse;
+import com.teamone.unitask.onboard.security.jwt.JwtUtils;
+import com.teamone.unitask.onboard.usermodels.User;
+import com.teamone.unitask.onboard.userrepos.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -15,12 +18,21 @@ import java.util.List;
 public class ProjectController {
 
     @Autowired
+    JwtUtils jwtUtils;
+
+    @Autowired
     ProjectRepository projectRepository;
 
+    @Autowired
+    UserRepository userRepository;
+
     @PostMapping("/createProject")
-    @PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
-    public ResponseEntity<?> createProject(@RequestBody Project project) {
+    public ResponseEntity<?> createProject(@RequestBody Project project, @RequestHeader("Authorization") String header) {
         try {
+            String jwtToken = extractTokenFromAuthorizationHeader(header);
+            String email = jwtUtils.getUserNameFromJwtToken(jwtToken);
+            User curUser = userRepository.getByEmail(email);
+            curUser.getProjectsJoined().add(project);
             projectRepository.save(project);
             return ResponseEntity.ok(new MessageResponse("New project successfully created!"));
         } catch (Exception e) {
@@ -28,9 +40,18 @@ public class ProjectController {
         }
     }
 
-    @GetMapping("/getAllProject")
-    @PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
-    public List<Project> getAllProject() {
-        return projectRepository.findAll();
+//    @GetMapping("/getAllProject")
+//    @PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
+//    public List<Project> getAllProject() {
+//        return projectRepository.findAll();
+//    }
+
+    private String extractTokenFromAuthorizationHeader(String authorizationHeader) {
+
+        if (authorizationHeader != null && authorizationHeader.startsWith("Bearer ")) {
+            return authorizationHeader.substring(7);
+        }
+        return null;
     }
+
 }
