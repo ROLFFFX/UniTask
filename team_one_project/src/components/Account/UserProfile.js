@@ -56,7 +56,7 @@ export default function UserProfile() {
               padding: 1,
               paddingLeft: 4,
               paddingRight: 4,
-              fontSize: 16,
+              fontSize: 14,
             }}
           >
             <pre></pre>
@@ -72,7 +72,7 @@ export default function UserProfile() {
               padding: 1,
               paddingLeft: 4,
               paddingRight: 4,
-              fontSize: 16,
+              fontSize: 14,
             }}
           >
             Email: {dummyUserInfo.email}
@@ -92,7 +92,7 @@ export default function UserProfile() {
               padding: 1,
               paddingLeft: 4,
               paddingRight: 4,
-              fontSize: 16,
+              fontSize: 14,
               flexGrow: 1,
             }}
           >

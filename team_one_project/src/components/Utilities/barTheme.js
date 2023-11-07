@@ -6,6 +6,13 @@ const barTheme = createTheme({
     fontSize: 13,
   },
   components: {
+    MuiDrawer: {
+      styleOverrides: {
+        paper: {
+          backgroundColor: "white", // This will set drawer's bgcolor
+        },
+      },
+    },
     MuiCssBaseline: {
       styleOverrides: {
         "@global": {

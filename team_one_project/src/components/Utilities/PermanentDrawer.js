@@ -1,4 +1,11 @@
-import { ThemeProvider, Toolbar } from "@mui/material";
+import AccountCircleIcon from "@mui/icons-material/AccountCircle";
+import AssignmentIcon from "@mui/icons-material/Assignment";
+import DashboardIcon from "@mui/icons-material/Dashboard";
+import GroupsIcon from "@mui/icons-material/Groups";
+import MeetingRoomIcon from "@mui/icons-material/MeetingRoom";
+import RateReviewIcon from "@mui/icons-material/RateReview";
+import SettingsApplicationsIcon from "@mui/icons-material/SettingsApplications";
+import { Box, ThemeProvider, Toolbar } from "@mui/material";
 import Divider from "@mui/material/Divider";
 import Drawer from "@mui/material/Drawer";
 import List from "@mui/material/List";
@@ -7,16 +14,8 @@ import ListItemButton from "@mui/material/ListItemButton";
 import ListItemText from "@mui/material/ListItemText";
 import * as React from "react";
 import { useNavigate } from "react-router-dom";
-import barTheme from "./barTheme";
 import LogOutButton from "./LogOutButton";
-import { Box } from "@mui/material";
-import DashboardIcon from "@mui/icons-material/Dashboard";
-import AssignmentIcon from "@mui/icons-material/Assignment";
-import MeetingRoomIcon from "@mui/icons-material/MeetingRoom";
-import RateReviewIcon from "@mui/icons-material/RateReview";
-import GroupsIcon from "@mui/icons-material/Groups";
-import AccountCircleIcon from "@mui/icons-material/AccountCircle";
-import SettingsApplicationsIcon from "@mui/icons-material/SettingsApplications";
+import barTheme from "./barTheme";
 
 const drawerWidth = 200;
 
