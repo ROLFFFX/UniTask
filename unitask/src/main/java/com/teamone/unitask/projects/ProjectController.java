@@ -40,11 +40,11 @@ public class ProjectController {
         }
     }
 
-//    @GetMapping("/getAllProject")
-//    @PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
-//    public List<Project> getAllProject() {
-//        return projectRepository.findAll();
-//    }
+    @GetMapping("/getAllProject")
+    public List<Project> getAllProject(@RequestHeader("Authorization") String header) {
+        
+        return projectRepository.findAll();
+    }
 
     private String extractTokenFromAuthorizationHeader(String authorizationHeader) {
 
