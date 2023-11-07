@@ -25,27 +25,20 @@ export default function PermanentDrawer() {
     switch (index) {
       case 0:
         return <DashboardIcon sx={{ marginLeft: 1, color: "#495057" }} />;
-        break;
       case 1:
         return <AssignmentIcon sx={{ marginLeft: 1, color: "#495057" }} />;
-        break;
       case 2:
         return <MeetingRoomIcon sx={{ marginLeft: 1, color: "#495057" }} />;
-        break;
       case 3:
         return <RateReviewIcon sx={{ marginLeft: 1, color: "#495057" }} />;
-        break;
       case 5:
         return <GroupsIcon sx={{ marginLeft: 1, color: "#495057" }} />;
-        break;
       case 6:
         return <AccountCircleIcon sx={{ marginLeft: 1, color: "#495057" }} />;
-        break;
       case 7:
         return (
           <SettingsApplicationsIcon sx={{ marginLeft: 1, color: "#495057" }} />
         );
-        break;
     }
   };
   const sidebar_upper = [
