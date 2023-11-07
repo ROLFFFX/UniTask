@@ -61,6 +61,14 @@ public class Project {
      * methods
      */
 
+    public Project() {
+
+    }
+
+    public Project(String projectTitle) {
+        this.projectTitle = projectTitle;
+    }
+
     public Long getProjectId() {
         return projectId;
     }
