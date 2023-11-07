@@ -6,12 +6,11 @@ export function MainAccount() {
   return (
     <Box style={{ marginLeft: "200px" }}>
       <Grid container>
-        <Grid item xs={6} padding={3}>
+        <Grid item xs={3} padding={3}></Grid>
+        <Grid item xs={6} padding={3} justifyContent="center">
           <UserProfile />
         </Grid>
-        <Grid item xs={6} padding={3}>
-          <h2>test</h2>
-        </Grid>
+        <Grid item xs={3} padding={3}></Grid>
       </Grid>
     </Box>
   );
