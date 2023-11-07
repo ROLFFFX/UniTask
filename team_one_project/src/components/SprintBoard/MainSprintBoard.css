@@ -43,7 +43,6 @@ html, body {
 #main {
   margin-left: 50px;
   margin-right: 50px;
-  /*border: 1px solid purple;*/
 }
 
 /* Page header */
@@ -109,7 +108,7 @@ html, body {
 #tasksHeader {
   grid-column: 1;
   grid-row: 1;
-  /*border-bottom: 1px solid #CCCCCC;*/
+  border-bottom: 1px solid #CCCCCC;
 }
 
 #addTaskButton {
@@ -118,7 +117,7 @@ html, body {
   cursor: pointer;
 }
 
-#tasks {
+#tasksColumn {
   grid-column: 1;
   grid-row: 2;
 }
@@ -136,7 +135,7 @@ html, body {
   font-size: 15px;
   padding-top: 10px;
   padding-bottom: 10px;
-  border-top: 1px solid #CCCCCC;
+  border-bottom: 1px solid #CCCCCC;
 }
 
 .taskLabel {
@@ -174,7 +173,6 @@ html, body {
 .subtask {
   padding: 10px;
   font-size: 13px;
-  border-top: 1px solid #CCCCCC;
 }
 
 #todoHeader {
