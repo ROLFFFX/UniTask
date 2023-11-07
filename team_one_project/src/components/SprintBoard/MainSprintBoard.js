@@ -88,7 +88,7 @@ export function MainSprintBoard() {
   const doneColumn = document.getElementById("doneColumn");
   const columns = [tasksColumn, todoColumn, doingColumn, doneColumn]
 
-
+/*
   columns.forEach((column) => {
     if (column) {
       column.addEventListener("dragover", (e) => {
@@ -98,6 +98,22 @@ export function MainSprintBoard() {
       });
     }
   });
+*/
+
+  const onDragOver = (e) => {
+    e.preventDefault(); // Allow the drop
+  };
+
+  const onDrop = (e, targetContainerId) => {
+    e.preventDefault();
+    const jsonDataString = e.dataTransfer.getData('application/json'); // Retrieve the JSON string
+    const data = JSON.parse(jsonDataString); // Parse the JSON string into an object
+    const sourceContainerId = e.dataTransfer.getData('containerId'); // Retrieve the source container identifier
+    // Source container id isn't working properly but it might not matter?
+    console.log(`Dropped into container ${targetContainerId} from ${sourceContainerId}`); // Can identify the target column
+    console.log(data);  // Can receive all the task data (note: this is a copy of the JSON data, not a reference to the original)
+  };
+
 
   return (
     <Box sx={{ marginLeft: "200px" }}>
@@ -171,7 +187,7 @@ export function MainSprintBoard() {
           <div className="grid-item" id="todoHeader">
             TO DO
           </div>
-          <div className="grid-item" id="todoColumn"></div>
+          <div className="grid-item" id="todoColumn" onDragOver={onDragOver} onDrop={(e) => onDrop(e, 'todoColumn')}></div>
           <div className="grid-item" id="doingHeader">
             DOING
           </div>

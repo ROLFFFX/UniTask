@@ -25,13 +25,16 @@ function Task({ taskData }) {
 
   // Add dragging capability
   // When item is dragged, give it the dragging class
-  const addDrag = () => {
+  const drag = (e, containerId) => {
     if (elementRef.current) {
       elementRef.current.classList.add('dragging');
+
+      e.dataTransfer.setData('application/json', JSON.stringify(taskData)); // Set data to enable drag
+      e.dataTransfer.setData('containerId', containerId); // Set the container identifier
     }
   }
 
-  const removeDrag = () => {
+  const endDrag = () => {
     if (elementRef.current) {
       elementRef.current.classList.remove('dragging');
     }
@@ -44,8 +47,8 @@ function Task({ taskData }) {
       key={taskData.id}
       draggable="true"
       ref={elementRef}
-      onDragStart={addDrag}
-      onDragEnd={removeDrag}
+      onDragStart={(containerId) => drag(containerId)}
+      onDragEnd={endDrag}
     >
         <div className="taskLabel">
         <img src={circle_orange_favicon} alt=""></img>
