@@ -25,19 +25,28 @@ function Task({ taskData }) {
 
   // Add dragging capability
   // When item is dragged, give it the dragging class
-  const drag = (e, containerId) => {
+  const drag = (e) => {
     if (elementRef.current) {
       elementRef.current.classList.add('dragging');
       
-      //e.dataTransfer.setData('application/json', JSON.stringify(taskData)); // Set data to enable drag
-      //e.dataTransfer.setData('containerId', containerId); // Send the id of the container
+      // If needed, can transfer task data
+      //e.dataTransfer.setData('application/json', JSON.stringify(taskData)); // Transfer data to main app
     }
   }
 
   const endDrag = () => {
     if (elementRef.current) {
       elementRef.current.classList.remove('dragging');
-      taskData.status = elementRef.current.parentElement.id;
+
+      // Set status
+      const targetColumn = elementRef.current.parentElement.id;
+      const statusByColumn = {  // Dict with status values corresponding to each column
+        "tasksColumn": "Not Started",
+        "todoColumn": "Todo",
+        "doingColumn": "Doing",
+        "doneColumn": "Done"
+      }
+      taskData.status = statusByColumn[targetColumn];
       console.log(taskData);
     }
   }
@@ -49,14 +58,16 @@ function Task({ taskData }) {
       key={taskData.id}
       draggable="true"
       ref={elementRef}
-      onDragStart={(containerId) => drag(containerId)}
+      onDragStart={drag}
       onDragEnd={endDrag}
     >
         <div className="taskLabel">
-        <img src={circle_orange_favicon} alt=""></img>
-        {taskData.title}
+        {/*<img src={circle_orange_favicon} alt=""></img>*/}
+        <span className="taskTitleLabel">{taskData.title}</span>
+        <span className="assigneeLabel">{taskData.assignee}</span>
         <button 
-            className="showSubtaskButton" 
+            
+            className={`showSubtaskButton ${ShowSub==="expand" ? 'rotate-down' : 'rotate-left'}`}
             onClick={() => 
             setShowSub(ShowSub==="collapse"? ("expand") :("collapse") )
             }
