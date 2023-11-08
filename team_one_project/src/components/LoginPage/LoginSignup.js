@@ -35,10 +35,14 @@ export function LoginSignup() {
   const [cookies, setCookie, removeCookie] = useCookies(["auth"]);
   const { auth, setAuth } = useAuth();
   const [showFailureAlert, setShowFailureAlert] = useState(false);
+  const [showBadCredential, setBadCredential] = useState(false);
   const handleClose = () => {
     setShowFailureAlert(false);
-    //@todo: jwt-test: delete current user info
   };
+  const handleBadCredentialClose = () => {
+    setBadCredential(false);
+  };
+
   const navigate = useNavigate();
   useEffect(() => {
     if (auth?.user) {
@@ -69,18 +73,12 @@ export function LoginSignup() {
         { user: { userEmail, userJWT } },
         { path: "/", maxAge: 1800 }
       );
-      // console.log(
-      //   "You have been logged in successfully! Here are some of your credentials:"
-      // );
-      // console.log(data);
-      // console.log({ userEmail, userPassword, userJWT });
-      // console.log(userJWT);
     } catch (error) {
       if (error) {
         if (!error?.response) {
           alert("No Server Response!");
         } else if (error.response.status === 401) {
-          alert("Invalid email and password!");
+          setBadCredential(true);
         } else {
           setShowFailureAlert(true);
         }
@@ -115,6 +113,30 @@ export function LoginSignup() {
             </Typography>
             <Button
               onClick={handleClose}
+              color="inherit"
+              autoFocus
+              sx={{ mt: 2, color: "white" }}
+            >
+              Close
+            </Button>
+          </Box>
+        </Modal>
+        <Modal
+          open={showBadCredential}
+          onClose={handleBadCredentialClose}
+          aria-labelledby="error-modal-title"
+          aria-describedby="error-modal-description"
+        >
+          <Box sx={modalStyle}>
+            <Typography id="error-modal-title" variant="h6" component="h2">
+              Sign In Error
+            </Typography>
+            <Typography id="error-modal-description" sx={{ mt: 2 }}>
+              There is something wrong with your email and password. Please try
+              again.
+            </Typography>
+            <Button
+              onClick={handleBadCredentialClose}
               color="inherit"
               autoFocus
               sx={{ mt: 2, color: "white" }}
