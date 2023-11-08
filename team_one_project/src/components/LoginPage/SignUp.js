@@ -212,7 +212,7 @@ export function SignUp() {
                   success: <CheckCircleOutlineIcon fontSize="inherit" />,
                 }}
               >
-                Registration successful! Redirecting to login...
+                Registration successful! Please check your email...
               </Alert>
             )}
             <Grid container justifyContent="flex-end">
