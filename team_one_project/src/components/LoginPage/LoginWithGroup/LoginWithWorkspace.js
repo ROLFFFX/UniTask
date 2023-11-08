@@ -5,9 +5,21 @@ import { Divider } from "@mui/material";
 import { Button } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import LoginIcon from "@mui/icons-material/Login";
+import { ListItem } from "@mui/material";
+import { ListItemButton } from "@mui/material";
+import { ListItemText } from "@mui/material";
+import Diversity3Icon from "@mui/icons-material/Diversity3";
+
+const dummy_project_title = ["UniTask", "Team One"];
+
 export default function LoginWithGroup() {
   const navigate = useNavigate();
   const handleNavigate = () => {
+    navigate("/dashboard");
+  };
+  const handleClick = (index) => {
+    //setAuth
+    console.log(dummy_project_title[index]);
     navigate("/dashboard");
   };
   return (
@@ -41,6 +53,17 @@ export default function LoginWithGroup() {
           click the one you want to log in with. <br />
           <pre />
         </Typography>
+        {dummy_project_title.map((text, index) => (
+          <ListItem key={index} sx={{ marginLeft: 20 }}>
+            {<Diversity3Icon />}
+            <ListItemButton
+              onClick={() => handleClick(index)}
+              sx={{ marginRight: 20 }}
+            >
+              <ListItemText primary={text} />
+            </ListItemButton>
+          </ListItem>
+        ))}
         <Button
           variant="contained"
           style={{

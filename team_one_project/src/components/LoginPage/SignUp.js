@@ -80,7 +80,7 @@ export function SignUp() {
       // success alert on succesfully registered
       setTimeout(() => {
         navigate("/login");
-      }, 3000);
+      }, 5000);
     } catch (error) {
       if (!error?.response) {
         alert("No Server Response!");
@@ -212,7 +212,7 @@ export function SignUp() {
                   success: <CheckCircleOutlineIcon fontSize="inherit" />,
                 }}
               >
-                Registration successful! Redirecting to login...
+                Registration successful! Please check your email...
               </Alert>
             )}
             <Grid container justifyContent="flex-end">
