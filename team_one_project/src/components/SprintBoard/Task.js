@@ -3,8 +3,11 @@ import chevron_favicon from "../../images/chevron_favicon.png";
 import circle_blue_favicon from "../../images/circle_blue_favicon.png";
 import circle_orange_favicon from "../../images/circle_orange_favicon.png";
 import add_button_favicon from "../../images/add_button_favicon.png";
+import deleteIcon from "../../images/delete.png";
+import editIcon from "../../images/edit.png";
+import settingsIcon from "../../images/dots.png";
 
-function Task({ taskData }) {
+function Task({ taskData, onDelete, onEdit }) {
   const [subtasks, setSubtasks] = useState([]);
   const [newSubtask, setNewSubtask] = useState('');
   const [isAddingSubtask, setIsAddingSubtask] = useState(false);
@@ -28,7 +31,7 @@ function Task({ taskData }) {
   const drag = (e) => {
     if (elementRef.current) {
       elementRef.current.classList.add('dragging');
-      
+
       // If needed, can transfer task data
       //e.dataTransfer.setData('application/json', JSON.stringify(taskData)); // Transfer data to main app
     }
@@ -51,77 +54,100 @@ function Task({ taskData }) {
     }
   }
 
+  const [isSettingsOpen, setIsSettingsOpen] = useState(false);
+
+  const deleteTask = () => {
+    onDelete(taskData.id);
+  };
+
+  const editTask = () => {
+    const newTaskName = prompt("Enter new task name");
+    if (newTaskName) {
+      const newTaskData = { ...taskData, title: newTaskName };
+      onEdit(newTaskData);
+    }
+  };
 
   return (
-    <div 
-      className={"task"}
-      key={taskData.id}
-      draggable="true"
-      ref={elementRef}
-      onDragStart={drag}
-      onDragEnd={endDrag}
-    >
+    <div>
+      <div
+        className={"task"}
+        key={taskData.id}
+        draggable="true"
+        ref={elementRef}
+        onDragStart={drag}
+        onDragEnd={endDrag}
+      >
         <div className="taskLabel">
-        {/*<img src={circle_orange_favicon} alt=""></img>*/}
-        <span className="taskTitleLabel">{taskData.title}</span>
-        <span className="assigneeLabel">{taskData.assignee}</span>
-        <button 
-            
-            className={`showSubtaskButton ${ShowSub==="expand" ? 'rotate-down' : 'rotate-left'}`}
-            onClick={() => 
-            setShowSub(ShowSub==="collapse"? ("expand") :("collapse") )
-            }
-        >
+          {/*<img src={circle_orange_favicon} alt=""></img>*/}
+          <span className="taskTitleLabel">{taskData.title}</span>
+          <span className="assigneeLabel">{taskData.assignee}</span>
+          <button
+            className={`showSubtaskButton ${ShowSub === "expand" ? 'rotate-down' : 'rotate-left'}`}
+            onClick={() => {
+              setShowSub(ShowSub === "collapse" ? ("expand") : ("collapse"));
+              setIsSettingsOpen(!isSettingsOpen);
+            }}
+          >
             <img
-            className="showSubtaskButtonImg"
-            src={chevron_favicon}
-            alt=""
+              className="showSubtaskButtonImg"
+              src={chevron_favicon}
+              alt=""
             ></img>
-        </button>
-        <button 
+          </button>
+          <button
             className="newSubtaskButton"
             onClick={() => setIsAddingSubtask(true)}
-        >
+          >
             <img
-                className="newSubtaskButtonImg"
-                src={add_button_favicon}
-                alt={""}
+              className="newSubtaskButtonImg"
+              src={add_button_favicon}
+              alt={""}
             ></img>
-        </button>
-        
+          </button>
+
         </div>
         {ShowSub === "expand" ?
-            (<ul className={"subtaskList"}>
+          (<ul className={"subtaskList"}>
             {subtasks.map((subtask, index) => (
-                <li
-                    className={"subtask"}
-                    key={index}
-                >
-                <input type="checkbox"/>
+              <li
+                className={"subtask"}
+                key={index}
+              >
+                <input type="checkbox" />
                 {subtask}
-                </li>
+              </li>
             ))}
-            </ul>)
-            : null
+          </ul>)
+          : null
         }
         {isAddingSubtask ? (
+          <div>
+            <input
+              type="text"
+              value={newSubtask}
+              onChange={(e) => setNewSubtask(e.target.value)}
+            />
+            <button
+              className="addSubtaskButton"
+              onClick={addSubtask}
+            >
+              Add Subtask
+            </button>
+          </div>
+        ) : (
+          null
+        )}
+      </div>
+
+
+      {isSettingsOpen && (
         <div>
-          <input
-            type="text"
-            value={newSubtask}
-            onChange={(e) => setNewSubtask(e.target.value)}
-          />
-          <button 
-            className="addSubtaskButton"
-            onClick={addSubtask}
-          >
-            Add Subtask
-          </button>
+          <img className="icon" src={deleteIcon} onClick={deleteTask} />
+          <img className="icon" src={editIcon} onClick={editTask} />
         </div>
-      ) : (
-        null
       )}
-    </div>    
+    </div>
   );
 }
 

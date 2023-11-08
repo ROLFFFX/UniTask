@@ -1,4 +1,5 @@
-html, body {
+html,
+body {
   margin: 0;
   height: 100%;
   font-family: sans-serif;
@@ -46,7 +47,7 @@ html, body {
 }
 
 .show {
-    display: block;
+  display: block;
 }
 
 /* Task grid */
@@ -69,7 +70,7 @@ html, body {
 #board {
   /*border: 1px solid red;*/
   height: 100%;
-  
+
 }
 
 #tasksHeader {
@@ -154,6 +155,8 @@ html, body {
   border: none;
 }
 
+
+
 .showSubtaskButton {
   float: right;
   cursor: pointer;
@@ -163,11 +166,13 @@ html, body {
 
 /*For rotating the chevron icon*/
 .rotate-down {
-  transform: rotate(0deg); /* No rotation for down-pointing icon */
+  transform: rotate(0deg);
+  /* No rotation for down-pointing icon */
 }
 
 .rotate-left {
-  transform: rotate(90deg); /* Rotate 90 degrees for left-pointing icon */
+  transform: rotate(90deg);
+  /* Rotate 90 degrees for left-pointing icon */
 }
 
 .addSubTaskButton {
@@ -222,4 +227,14 @@ html, body {
   grid-column: 4;
   grid-row: 2;
   border-right: 0;
+}
+
+.icon {
+  width: 20px;
+  height: 20px;
+}
+
+.settingsIcon {
+  width: 20px;
+  height: 20px;
 }

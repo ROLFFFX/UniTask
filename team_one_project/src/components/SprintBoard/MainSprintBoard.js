@@ -7,6 +7,9 @@ import add_button_favicon from "../../images/add_button_favicon.png";
 import chevron_favicon from "../../images/chevron_favicon.png";
 import circle_blue_favicon from "../../images/circle_blue_favicon.png";
 import circle_orange_favicon from "../../images/circle_orange_favicon.png";
+import deleteIcon from "../../images/delete.png";
+import editIcon from "../../images/edit.png";
+import settingsIcon from "../../images/dots.png";
 import "./MainSprintBoard.css";
 import { v4 as uuidv4 } from "uuid";
 
@@ -73,9 +76,12 @@ export function MainSprintBoard() {
   };
 
   const createTask = (taskData) => {
-    // Add task into tasks array
-    setTasks([...tasks, taskData]);
-    console.log(tasks);   // TODO: fix bug where list is always one behind, use useEffect
+    // Add a unique id to the task data
+    const taskWithId = { ...taskData, id: uuidv4() };
+  
+    // Add the new task to the tasks array
+    setTasks([...tasks, taskWithId]);
+  
     // TODO: insert data into database
   };
 
@@ -89,6 +95,8 @@ export function MainSprintBoard() {
     const currentTask = document.querySelector(".dragging");
     const column = document.getElementById(targetContainerId);
     column.appendChild(currentTask);
+
+  
 
     /*  // Work in progress
     const bottomTask = insertAboveTask(column, e.clientY);
@@ -106,6 +114,15 @@ export function MainSprintBoard() {
     const data = JSON.parse(jsonDataString); // Parse the JSON string into an object
     // Can receive all the task data (note: this is a copy of the JSON data, not a reference to the original)
     */
+  };
+  const deleteTask = (taskId) => {
+    const updatedTasks = tasks.filter(task => task.id !== taskId);
+    setTasks(updatedTasks);
+  };
+
+  const editTask = (newTaskData) => {
+    const updatedTasks = tasks.map(task => task.id === newTaskData.id ? newTaskData : task);
+    setTasks(updatedTasks);
   };
 
   /*
@@ -194,10 +211,10 @@ export function MainSprintBoard() {
             </Box>
           </Popper>
           <div className="grid-item" id="tasksColumn" onDragOver={onDragOver} onDrop={(e) => onDrop(e, 'tasksColumn')}>
-            {tasks.map((task, index) => (
-              <Task key={index} taskData={task} />
-            ))}
-          </div>
+  {tasks.map(task => (
+    <Task key={task.id} taskData={task} onDelete={deleteTask} onEdit={editTask} />
+  ))}
+</div>
           <div className="grid-item" id="todoHeader">
             TO DO
           </div>
@@ -211,7 +228,15 @@ export function MainSprintBoard() {
           </div>
           <div className="grid-item" id="doneColumn" onDragOver={onDragOver} onDrop={(e) => onDrop(e, 'doneColumn')}></div>
         </div>
+        
       </div>
+      <div>
+      
+      {tasks.map(task => (
+        <Task key={task.id} taskData={task} onDelete={deleteTask} onEdit={editTask} />
+      ))}
+      
+    </div>
     </Box>
   );
 
