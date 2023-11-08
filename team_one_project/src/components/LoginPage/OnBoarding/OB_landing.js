@@ -41,9 +41,11 @@ export function OB_landing() {
 
   const handleNext = () => {
     if (activeStep === 0) {
-      alert(workspaceName); // console log when 'Next' is clicked on the first step
+      // @todo: axios.post
+      alert(workspaceName);
     }
     if (activeStep === 1) {
+      // @todo: axios.post
       alert(role);
     }
     setActiveStep((prevActiveStep) => prevActiveStep + 1);
@@ -101,10 +103,8 @@ export function OB_landing() {
                   <StepLabel
                     StepIconProps={{
                       sx: {
-                        // This styles the icons
                         "&.MuiStepIcon-root": {
-                          // base style for the icons
-                          color: "#495057", // default (inactive) color
+                          color: "#495057",
                         },
                       },
                     }}
@@ -146,10 +146,10 @@ export function OB_landing() {
                   <Box
                     sx={{
                       display: "flex",
-                      flexDirection: "row", // ensures the buttons are in one line
-                      justifyContent: "flex-end", // aligns the buttons to the right
-                      width: "100%", // the box takes the full width
-                      mt: 3, // some margin on top for visual spacing
+                      flexDirection: "row",
+                      justifyContent: "flex-end",
+                      width: "100%",
+                      mt: 3,
                     }}
                   >
                     {activeStep !== 0 && (

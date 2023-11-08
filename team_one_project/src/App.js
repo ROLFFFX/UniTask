@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Route, Routes } from "react-router-dom";
+import { Outlet, Route, Routes } from "react-router-dom";
 
 import { MainDashboard } from "./components/Dashboard/MainDashboard";
 import { MainSprintBoard } from "./components/SprintBoard/MainSprintBoard";
@@ -12,203 +12,69 @@ import { PageNotFound } from "./components/PageNotFound/PageNotFound";
 import { MainReview } from "./components/Review/MainReview";
 import { MainSetting } from "./components/Setting/MainSetting";
 
-import { ForgotPassword } from "./components/LoginPage/ForgotPassword";
+import { OB_landing } from "./components/LoginPage/OnBoarding/OB_landing";
 import { SignUp } from "./components/LoginPage/SignUp";
-import MainSideBar from "./components/Utilities/MainSideBar";
+import { ManageTeam } from "./components/ManageTeam/ManageTeam";
+import { SelectMeeting } from "./components/Meeting/SelectMeeting";
+import RequireAuth from "./components/RequireAuth";
 import PermanentDrawer from "./components/Utilities/PermanentDrawer";
 import { TopAppBar } from "./components/Utilities/TopNavBar";
-import { SelectMeeting } from "./components/Meeting/SelectMeeting";
-import { Skeleton } from "@mui/material";
-import { MeetingContent } from "./components/Meeting/MeetingContent";
-import { OB_landing } from "./components/LoginPage/OnBoarding/OB_landing";
-import { ManageTeam } from "./components/ManageTeam/ManageTeam";
+import LoginWithGroup from "./components/LoginPage/LoginWithGroup/LoginWithGroup";
+import WelcomePage from "./components/Utilities/WelcomePage";
 
 function Layout({ children }) {
   return (
     <>
+      <Outlet />
+    </>
+  );
+}
+
+function CustomLayout({ children }) {
+  return (
+    <>
       <TopAppBar />
       <PermanentDrawer />
-      {children}
+      <Outlet />
     </>
   );
 }
 
 function App() {
   return (
-    <div>
+    <React.Fragment>
       <Routes>
-        <Route path="/" element={<LoginSignup />} />
-
-        <Route
-          path="/dashboard"
-          element={
-            <Layout>
-              <MainDashboard />
-            </Layout>
-          }
-        />
-        {/* ... (other routes wrapped with Layout) */}
-        <Route
-          path="/sprintboard"
-          element={
-            <Layout>
-              <MainSprintBoard />
-            </Layout>
-          }
-        />
-        {/* <Route
-          path="/meeting"
-          element={
-            <Layout>
-              <MainMeeting />
-            </Layout>
-          }
-        /> */}
-        <Route path="/meeting">
-          <Route
-            index
-            element={
-              <Layout>
-                <MainMeeting />
-              </Layout>
-            }
-          ></Route>
-          <Route
-            path="selectmeeting"
-            element={
-              <Layout>
-                <SelectMeeting />
-              </Layout>
-            }
-          ></Route>
-
-          {/* nested routes waiting to be populated */}
+        <Route path="/" element={<Layout />}>
+          {/* Public Routes */}
+          <Route path="/" element={<WelcomePage />} />
+          <Route path="/login" element={<LoginSignup />} />
+          <Route path="/login/signup" element={<SignUp />} />
+          {/* Protected Routes */}
+          <Route element={<RequireAuth />}>
+            <Route element={<CustomLayout />}>
+              <Route path="/dashboard" element={<MainDashboard />} />
+              <Route path="/sprintboard" element={<MainSprintBoard />} />
+              <Route path="/meeting">
+                <Route index element={<MainMeeting />} />
+                <Route path="selectmeeting" element={<SelectMeeting />} />
+              </Route>
+              <Route path="/review" element={<MainReview />} />
+              <Route path="/manageteam" element={<ManageTeam />} />
+              <Route path="/account" element={<MainAccount />} />
+              <Route path="/setting" element={<MainSetting />} />
+            </Route>
+            {/* Protected Pages without Custom Layout */}
+            <Route path="/login/ob_landing" element={<OB_landing />} />
+            <Route
+              path="/login/login_with_group"
+              element={<LoginWithGroup />}
+            />
+            <Route path="*" element={<PageNotFound />} />
+          </Route>
         </Route>
-        {/*<Route
-          path="/hyperlink"
-          element={
-            <Layout>
-              <HyperlinkDrawer />
-            </Layout>
-          }
-        />*/}
-        <Route
-          path="/review"
-          element={
-            <Layout>
-              <MainReview />
-            </Layout>
-          }
-        />
-        <Route
-          path="/manageteam"
-          element={
-            <Layout>
-              <ManageTeam />
-            </Layout>
-          }
-        />
-        <Route
-          path="/account"
-          element={
-            <Layout>
-              <MainAccount />
-            </Layout>
-          }
-        />
-        <Route
-          path="/setting"
-          element={
-            <Layout>
-              <MainSetting />
-            </Layout>
-          }
-        />
-        <Route
-          path="/sidebar"
-          element={
-            <Layout>
-              <MainSideBar />
-            </Layout>
-          }
-        />
-
-        <Route path="/login">
-          <Route index element={<LoginSignup />}></Route>
-          <Route path="forgotpassword" element={<ForgotPassword />}></Route>
-          <Route path="signup" element={<SignUp />}></Route>
-          <Route path="ob_landing" element={<OB_landing />}></Route>
-          {/* nested routes waiting to be populated */}
-        </Route>
-
-        <Route path="*" element={<PageNotFound />}></Route>
       </Routes>
-    </div>
+    </React.Fragment>
   );
 }
-
-// function App() {
-//   return (
-//     <>
-//       <div>
-//         <TopAppBar />
-//         <PermanentDrawer />
-//         <Routes>
-//           <Route path="/" element={<MainDashboard />} />
-
-//           <Route path="/dashboard">
-//             <Route index element={<MainDashboard />}></Route>
-//             {/* nested routes waiting to be populated */}
-//           </Route>
-
-//           <Route path="/sprintboard">
-//             <Route index element={<MainSprintBoard />}>
-//               {/* nested routes waiting to be populated */}
-//             </Route>
-//           </Route>
-
-//           <Route path="/meeting">
-//             <Route index element={<MainMeeting />}></Route>
-//             {/* nested routes waiting to be populated */}
-//           </Route>
-
-//           <Route path="/hyperlink">
-//             <Route index element={<MainHyperLink />}></Route>
-//             {/* nested routes waiting to be populated */}
-//           </Route>
-
-//           <Route path="/review">
-//             <Route index element={<MainReview />}></Route>
-//             {/* nested routes waiting to be populated */}
-//           </Route>
-
-//           <Route path="/account">
-//             <Route index element={<MainAccount />}></Route>
-//             {/* nested routes waiting to be populated */}
-//           </Route>
-
-//           <Route path="/setting">
-//             <Route index element={<MainSetting />}></Route>
-//             {/* nested routes waiting to be populated */}
-//           </Route>
-
-//           <Route path="/sidebar">
-//             <Route index element={<MainSideBar />}></Route>
-//             {/* nested routes waiting to be populated */}
-//           </Route>
-
-//           <Route path="/login">
-//             <Route index element={<LoginSignup />}></Route>
-//             <Route path="forgotpassword" element={<ForgotPassword />}></Route>
-//             <Route path="signup" element={<SignUp />}></Route>
-//             {/* nested routes waiting to be populated */}
-//           </Route>
-
-//           <Route path="*" element={<PageNotFound />}></Route>
-//         </Routes>
-//       </div>
-//     </>
-//   );
-// }
 
 export default App;

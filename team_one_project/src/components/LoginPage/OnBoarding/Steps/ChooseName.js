@@ -33,8 +33,8 @@ function ChooseName({ workspaceName, setWorkspaceName }) {
             fullWidth
             autoComplete="off"
             variant="outlined"
-            value={workspaceName} // controlled component
-            onChange={handleInputChange} // handle input change
+            value={workspaceName}
+            onChange={handleInputChange}
             InputLabelProps={{ style: { fontSize: 14 } }}
           />
         </Grid>

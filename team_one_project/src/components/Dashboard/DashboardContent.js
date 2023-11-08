@@ -7,7 +7,7 @@ import { TeamProgress } from "./TeamProgress";
 export function DashboardContent() {
   return (
     <React.Fragment>
-      <Grid container xs={12}>
+      <Grid container>
         {/* For Left Side Bar */}
         <Grid item xs={7} borderRight={0.1} borderColor="#9e9e9e">
           <ProductBacklog />
