@@ -16,7 +16,7 @@ export function MainSprintBoard() {
   const [users, setUsers] = useState([]);
   //const [selectedUser, setSelectedUser] = useState('');
 
-  // Simulate fetching the list of users from a database
+  // Simulate getting the list of users from a database
   useEffect(() => {
     // Hard code user names for now
     const tempUsers = [
@@ -56,7 +56,7 @@ export function MainSprintBoard() {
       title: taskNameInput.valueOf(),
       assignee: assigneeInput.valueOf(),
       expectedCompleteTime: dueDateInput.valueOf(),
-      status: "Not Started", // TODO: get from user
+      status: "Not Started",
       taskPoints: taskPointsInput.valueOf(),
       //parentTaskID: null, // TODO: set parent ID if applicable
       //numLayers: 1, // TODO: calculate layer count
@@ -65,40 +65,20 @@ export function MainSprintBoard() {
     createTask(taskData);
 
     // Reset input fields
-    // TODO: add more fields
     setTaskNameInput("");
     setTaskPointsInput(1);
+    setAssigneeInput("Unassigned");
+    setDueDateInput("");
     // }
   };
 
   const createTask = (taskData) => {
     // Add task into tasks array
     setTasks([...tasks, taskData]);
-    console.log(tasks);   // Task list is always out of sync, need useEffect
+    console.log(tasks);   // TODO: fix bug where list is always one behind, use useEffect
     // TODO: insert data into database
   };
 
-
-  // Handle drag and drop
-  // TODO: Don't hard code column names, instead select all columns via class
-  // (sloppy temp solution implemented because don't know how to add multiple classes in React)
-  const tasksColumn = document.getElementById("tasksColumn");
-  const todoColumn = document.getElementById("todoColumn");
-  const doingColumn = document.getElementById("doingColumn");
-  const doneColumn = document.getElementById("doneColumn");
-  const columns = [tasksColumn, todoColumn, doingColumn, doneColumn]
-
-/*
-  columns.forEach((column) => {
-    if (column) {
-      column.addEventListener("dragover", (e) => {
-        e.preventDefault();
-        const currentTask = document.querySelector(".dragging");
-        column.appendChild(currentTask);
-      });
-    }
-  });
-*/
 
   const onDragOver = (e) => {
     e.preventDefault(); // Allow the drop
@@ -106,19 +86,48 @@ export function MainSprintBoard() {
 
   const onDrop = (e, targetContainerId) => {
     e.preventDefault();
+    const currentTask = document.querySelector(".dragging");
+    const column = document.getElementById(targetContainerId);
+    column.appendChild(currentTask);
+
+    /*  // Work in progress
+    const bottomTask = insertAboveTask(column, e.clientY);
+
+    if (!bottomTask) {
+      column.appendChild(currentTask);
+    } else {
+      column.insertBefore(currentTask, bottomTask);
+    }
+    */
+    
     /*
+    // No current need for this, but if need to extract task data:
     const jsonDataString = e.dataTransfer.getData('application/json'); // Retrieve the JSON string
     const data = JSON.parse(jsonDataString); // Parse the JSON string into an object
-    const sourceContainerId = e.dataTransfer.getData('containerId'); // Retrieve the source container identifier
-    // Source container id isn't working properly but it might not matter?
-    console.log(`Dropped into container ${targetContainerId} from ${sourceContainerId}`); // Can identify the target column
-    //console.log(data);  // Can receive all the task data (note: this is a copy of the JSON data, not a reference to the original)
+    // Can receive all the task data (note: this is a copy of the JSON data, not a reference to the original)
     */
-    const currentTask = document.querySelector(".dragging");
-    document.getElementById(targetContainerId).appendChild(currentTask);
-    
   };
 
+  /*
+  // Helper function for drag and drop (work in progress)
+  const insertAboveTask = (zone, mouseY) => {
+    const els = zone.querySelectorAll(".task:not(.dragging)");
+  
+    let closestTask = null;
+    let closestOffset = Number.NEGATIVE_INFINITY;
+  
+    els.forEach((task) => {
+      const { top } = task.getBoundingClientRect();
+  
+      const offset = mouseY - top;
+  
+      if (offset < 0 && offset > closestOffset) {
+        closestOffset = offset;
+        closestTask = task;
+      }
+    });
+  }
+  */
 
   return (
     <Box sx={{ marginLeft: "200px" }}>
@@ -184,7 +193,7 @@ export function MainSprintBoard() {
               </button>
             </Box>
           </Popper>
-          <div className="grid-item" id="tasksColumn">
+          <div className="grid-item" id="tasksColumn" onDragOver={onDragOver} onDrop={(e) => onDrop(e, 'tasksColumn')}>
             {tasks.map((task, index) => (
               <Task key={index} taskData={task} />
             ))}
@@ -205,34 +214,5 @@ export function MainSprintBoard() {
       </div>
     </Box>
   );
-
-
-  /*
-    STUFF IN RETURN
-            {tasks.map(task => (
-                <li className='task' key={task.taskName}>
-                </li>
-            ))}
-            <div id='createTaskMenu' className='popup'>
-                <div className='popupContent'>
-                    <input
-                        type='text'
-                        id='taskNameInput'
-                        value={taskNameInput}
-                        onChange={e => setTaskNameInput(e.target.value)}
-                    />
-                    <button id='closeTaskPopupButton' onClick={closeTaskPopup}>
-                        Submit
-                    </button>
-                </div>
-            </div>
-    */
-
-  /*<div id="createTaskMenu" className="popup">
-                    <div className="popupContent">
-                        <input type="text" id="taskNameInput"></input>
-                        <button id="closeTaskPopupButton" onClick="closeTaskPopup()">Submit</button>
-                    </div>
-                </div> */
 
 }
