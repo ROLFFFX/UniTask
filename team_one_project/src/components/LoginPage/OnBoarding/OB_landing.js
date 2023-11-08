@@ -47,7 +47,6 @@ export function OB_landing() {
     if (activeStep === 0) {
       // axios.post workspace name
       try {
-        // Assuming workspaceName and token are available in this scope
         const response = await axios.post(
           "http://localhost:8080/projects/createProject",
           {
@@ -59,14 +58,14 @@ export function OB_landing() {
             },
           }
         );
-        console.log(response.data); // Log or handle response data as needed
+        console.log(response.data);
       } catch (error) {
         console.error("There was an error!", error);
       }
     }
     if (activeStep === 1) {
       // @todo: axios.post
-      alert(role);
+      // alert(role);
     }
     setActiveStep((prevActiveStep) => prevActiveStep + 1);
   };
