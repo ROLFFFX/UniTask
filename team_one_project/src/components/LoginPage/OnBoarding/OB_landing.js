@@ -14,12 +14,16 @@ import theme from "../LoginStyling/theme";
 import ChooseName from "./Steps/ChooseName";
 import ChooseRole from "./Steps/ChooseRole";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
+import useAuth from "../../../hooks/useAuth";
 
 export function OB_landing() {
   const [activeStep, setActiveStep] = React.useState(0);
   const [workspaceName, setWorkspaceName] = React.useState(""); // new state for storing the workspace name
   const [role, setRole] = React.useState("");
   const navigate = useNavigate();
+  const { auth } = useAuth();
+  const token = auth.user.userJWT;
 
   const steps = ["Choose Name", "Choose Role"];
 
@@ -39,10 +43,26 @@ export function OB_landing() {
     }
   }
 
-  const handleNext = () => {
+  const handleNext = async () => {
     if (activeStep === 0) {
-      // @todo: axios.post
-      alert(workspaceName);
+      // axios.post workspace name
+      try {
+        // Assuming workspaceName and token are available in this scope
+        const response = await axios.post(
+          "http://localhost:8080/projects/createProject",
+          {
+            projectTitle: workspaceName,
+          },
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+        console.log(response.data); // Log or handle response data as needed
+      } catch (error) {
+        console.error("There was an error!", error);
+      }
     }
     if (activeStep === 1) {
       // @todo: axios.post

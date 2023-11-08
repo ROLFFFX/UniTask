@@ -80,7 +80,7 @@ export function SignUp() {
       // success alert on succesfully registered
       setTimeout(() => {
         navigate("/login");
-      }, 3000);
+      }, 5000);
     } catch (error) {
       if (!error?.response) {
         alert("No Server Response!");
