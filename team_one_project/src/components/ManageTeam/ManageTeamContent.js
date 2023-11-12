@@ -18,6 +18,8 @@ import InviteNewMemberModal from "./InviteNewMemberModal";
 const dummyTeamMember = [
   { userName: "Yuxuan Shi", userEmail: "yshi373@emory.edu" },
   { userName: "Alec Bergers", userEmail: "alec.berger7@emory.edu" },
+  { userName: "Daniel He", userEmail: "dyhe@emory.edu" },
+  { userName: "Yuxuan Shi", userEmail: "yshi373@emory.edu" },
 ];
 
 export default function ManageTeamContent() {
