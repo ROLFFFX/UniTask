@@ -1,5 +1,6 @@
 package com.teamone.unitask.onboard.confirmationtoken;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.teamone.unitask.onboard.usermodels.User;
 import lombok.NoArgsConstructor;
 
@@ -36,6 +37,7 @@ public class ConfirmationToken {
 
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(nullable = false, name = "user_id")
+    @JsonIgnore
     private User user;
 
 
