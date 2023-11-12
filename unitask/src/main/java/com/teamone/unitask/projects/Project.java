@@ -1,5 +1,7 @@
 package com.teamone.unitask.projects;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.teamone.unitask.hyperlinks.Hyperlink;
 import com.teamone.unitask.meetings.Meeting;
 import com.teamone.unitask.onboard.usermodels.User;
@@ -8,8 +10,7 @@ import com.teamone.unitask.timeslots.TimeSlot;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
-import java.util.Collection;
-import java.util.List;
+import java.util.*;
 
 @Entity
 @Table(name = "project",
@@ -36,14 +37,24 @@ public class Project {
 
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "master_user_id")
-    private User masterUserId;
+    private User masterUserId = null;
+
+    @ManyToMany(fetch = FetchType.LAZY,
+            cascade = {
+                    CascadeType.PERSIST,
+                    CascadeType.MERGE
+            },
+            mappedBy = "projects")
+    @JsonIgnore
+    private Set<User> users = new HashSet<>();
 
     /**
      * mapped by
      */
 
-    @ManyToMany(mappedBy = "projectsJoined")
-    private Collection<User> users_participated;
+//    @ManyToMany(mappedBy = "projectsJoined", cascade = CascadeType.ALL)
+//    @JsonManagedReference
+//    private Collection<User> users_participated;
 
     @OneToMany(mappedBy = "projectBelonged")
     private Collection<TimeSlot> timeSlots;
@@ -73,10 +84,6 @@ public class Project {
         return projectId;
     }
 
-    public void setProjectId(Long projectId) {
-        this.projectId = projectId;
-    }
-
     public String getProjectTitle() {
         return projectTitle;
     }
@@ -93,12 +100,12 @@ public class Project {
         this.masterUserId = masterUserId;
     }
 
-    public Collection<User> getUsers_participated() {
-        return users_participated;
+    public Set<User> getUsers() {
+        return users;
     }
 
-    public void setUsers_participated(Collection<User> users_participated) {
-        this.users_participated = users_participated;
+    public void setUsers(Set<User> users) {
+        this.users = users;
     }
 
     public Collection<TimeSlot> getTimeSlots() {

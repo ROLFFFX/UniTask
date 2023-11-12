@@ -1,5 +1,7 @@
 package com.teamone.unitask.onboard.usermodels;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.teamone.unitask.onboard.confirmationtoken.ConfirmationToken;
 import com.teamone.unitask.onboard.usermodels.Role;
 import com.teamone.unitask.projects.Project;
@@ -54,15 +56,24 @@ public class User {
             inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Set<Role> roles = new HashSet<>();
 
-    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @ManyToMany(fetch = FetchType.LAZY,
+            cascade = {
+                    CascadeType.PERSIST,
+                    CascadeType.MERGE,
+                    CascadeType.ALL
+            })
     @JoinTable(name = "user_projects",
-            joinColumns = @JoinColumn(name = "user_id"),
-            inverseJoinColumns = @JoinColumn(name = "project_id"))
-    private List<Project> projectsJoined = new ArrayList<>();
+            joinColumns = { @JoinColumn(name = "user_id") },
+            inverseJoinColumns = { @JoinColumn(name = "project_id") })
+    private Set<Project> projects = new HashSet<>();
 
     /**
      * mapped by
      */
+
+//    @ManyToMany(mappedBy = "usersParticipated", cascade = CascadeType.ALL)
+//    private Collection<Project> projectsJoined = new ArrayList<>();
+
     @OneToMany(mappedBy = "user")
     private Collection<ConfirmationToken> confirmationTokens;
 
@@ -90,12 +101,37 @@ public class User {
         this.enabled = false;
     }
 
-    public Long getId() {
-        return id;
+    /**
+     * Project methods
+     */
+
+    public void addProject(Project project) {
+        this.projects.add(project);
+        project.getUsers().add(this);
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void removeProject(Long projectId) {
+        Project project = this.projects.stream().filter(t -> t.getProjectId() == projectId).findFirst().orElse(null);
+        if (project != null) {
+            this.projects.remove(project);
+            project.getUsers().remove(this);
+        }
+    }
+
+    public Set<Project> getProjects() {
+        return projects;
+    }
+
+    public void setProjects(Set<Project> projects) {
+        this.projects = projects;
+    }
+
+    /**
+     * Other methods
+     */
+
+    public Long getId() {
+        return id;
     }
 
     public String getUsername() {
@@ -136,14 +172,6 @@ public class User {
 
     public void setRoles(Set<Role> roles) {
         this.roles = roles;
-    }
-
-    public List<Project> getProjectsJoined() {
-        return projectsJoined;
-    }
-
-    public void setProjectsJoined(List<Project> projectsJoined) {
-        this.projectsJoined = projectsJoined;
     }
 
     public Collection<ConfirmationToken> getConfirmationTokens() {
