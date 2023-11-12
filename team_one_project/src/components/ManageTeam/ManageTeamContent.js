@@ -1,5 +1,6 @@
 import Diversity2Icon from "@mui/icons-material/Diversity2";
 import GroupAddIcon from "@mui/icons-material/GroupAdd";
+import GroupRemoveIcon from "@mui/icons-material/GroupRemove";
 import {
   Box,
   Divider,
@@ -7,6 +8,8 @@ import {
   ListItem,
   ListItemText,
   Typography,
+  Paper,
+  IconButton,
 } from "@mui/material";
 import Button from "@mui/material/Button";
 import React from "react";
@@ -14,13 +17,16 @@ import InviteNewMemberModal from "./InviteNewMemberModal";
 
 const dummyTeamMember = [
   { userName: "Yuxuan Shi", userEmail: "yshi373@emory.edu" },
-  { userName: "Alec", userEmail: "alec.berger7@emory.edu" },
+  { userName: "Alec Bergers", userEmail: "alec.berger7@emory.edu" },
 ];
 
 export default function ManageTeamContent() {
   const [openModal, setOpenModal] = React.useState(false);
   const handleOpenModal = () => setOpenModal(true);
   const handleCloseModal = () => setOpenModal(false);
+  const handleRemoveUser = (tobeRemoved) => {
+    alert("Removing " + tobeRemoved);
+  };
   return (
     <React.Fragment>
       <Box
@@ -76,7 +82,7 @@ export default function ManageTeamContent() {
           padding={3}
         >
           <Typography sx={{ color: "#343A40", fontSize: 14 }}>
-            {dummyTeamMember.length} Members
+            {dummyTeamMember.length} Current Members
           </Typography>
         </Box>
         <Box
@@ -87,20 +93,35 @@ export default function ManageTeamContent() {
           }}
         >
           <List
-            sx={{ width: "100%", maxWidth: 360, bgcolor: "background.paper" }}
+            sx={{ width: "100%", maxWidth: 600, bgcolor: "background.paper" }}
           >
             {dummyTeamMember.map((member) => (
-              <ListItem
+              <Box
                 key={member.userEmail}
-                disableGutters
-                secondaryAction={
-                  <Diversity2Icon aria-label="comment">
-                    <Diversity2Icon />
-                  </Diversity2Icon>
-                }
+                style={{
+                  border: "1px solid black",
+                  borderRadius: 5,
+
+                  marginTop: "5px",
+                }}
+                paddingLeft="15px"
+                paddingRight="15px"
               >
-                <ListItemText primary={`${member.userName}`} />
-              </ListItem>
+                <ListItem
+                  key={member.userEmail}
+                  disableGutters
+                  secondaryAction={
+                    <IconButton
+                      aria-label="remove"
+                      onClick={() => handleRemoveUser(member.userName)}
+                    >
+                      <GroupRemoveIcon />
+                    </IconButton>
+                  }
+                >
+                  <ListItemText primary={`${member.userName}`} />
+                </ListItem>
+              </Box>
             ))}
           </List>
         </Box>
