@@ -7,6 +7,7 @@ import java.util.Set;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
+import com.teamone.unitask.onboard.UserService;
 import com.teamone.unitask.onboard.confirmationtoken.ConfirmationTokenService;
 import com.teamone.unitask.onboard.email.EmailService;
 import com.teamone.unitask.onboard.confirmationtoken.ConfirmationToken;
@@ -22,6 +23,7 @@ import com.teamone.unitask.onboard.userrepos.UserRepository;
 import com.teamone.unitask.onboard.security.jwt.JwtUtils;
 import com.teamone.unitask.onboard.security.services.UserDetailsImpl;
 import com.teamone.unitask.onboard.email.EmailValidator;
+import com.teamone.unitask.projects.Project;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -63,6 +65,9 @@ public class AuthController {
 
     @Autowired
     ConfirmationTokenService confirmationTokenService;
+
+    @Autowired
+    UserService userService;
 
     @CrossOrigin(origins = "http://localhost:3000", allowCredentials = "true")
     @PostMapping("/signin")
@@ -199,25 +204,6 @@ public class AuthController {
             // return generated token;
             return ResponseEntity.ok(new MessageResponse("Email sent again!"));
         }
-
-//        // generate register token;
-//        String signupToken = UUID.randomUUID().toString();
-//        // save token;
-//        ConfirmationToken confirmationToken = new ConfirmationToken(
-//                signupToken,
-//                LocalDateTime.now(),
-//                LocalDateTime.now().plusMinutes(15),
-//                user
-//        );
-//        confirmationTokenService.saveConfirmationToken(confirmationToken);
-//        // create email link and send email;
-//        //TODO: need to modify when deploy;
-//        String link = "http://localhost:8080/api/auth/confirmSignUp?token=" + signupToken;
-//        emailService.send(signUpRequest.getEmail(),
-//                emailService.buildEmail(signUpRequest.getUsername(), link));
-//
-//        // return generated token;
-//        return ResponseEntity.ok(new MessageResponse("Email sent!"));
     }
 
     @GetMapping(path = "confirmSignUp")
@@ -244,6 +230,24 @@ public class AuthController {
         user.setEnabled(true);
 
         return ResponseEntity.ok(new MessageResponse("Email is confirmed"));
+    }
+
+
+
+//    @GetMapping(path = "/getUserWorkspaces")
+//    public ResponseEntity<Set<Project>> getUserProjectList(@RequestHeader("Authorization") String header) {
+//        User curUser = userService.getUserEmailFromToken(header);
+//        Set<Project> userProjects = curUser.getProjects();
+//        if (userProjects.isEmpty()) {
+//            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+//        }
+//        return new ResponseEntity<>(userProjects, HttpStatus.OK);
+//    }
+
+
+    @GetMapping(path = "getAllUsers")
+    public List<User> getAllUser() {
+        return userRepository.findAll();
     }
 
 }

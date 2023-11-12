@@ -59,7 +59,8 @@ public class User {
     @ManyToMany(fetch = FetchType.LAZY,
             cascade = {
                     CascadeType.PERSIST,
-                    CascadeType.MERGE
+                    CascadeType.MERGE,
+                    CascadeType.ALL
             })
     @JoinTable(name = "user_projects",
             joinColumns = { @JoinColumn(name = "user_id") },
@@ -100,6 +101,10 @@ public class User {
         this.enabled = false;
     }
 
+    /**
+     * Project methods
+     */
+
     public void addProject(Project project) {
         this.projects.add(project);
         project.getUsers().add(this);
@@ -112,6 +117,18 @@ public class User {
             project.getUsers().remove(this);
         }
     }
+
+    public Set<Project> getProjects() {
+        return projects;
+    }
+
+    public void setProjects(Set<Project> projects) {
+        this.projects = projects;
+    }
+
+    /**
+     * Other methods
+     */
 
     public Long getId() {
         return id;
@@ -187,13 +204,5 @@ public class User {
 
     public void setTasks(Collection<Task> tasks) {
         this.tasks = tasks;
-    }
-
-    public Set<Project> getProjects() {
-        return projects;
-    }
-
-    public void setProjects(Set<Project> projects) {
-        this.projects = projects;
     }
 }

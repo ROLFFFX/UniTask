@@ -37,7 +37,7 @@ public class Project {
 
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "master_user_id")
-    private User masterUserId;
+    private User masterUserId = null;
 
     @ManyToMany(fetch = FetchType.LAZY,
             cascade = {
