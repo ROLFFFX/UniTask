@@ -46,7 +46,7 @@ export default function InviteNewMemberModal({ open, handleClose }) {
             </Typography>
             <Typography id="modal-modal-description" sx={{ mt: 2 }}>
               Please enter the email of team member you want to invite in the
-              textfield above. Make sure team member already registered using
+              textfield below. Make sure team member already registered using
               this email.
             </Typography>
             <TextField
