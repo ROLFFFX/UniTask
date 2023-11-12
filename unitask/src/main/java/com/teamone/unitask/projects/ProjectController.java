@@ -16,7 +16,7 @@ import java.util.List;
 import java.util.Set;
 
 
-@CrossOrigin(origins = "", maxAge = 3600)
+@CrossOrigin(origins = "", allowCredentials = "true", maxAge = 3600)
 @RestController
 @RequestMapping("/projects")
 public class ProjectController {
@@ -54,6 +54,7 @@ public class ProjectController {
     }
 
     @GetMapping(path = "/getUserWorkspaces")
+    @CrossOrigin(origins = "http://localhost:3000", allowCredentials = "true")
     public ResponseEntity<Set<Project>> getUserProjectList(@RequestHeader("Authorization") String header) {
         User curUser = userService.getUserEmailFromToken(header);
         Set<Project> userProjects = curUser.getProjects();

@@ -1,6 +1,7 @@
 import { Navigate, Outlet } from "react-router-dom";
 import useAuth from "../hooks/useAuth";
 import { useCookies } from "react-cookie";
+import { useEffect } from "react";
 
 const RequireAuth = () => {
   const [cookies, setCookie] = useCookies(["auth"]);
@@ -10,6 +11,11 @@ const RequireAuth = () => {
   if (!auth?.user && cookies.auth?.user) {
     setAuth(cookies.auth);
   }
+
+  //@todo TO BE DELETED, FOR TESTING PURPOSE ONLY
+  useEffect(() => {
+    console.log("Auth State: ", auth);
+  }, []);
 
   return auth?.user ? <Outlet /> : <Navigate to="/login" replace />;
 };

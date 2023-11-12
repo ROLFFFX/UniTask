@@ -15,7 +15,7 @@ import axios from "axios";
 const dummy_project_title = ["UniTask", "Team One"];
 
 export default function LoginWithGroup() {
-  const { auth } = useAuth();
+  const { auth, setAuth } = useAuth();
   const token = auth.user.userJWT;
   const [workspaces, setWorkspaces] = useState([]);
   useEffect(() => {
@@ -31,7 +31,7 @@ export default function LoginWithGroup() {
           config
         );
         if (response.status === 200) {
-          setWorkspaces(response.data);
+          setWorkspaces(response.data.map((project) => project.projectTitle));
         } else if (response.status === 204) {
           console.log("No workspaces found for the user");
         }
@@ -40,7 +40,6 @@ export default function LoginWithGroup() {
       }
     };
     fetchUserWorkspaces();
-    console.log(workspaces);
   }, []);
   const navigate = useNavigate();
   const handleNavigate = () => {
@@ -48,7 +47,8 @@ export default function LoginWithGroup() {
   };
   const handleClick = (index) => {
     //setAuth
-    console.log(dummy_project_title[index]);
+    const selectedWorkspaceTitle = workspaces[index];
+    setAuth({ ...auth, selectedWorkspace: selectedWorkspaceTitle });
     navigate("/dashboard");
   };
   return (
@@ -82,14 +82,14 @@ export default function LoginWithGroup() {
           click the one you want to log in with. <br />
           <pre />
         </Typography>
-        {dummy_project_title.map((text, index) => (
+        {workspaces.map((workspaceTitle, index) => (
           <ListItem key={index} sx={{ marginLeft: 20 }}>
             {<Diversity3Icon />}
             <ListItemButton
               onClick={() => handleClick(index)}
               sx={{ marginRight: 20 }}
             >
-              <ListItemText primary={text} />
+              <ListItemText primary={workspaceTitle} />
             </ListItemButton>
           </ListItem>
         ))}
