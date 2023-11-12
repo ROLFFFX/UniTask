@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef } from "react";
 import chevron_favicon from "../../images/chevron_favicon.png";
 import circle_blue_favicon from "../../images/circle_blue_favicon.png";
 import circle_orange_favicon from "../../images/circle_orange_favicon.png";
@@ -9,7 +9,7 @@ import settingsIcon from "../../images/dots.png";
 
 function Task({ taskData, onDelete, onEdit }) {
   const [subtasks, setSubtasks] = useState([]);
-  const [newSubtask, setNewSubtask] = useState('');
+  const [newSubtask, setNewSubtask] = useState("");
   const [isAddingSubtask, setIsAddingSubtask] = useState(false);
 
   const [AddSub, setAddSub] = useState("idle");
@@ -21,8 +21,8 @@ function Task({ taskData, onDelete, onEdit }) {
   const addSubtask = () => {
     setSubtasks([...subtasks, newSubtask]);
     taskData.subtaskList = subtasks;
-    console.log(taskData);  // TODO: Fix bug where the last subtask is not visible in list
-    setNewSubtask('');
+    console.log(taskData); // TODO: Fix bug where the last subtask is not visible in list
+    setNewSubtask("");
     setIsAddingSubtask(false);
   };
 
@@ -30,29 +30,30 @@ function Task({ taskData, onDelete, onEdit }) {
   // When item is dragged, give it the dragging class
   const drag = (e) => {
     if (elementRef.current) {
-      elementRef.current.classList.add('dragging');
+      elementRef.current.classList.add("dragging");
 
       // If needed, can transfer task data
       //e.dataTransfer.setData('application/json', JSON.stringify(taskData)); // Transfer data to main app
     }
-  }
+  };
 
   const endDrag = () => {
     if (elementRef.current) {
-      elementRef.current.classList.remove('dragging');
+      elementRef.current.classList.remove("dragging");
 
       // Set status
       const targetColumn = elementRef.current.parentElement.id;
-      const statusByColumn = {  // Dict with status values corresponding to each column
-        "tasksColumn": "Not Started",
-        "todoColumn": "Todo",
-        "doingColumn": "Doing",
-        "doneColumn": "Done"
-      }
+      const statusByColumn = {
+        // Dict with status values corresponding to each column
+        tasksColumn: "Not Started",
+        todoColumn: "Todo",
+        doingColumn: "Doing",
+        doneColumn: "Done",
+      };
       taskData.status = statusByColumn[targetColumn];
       console.log(taskData);
     }
-  }
+  };
 
   const [isSettingsOpen, setIsSettingsOpen] = useState(false);
 
@@ -83,9 +84,11 @@ function Task({ taskData, onDelete, onEdit }) {
           <span className="taskTitleLabel">{taskData.title}</span>
           <span className="assigneeLabel">{taskData.assignee}</span>
           <button
-            className={`showSubtaskButton ${ShowSub === "expand" ? 'rotate-down' : 'rotate-left'}`}
+            className={`showSubtaskButton ${
+              ShowSub === "expand" ? "rotate-down" : "rotate-left"
+            }`}
             onClick={() => {
-              setShowSub(ShowSub === "collapse" ? ("expand") : ("collapse"));
+              setShowSub(ShowSub === "collapse" ? "expand" : "collapse");
               setIsSettingsOpen(!isSettingsOpen);
             }}
           >
@@ -105,22 +108,17 @@ function Task({ taskData, onDelete, onEdit }) {
               alt={""}
             ></img>
           </button>
-
         </div>
-        {ShowSub === "expand" ?
-          (<ul className={"subtaskList"}>
+        {ShowSub === "expand" ? (
+          <ul className={"subtaskList"}>
             {subtasks.map((subtask, index) => (
-              <li
-                className={"subtask"}
-                key={index}
-              >
+              <li className={"subtask"} key={index}>
                 <input type="checkbox" />
                 {subtask}
               </li>
             ))}
-          </ul>)
-          : null
-        }
+          </ul>
+        ) : null}
         {isAddingSubtask ? (
           <div>
             <input
@@ -128,18 +126,12 @@ function Task({ taskData, onDelete, onEdit }) {
               value={newSubtask}
               onChange={(e) => setNewSubtask(e.target.value)}
             />
-            <button
-              className="addSubtaskButton"
-              onClick={addSubtask}
-            >
+            <button className="addSubtaskButton" onClick={addSubtask}>
               Add Subtask
             </button>
           </div>
-        ) : (
-          null
-        )}
+        ) : null}
       </div>
-
 
       {isSettingsOpen && (
         <div>

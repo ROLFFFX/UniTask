@@ -10,7 +10,7 @@ export const AuthProvider = ({ children }) => {
   useEffect(() => {
     // Whenever auth state changes, update the cookie as well
     if (auth?.user) {
-      setCookie("auth", auth, { path: "/", maxAge: 1800 }); // Expires in 30 minutes
+      setCookie("auth", auth, { path: "/", maxAge: 1800 }); // expires in 30 minutes
     }
   }, [auth, setCookie]);
 
@@ -27,19 +27,3 @@ export const AuthProvider = ({ children }) => {
 };
 
 export default AuthContext;
-
-//without cookie
-// import { createContext, useState } from "react";
-
-// const AuthContext = createContext({}); // this is the initial auth.user
-
-// export const AuthProvider = ({ children }) => {
-//   const [auth, setAuth] = useState({});
-//   return (
-//     <AuthContext.Provider value={{ auth, setAuth }}>
-//       {children}
-//     </AuthContext.Provider>
-//   );
-// };
-
-// export default AuthContext;

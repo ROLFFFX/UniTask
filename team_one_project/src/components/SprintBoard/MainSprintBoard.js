@@ -1,5 +1,5 @@
 import { Box } from "@mui/material";
-import Task from './Task';
+import Task from "./Task";
 import Popper from "@mui/material/Popper";
 import React, { useState, useEffect } from "react";
 import "../../App.css";
@@ -14,7 +14,6 @@ import "./MainSprintBoard.css";
 import { v4 as uuidv4 } from "uuid";
 
 export function MainSprintBoard() {
-
   // List of users (for assignee list)
   const [users, setUsers] = useState([]);
   //const [selectedUser, setSelectedUser] = useState('');
@@ -52,7 +51,7 @@ export function MainSprintBoard() {
 
   // Close task popup menu and submit data
   const closeTaskPopup = () => {
-    setAnchorEl(null);  // Close popup window
+    setAnchorEl(null); // Close popup window
     // if (taskNameInput) {
     // TODO: send data to backend
     const taskData = {
@@ -63,7 +62,7 @@ export function MainSprintBoard() {
       taskPoints: taskPointsInput.valueOf(),
       //parentTaskID: null, // TODO: set parent ID if applicable
       //numLayers: 1, // TODO: calculate layer count
-      subtaskList: []
+      subtaskList: [],
     };
     createTask(taskData);
 
@@ -78,13 +77,12 @@ export function MainSprintBoard() {
   const createTask = (taskData) => {
     // Add a unique id to the task data
     const taskWithId = { ...taskData, id: uuidv4() };
-  
+
     // Add the new task to the tasks array
     setTasks([...tasks, taskWithId]);
-  
+
     // TODO: insert data into database
   };
-
 
   const onDragOver = (e) => {
     e.preventDefault(); // Allow the drop
@@ -96,8 +94,6 @@ export function MainSprintBoard() {
     const column = document.getElementById(targetContainerId);
     column.appendChild(currentTask);
 
-  
-
     /*  // Work in progress
     const bottomTask = insertAboveTask(column, e.clientY);
 
@@ -107,7 +103,7 @@ export function MainSprintBoard() {
       column.insertBefore(currentTask, bottomTask);
     }
     */
-    
+
     /*
     // No current need for this, but if need to extract task data:
     const jsonDataString = e.dataTransfer.getData('application/json'); // Retrieve the JSON string
@@ -116,12 +112,14 @@ export function MainSprintBoard() {
     */
   };
   const deleteTask = (taskId) => {
-    const updatedTasks = tasks.filter(task => task.id !== taskId);
+    const updatedTasks = tasks.filter((task) => task.id !== taskId);
     setTasks(updatedTasks);
   };
 
   const editTask = (newTaskData) => {
-    const updatedTasks = tasks.map(task => task.id === newTaskData.id ? newTaskData : task);
+    const updatedTasks = tasks.map((task) =>
+      task.id === newTaskData.id ? newTaskData : task
+    );
     setTasks(updatedTasks);
   };
 
@@ -210,34 +208,60 @@ export function MainSprintBoard() {
               </button>
             </Box>
           </Popper>
-          <div className="grid-item" id="tasksColumn" onDragOver={onDragOver} onDrop={(e) => onDrop(e, 'tasksColumn')}>
-  {tasks.map(task => (
-    <Task key={task.id} taskData={task} onDelete={deleteTask} onEdit={editTask} />
-  ))}
-</div>
+          <div
+            className="grid-item"
+            id="tasksColumn"
+            onDragOver={onDragOver}
+            onDrop={(e) => onDrop(e, "tasksColumn")}
+          >
+            {tasks.map((task) => (
+              <Task
+                key={task.id}
+                taskData={task}
+                onDelete={deleteTask}
+                onEdit={editTask}
+              />
+            ))}
+          </div>
           <div className="grid-item" id="todoHeader">
             TO DO
           </div>
-          <div className="grid-item" id="todoColumn" onDragOver={onDragOver} onDrop={(e) => onDrop(e, 'todoColumn')}></div>
+          <div
+            className="grid-item"
+            id="todoColumn"
+            onDragOver={onDragOver}
+            onDrop={(e) => onDrop(e, "todoColumn")}
+          ></div>
           <div className="grid-item" id="doingHeader">
             DOING
           </div>
-          <div className="grid-item" id="doingColumn" onDragOver={onDragOver} onDrop={(e) => onDrop(e, 'doingColumn')}></div>
+          <div
+            className="grid-item"
+            id="doingColumn"
+            onDragOver={onDragOver}
+            onDrop={(e) => onDrop(e, "doingColumn")}
+          ></div>
           <div className="grid-item" id="doneHeader">
             DONE
           </div>
-          <div className="grid-item" id="doneColumn" onDragOver={onDragOver} onDrop={(e) => onDrop(e, 'doneColumn')}></div>
+          <div
+            className="grid-item"
+            id="doneColumn"
+            onDragOver={onDragOver}
+            onDrop={(e) => onDrop(e, "doneColumn")}
+          ></div>
         </div>
-        
       </div>
       <div>
-      
-      {tasks.map(task => (
-        <Task key={task.id} taskData={task} onDelete={deleteTask} onEdit={editTask} />
-      ))}
-      
-    </div>
+        {tasks.map((task) => (
+          <Task
+            key={task.id}
+            taskData={task}
+            onDelete={deleteTask}
+            onEdit={editTask}
+          />
+        ))}
+      </div>
     </Box>
   );
-
 }
