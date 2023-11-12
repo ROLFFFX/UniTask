@@ -16,7 +16,7 @@ import java.util.List;
 import java.util.Set;
 
 
-@CrossOrigin(origins = "*", maxAge = 3600)
+@CrossOrigin(origins = "", maxAge = 3600)
 @RestController
 @RequestMapping("/projects")
 public class ProjectController {
@@ -33,6 +33,7 @@ public class ProjectController {
     @Autowired
     ProjectRepository projectRepository;
 
+    @CrossOrigin(origins = "http://localhost:3000", allowCredentials = "true")
     @PostMapping("/createNewWorkspace")
     public ResponseEntity<Project> createProject(@RequestBody Project requestProject, @RequestHeader("Authorization") String header) {
         User curUser = userService.getUserEmailFromToken(header);
@@ -78,6 +79,7 @@ public class ProjectController {
         return new ResponseEntity<>(projectMember, HttpStatus.OK);
     }
 
+    @CrossOrigin(origins = "http://localhost:3000", allowCredentials = "true")
     @PostMapping(path = "/addUserToWorkspace/{email}/{projectTitle}")
     public ResponseEntity<MessageResponse> addUserToProjectByEmail(@PathVariable("email") String email,
                                                                    @PathVariable("projectTitle") String projectTitle) {
