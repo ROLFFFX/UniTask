@@ -119,7 +119,11 @@ export default function ManageTeamContent() {
                     </IconButton>
                   }
                 >
-                  <ListItemText primary={`${member.userName}`} />
+                  <ListItemText
+                    primary={`${member.userName}`}
+                    secondary={member.userEmail}
+                    secondaryTypographyProps={{ style: { color: "#6C757D" } }}
+                  />
                 </ListItem>
               </Box>
             ))}
