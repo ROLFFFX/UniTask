@@ -10,6 +10,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 import java.util.Set;
@@ -60,5 +61,71 @@ public class ProjectController {
         }
         return new ResponseEntity<>(userProjects, HttpStatus.OK);
     }
+
+    //TODO: delete a workspace
+
+    @GetMapping(path = "/workspaceMembers/{projectTitle}")
+    public ResponseEntity<List<User>> getAllUsersByProjectName(@PathVariable("projectTitle") String projectTitle) {
+
+        // if project does not exist;
+        if (!projectRepository.existsByProjectTitle(projectTitle)) {
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }
+
+        // find the users that participated in the project;
+        List<User> projectMember = userRepository.findUserByProjects(projectRepository.findByProjectTitle(projectTitle));
+
+        return new ResponseEntity<>(projectMember, HttpStatus.OK);
+    }
+
+    @PostMapping(path = "/addUserToWorkspace/{email}/{projectTitle}")
+    public ResponseEntity<MessageResponse> addUserToProjectByEmail(@PathVariable("email") String email,
+                                                                   @PathVariable("projectTitle") String projectTitle) {
+
+        // if project does not exist;
+        if (!projectRepository.existsByProjectTitle(projectTitle)) {
+            return new ResponseEntity<>(new MessageResponse("Error: Project does not exist"), HttpStatus.BAD_REQUEST);
+        }
+
+        // if user does not exist;
+        if (!userRepository.existsByEmail(email)) {
+            return new ResponseEntity<>(new MessageResponse("Error: User does not exist"), HttpStatus.BAD_REQUEST);
+        }
+
+        // add project to user's project list;
+        User userToAdd = userRepository.getByEmail(email);
+        Project projectToJoin = projectRepository.findByProjectTitle(projectTitle);
+
+        userToAdd.addProject(projectToJoin);
+        userRepository.save(userToAdd);
+
+        return new ResponseEntity<>(new MessageResponse("User successfully added!"), HttpStatus.CREATED);
+    }
+
+    @DeleteMapping(path = "/deleteUserFromWorkspace/{email}/{projectTitle}")
+    public ResponseEntity<MessageResponse> deleteUserFromProjectByEmail(@PathVariable("email") String email,
+                                                                        @PathVariable("projectTitle") String projectTitle) {
+
+        // if project does not exist;
+        if (!projectRepository.existsByProjectTitle(projectTitle)) {
+            return new ResponseEntity<>(new MessageResponse("Error: Project does not exist"), HttpStatus.BAD_REQUEST);
+        }
+
+        // if user does not exist;
+        if (!userRepository.existsByEmail(email)) {
+            return new ResponseEntity<>(new MessageResponse("Error: User does not exist"), HttpStatus.BAD_REQUEST);
+        }
+
+        // delete user from project;
+        User userToDelete = userRepository.getByEmail(email);
+        Project projectDeleteFrom = projectRepository.findByProjectTitle(projectTitle);
+
+        userToDelete.removeProject(projectDeleteFrom.getProjectId());
+        userRepository.save(userToDelete);
+
+        return new ResponseEntity<>(new MessageResponse("Successfully removed user from the project!"), HttpStatus.NO_CONTENT);
+    }
+
+//    @PutMapping
 
 }
