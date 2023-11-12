@@ -66,7 +66,7 @@ public class Project {
     private Collection<Meeting> meetings;
 
     @OneToMany(mappedBy = "projectId")
-    private Collection<Hyperlink> hyperlinks;
+    private Set<Hyperlink> hyperlinks = new HashSet<>();
 
     /**
      * methods
@@ -132,11 +132,11 @@ public class Project {
         this.meetings = meetings;
     }
 
-    public Collection<Hyperlink> getHyperlinks() {
+    public Set<Hyperlink> getHyperlinks() {
         return hyperlinks;
     }
 
-    public void setHyperlinks(Collection<Hyperlink> hyperlinks) {
+    public void setHyperlinks(Set<Hyperlink> hyperlinks) {
         this.hyperlinks = hyperlinks;
     }
 }
