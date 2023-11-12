@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Box } from "@mui/material";
 import { Typography } from "@mui/material";
 import { Divider } from "@mui/material";
@@ -9,10 +9,39 @@ import { ListItem } from "@mui/material";
 import { ListItemButton } from "@mui/material";
 import { ListItemText } from "@mui/material";
 import Diversity3Icon from "@mui/icons-material/Diversity3";
+import useAuth from "../../../hooks/useAuth";
+import axios from "axios";
 
 const dummy_project_title = ["UniTask", "Team One"];
 
 export default function LoginWithGroup() {
+  const { auth } = useAuth();
+  const token = auth.user.userJWT;
+  const [workspaces, setWorkspaces] = useState([]);
+  useEffect(() => {
+    const fetchUserWorkspaces = async () => {
+      const config = {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      };
+      try {
+        const response = await axios.get(
+          "http://localhost:8080/projects/getUserWorkspaces",
+          config
+        );
+        if (response.status === 200) {
+          setWorkspaces(response.data);
+        } else if (response.status === 204) {
+          console.log("No workspaces found for the user");
+        }
+      } catch (error) {
+        console.error("Error fetching workspaces: ", error);
+      }
+    };
+    fetchUserWorkspaces();
+    console.log(workspaces);
+  }, []);
   const navigate = useNavigate();
   const handleNavigate = () => {
     navigate("/dashboard");
