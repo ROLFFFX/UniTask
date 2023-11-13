@@ -13,6 +13,21 @@ import useAuth from "../../../hooks/useAuth";
 import axios from "axios";
 import Backdrop from "@mui/material/Backdrop";
 import CircularProgress from "@mui/material/CircularProgress";
+import { FixedSizeList, ListChildComponentProps } from "react-window";
+
+function renderWorkspaceRow(props, workspaces, handleClick) {
+  //handles the rendering of each workspace
+  const { index, style } = props;
+  const workspaceTitle = workspaces[index];
+  return (
+    <ListItem style={style} key={index} component="div" disablePadding>
+      <ListItemButton onClick={() => handleClick(index)}>
+        <Diversity3Icon sx={{ marginLeft: 10 }} />
+        <ListItemText primary={" " + workspaceTitle} sx={{ marginLeft: 5 }} />
+      </ListItemButton>
+    </ListItem>
+  );
+}
 
 export default function LoginWithGroup() {
   const { auth, setAuth } = useAuth();
@@ -86,14 +101,19 @@ export default function LoginWithGroup() {
 
         <Divider sx={{ width: "100%", padding: 1 }}></Divider>
         <Typography
-          sx={{ color: "#343A40", padding: 1, paddingLeft: 4, paddingRight: 4 }}
+          sx={{
+            color: "#343A40",
+            padding: 1,
+            paddingLeft: 4,
+            paddingRight: 4,
+            marginTop: 3,
+            marginBottom: 3,
+          }}
         >
-          <pre />
           We detect that you are currently in these workspaces below. Please
-          click the one you want to log in with. <br />
-          <pre />
+          click the one you want to log in with. (*You might scroll this list.)
         </Typography>
-        {workspaces.map((workspaceTitle, index) => (
+        {/* {workspaces.map((workspaceTitle, index) => (
           <ListItem key={index} sx={{ marginLeft: 20 }}>
             {<Diversity3Icon />}
             <ListItemButton
@@ -103,8 +123,19 @@ export default function LoginWithGroup() {
               <ListItemText primary={workspaceTitle} />
             </ListItemButton>
           </ListItem>
-        ))}
-        <Button
+        ))} */}
+
+        <FixedSizeList
+          height={190}
+          width={500}
+          itemSize={46}
+          itemCount={workspaces.length}
+          overscanCount={5}
+        >
+          {(props) => renderWorkspaceRow(props, workspaces, handleClick)}
+        </FixedSizeList>
+
+        {/* <Button
           variant="contained"
           style={{
             backgroundColor: "#343A40",
@@ -114,7 +145,7 @@ export default function LoginWithGroup() {
           onClick={handleNavigate}
         >
           Tester Login
-        </Button>
+        </Button> */}
       </Box>
     </React.Fragment>
   );
