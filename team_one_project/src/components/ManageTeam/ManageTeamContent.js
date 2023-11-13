@@ -25,15 +25,34 @@ export default function ManageTeamContent() {
   const [backdropOpen, setBackdropOpen] = useState(false); //loading page
   const handleOpenModal = () => setOpenModal(true);
   const handleCloseModal = () => setOpenModal(false);
-  const handleRemoveUser = (tobeRemoved) => {
-    alert("Removing " + tobeRemoved);
-  };
   const { auth } = useAuth();
   const projectTitle = auth.selectedWorkspace;
   const [teamMembers, setTeamMembers] = useState([]);
   const refreshTeamMembers = () => {
     //refetch team member, specifically used after success invitation
     fetchTeamMembers(); // Re-fetch team members
+  };
+
+  const handleRemoveUser = async (userEmail) => {
+    setBackdropOpen(true); //display loading page
+    try {
+      const response = await axios.delete(
+        `http://localhost:8080/projects/deleteUserFromWorkspace/${userEmail}/${projectTitle}`,
+        {
+          headers: {
+            Authorization: `Bearer ${auth.user.userJWT}`,
+          },
+        }
+      );
+      if (response.status === 204) {
+        console.log("User removed successfully.");
+        refreshTeamMembers();
+      }
+    } catch (error) {
+      console.error("Error removing user from project: ", error);
+    } finally {
+      setBackdropOpen(false);
+    }
   };
 
   const fetchTeamMembers = async () => {
@@ -156,7 +175,7 @@ export default function ManageTeamContent() {
                   secondaryAction={
                     <IconButton
                       aria-label="remove"
-                      onClick={() => handleRemoveUser(member.userName)}
+                      onClick={() => handleRemoveUser(member.userEmail)}
                     >
                       <GroupRemoveIcon />
                     </IconButton>
