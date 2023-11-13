@@ -67,7 +67,7 @@ export function LoginSignup() {
         }
       );
       const userJWT = response.data.accessToken;
-      setAuth({ user: { userEmail, userPassword, userJWT } });
+      setAuth({ user: { userEmail, userJWT } });
       setCookie(
         "auth",
         { user: { userEmail, userJWT } },
