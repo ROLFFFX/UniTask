@@ -75,7 +75,7 @@ export function OB_landing() {
   };
 
   const handleToRoot = () => {
-    navigate("/dashboard");
+    navigate("/login/login_with_group");
   };
 
   return (
