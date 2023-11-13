@@ -10,10 +10,13 @@ import {
   Typography,
   Paper,
   IconButton,
+  useScrollTrigger,
 } from "@mui/material";
 import Button from "@mui/material/Button";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import InviteNewMemberModal from "./InviteNewMemberModal";
+import useAuth from "../../hooks/useAuth";
+import axios from "axios";
 
 const dummyTeamMember = [
   { userName: "Yuxuan Shi", userEmail: "yshi373@emory.edu" },
@@ -29,11 +32,38 @@ export default function ManageTeamContent() {
   const handleRemoveUser = (tobeRemoved) => {
     alert("Removing " + tobeRemoved);
   };
+  const { auth } = useAuth();
+  const projectTitle = auth.selectedWorkspace;
+  const [teamMembers, setTeamMembers] = useState([]);
+  const fetchTeamMembers = async () => {
+    try {
+      const response = await axios.get(
+        "http://localhost:8080/projects/workspaceMembers/${projectTitle}",
+        {
+          headers: {
+            Authorization: `Bearer ${auth.token}`, // Assuming auth.token contains the JWT token
+          },
+        }
+      );
+      console.log(
+        "http://localhost:8080/projects/workspaceMembers/${projectTitle}"
+      );
+      console.log(response);
+      //   setTeamMembers(response.data);
+    } catch (error) {
+      console.error("Error fetching team members:", error);
+      // Handle error accordingly
+    }
+  };
+
+  useEffect(() => {
+    fetchTeamMembers();
+  }, []);
+
   return (
     <React.Fragment>
       <Box
         sx={{
-          marginTop: 15,
           display: "flex",
           flexDirection: "column",
           //   alignItems: "center",
