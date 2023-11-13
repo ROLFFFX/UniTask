@@ -8,6 +8,8 @@ import {
   Button,
 } from "@mui/material";
 import theme from "../LoginPage/LoginStyling/theme";
+import axios from "axios";
+import useAuth from "../../hooks/useAuth";
 
 const modalStyle = {
   position: "absolute",
@@ -21,10 +23,35 @@ const modalStyle = {
   p: 4,
 };
 
-export default function InviteNewMemberModal({ open, handleClose }) {
+export default function InviteNewMemberModal({
+  open,
+  handleClose,
+  onInviteSuccess,
+}) {
+  const { auth } = useAuth();
   const [email, setEmail] = React.useState("");
-  const handleSubmit = () => {
-    console.log("Email Submitted: ", email);
+  const handleSubmit = async () => {
+    //email is already set up in text field
+    const projectTitle = auth.selectedWorkspace;
+    try {
+      const response = await axios.post(
+        `http://localhost:8080/projects/addUserToWorkspace/${email}/${projectTitle}`,
+        {},
+        {
+          headers: {
+            Authorization: `Bearer ${auth.user.userJWT}`,
+          },
+        }
+      );
+      if (response.status === 201) {
+        console.log("User Added Successfully.");
+        handleClose();
+        onInviteSuccess();
+      }
+      console.log(response);
+    } catch (error) {
+      console.error("Error adding user to project: ", error);
+    }
   };
   return (
     <React.Fragment>

@@ -67,6 +67,7 @@ public class ProjectController {
     //TODO: delete a workspace
 
     @GetMapping(path = "/workspaceMembers/{projectTitle}")
+    @CrossOrigin(origins = "http://localhost:3000", allowCredentials = "true")
     public ResponseEntity<List<User>> getAllUsersByProjectName(@PathVariable("projectTitle") String projectTitle) {
 
         // if project does not exist;
