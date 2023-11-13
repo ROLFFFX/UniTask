@@ -17,9 +17,12 @@ import React, { useEffect, useState } from "react";
 import InviteNewMemberModal from "./InviteNewMemberModal";
 import useAuth from "../../hooks/useAuth";
 import axios from "axios";
+import Backdrop from "@mui/material/Backdrop";
+import CircularProgress from "@mui/material/CircularProgress";
 
 export default function ManageTeamContent() {
-  const [openModal, setOpenModal] = React.useState(false);
+  const [openModal, setOpenModal] = useState(false);
+  const [backdropOpen, setBackdropOpen] = useState(false); //loading page
   const handleOpenModal = () => setOpenModal(true);
   const handleCloseModal = () => setOpenModal(false);
   const handleRemoveUser = (tobeRemoved) => {
@@ -34,6 +37,7 @@ export default function ManageTeamContent() {
   };
 
   const fetchTeamMembers = async () => {
+    setBackdropOpen(true); //display loading page
     try {
       const response = await axios.get(
         `http://localhost:8080/projects/workspaceMembers/${projectTitle}`,
@@ -51,6 +55,8 @@ export default function ManageTeamContent() {
       setTeamMembers(parsedTeamMembers);
     } catch (error) {
       console.error("Error fetching team members:", error);
+    } finally {
+      setBackdropOpen(false);
     }
   };
 
@@ -60,6 +66,12 @@ export default function ManageTeamContent() {
 
   return (
     <React.Fragment>
+      <Backdrop
+        sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }}
+        open={backdropOpen}
+      >
+        <CircularProgress color="inherit" />
+      </Backdrop>
       <Box
         sx={{
           display: "flex",

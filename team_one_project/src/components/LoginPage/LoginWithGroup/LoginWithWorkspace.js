@@ -11,13 +11,18 @@ import { ListItemText } from "@mui/material";
 import Diversity3Icon from "@mui/icons-material/Diversity3";
 import useAuth from "../../../hooks/useAuth";
 import axios from "axios";
+import Backdrop from "@mui/material/Backdrop";
+import CircularProgress from "@mui/material/CircularProgress";
 
 export default function LoginWithGroup() {
   const { auth, setAuth } = useAuth();
   const token = auth.user.userJWT;
   const [workspaces, setWorkspaces] = useState([]);
+  const [backdropOpen, setBackdropOpen] = useState(false); //loading page
+
   useEffect(() => {
     const fetchUserWorkspaces = async () => {
+      setBackdropOpen(true); //display loading page
       const config = {
         headers: {
           Authorization: `Bearer ${token}`,
@@ -35,6 +40,8 @@ export default function LoginWithGroup() {
         }
       } catch (error) {
         console.error("Error fetching workspaces: ", error);
+      } finally {
+        setBackdropOpen(false);
       }
     };
     fetchUserWorkspaces();
@@ -50,7 +57,13 @@ export default function LoginWithGroup() {
     navigate("/dashboard");
   };
   return (
-    <div>
+    <React.Fragment>
+      <Backdrop
+        sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }}
+        open={backdropOpen}
+      >
+        <CircularProgress color="inherit" />
+      </Backdrop>
       <Box
         sx={{
           marginTop: 15,
@@ -103,6 +116,6 @@ export default function LoginWithGroup() {
           Tester Login
         </Button>
       </Box>
-    </div>
+    </React.Fragment>
   );
 }
