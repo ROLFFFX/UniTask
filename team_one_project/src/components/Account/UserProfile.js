@@ -16,7 +16,7 @@ export default function UserProfile() {
     navigate("/login/login_with_group");
   };
   const UserInfo = {
-    // username: auth.user.userName,  to be implemented
+    // username: auth.user.userName,  @todo to be implemented
     username: "Dummy User Name",
     email: auth.user.userEmail,
     group_title: auth.selectedWorkspace,
@@ -30,13 +30,11 @@ export default function UserProfile() {
           marginTop: 15,
           display: "flex",
           flexDirection: "column",
-          // alignItems: "center",
           // maxWidth: "lg",
-
           padding: "40px",
           backgroundColor: "white",
-          borderRadius: "16px", // Adjust this value for more or less rounded corners
-          boxShadow: "0 3px 5px rgba(0, 0, 0, 0.3)", // Adjust values and color for desired shadow effect
+          borderRadius: "16px",
+          boxShadow: "0 3px 5px rgba(0, 0, 0, 0.3)",
         }}
       >
         <Box
@@ -108,7 +106,7 @@ export default function UserProfile() {
             {UserInfo.group_title}
           </Typography>
           <Button
-            variant="contained" // This gives the button the primary color
+            variant="contained"
             startIcon={<ChangeCircleIcon />}
             onClick={handleLogoutGroup}
             style={{
