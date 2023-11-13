@@ -7,18 +7,22 @@ import { Box, Button, Divider, Toolbar, Typography } from "@mui/material";
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import LogOutButton from "../Utilities/LogOutButton";
-
-const dummyUserInfo = {
-  username: "Yuxuan Shi",
-  email: "shiyuxuanrolf@gmail.com",
-  group_title: "UniTask",
-};
+import useAuth from "../../hooks/useAuth";
 
 export default function UserProfile() {
+  const { auth } = useAuth();
   const navigate = useNavigate();
   const handleLogoutGroup = () => {
     navigate("/login/login_with_group");
   };
+  const UserInfo = {
+    // username: auth.user.userName,  to be implemented
+    username: "Dummy User Name",
+    email: auth.user.userEmail,
+    group_title: auth.selectedWorkspace,
+  };
+  console.log(UserInfo);
+
   return (
     <div>
       <Box
@@ -48,8 +52,10 @@ export default function UserProfile() {
         </Box>
         <Divider sx={{ width: "100%", padding: 1 }}></Divider>
         {/* usernmae */}
+
         <Box style={{ display: "flex", alignItems: "center" }}>
           <BadgeIcon />
+
           <Typography
             sx={{
               color: "#343A40",
@@ -59,8 +65,7 @@ export default function UserProfile() {
               fontSize: 14,
             }}
           >
-            <pre></pre>
-            Username: {dummyUserInfo.username}
+            Username: {UserInfo.username}
           </Typography>
         </Box>
         {/* user email */}
@@ -75,7 +80,7 @@ export default function UserProfile() {
               fontSize: 14,
             }}
           >
-            Email: {dummyUserInfo.email}
+            Email: {UserInfo.email}
           </Typography>
         </Box>
         {/* group name */}
@@ -96,7 +101,7 @@ export default function UserProfile() {
               flexGrow: 1,
             }}
           >
-            Current Workspace: {dummyUserInfo.group_title}
+            Current Workspace: {UserInfo.group_title}
           </Typography>
           <Button
             variant="contained" // This gives the button the primary color
