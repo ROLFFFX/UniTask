@@ -112,7 +112,8 @@ export default function ManageTeamContent() {
         >
           <Diversity2Icon style={{ marginRight: 8 }} />
           <Typography sx={{ color: "#343A40", fontSize: 20 }}>
-            Manage Team Members
+            Manage Team Members:{" "}
+            <span style={{ fontWeight: "bold" }}>{auth.selectedWorkspace}</span>
           </Typography>
         </Box>
         <Divider sx={{ width: "100%", padding: 1 }}></Divider>
