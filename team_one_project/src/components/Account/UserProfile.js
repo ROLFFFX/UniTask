@@ -30,8 +30,9 @@ export default function UserProfile() {
           marginTop: 15,
           display: "flex",
           flexDirection: "column",
-          //   alignItems: "center",
-          maxWidth: "lg", // Or another desired value, or remove maxWidth
+          // alignItems: "center",
+          // maxWidth: "lg",
+
           padding: "40px",
           backgroundColor: "white",
           borderRadius: "16px", // Adjust this value for more or less rounded corners
@@ -65,7 +66,8 @@ export default function UserProfile() {
               fontSize: 14,
             }}
           >
-            Username: {UserInfo.username}
+            <span style={{ fontWeight: "bold" }}>Username:</span>{" "}
+            {UserInfo.username}
           </Typography>
         </Box>
         {/* user email */}
@@ -80,7 +82,8 @@ export default function UserProfile() {
               fontSize: 14,
             }}
           >
-            Email: {UserInfo.email}
+            <span style={{ fontWeight: "bold" }}>Email: </span>
+            {UserInfo.email}
           </Typography>
         </Box>
         {/* group name */}
@@ -101,7 +104,8 @@ export default function UserProfile() {
               flexGrow: 1,
             }}
           >
-            Current Workspace: {UserInfo.group_title}
+            <span style={{ fontWeight: "bold" }}>Current Workspace:</span>{" "}
+            {UserInfo.group_title}
           </Typography>
           <Button
             variant="contained" // This gives the button the primary color
