@@ -18,13 +18,6 @@ import InviteNewMemberModal from "./InviteNewMemberModal";
 import useAuth from "../../hooks/useAuth";
 import axios from "axios";
 
-const dummyTeamMember = [
-  { userName: "Yuxuan Shi", userEmail: "yshi373@emory.edu" },
-  { userName: "Alec Bergers", userEmail: "alec.berger7@emory.edu" },
-  { userName: "Daniel He", userEmail: "dyhe@emory.edu" },
-  { userName: "Yuxuan Shi", userEmail: "yshi373@emory.edu" },
-];
-
 export default function ManageTeamContent() {
   const [openModal, setOpenModal] = React.useState(false);
   const handleOpenModal = () => setOpenModal(true);
@@ -35,24 +28,29 @@ export default function ManageTeamContent() {
   const { auth } = useAuth();
   const projectTitle = auth.selectedWorkspace;
   const [teamMembers, setTeamMembers] = useState([]);
+  const refreshTeamMembers = () => {
+    //refetch team member, specifically used after success invitation
+    fetchTeamMembers(); // Re-fetch team members
+  };
+
   const fetchTeamMembers = async () => {
     try {
       const response = await axios.get(
-        "http://localhost:8080/projects/workspaceMembers/${projectTitle}",
+        `http://localhost:8080/projects/workspaceMembers/${projectTitle}`,
         {
           headers: {
-            Authorization: `Bearer ${auth.token}`, // Assuming auth.token contains the JWT token
+            Authorization: `Bearer ${auth.user.userJWT}`,
           },
         }
       );
-      console.log(
-        "http://localhost:8080/projects/workspaceMembers/${projectTitle}"
-      );
-      console.log(response);
-      //   setTeamMembers(response.data);
+      // Parse the response data and update the team member state
+      const parsedTeamMembers = response.data.map((user) => ({
+        userName: user.username,
+        userEmail: user.email,
+      }));
+      setTeamMembers(parsedTeamMembers);
     } catch (error) {
       console.error("Error fetching team members:", error);
-      // Handle error accordingly
     }
   };
 
@@ -102,6 +100,7 @@ export default function ManageTeamContent() {
           <InviteNewMemberModal
             open={openModal}
             handleClose={handleCloseModal}
+            onInviteSuccess={refreshTeamMembers}
           />
         </Box>
 
@@ -114,7 +113,7 @@ export default function ManageTeamContent() {
           padding={3}
         >
           <Typography sx={{ color: "#343A40", fontSize: 14 }}>
-            {dummyTeamMember.length} Current Members
+            {teamMembers.length} Current Members
           </Typography>
         </Box>
         <Box
@@ -127,7 +126,7 @@ export default function ManageTeamContent() {
           <List
             sx={{ width: "100%", maxWidth: 600, bgcolor: "background.paper" }}
           >
-            {dummyTeamMember.map((member) => (
+            {teamMembers.map((member) => (
               <Box
                 key={member.userEmail}
                 style={{
