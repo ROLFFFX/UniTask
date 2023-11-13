@@ -33,7 +33,7 @@ public class ProjectController {
     @Autowired
     ProjectRepository projectRepository;
 
-//    @CrossOrigin(origins = "http://localhost:3000", allowCredentials = "true")
+    @CrossOrigin(origins = "http://localhost:3000", allowCredentials = "true")
     @PostMapping("/createNewWorkspace")
     public ResponseEntity<Project> createProject(@RequestBody Project requestProject, @RequestHeader("Authorization") String header) {
         User curUser = userService.getUserEmailFromToken(header);
@@ -80,7 +80,7 @@ public class ProjectController {
         return new ResponseEntity<>(projectMember, HttpStatus.OK);
     }
 
-//    @CrossOrigin(origins = "http://localhost:3000", allowCredentials = "true")
+    @CrossOrigin(origins = "http://localhost:3000", allowCredentials = "true")
     @PostMapping(path = "/addUserToWorkspace/{email}/{projectTitle}")
     public ResponseEntity<MessageResponse> addUserToProjectByEmail(@PathVariable("email") String email,
                                                                    @PathVariable("projectTitle") String projectTitle) {
@@ -106,6 +106,7 @@ public class ProjectController {
     }
 
     @DeleteMapping(path = "/deleteUserFromWorkspace/{email}/{projectTitle}")
+    @CrossOrigin(origins = "http://localhost:3000", allowCredentials = "true")
     public ResponseEntity<MessageResponse> deleteUserFromProjectByEmail(@PathVariable("email") String email,
                                                                         @PathVariable("projectTitle") String projectTitle) {
 

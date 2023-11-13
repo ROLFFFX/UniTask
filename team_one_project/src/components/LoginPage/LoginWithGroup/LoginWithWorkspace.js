@@ -12,8 +12,6 @@ import Diversity3Icon from "@mui/icons-material/Diversity3";
 import useAuth from "../../../hooks/useAuth";
 import axios from "axios";
 
-const dummy_project_title = ["UniTask", "Team One"];
-
 export default function LoginWithGroup() {
   const { auth, setAuth } = useAuth();
   const token = auth.user.userJWT;
