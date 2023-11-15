@@ -1,5 +1,6 @@
 package com.teamone.unitask.projects;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.teamone.unitask.hyperlinks.Hyperlink;
 import com.teamone.unitask.meetings.Meeting;
 import com.teamone.unitask.onboard.usermodels.User;
@@ -8,6 +9,7 @@ import com.teamone.unitask.timeslots.TimeSlot;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
@@ -51,8 +53,10 @@ public class Project {
     @OneToMany(mappedBy = "projectBelonged")
     private Collection<Task> tasks;
 
+
     @OneToMany(mappedBy = "projectId")
-    private Collection<Meeting> meetings;
+    @JsonManagedReference
+    private Collection<Meeting> meetings = new ArrayList<>();
 
     @OneToMany(mappedBy = "projectId")
     private Collection<Hyperlink> hyperlinks;

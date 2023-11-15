@@ -1,10 +1,12 @@
 package com.teamone.unitask.meetings;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.teamone.unitask.projects.Project;
 import net.bytebuddy.asm.Advice;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 
 @Entity
@@ -15,17 +17,22 @@ public class Meeting {
      * fields
      */
 
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name="meeting_id")
     private Long meetingId;
 
     @NotBlank
+    @Column(name="title")
     private String title = "New Meeting";
 
-    @NotBlank
+    @NotNull
+    @Column(name="start_time")
     private LocalDateTime startTime;
 
-    @NotBlank
+    @NotNull
+    @Column(name="end_time")
     private LocalDateTime endTime;
 
     /**
@@ -34,6 +41,7 @@ public class Meeting {
 
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "project_id")
+    @JsonBackReference
     private Project projectId;
 
 
