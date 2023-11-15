@@ -101,7 +101,7 @@ export function MainSprintBoard() {
             taskID: task.taskID, // Assuming taskID is a unique identifier
             title: task.taskName,
             assignee: task.userName,
-            expectedCompleteTime: task.duedate,
+            dueDate: task.duedate,
             status: task.status,
             taskPoints: task.taskPoints,
             subtaskList: [],
@@ -129,7 +129,7 @@ export function MainSprintBoard() {
     const taskData = {
       title: taskNameInput.valueOf(),
       assignee: assigneeInput.valueOf(),
-      expectedCompleteTime: dueDateInput.valueOf(),
+      dueDate: dueDateInput.valueOf(),
       status: "Not Started",
       taskPoints: taskPointsInput.valueOf(),
       //parentTaskID: null, // TODO: set parent ID if applicable
