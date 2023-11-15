@@ -35,7 +35,8 @@ public class ProjectController {
 
     @CrossOrigin(origins = "http://localhost:3000", allowCredentials = "true")
     @PostMapping("/createNewWorkspace")
-    public ResponseEntity<Project> createProject(@RequestBody Project requestProject, @RequestHeader("Authorization") String header) {
+    public ResponseEntity<Project> createProject(@RequestBody Project requestProject,
+                                                 @RequestHeader("Authorization") String header) {
         User curUser = userService.getUserEmailFromToken(header);
         Project _project = null;
 

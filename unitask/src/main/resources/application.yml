@@ -6,9 +6,9 @@ server:
 spring:
     jpa:
         hibernate:
-            ddl-auto: update
+            ddl-auto:  update
     datasource:
-        url: jdbc:mysql://unitask-mysql.mysql.database.azure.com/unitask_impl
+        url: jdbc:mysql://unitask-mysql.mysql.database.azure.com/impl
         username: TeamOneMySQL
         password: Un1taskerz
         driver-class-name: com.mysql.cj.jdbc.Driver
@@ -29,6 +29,10 @@ spring:
             allowed-methods: "GET,POST,PUT,DELETE,OPTIONS"
             allowed-headers: "*"
             allow-credentials: true
+    jackson:
+        serialization:
+            fail-on-empty-beans: false
+        default-property-inclusion: non_null
 
 # App Properties
 unitask:
