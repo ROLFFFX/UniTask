@@ -160,11 +160,29 @@ export function MainSprintBoard() {
   };
 
   const onDrop = (e, targetContainerId) => {
+    /*
     e.preventDefault();
     const currentTask = document.querySelector(".dragging");
     const column = document.getElementById(targetContainerId);
     column.appendChild(currentTask);
-
+    */
+    e.preventDefault();
+    const taskId = e.dataTransfer.getData("text/plain");
+    const statusByColumn = {
+      // Dict with status values corresponding to each column
+      tasksColumn: "Not Started",
+      todoColumn: "Todo",
+      doingColumn: "Doing",
+      doneColumn: "Done",
+    };
+    const newStatus = statusByColumn[targetContainerId];
+    console.log(taskId);
+    console.log(newStatus);
+    const updatedTasks = tasks.map((task) =>
+      task.taskID === taskId ? { ...task, status: newStatus } : task
+    );
+    setTasks(updatedTasks);
+    console.log(tasks);
 
 
     /*  // Work in progress
