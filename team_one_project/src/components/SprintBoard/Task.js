@@ -31,6 +31,7 @@ function Task({ taskData, onDelete, onEdit }) {
   const drag = (e) => {
     if (elementRef.current) {
       elementRef.current.classList.add("dragging");
+      e.dataTransfer.setData("text/plain", taskData.taskID);
 
       // If needed, can transfer task data
       //e.dataTransfer.setData('application/json', JSON.stringify(taskData)); // Transfer data to main app
@@ -72,11 +73,11 @@ function Task({ taskData, onDelete, onEdit }) {
   return (
     <div
         className={"task"}
-        key={taskData.id}
+        key={taskData.taskID}
         draggable="true"
         ref={elementRef}
-        onDragStart={drag}
-        onDragEnd={endDrag}
+        onDragStart={(e) => drag(e)}
+
       >
     <div class="taskHeader">
       <div className="taskTitleLabel">{taskData.title}</div>
@@ -98,7 +99,7 @@ function Task({ taskData, onDelete, onEdit }) {
           className="button optionsButton"
         ></button>
       </div>
-      
+
     </div>
     <div class="taskInfo">
       <div className="assigneeLabel">{taskData.assignee}</div>
