@@ -1,5 +1,5 @@
 import { Box } from "@mui/material";
-import Task from './Task';
+import Task from "./Task";
 import Popper from "@mui/material/Popper";
 import React, { useState, useEffect } from "react";
 import "../../App.css";
@@ -59,7 +59,6 @@ const dummyTaskfromBackend = [
 ];
 
 export function MainSprintBoard() {
-
   // List of users (for assignee list)
   const [users, setUsers] = useState([]);
   //const [selectedUser, setSelectedUser] = useState('');
@@ -123,7 +122,7 @@ export function MainSprintBoard() {
 
   // Close task popup menu and submit data
   const closeTaskPopup = () => {
-    setAnchorEl(null);  // Close popup window
+    setAnchorEl(null); // Close popup window
     // if (taskNameInput) {
     // TODO: send data to backend
     const taskData = {
@@ -134,7 +133,7 @@ export function MainSprintBoard() {
       taskPoints: taskPointsInput.valueOf(),
       //parentTaskID: null, // TODO: set parent ID if applicable
       //numLayers: 1, // TODO: calculate layer count
-      subtaskList: []
+      subtaskList: [],
     };
     createTask(taskData);
 
@@ -147,19 +146,16 @@ export function MainSprintBoard() {
   };
 
   const createTask = (taskData) => {
-
     // Add the new task to the tasks array
     setTasks([...tasks, taskData]);
     console.log(tasks); // Fix bug where tasks list is always one behind
     // TODO: insert data into database
   };
 
-
   const onDragOver = (e) => {
     e.preventDefault(); // Allow drop
   };
 
-  
   const onDrop = (e, targetContainerId) => {
     e.preventDefault(); // Allow drop
     const taskId = Number(e.dataTransfer.getData("text/plain"));
@@ -175,29 +171,32 @@ export function MainSprintBoard() {
     // Update task list to adjust status of dropped task
     setTasks((prevTasks) => {
       const updatedTasks = [...prevTasks];
-      const taskIndex = updatedTasks.findIndex((task) => task.taskID === taskId);
+      const taskIndex = updatedTasks.findIndex(
+        (task) => task.taskID === taskId
+      );
       const draggedTask = updatedTasks[taskIndex];
-  
+
       // Remove the task from its current position
       updatedTasks.splice(taskIndex, 1);
-  
+
       // Insert the task at the bottom of the column
       updatedTasks.push({ ...draggedTask, status: newStatus });
-  
+
       return updatedTasks;
     });
   };
 
   const deleteTask = (taskId) => {
-    const updatedTasks = tasks.filter(task => task.id !== taskId);
+    const updatedTasks = tasks.filter((task) => task.id !== taskId);
     setTasks(updatedTasks);
   };
 
   const editTask = (newTaskData) => {
-    const updatedTasks = tasks.map(task => task.id === newTaskData.id ? newTaskData : task);
+    const updatedTasks = tasks.map((task) =>
+      task.id === newTaskData.id ? newTaskData : task
+    );
     setTasks(updatedTasks);
   };
-
 
   return (
     <Box sx={{ marginLeft: "200px" }}>
@@ -263,42 +262,86 @@ export function MainSprintBoard() {
               </button>
             </Box>
           </Popper>
-          <div className="grid-item" id="tasksColumn" onDragOver={onDragOver} onDrop={(e) => onDrop(e, 'tasksColumn')}>
-            {tasks.filter(task => task.status.includes('Not Started')).map(task => (
-              <Task key={task.id} taskData={task} onDelete={deleteTask} onEdit={editTask} />
-            ))}
+          <div
+            className="grid-item"
+            id="tasksColumn"
+            onDragOver={onDragOver}
+            onDrop={(e) => onDrop(e, "tasksColumn")}
+          >
+            {tasks
+              .filter((task) => task.status.includes("Not Started"))
+              .map((task) => (
+                <Task
+                  key={task.id}
+                  taskData={task}
+                  onDelete={deleteTask}
+                  onEdit={editTask}
+                />
+              ))}
           </div>
           <div className="grid-item" id="todoHeader">
             TO DO
           </div>
-          <div className="grid-item" id="todoColumn" onDragOver={onDragOver} onDrop={(e) => onDrop(e, 'todoColumn')}>
-            {tasks.filter(task => task.status.includes('Todo')).map(task => (
-              <Task key={task.id} taskData={task} onDelete={deleteTask} onEdit={editTask} />
-            ))}
+          <div
+            className="grid-item"
+            id="todoColumn"
+            onDragOver={onDragOver}
+            onDrop={(e) => onDrop(e, "todoColumn")}
+          >
+            {tasks
+              .filter((task) => task.status.includes("Todo"))
+              .map((task) => (
+                <Task
+                  key={task.id}
+                  taskData={task}
+                  onDelete={deleteTask}
+                  onEdit={editTask}
+                />
+              ))}
           </div>
           <div className="grid-item" id="doingHeader">
             DOING
           </div>
-          <div className="grid-item" id="doingColumn" onDragOver={onDragOver} onDrop={(e) => onDrop(e, 'doingColumn')}>
-            {tasks.filter(task => task.status.includes('Doing')).map(task => (
-              <Task key={task.id} taskData={task} onDelete={deleteTask} onEdit={editTask} />
-            ))}
+          <div
+            className="grid-item"
+            id="doingColumn"
+            onDragOver={onDragOver}
+            onDrop={(e) => onDrop(e, "doingColumn")}
+          >
+            {tasks
+              .filter((task) => task.status.includes("Doing"))
+              .map((task) => (
+                <Task
+                  key={task.id}
+                  taskData={task}
+                  onDelete={deleteTask}
+                  onEdit={editTask}
+                />
+              ))}
           </div>
           <div className="grid-item" id="doneHeader">
             DONE
           </div>
-          <div className="grid-item" id="doneColumn" onDragOver={onDragOver} onDrop={(e) => onDrop(e, 'doneColumn')}>
-            {tasks.filter(task => task.status.includes('Done')).map(task => (
-              <Task key={task.id} taskData={task} onDelete={deleteTask} onEdit={editTask} />
-            ))}
+          <div
+            className="grid-item"
+            id="doneColumn"
+            onDragOver={onDragOver}
+            onDrop={(e) => onDrop(e, "doneColumn")}
+          >
+            {tasks
+              .filter((task) => task.status.includes("Done"))
+              .map((task) => (
+                <Task
+                  key={task.id}
+                  taskData={task}
+                  onDelete={deleteTask}
+                  onEdit={editTask}
+                />
+              ))}
           </div>
         </div>
-
       </div>
-      <div>
-
-    </div>
+      <div></div>
     </Box>
   );
-
 }
