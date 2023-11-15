@@ -34,7 +34,7 @@ const dummyTaskfromBackend = [
   }, //userName is assignee
   {
     taskID: 2,
-    taskName: "Clear Up fucked up css",
+    taskName: "Clear up css",
     userName: "Alec",
     status: "Todo",
     duedate: "2023-12-01",
