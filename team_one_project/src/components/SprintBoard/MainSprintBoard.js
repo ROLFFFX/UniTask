@@ -30,7 +30,7 @@ const dummyTaskfromBackend = [
     userName: "Alec",
     status: "Todo",
     duedate: "2023-12-01",
-    taskPoints: "3",
+    taskPoints: "8",
   }, //userName is assignee
   {
     taskID: 2,
@@ -43,10 +43,10 @@ const dummyTaskfromBackend = [
   {
     taskID: 3,
     taskName: "In progress task",
-    userName: "Rolf",
+    userName: "Sichen",
     status: "Doing",
     duedate: "2023-12-01",
-    taskPoints: "5",
+    taskPoints: "3",
   }, //userName is assignee
   {
     taskID: 4,
@@ -54,7 +54,7 @@ const dummyTaskfromBackend = [
     userName: "Rolf",
     status: "Done",
     duedate: "2023-12-01",
-    taskPoints: "5",
+    taskPoints: "1",
   }, //userName is assignee
 ];
 

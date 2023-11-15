@@ -111,11 +111,7 @@ body {
   border-radius: 5px;
 }
 
-.assigneeLabel {
-  font-size: 12px;
-  padding-left: 20px;
-  color: #6C757D;
-}
+
 
 .addSubTaskButton {
   opacity: 1;
@@ -192,12 +188,45 @@ body {
 }
 
 .taskTitleLabel {
-  font-size: 14px;
+  font-size: 15px;
   color: #212529;
   font-weight: bold;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+}
+
+.assigneeLabel {
+  font-size: 14px;
+  padding-left: 10px;
+  padding-bottom: 5px;
+  color: #495057;
+}
+
+.taskInfo {
+  display: flex;
+  justify-content: space-between;
+  padding-top: 5px;
+}
+
+.taskInfo span {
+  display: flex;
+  align-items: center;
+  font-size: 13px;
+  color: #495057;
+  line-height: 1;
+}
+
+.dueDateLabel {
+  float: right;
+}
+
+.icon {
+  width: 20px;
+  height: 20px;
+  margin-right: 5px;
+  vertical-align: text-bottom;
+  opacity: .5;
 }
 
 .subtaskList {
@@ -250,11 +279,6 @@ body {
   grid-column: 4;
   grid-row: 2;
   border-right: 0;
-}
-
-.icon {
-  width: 20px;
-  height: 20px;
 }
 
 .settingsIcon {

@@ -1,4 +1,6 @@
 import React, { useState, useRef } from "react";
+import points_icon from "../../images/points.png";
+import calendar_icon from "../../images/calendar.png";
 import chevron_favicon from "../../images/chevron_favicon.png";
 import circle_blue_favicon from "../../images/circle_blue_favicon.png";
 import circle_orange_favicon from "../../images/circle_orange_favicon.png";
@@ -66,59 +68,66 @@ function Task({ taskData, onDelete, onEdit }) {
         ref={elementRef}
         onDragStart={(e) => drag(e)}
         onDragEnd={endDrag}
-      >
-    <div class="taskHeader">
-      <div className="taskTitleLabel">{taskData.title}</div>
-      <div class="buttonsContainer">
-        <button
-          className={`button showSubtaskButton ${
-            ShowSub === "expand" ? "rotate-down" : "rotate-left"
-          }`}
-          onClick={() => {
-            setShowSub(ShowSub === "collapse" ? "expand" : "collapse");
-            setIsSettingsOpen(!isSettingsOpen);
-          }}
-        ></button>
-        <button
-          className="button newSubtaskButton"
-          onClick={() => setIsAddingSubtask(true)}
-        ></button>
-        <button
-          className="button optionsButton"
-        ></button>
+    >
+      <div class="taskHeader">
+        <div className="taskTitleLabel">{taskData.title}</div>
+        <div class="buttonsContainer">
+          <button
+            className={`button showSubtaskButton ${
+              ShowSub === "expand" ? "rotate-down" : "rotate-left"
+            }`}
+            onClick={() => {
+              setShowSub(ShowSub === "collapse" ? "expand" : "collapse");
+              setIsSettingsOpen(!isSettingsOpen);
+            }}
+          ></button>
+          <button
+            className="button newSubtaskButton"
+            onClick={() => setIsAddingSubtask(true)}
+          ></button>
+          <button
+            className="button optionsButton"
+          ></button>
+        </div>
       </div>
-
-    </div>
-    <div class="taskInfo">
+      
       <div className="assigneeLabel">{taskData.assignee}</div>
-      <div class="dueDateLabel">Due: {taskData.dueDate}</div>
-      <div class="taskPoints">Points: 5</div>
-    </div>
 
-    {ShowSub === "expand" ? (
-      <ul className={"subtaskList"}>
-        {subtasks.map((subtask, index) => (
-          <li className={"subtask"} key={index}>
-            <input type="checkbox" />
-            {subtask}
-          </li>
-        ))}
-      </ul>
-    ) : null}
+      {ShowSub === "expand" ? (
+        <ul className={"subtaskList"}>
+          {subtasks.map((subtask, index) => (
+            <li className={"subtask"} key={index}>
+              <input type="checkbox" />
+              {subtask}
+            </li>
+          ))}
+        </ul>
+      ) : null}
 
-    {isAddingSubtask ? (
-      <div>
-        <input
-          type="text"
-          value={newSubtask}
-          onChange={(e) => setNewSubtask(e.target.value)}
-        />
-        <button className="addSubtaskButton" onClick={addSubtask}>
-          Add Subtask
-        </button>
+      {isAddingSubtask ? (
+        <div>
+          <input
+            type="text"
+            value={newSubtask}
+            onChange={(e) => setNewSubtask(e.target.value)}
+          />
+          <button className="addSubtaskButton" onClick={addSubtask}>
+            Add Subtask
+          </button>
+        </div>
+      ) : null}
+
+      <div class="taskInfo">
+        <span class="taskPoints">
+          <img className="icon" src={points_icon}></img>
+          {taskData.taskPoints}
+        </span>
+        <span class="dueDateLabel">
+          <img className="icon" src={calendar_icon}></img>
+          {taskData.dueDate}
+        </span>
       </div>
-    ) : null}
-  </div>
+    </div>
   );
 }
 
