@@ -48,7 +48,7 @@ export function OB_landing() {
       // axios.post workspace name
       try {
         const response = await axios.post(
-          "http://localhost:8080/projects/createProject",
+          "http://localhost:8080/projects/createNewWorkspace",
           {
             projectTitle: workspaceName,
           },
@@ -75,7 +75,7 @@ export function OB_landing() {
   };
 
   const handleToRoot = () => {
-    navigate("/dashboard");
+    navigate("/login/login_with_group");
   };
 
   return (

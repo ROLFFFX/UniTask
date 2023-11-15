@@ -33,10 +33,10 @@ export default function CreateYourWorkspace() {
         </Box>
 
         <Divider sx={{ width: "100%", padding: 1 }}></Divider>
-        <Typography
+        {/* <Typography
           sx={{ color: "#343A40", padding: 1, paddingLeft: 4, paddingRight: 4 }}
-        >
-          <pre />
+        > */}
+        {/* <pre />
           We require each user to possess their own workspace to use our app.{" "}
           <pre />
           <br />
@@ -45,8 +45,47 @@ export default function CreateYourWorkspace() {
           <br />
           If you are currently waiting for your teammates to invite your to
           their workspace, please refresh the page periodically.
-        </Typography>
-        <pre></pre>
+          <pre></pre> */}
+        {/* </Typography> */}
+        <Box>
+          <Typography
+            sx={{
+              color: "#343A40",
+              padding: 1,
+              paddingLeft: 4,
+              paddingRight: 4,
+              marginTop: 3,
+            }}
+            justifyContent="left"
+          >
+            We require each user to possess their own workspace to use our app.
+          </Typography>
+          <Typography
+            sx={{
+              color: "#343A40",
+              padding: 1,
+              paddingLeft: 4,
+              paddingRight: 4,
+              marginTop: 3,
+            }}
+          >
+            If the list on your right is empty, please proceed to click the
+            button below to establish your own workspace.
+          </Typography>
+          <Typography
+            sx={{
+              color: "#343A40",
+              padding: 1,
+              paddingLeft: 4,
+              paddingRight: 4,
+              marginTop: 3,
+              marginBottom: 4,
+            }}
+          >
+            If you are currently waiting for your teammates to invite your to
+            their workspace, please refresh the page periodically.
+          </Typography>
+        </Box>
         <Button
           variant="contained"
           style={{

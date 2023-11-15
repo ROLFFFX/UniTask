@@ -7,18 +7,22 @@ import { Box, Button, Divider, Toolbar, Typography } from "@mui/material";
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import LogOutButton from "../Utilities/LogOutButton";
-
-const dummyUserInfo = {
-  username: "Yuxuan Shi",
-  email: "shiyuxuanrolf@gmail.com",
-  group_title: "UniTask",
-};
+import useAuth from "../../hooks/useAuth";
 
 export default function UserProfile() {
+  const { auth } = useAuth();
   const navigate = useNavigate();
   const handleLogoutGroup = () => {
     navigate("/login/login_with_group");
   };
+  const UserInfo = {
+    // username: auth.user.userName,  @todo to be implemented
+    username: "Dummy User Name",
+    email: auth.user.userEmail,
+    group_title: auth.selectedWorkspace,
+  };
+  console.log(UserInfo);
+
   return (
     <div>
       <Box
@@ -26,12 +30,11 @@ export default function UserProfile() {
           marginTop: 15,
           display: "flex",
           flexDirection: "column",
-          //   alignItems: "center",
-          maxWidth: "lg", // Or another desired value, or remove maxWidth
+          // maxWidth: "lg",
           padding: "40px",
           backgroundColor: "white",
-          borderRadius: "16px", // Adjust this value for more or less rounded corners
-          boxShadow: "0 3px 5px rgba(0, 0, 0, 0.3)", // Adjust values and color for desired shadow effect
+          borderRadius: "16px",
+          boxShadow: "0 3px 5px rgba(0, 0, 0, 0.3)",
         }}
       >
         <Box
@@ -48,8 +51,10 @@ export default function UserProfile() {
         </Box>
         <Divider sx={{ width: "100%", padding: 1 }}></Divider>
         {/* usernmae */}
+
         <Box style={{ display: "flex", alignItems: "center" }}>
           <BadgeIcon />
+
           <Typography
             sx={{
               color: "#343A40",
@@ -59,8 +64,8 @@ export default function UserProfile() {
               fontSize: 14,
             }}
           >
-            <pre></pre>
-            Username: {dummyUserInfo.username}
+            <span style={{ fontWeight: "bold" }}>Username:</span>{" "}
+            {UserInfo.username}
           </Typography>
         </Box>
         {/* user email */}
@@ -75,7 +80,8 @@ export default function UserProfile() {
               fontSize: 14,
             }}
           >
-            Email: {dummyUserInfo.email}
+            <span style={{ fontWeight: "bold" }}>Email: </span>
+            {UserInfo.email}
           </Typography>
         </Box>
         {/* group name */}
@@ -96,10 +102,11 @@ export default function UserProfile() {
               flexGrow: 1,
             }}
           >
-            Current Workspace: {dummyUserInfo.group_title}
+            <span style={{ fontWeight: "bold" }}>Current Workspace:</span>{" "}
+            {UserInfo.group_title}
           </Typography>
           <Button
-            variant="contained" // This gives the button the primary color
+            variant="contained"
             startIcon={<ChangeCircleIcon />}
             onClick={handleLogoutGroup}
             style={{

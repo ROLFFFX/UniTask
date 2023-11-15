@@ -1,12 +1,14 @@
-import React from "react";
 import {
-  Modal,
   Box,
-  Typography,
+  Button,
+  Modal,
   TextField,
   ThemeProvider,
-  Button,
+  Typography,
 } from "@mui/material";
+import axios from "axios";
+import React from "react";
+import useAuth from "../../hooks/useAuth";
 import theme from "../LoginPage/LoginStyling/theme";
 
 const modalStyle = {
@@ -21,10 +23,37 @@ const modalStyle = {
   p: 4,
 };
 
-export default function InviteNewMemberModal({ open, handleClose }) {
+export default function InviteNewMemberModal({
+  open,
+  handleClose,
+  onInviteSuccess,
+}) {
+  const { auth } = useAuth();
   const [email, setEmail] = React.useState("");
-  const handleSubmit = () => {
-    console.log("Email Submitted: ", email);
+  const [errorModalOpen, setErrorModalOpen] = React.useState(false); //handle user invite error
+  const handleSubmit = async () => {
+    //email is already set up in text field
+    const projectTitle = auth.selectedWorkspace;
+    try {
+      const response = await axios.post(
+        `http://localhost:8080/projects/addUserToWorkspace/${email}/${projectTitle}`,
+        {},
+        {
+          headers: {
+            Authorization: `Bearer ${auth.user.userJWT}`,
+          },
+        }
+      );
+      if (response.status === 201) {
+        console.log("User Added Successfully.");
+        handleClose();
+        onInviteSuccess();
+      }
+      console.log(response);
+    } catch (error) {
+      console.error("Error adding user to project: ", error);
+      setErrorModalOpen(true);
+    }
   };
   return (
     <React.Fragment>
@@ -66,6 +95,37 @@ export default function InviteNewMemberModal({ open, handleClose }) {
               onClick={handleSubmit}
             >
               Invite User with this Email
+            </Button>
+          </Box>
+        </Modal>
+
+        {/* Error Modal */}
+        <Modal
+          open={errorModalOpen}
+          onClose={() => setErrorModalOpen(false)}
+          aria-labelledby="error-modal-title"
+          aria-describedby="error-modal-description"
+        >
+          <Box sx={modalStyle}>
+            <Typography
+              id="error-modal-title"
+              variant="h6"
+              component="h2"
+              textAlign="center"
+            >
+              Invite User Error
+            </Typography>
+            <Typography id="error-modal-description" sx={{ mt: 2 }}>
+              An error occurred while inviting the user. Please make sure that
+              the member you are inviting has registered with this email.
+            </Typography>
+            <Button
+              variant="contained"
+              sx={{ marginTop: 5, fontSize: "12px" }}
+              fullWidth
+              onClick={() => setErrorModalOpen(false)}
+            >
+              Close
             </Button>
           </Box>
         </Modal>

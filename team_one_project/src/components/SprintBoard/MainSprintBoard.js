@@ -13,6 +13,51 @@ import settingsIcon from "../../images/dots.png";
 import "./MainSprintBoard.css";
 import { v4 as uuidv4 } from "uuid";
 
+const tempUsers = [
+  { userName: "Alec" },
+  { userName: "Daniel" },
+  { userName: "Eula" },
+  { userName: "Francis" },
+  { userName: "Rolf" },
+  { userName: "Salina" },
+  { userName: "Sichen" },
+];
+
+const dummyTaskfromBackend = [
+  {
+    taskID: 1,
+    taskName: "API implementation",
+    userName: "Alec",
+    status: "Todo",
+    duedate: "2023-12-01",
+    taskPoints: "8",
+  }, //userName is assignee
+  {
+    taskID: 2,
+    taskName: "Clear up css",
+    userName: "Alec",
+    status: "Todo",
+    duedate: "2023-12-01",
+    taskPoints: "5",
+  }, //userName is assignee
+  {
+    taskID: 3,
+    taskName: "In progress task",
+    userName: "Sichen",
+    status: "Doing",
+    duedate: "2023-12-01",
+    taskPoints: "3",
+  }, //userName is assignee
+  {
+    taskID: 4,
+    taskName: "Done task",
+    userName: "Rolf",
+    status: "Done",
+    duedate: "2023-12-01",
+    taskPoints: "1",
+  }, //userName is assignee
+];
+
 export function MainSprintBoard() {
   // List of users (for assignee list)
   const [users, setUsers] = useState([]);
@@ -44,6 +89,32 @@ export function MainSprintBoard() {
   const [dueDateInput, setDueDateInput] = useState("");
   const [taskPointsInput, setTaskPointsInput] = useState(1);
 
+  // Reformat task data from backend into taskData format
+  const unpackTaskData = (backendTasks) => {
+    setTasks((prevTasks) => [
+      ...prevTasks,
+      ...backendTasks.reduce((uniqueTasks, task) => {
+        // Check if the taskID already exists in the state
+        if (!prevTasks.some((prevTask) => prevTask.taskID === task.taskID)) {
+          uniqueTasks.push({
+            taskID: task.taskID, // Assuming taskID is a unique identifier
+            title: task.taskName,
+            assignee: task.userName,
+            dueDate: task.duedate,
+            status: task.status,
+            taskPoints: task.taskPoints,
+            subtaskList: [],
+          });
+        }
+        return uniqueTasks;
+      }, []),
+    ]);
+  };
+
+  useEffect(() => {
+    unpackTaskData(dummyTaskfromBackend);
+  }, []);
+
   // Show task creation popup menu
   const openTaskPopup = (event) => {
     setAnchorEl(anchorEl ? null : event.currentTarget);
@@ -57,7 +128,7 @@ export function MainSprintBoard() {
     const taskData = {
       title: taskNameInput.valueOf(),
       assignee: assigneeInput.valueOf(),
-      expectedCompleteTime: dueDateInput.valueOf(),
+      dueDate: dueDateInput.valueOf(),
       status: "Not Started",
       taskPoints: taskPointsInput.valueOf(),
       //parentTaskID: null, // TODO: set parent ID if applicable
@@ -75,42 +146,46 @@ export function MainSprintBoard() {
   };
 
   const createTask = (taskData) => {
-    // Add a unique id to the task data
-    const taskWithId = { ...taskData, id: uuidv4() };
-
     // Add the new task to the tasks array
-    setTasks([...tasks, taskWithId]);
-
+    setTasks([...tasks, taskData]);
+    console.log(tasks); // Fix bug where tasks list is always one behind
     // TODO: insert data into database
   };
 
   const onDragOver = (e) => {
-    e.preventDefault(); // Allow the drop
+    e.preventDefault(); // Allow drop
   };
 
   const onDrop = (e, targetContainerId) => {
-    e.preventDefault();
-    const currentTask = document.querySelector(".dragging");
-    const column = document.getElementById(targetContainerId);
-    column.appendChild(currentTask);
+    e.preventDefault(); // Allow drop
+    const taskId = Number(e.dataTransfer.getData("text/plain"));
+    const statusByColumn = {
+      // Dict with status values corresponding to each column
+      tasksColumn: "Not Started",
+      todoColumn: "Todo",
+      doingColumn: "Doing",
+      doneColumn: "Done",
+    };
+    const newStatus = statusByColumn[targetContainerId];
 
-    /*  // Work in progress
-    const bottomTask = insertAboveTask(column, e.clientY);
+    // Update task list to adjust status of dropped task
+    setTasks((prevTasks) => {
+      const updatedTasks = [...prevTasks];
+      const taskIndex = updatedTasks.findIndex(
+        (task) => task.taskID === taskId
+      );
+      const draggedTask = updatedTasks[taskIndex];
 
-    if (!bottomTask) {
-      column.appendChild(currentTask);
-    } else {
-      column.insertBefore(currentTask, bottomTask);
-    }
-    */
+      // Remove the task from its current position
+      updatedTasks.splice(taskIndex, 1);
 
-    /*
-    // No current need for this, but if need to extract task data:
-    const jsonDataString = e.dataTransfer.getData('application/json'); // Retrieve the JSON string
-    const data = JSON.parse(jsonDataString); // Parse the JSON string into an object
-    // Can receive all the task data (note: this is a copy of the JSON data, not a reference to the original)
-    */
+      // Insert the task at the bottom of the column
+      updatedTasks.push({ ...draggedTask, status: newStatus });
+
+      return updatedTasks;
+    });
   };
+
   const deleteTask = (taskId) => {
     const updatedTasks = tasks.filter((task) => task.id !== taskId);
     setTasks(updatedTasks);
@@ -122,27 +197,6 @@ export function MainSprintBoard() {
     );
     setTasks(updatedTasks);
   };
-
-  /*
-  // Helper function for drag and drop (work in progress)
-  const insertAboveTask = (zone, mouseY) => {
-    const els = zone.querySelectorAll(".task:not(.dragging)");
-  
-    let closestTask = null;
-    let closestOffset = Number.NEGATIVE_INFINITY;
-  
-    els.forEach((task) => {
-      const { top } = task.getBoundingClientRect();
-  
-      const offset = mouseY - top;
-  
-      if (offset < 0 && offset > closestOffset) {
-        closestOffset = offset;
-        closestTask = task;
-      }
-    });
-  }
-  */
 
   return (
     <Box sx={{ marginLeft: "200px" }}>
@@ -214,14 +268,16 @@ export function MainSprintBoard() {
             onDragOver={onDragOver}
             onDrop={(e) => onDrop(e, "tasksColumn")}
           >
-            {tasks.map((task) => (
-              <Task
-                key={task.id}
-                taskData={task}
-                onDelete={deleteTask}
-                onEdit={editTask}
-              />
-            ))}
+            {tasks
+              .filter((task) => task.status.includes("Not Started"))
+              .map((task) => (
+                <Task
+                  key={task.id}
+                  taskData={task}
+                  onDelete={deleteTask}
+                  onEdit={editTask}
+                />
+              ))}
           </div>
           <div className="grid-item" id="todoHeader">
             TO DO
@@ -231,7 +287,18 @@ export function MainSprintBoard() {
             id="todoColumn"
             onDragOver={onDragOver}
             onDrop={(e) => onDrop(e, "todoColumn")}
-          ></div>
+          >
+            {tasks
+              .filter((task) => task.status.includes("Todo"))
+              .map((task) => (
+                <Task
+                  key={task.id}
+                  taskData={task}
+                  onDelete={deleteTask}
+                  onEdit={editTask}
+                />
+              ))}
+          </div>
           <div className="grid-item" id="doingHeader">
             DOING
           </div>
@@ -240,7 +307,18 @@ export function MainSprintBoard() {
             id="doingColumn"
             onDragOver={onDragOver}
             onDrop={(e) => onDrop(e, "doingColumn")}
-          ></div>
+          >
+            {tasks
+              .filter((task) => task.status.includes("Doing"))
+              .map((task) => (
+                <Task
+                  key={task.id}
+                  taskData={task}
+                  onDelete={deleteTask}
+                  onEdit={editTask}
+                />
+              ))}
+          </div>
           <div className="grid-item" id="doneHeader">
             DONE
           </div>
@@ -249,19 +327,21 @@ export function MainSprintBoard() {
             id="doneColumn"
             onDragOver={onDragOver}
             onDrop={(e) => onDrop(e, "doneColumn")}
-          ></div>
+          >
+            {tasks
+              .filter((task) => task.status.includes("Done"))
+              .map((task) => (
+                <Task
+                  key={task.id}
+                  taskData={task}
+                  onDelete={deleteTask}
+                  onEdit={editTask}
+                />
+              ))}
+          </div>
         </div>
       </div>
-      <div>
-        {tasks.map((task) => (
-          <Task
-            key={task.id}
-            taskData={task}
-            onDelete={deleteTask}
-            onEdit={editTask}
-          />
-        ))}
-      </div>
+      <div></div>
     </Box>
   );
 }
