@@ -7,8 +7,8 @@ body {
 
 /* main content */
 #main {
-  margin-left: 50px;
-  margin-right: 50px;
+  margin-left: 25px;
+  margin-right: 25px;
 }
 
 /* Page header */
@@ -54,21 +54,21 @@ body {
 
 .grid-container {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(4, minmax(0, 1fr)); /* Ensure even column width */
+  /* Set row height to extend down most of the page, unless specified otherwise */
+  grid-template-rows: auto minmax(calc(75vh), auto); 
   padding: 10px;
-  /*min-height: 500px;*/
-  /*column-gap: 20px;*/
+  margin-bottom: 20px;
+
 }
 
 .grid-item {
   padding: 20px;
   font-size: 15px;
   border-right: 1px solid #6C757D;
-  /*max-width: 200px;*/
 }
 
 #board {
-  /*border: 1px solid red;*/
   height: 100%;
 
 }
