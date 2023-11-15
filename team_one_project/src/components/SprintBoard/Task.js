@@ -41,18 +41,6 @@ function Task({ taskData, onDelete, onEdit }) {
   const endDrag = () => {
     if (elementRef.current) {
       elementRef.current.classList.remove("dragging");
-
-      // Set status
-      const targetColumn = elementRef.current.parentElement.id;
-      const statusByColumn = {
-        // Dict with status values corresponding to each column
-        tasksColumn: "Not Started",
-        todoColumn: "Todo",
-        doingColumn: "Doing",
-        doneColumn: "Done",
-      };
-      taskData.status = statusByColumn[targetColumn];
-      console.log(taskData);
     }
   };
 
@@ -77,7 +65,7 @@ function Task({ taskData, onDelete, onEdit }) {
         draggable="true"
         ref={elementRef}
         onDragStart={(e) => drag(e)}
-
+        onDragEnd={endDrag}
       >
     <div class="taskHeader">
       <div className="taskTitleLabel">{taskData.title}</div>

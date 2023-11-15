@@ -150,24 +150,19 @@ export function MainSprintBoard() {
 
     // Add the new task to the tasks array
     setTasks([...tasks, taskData]);
-    console.log(tasks);
+    console.log(tasks); // Fix bug where tasks list is always one behind
     // TODO: insert data into database
   };
 
 
   const onDragOver = (e) => {
-    e.preventDefault(); // Allow the drop
+    e.preventDefault(); // Allow drop
   };
 
+  
   const onDrop = (e, targetContainerId) => {
-    /*
-    e.preventDefault();
-    const currentTask = document.querySelector(".dragging");
-    const column = document.getElementById(targetContainerId);
-    column.appendChild(currentTask);
-    */
-    e.preventDefault();
-    const taskId = e.dataTransfer.getData("text/plain");
+    e.preventDefault(); // Allow drop
+    const taskId = Number(e.dataTransfer.getData("text/plain"));
     const statusByColumn = {
       // Dict with status values corresponding to each column
       tasksColumn: "Not Started",
@@ -176,33 +171,22 @@ export function MainSprintBoard() {
       doneColumn: "Done",
     };
     const newStatus = statusByColumn[targetContainerId];
-    console.log(taskId);
-    console.log(newStatus);
-    const updatedTasks = tasks.map((task) =>
-      task.taskID === taskId ? { ...task, status: newStatus } : task
-    );
-    setTasks(updatedTasks);
-    console.log(tasks);
 
-
-    /*  // Work in progress
-    const bottomTask = insertAboveTask(column, e.clientY);
-
-    if (!bottomTask) {
-      column.appendChild(currentTask);
-    } else {
-      column.insertBefore(currentTask, bottomTask);
-    }
-    */
-
-    /*
-    // No current need for this, but if need to extract task data:
-    const jsonDataString = e.dataTransfer.getData('application/json'); // Retrieve the JSON string
-    const data = JSON.parse(jsonDataString); // Parse the JSON string into an object
-    // Can receive all the task data (note: this is a copy of the JSON data, not a reference to the original)
-    */
+    // Update task list to adjust status of dropped task
+    setTasks((prevTasks) => {
+      const updatedTasks = [...prevTasks];
+      const taskIndex = updatedTasks.findIndex((task) => task.taskID === taskId);
+      const draggedTask = updatedTasks[taskIndex];
+  
+      // Remove the task from its current position
+      updatedTasks.splice(taskIndex, 1);
+  
+      // Insert the task at the bottom of the column
+      updatedTasks.push({ ...draggedTask, status: newStatus });
+  
+      return updatedTasks;
+    });
   };
-
 
   const deleteTask = (taskId) => {
     const updatedTasks = tasks.filter(task => task.id !== taskId);
@@ -214,27 +198,6 @@ export function MainSprintBoard() {
     setTasks(updatedTasks);
   };
 
-
-  /*
-  // Helper function for drag and drop (work in progress)
-  const insertAboveTask = (zone, mouseY) => {
-    const els = zone.querySelectorAll(".task:not(.dragging)");
-
-    let closestTask = null;
-    let closestOffset = Number.NEGATIVE_INFINITY;
-
-    els.forEach((task) => {
-      const { top } = task.getBoundingClientRect();
-
-      const offset = mouseY - top;
-
-      if (offset < 0 && offset > closestOffset) {
-        closestOffset = offset;
-        closestTask = task;
-      }
-    });
-  }
-  */
 
   return (
     <Box sx={{ marginLeft: "200px" }}>
