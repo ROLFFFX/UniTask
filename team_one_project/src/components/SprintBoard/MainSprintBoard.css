@@ -98,6 +98,7 @@ body {
   overflow: hidden;
 }
 
+/*
 .task {
   display: block;
   background-color: #F8F9FA;
@@ -110,58 +111,73 @@ body {
   border-radius: 5px;
 }
 
-.task:hover {
-  background-color: #E9ECEF;
-}
-
-.taskLabel {
-  padding-top: 10px;
-  padding-bottom: 10px;
-}
-
-.task img {
-  height: 16px;
-  padding-right: 5px;
-}
-
-/*Button styling (excluding the addsubtask button)*/
-.task button:not(.addSubtaskButton) {
-  opacity: 0;
-}
-
-.task:hover button:not(.addSubtaskButton) {
-  opacity: 0.5;
-}
-
-.task:hover button:hover:not(.addSubtaskButton) {
-  opacity: 1;
-}
-
-.taskTitleLabel {
-  color: #212529;
-}
-
 .assigneeLabel {
   font-size: 12px;
   padding-left: 20px;
   color: #6C757D;
 }
 
-.newSubtaskButton {
-  float: right;
-  padding-right: 5px;
-  cursor: pointer;
-  background: none;
-  border: none;
+.addSubTaskButton {
+  opacity: 1;
+}
+*/
+
+.task {
+  flex: 1; /* Let the task card grow to fill available space */
+  max-width: 100%; /* Ensure the task card doesn't exceed the width of the column */
+  box-sizing: border-box; /* Include padding and border in the width calculation */
+  padding: 10px;
+  margin-bottom: 20px;
+  box-shadow: rgba(0, 0, 0, 0.3) 0px 1px 4px;
+  border-radius: 5px;
+  background-color: #F8F9FA;
 }
 
+.task:hover {
+  background-color: #E9ECEF;
+}
 
+.taskHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+}
 
-.showSubtaskButton {
-  float: right;
+.buttonsContainer {
+  display: flex;
+}
+
+.button {
+  height: 16px;
+  width: 16px;
+  margin-left: 8px;
+  border: none;
   cursor: pointer;
   background: none;
-  border: none;
+  background-size: cover;
+  background-position: center;
+  opacity: 0;
+}
+
+.task:hover .button {
+  opacity: 0.5;
+}
+
+.task:hover .button:hover {
+  opacity: 1;
+}
+
+.newSubtaskButton {
+  background-image: url("../../images/add_button_favicon.png");
+}
+
+.optionsButton {
+  background-image: url("../../images/dots.png");
+}
+
+.showSubtaskButton {
+  background-image: url("../../images/chevron_favicon.png");
 }
 
 /*For rotating the chevron icon*/
@@ -175,8 +191,13 @@ body {
   /* Rotate 90 degrees for left-pointing icon */
 }
 
-.addSubTaskButton {
-  opacity: 1;
+.taskTitleLabel {
+  font-size: 14px;
+  color: #212529;
+  font-weight: bold;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .subtaskList {
@@ -187,9 +208,11 @@ body {
 }
 
 .subtask {
-  padding: 10px;
+  padding: 8px;
   font-size: 13px;
 }
+
+/*Other columns*/
 
 #todoHeader {
   grid-column: 2;
