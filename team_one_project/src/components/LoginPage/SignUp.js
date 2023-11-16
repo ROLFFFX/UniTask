@@ -18,6 +18,7 @@ import theme from "./LoginStyling/theme";
 import { PasswordInput } from "./PasswordInput";
 import { Alert } from "@mui/material";
 import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
+import { ENDPOINT_URL } from "../../hooks/useConfig";
 
 const modalStyle = {
   position: "absolute",
@@ -68,7 +69,7 @@ export function SignUp() {
     console.log(modifyUser);
     try {
       const response = await axios.post(
-        "http://localhost:8080/api/auth/signup",
+        `${ENDPOINT_URL}api/auth/signup`,
         modifyUser,
         {
           headers: { "Content-Type": "application/json" },

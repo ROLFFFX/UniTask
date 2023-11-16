@@ -21,7 +21,7 @@ export default function UserProfile() {
     email: auth.user.userEmail,
     group_title: auth.selectedWorkspace,
   };
-  console.log(UserInfo);
+  // console.log(UserInfo);
 
   return (
     <div>
