@@ -10,6 +10,7 @@ import axios from "axios";
 import React from "react";
 import useAuth from "../../hooks/useAuth";
 import theme from "../LoginPage/LoginStyling/theme";
+import { ENDPOINT_URL } from "../../hooks/useConfig";
 
 const modalStyle = {
   position: "absolute",
@@ -36,7 +37,7 @@ export default function InviteNewMemberModal({
     const projectTitle = auth.selectedWorkspace;
     try {
       const response = await axios.post(
-        `http://localhost:8080/projects/addUserToWorkspace/${email}/${projectTitle}`,
+        `${ENDPOINT_URL}projects/addUserToWorkspace/${email}/${projectTitle}`,
         {},
         {
           headers: {

@@ -13,9 +13,9 @@ const RequireAuth = () => {
   }
 
   //@todo TO BE DELETED, FOR TESTING PURPOSE ONLY
-  useEffect(() => {
-    console.log("Auth State: ", auth);
-  }, []);
+  // useEffect(() => {
+  //   console.log("Auth State: ", auth);
+  // }, []);
 
   return auth?.user ? <Outlet /> : <Navigate to="/login" replace />;
 };
