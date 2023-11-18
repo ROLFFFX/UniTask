@@ -25,7 +25,7 @@ spring:
                         enable: true
     mvc:
         cors:
-            allowed-origins: "http://localhost:3000"
+            allowed-origins: "https://uni-task-beta-front.vercel.app"
             allowed-methods: "GET,POST,PUT,DELETE,OPTIONS"
             allowed-headers: "*"
             allow-credentials: true

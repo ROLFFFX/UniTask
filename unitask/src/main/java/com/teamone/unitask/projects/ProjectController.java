@@ -33,7 +33,7 @@ public class ProjectController {
     @Autowired
     ProjectRepository projectRepository;
 
-    @CrossOrigin(origins = "http://localhost:3000", allowCredentials = "true")
+    @CrossOrigin(origins = "https://uni-task-beta-front.vercel.app/", allowCredentials = "true")
     @PostMapping("/createNewWorkspace")
     public ResponseEntity<Project> createProject(@RequestBody Project requestProject,
                                                  @RequestHeader("Authorization") String header) {
@@ -55,7 +55,7 @@ public class ProjectController {
     }
 
     @GetMapping(path = "/getUserWorkspaces")
-    @CrossOrigin(origins = "http://localhost:3000", allowCredentials = "true")
+    @CrossOrigin(origins = "https://uni-task-beta-front.vercel.app/", allowCredentials = "true")
     public ResponseEntity<Set<Project>> getUserProjectList(@RequestHeader("Authorization") String header) {
         User curUser = userService.getUserEmailFromToken(header);
         Set<Project> userProjects = curUser.getProjects();
@@ -68,7 +68,7 @@ public class ProjectController {
     //TODO: delete a workspace
 
     @GetMapping(path = "/workspaceMembers/{projectTitle}")
-    @CrossOrigin(origins = "http://localhost:3000", allowCredentials = "true")
+    @CrossOrigin(origins = "https://uni-task-beta-front.vercel.app/", allowCredentials = "true")
     public ResponseEntity<List<User>> getAllUsersByProjectName(@PathVariable("projectTitle") String projectTitle) {
 
         // if project does not exist;
@@ -82,7 +82,7 @@ public class ProjectController {
         return new ResponseEntity<>(projectMember, HttpStatus.OK);
     }
 
-    @CrossOrigin(origins = "http://localhost:3000", allowCredentials = "true")
+    @CrossOrigin(origins = "https://uni-task-beta-front.vercel.app/", allowCredentials = "true")
     @PostMapping(path = "/addUserToWorkspace/{email}/{projectTitle}")
     public ResponseEntity<MessageResponse> addUserToProjectByEmail(@PathVariable("email") String email,
                                                                    @PathVariable("projectTitle") String projectTitle) {
@@ -108,7 +108,7 @@ public class ProjectController {
     }
 
     @DeleteMapping(path = "/deleteUserFromWorkspace/{email}/{projectTitle}")
-    @CrossOrigin(origins = "http://localhost:3000", allowCredentials = "true")
+    @CrossOrigin(origins = "https://uni-task-beta-front.vercel.app/", allowCredentials = "true")
     public ResponseEntity<MessageResponse> deleteUserFromProjectByEmail(@PathVariable("email") String email,
                                                                         @PathVariable("projectTitle") String projectTitle) {
 

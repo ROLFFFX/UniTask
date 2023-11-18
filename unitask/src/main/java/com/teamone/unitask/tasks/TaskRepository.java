@@ -14,7 +14,7 @@ public interface TaskRepository extends JpaRepository<Task, Long> {
 
     List<Task> findByProjectBelonged(Project project);
 
-    List<Task> findByParentTaskId(Task task);
+    List<Task> findByParentTaskId(Long parentTaskId);
 
     boolean existsByTaskId(Long id);
 }
