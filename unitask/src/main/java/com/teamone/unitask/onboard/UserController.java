@@ -13,8 +13,9 @@ public class UserController {
     @Autowired
     UserService userService;
 
-    @CrossOrigin(origins = "https://uni-task-beta-front.vercel.app/", allowCredentials = "true")
-    @GetMapping(path = "/getUsername")
+//    @CrossOrigin(origins = "https://uni-task-beta-front.vercel.app/", allowCredentials = "true")
+@CrossOrigin(origins = "http://localhost:3000", allowCredentials = "true")
+@GetMapping(path = "/getUsername")
     public ResponseEntity<String> getUsernameByJWT(@RequestHeader("Authorization") String header) {
 
         User cur_user = userService.getUserEmailFromToken(header);
