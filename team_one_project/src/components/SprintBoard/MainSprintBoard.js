@@ -12,16 +12,11 @@ import editIcon from "../../images/edit.png";
 import settingsIcon from "../../images/dots.png";
 import "./MainSprintBoard.css";
 import { v4 as uuidv4 } from "uuid";
-
-const tempUsers = [
-  { userName: "Alec" },
-  { userName: "Daniel" },
-  { userName: "Eula" },
-  { userName: "Francis" },
-  { userName: "Rolf" },
-  { userName: "Salina" },
-  { userName: "Sichen" },
-];
+import axios from "axios";
+import { ENDPOINT_URL } from "../../hooks/useConfig";
+import Backdrop from "@mui/material/Backdrop";
+import useAuth from "../../hooks/useAuth";
+import CircularProgress from "@mui/material/CircularProgress";
 
 const dummyTaskfromBackend = [
   {
@@ -59,24 +54,42 @@ const dummyTaskfromBackend = [
 ];
 
 export function MainSprintBoard() {
-  // List of users (for assignee list)
+  /* Helper functions for request cycles */
+  const { auth } = useAuth();
+  const [backdropOpen, setBackdropOpen] = useState(false); //loading page
+  const refreshTeamMembers = () => {
+    //refetch team member, specifically used after success invitation
+    fetchTeamMembers(); // Re-fetch team members
+  };
+  /* First Step: Getting project members */
   const [users, setUsers] = useState([]);
-  //const [selectedUser, setSelectedUser] = useState('');
-
-  // Simulate getting the list of users from a database
+  const projectTitle = auth.selectedWorkspace;
+  const fetchTeamMembers = async () => {
+    setBackdropOpen(true); //display loading page
+    try {
+      const response = await axios.get(
+        `${ENDPOINT_URL}projects/workspaceMembers/${projectTitle}`,
+        {
+          headers: {
+            Authorization: `Bearer ${auth.user.userJWT}`,
+          },
+        }
+      );
+      // Parse the response data and update the users teamstate: should only be a list of users
+      const parsedTeamMembers = response.data.map((user) => user.username);
+      // Set Users
+      setUsers(parsedTeamMembers);
+    } catch (error) {
+      console.error("Error fetching team members:", error);
+    } finally {
+      setBackdropOpen(false);
+    }
+  };
   useEffect(() => {
-    // Hard code user names for now
-    const tempUsers = [
-      "Alec",
-      "Daniel",
-      "Eula",
-      "Francis",
-      "Rolf",
-      "Salina",
-      "Sichen",
-    ];
-    setUsers(tempUsers);
+    // This useEffect hook will refetch the team members. The dependency list is not finalized.
+    fetchTeamMembers();
   }, []);
+  /* First Step: End of Getting project members */
 
   // From MUI Popper.js tutorial:
   const [anchorEl, setAnchorEl] = useState(null);
@@ -199,149 +212,157 @@ export function MainSprintBoard() {
   };
 
   return (
-    <Box sx={{ marginLeft: "200px" }}>
-      <title>Taskboard</title>
-      <div id="main">
-        <div className="grid-container" id="board">
-          <div className="grid-item" id="tasksHeader">
-            Tasks
-            <img
-              id="addTaskButton"
-              aria-describedby={"createTaskMenu"}
-              onClick={openTaskPopup}
-              src={add_button_favicon}
-              alt=""
-            ></img>
-          </div>
-          <Popper id={"createTaskMenu"} open={open} anchorEl={anchorEl}>
-            <Box className="popupContent">
-              <span>Title: </span>
-              <input
-                type="text"
-                id="taskNameInput"
-                value={taskNameInput}
-                onChange={(e) => setTaskNameInput(e.target.value)}
-              ></input>
-              <br></br>
-              <br></br>
-              <span>Assigned to: </span>
-              <select
-                name="assigneeInput"
-                id="assigneeInput"
-                value={assigneeInput}
-                onChange={(e) => setAssigneeInput(e.target.value)}
-              >
-                <option value="Unassigned">Unassigned</option>
-                {users.map((user, index) => (
-                  <option key={index} value={user}>
-                    {user}
-                  </option>
-                ))}
-              </select>
-              <br></br>
-              <br></br>
-              <span>Due date: </span>
-              <input
-                type="date"
-                id="dueDateInput"
-                value={dueDateInput}
-                onChange={(e) => setDueDateInput(e.target.value)}
-              ></input>
-              <br></br>
-              <br></br>
-              <span>Task Points: </span>
-              <input
-                type="number"
-                id="taskPointsInput"
-                value={taskPointsInput}
-                onChange={(e) => setTaskPointsInput(e.target.value)}
-              ></input>
+    <React.Fragment>
+      <Backdrop
+        sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }}
+        open={backdropOpen}
+      >
+        <CircularProgress color="inherit" />
+      </Backdrop>
+      <Box sx={{ marginLeft: "200px" }}>
+        <title>Taskboard</title>
+        <div id="main">
+          <div className="grid-container" id="board">
+            <div className="grid-item" id="tasksHeader">
+              Tasks
+              <img
+                id="addTaskButton"
+                aria-describedby={"createTaskMenu"}
+                onClick={openTaskPopup}
+                src={add_button_favicon}
+                alt=""
+              ></img>
+            </div>
+            <Popper id={"createTaskMenu"} open={open} anchorEl={anchorEl}>
+              <Box className="popupContent">
+                <span>Title: </span>
+                <input
+                  type="text"
+                  id="taskNameInput"
+                  value={taskNameInput}
+                  onChange={(e) => setTaskNameInput(e.target.value)}
+                ></input>
+                <br></br>
+                <br></br>
+                <span>Assigned to: </span>
+                <select
+                  name="assigneeInput"
+                  id="assigneeInput"
+                  value={assigneeInput}
+                  onChange={(e) => setAssigneeInput(e.target.value)}
+                >
+                  <option value="Unassigned">Unassigned</option>
+                  {users.map((user, index) => (
+                    <option key={index} value={user}>
+                      {user}
+                    </option>
+                  ))}
+                </select>
+                <br></br>
+                <br></br>
+                <span>Due date: </span>
+                <input
+                  type="date"
+                  id="dueDateInput"
+                  value={dueDateInput}
+                  onChange={(e) => setDueDateInput(e.target.value)}
+                ></input>
+                <br></br>
+                <br></br>
+                <span>Task Points: </span>
+                <input
+                  type="number"
+                  id="taskPointsInput"
+                  value={taskPointsInput}
+                  onChange={(e) => setTaskPointsInput(e.target.value)}
+                ></input>
 
-              <button id="closeTaskPopupButton" onClick={closeTaskPopup}>
-                Submit
-              </button>
-            </Box>
-          </Popper>
-          <div
-            className="grid-item"
-            id="tasksColumn"
-            onDragOver={onDragOver}
-            onDrop={(e) => onDrop(e, "tasksColumn")}
-          >
-            {tasks
-              .filter((task) => task.status.includes("Not Started"))
-              .map((task) => (
-                <Task
-                  key={task.id}
-                  taskData={task}
-                  onDelete={deleteTask}
-                  onEdit={editTask}
-                />
-              ))}
-          </div>
-          <div className="grid-item" id="todoHeader">
-            TO DO
-          </div>
-          <div
-            className="grid-item"
-            id="todoColumn"
-            onDragOver={onDragOver}
-            onDrop={(e) => onDrop(e, "todoColumn")}
-          >
-            {tasks
-              .filter((task) => task.status.includes("Todo"))
-              .map((task) => (
-                <Task
-                  key={task.id}
-                  taskData={task}
-                  onDelete={deleteTask}
-                  onEdit={editTask}
-                />
-              ))}
-          </div>
-          <div className="grid-item" id="doingHeader">
-            DOING
-          </div>
-          <div
-            className="grid-item"
-            id="doingColumn"
-            onDragOver={onDragOver}
-            onDrop={(e) => onDrop(e, "doingColumn")}
-          >
-            {tasks
-              .filter((task) => task.status.includes("Doing"))
-              .map((task) => (
-                <Task
-                  key={task.id}
-                  taskData={task}
-                  onDelete={deleteTask}
-                  onEdit={editTask}
-                />
-              ))}
-          </div>
-          <div className="grid-item" id="doneHeader">
-            DONE
-          </div>
-          <div
-            className="grid-item"
-            id="doneColumn"
-            onDragOver={onDragOver}
-            onDrop={(e) => onDrop(e, "doneColumn")}
-          >
-            {tasks
-              .filter((task) => task.status.includes("Done"))
-              .map((task) => (
-                <Task
-                  key={task.id}
-                  taskData={task}
-                  onDelete={deleteTask}
-                  onEdit={editTask}
-                />
-              ))}
+                <button id="closeTaskPopupButton" onClick={closeTaskPopup}>
+                  Submit
+                </button>
+              </Box>
+            </Popper>
+            <div
+              className="grid-item"
+              id="tasksColumn"
+              onDragOver={onDragOver}
+              onDrop={(e) => onDrop(e, "tasksColumn")}
+            >
+              {tasks
+                .filter((task) => task.status.includes("Not Started"))
+                .map((task) => (
+                  <Task
+                    key={task.id}
+                    taskData={task}
+                    onDelete={deleteTask}
+                    onEdit={editTask}
+                  />
+                ))}
+            </div>
+            <div className="grid-item" id="todoHeader">
+              TO DO
+            </div>
+            <div
+              className="grid-item"
+              id="todoColumn"
+              onDragOver={onDragOver}
+              onDrop={(e) => onDrop(e, "todoColumn")}
+            >
+              {tasks
+                .filter((task) => task.status.includes("Todo"))
+                .map((task) => (
+                  <Task
+                    key={task.id}
+                    taskData={task}
+                    onDelete={deleteTask}
+                    onEdit={editTask}
+                  />
+                ))}
+            </div>
+            <div className="grid-item" id="doingHeader">
+              DOING
+            </div>
+            <div
+              className="grid-item"
+              id="doingColumn"
+              onDragOver={onDragOver}
+              onDrop={(e) => onDrop(e, "doingColumn")}
+            >
+              {tasks
+                .filter((task) => task.status.includes("Doing"))
+                .map((task) => (
+                  <Task
+                    key={task.id}
+                    taskData={task}
+                    onDelete={deleteTask}
+                    onEdit={editTask}
+                  />
+                ))}
+            </div>
+            <div className="grid-item" id="doneHeader">
+              DONE
+            </div>
+            <div
+              className="grid-item"
+              id="doneColumn"
+              onDragOver={onDragOver}
+              onDrop={(e) => onDrop(e, "doneColumn")}
+            >
+              {tasks
+                .filter((task) => task.status.includes("Done"))
+                .map((task) => (
+                  <Task
+                    key={task.id}
+                    taskData={task}
+                    onDelete={deleteTask}
+                    onEdit={editTask}
+                  />
+                ))}
+            </div>
           </div>
         </div>
-      </div>
-      <div></div>
-    </Box>
+        <div></div>
+      </Box>
+    </React.Fragment>
   );
 }
