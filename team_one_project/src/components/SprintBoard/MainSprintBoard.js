@@ -257,7 +257,8 @@ export function MainSprintBoard() {
       })
       .catch((error) => {
         console.error("Error creating task:", error);
-      });
+      })
+      .finally(fetchAllTasks());
   };
 
   const onDragOver = (e) => {
