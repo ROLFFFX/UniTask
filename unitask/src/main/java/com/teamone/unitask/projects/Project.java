@@ -63,6 +63,7 @@ public class Project {
     @OneToMany(mappedBy = "projectBelonged")
     private Collection<Task> tasks;
 
+    @JsonManagedReference
     @OneToMany(mappedBy = "projectId")
     private Collection<Meeting> meetings;
 

@@ -38,7 +38,7 @@ public class Meeting {
      * foreign keys
      */
 
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     @JoinColumn(name = "project_id")
     @JsonBackReference
     private Project projectId;
