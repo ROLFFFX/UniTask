@@ -57,13 +57,14 @@ public class Project {
 //    @JsonManagedReference
 //    private Collection<User> users_participated;
 
+    @JsonManagedReference("project-timeslots")
     @OneToMany(mappedBy = "projectBelonged")
     private Collection<TimeSlot> timeSlots;
 
     @OneToMany(mappedBy = "projectBelonged")
     private Collection<Task> tasks;
 
-    @JsonManagedReference
+    @JsonManagedReference("project-meeting")
     @OneToMany(mappedBy = "projectId")
     private Collection<Meeting> meetings;
 

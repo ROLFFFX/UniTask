@@ -40,7 +40,7 @@ public class Meeting {
 
     @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     @JoinColumn(name = "project_id")
-    @JsonBackReference
+    @JsonBackReference("project-meeting")
     private Project projectId;
 
 

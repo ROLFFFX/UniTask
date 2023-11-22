@@ -2,6 +2,7 @@ package com.teamone.unitask.onboard.usermodels;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.teamone.unitask.onboard.confirmationtoken.ConfirmationToken;
 import com.teamone.unitask.onboard.usermodels.Role;
 import com.teamone.unitask.projects.Project;
@@ -80,6 +81,7 @@ public class User {
     @OneToMany(mappedBy = "masterUserId")
     private Collection<Project> mastered_projects;
 
+    @JsonManagedReference("user-timeslots")
     @OneToMany(mappedBy = "userAssigned")
     private Collection<TimeSlot> has_timeslots;
 
