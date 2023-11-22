@@ -14,6 +14,7 @@ import axios from "axios";
 import Backdrop from "@mui/material/Backdrop";
 import CircularProgress from "@mui/material/CircularProgress";
 import { FixedSizeList, ListChildComponentProps } from "react-window";
+import { ENDPOINT_URL } from "../../../hooks/useConfig";
 
 function renderWorkspaceRow(props, workspaces, handleClick) {
   //handles the rendering of each workspace
@@ -45,7 +46,7 @@ export default function LoginWithGroup() {
       };
       try {
         const response = await axios.get(
-          "http://localhost:8080/projects/getUserWorkspaces",
+          `${ENDPOINT_URL}projects/getUserWorkspaces`,
           config
         );
         if (response.status === 200) {

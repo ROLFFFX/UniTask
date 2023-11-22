@@ -4,27 +4,62 @@ import EmailIcon from "@mui/icons-material/Email";
 import GroupsIcon from "@mui/icons-material/Groups";
 import PortraitIcon from "@mui/icons-material/Portrait";
 import { Box, Button, Divider, Toolbar, Typography } from "@mui/material";
-import React from "react";
+import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import LogOutButton from "../Utilities/LogOutButton";
 import useAuth from "../../hooks/useAuth";
+import { Backdrop } from "@mui/material";
+import { CircularProgress } from "@mui/material";
+import { useState } from "react";
+import { ENDPOINT_URL } from "../../hooks/useConfig";
+import axios from "axios";
 
 export default function UserProfile() {
-  const { auth } = useAuth();
+  const { auth, setAuth } = useAuth();
+
+  const [userName, setUserName] = useState("");
   const navigate = useNavigate();
   const handleLogoutGroup = () => {
     navigate("/login/login_with_group");
   };
+  const fetchUserName = async () => {
+    //fetch User Name
+    setBackdropOpen(true); //display loading page
+    try {
+      const response = await axios.get(`${ENDPOINT_URL}users/getUsername`, {
+        headers: {
+          Authorization: `Bearer ${auth.user.userJWT}`,
+        },
+      });
+      setAuth({ ...auth, userName: response.data });
+      setUserName(response.data);
+    } catch (error) {
+      console.error("Error fetching username:", error);
+    } finally {
+      setBackdropOpen(false);
+    }
+  };
+  useEffect(() => {
+    fetchUserName();
+  }, []);
+
+  const [backdropOpen, setBackdropOpen] = useState(false); //loading page
   const UserInfo = {
     // username: auth.user.userName,  @todo to be implemented
-    username: "Dummy User Name",
+    username: userName,
     email: auth.user.userEmail,
     group_title: auth.selectedWorkspace,
   };
-  console.log(UserInfo);
+  // console.log(UserInfo);
 
   return (
     <div>
+      <Backdrop
+        sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }}
+        open={backdropOpen}
+      >
+        <CircularProgress color="inherit" />
+      </Backdrop>
       <Box
         sx={{
           marginTop: 15,

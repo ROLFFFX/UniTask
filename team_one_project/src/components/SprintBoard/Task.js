@@ -10,6 +10,8 @@ import editIcon from "../../images/edit.png";
 import settingsIcon from "../../images/dots.png";
 
 function Task({ taskData, onDelete, onEdit }) {
+  console.log("Task to be processed: ");
+  console.log(taskData);
   const [subtasks, setSubtasks] = useState([]);
   const [newSubtask, setNewSubtask] = useState("");
   const [isAddingSubtask, setIsAddingSubtask] = useState(false);
@@ -62,16 +64,16 @@ function Task({ taskData, onDelete, onEdit }) {
 
   return (
     <div
-        className={"task"}
-        key={taskData.taskID}
-        draggable="true"
-        ref={elementRef}
-        onDragStart={(e) => drag(e)}
-        onDragEnd={endDrag}
+      className={"task"}
+      key={taskData.taskID}
+      draggable="true"
+      ref={elementRef}
+      onDragStart={(e) => drag(e)}
+      onDragEnd={endDrag}
     >
-      <div class="taskHeader">
+      <div className="taskHeader">
         <div className="taskTitleLabel">{taskData.title}</div>
-        <div class="buttonsContainer">
+        <div className="buttonsContainer">
           <button
             className={`button showSubtaskButton ${
               ShowSub === "expand" ? "rotate-down" : "rotate-left"
@@ -85,20 +87,28 @@ function Task({ taskData, onDelete, onEdit }) {
             className="button newSubtaskButton"
             onClick={() => setIsAddingSubtask(true)}
           ></button>
-          <button
-            className="button optionsButton"
-          ></button>
+          <button className="button optionsButton"></button>
         </div>
       </div>
-      
+
       <div className="assigneeLabel">{taskData.assignee}</div>
 
-      {ShowSub === "expand" ? (
+      {/* {ShowSub === "expand" ? (
         <ul className={"subtaskList"}>
           {subtasks.map((subtask, index) => (
             <li className={"subtask"} key={index}>
               <input type="checkbox" />
               {subtask}
+            </li>
+          ))}
+        </ul>
+      ) : null} */}
+      {ShowSub === "expand" && taskData.subtaskList ? (
+        <ul className={"subtaskList"}>
+          {taskData.subtaskList.map((subtask, index) => (
+            <li className={"subtask"} key={subtask.taskID}>
+              <input type="checkbox" />
+              {subtask.title} {/* Displaying the title of the subtask */}
             </li>
           ))}
         </ul>
@@ -117,12 +127,12 @@ function Task({ taskData, onDelete, onEdit }) {
         </div>
       ) : null}
 
-      <div class="taskInfo">
-        <span class="taskPoints">
+      <div className="taskInfo">
+        <span className="taskPoints">
           <img className="icon" src={points_icon}></img>
           {taskData.taskPoints}
         </span>
-        <span class="dueDateLabel">
+        <span className="dueDateLabel">
           <img className="icon" src={calendar_icon}></img>
           {taskData.dueDate}
         </span>

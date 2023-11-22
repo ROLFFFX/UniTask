@@ -16,6 +16,7 @@ import ChooseRole from "./Steps/ChooseRole";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import useAuth from "../../../hooks/useAuth";
+import { ENDPOINT_URL } from "../../../hooks/useConfig";
 
 export function OB_landing() {
   const [activeStep, setActiveStep] = React.useState(0);
@@ -48,7 +49,7 @@ export function OB_landing() {
       // axios.post workspace name
       try {
         const response = await axios.post(
-          "http://localhost:8080/projects/createNewWorkspace",
+          `${ENDPOINT_URL}projects/createNewWorkspace`,
           {
             projectTitle: workspaceName,
           },

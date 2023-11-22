@@ -1,5 +1,6 @@
 package com.teamone.unitask.projects;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.teamone.unitask.hyperlinks.Hyperlink;

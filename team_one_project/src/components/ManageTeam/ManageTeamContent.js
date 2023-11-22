@@ -19,6 +19,7 @@ import useAuth from "../../hooks/useAuth";
 import axios from "axios";
 import Backdrop from "@mui/material/Backdrop";
 import CircularProgress from "@mui/material/CircularProgress";
+import { ENDPOINT_URL } from "../../hooks/useConfig";
 
 export default function ManageTeamContent() {
   const [openModal, setOpenModal] = useState(false);
@@ -37,7 +38,7 @@ export default function ManageTeamContent() {
     setBackdropOpen(true); //display loading page
     try {
       const response = await axios.delete(
-        `http://localhost:8080/projects/deleteUserFromWorkspace/${userEmail}/${projectTitle}`,
+        `${ENDPOINT_URL}projects/deleteUserFromWorkspace/${userEmail}/${projectTitle}`,
         {
           headers: {
             Authorization: `Bearer ${auth.user.userJWT}`,
@@ -59,7 +60,7 @@ export default function ManageTeamContent() {
     setBackdropOpen(true); //display loading page
     try {
       const response = await axios.get(
-        `http://localhost:8080/projects/workspaceMembers/${projectTitle}`,
+        `${ENDPOINT_URL}projects/workspaceMembers/${projectTitle}`,
         {
           headers: {
             Authorization: `Bearer ${auth.user.userJWT}`,

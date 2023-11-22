@@ -18,6 +18,7 @@ import theme from "./LoginStyling/theme";
 import { useState } from "react";
 import { Modal } from "@mui/material";
 import { useCookies } from "react-cookie";
+import { ENDPOINT_URL } from "../../hooks/useConfig";
 
 const modalStyle = {
   position: "absolute",
@@ -55,11 +56,9 @@ export function LoginSignup() {
     const userEmail = data.get("email");
     const userPassword = data.get("password");
     data = { email: userEmail, password: userPassword };
-    // console.log(" This is data: ");
-    // console.log(data);
     try {
       const response = await axios.post(
-        "http://localhost:8080/api/auth/signin",
+        `${ENDPOINT_URL}api/auth/signin`,
         data,
         {
           headers: { "Content-Type": "application/json" },

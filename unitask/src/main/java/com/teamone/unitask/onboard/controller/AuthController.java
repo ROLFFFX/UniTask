@@ -69,8 +69,9 @@ public class AuthController {
     @Autowired
     UserService userService;
 
-    @CrossOrigin(origins = "http://localhost:3000", allowCredentials = "true")
+//    @CrossOrigin(origins = "https://uni-task-beta-front.vercel.app/", allowCredentials = "true")
     @PostMapping("/signin")
+    @CrossOrigin(origins = "http://localhost:3000", allowCredentials = "true")
     public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginRequest loginRequest) {
 
         if (userRepository.existsByEmail(loginRequest.getEmail()) &&
@@ -106,8 +107,9 @@ public class AuthController {
 //        }
 //    }
 
-    @CrossOrigin(origins = "http://localhost:3000", allowCredentials = "true")
+//    @CrossOrigin(origins = "https://uni-task-beta-front.vercel.app/", allowCredentials = "true")
     @PostMapping("/signup")
+    @CrossOrigin(origins = "http://localhost:3000", allowCredentials = "true")
     public ResponseEntity<?> registerUser(@Valid @RequestBody SignupRequest signUpRequest) {
 
         if (!(userRepository.existsByEmail(signUpRequest.getEmail()) &&
@@ -176,7 +178,7 @@ public class AuthController {
             confirmationTokenService.saveConfirmationToken(confirmationToken);
             // create email link and send email;
             //TODO: need to modify when deploy;
-            String link = "http://localhost:8080/api/auth/confirmSignUp?token=" + signupToken;
+            String link = "https://unitask-backend-impl-72c59f313288.herokuapp.com/api/auth/confirmSignUp?token=" + signupToken;
             emailService.send(signUpRequest.getEmail(),
                     emailService.buildEmail(signUpRequest.getUsername(), link));
 
@@ -197,7 +199,7 @@ public class AuthController {
             confirmationTokenService.saveConfirmationToken(confirmationToken);
             // create email link and send email;
             //TODO: need to modify when deploy;
-            String link = "http://localhost:8080/api/auth/confirmSignUp?token=" + signupToken;
+            String link = "https://unitask-backend-impl-72c59f313288.herokuapp.com/api/auth/confirmSignUp?token=" + signupToken;
             emailService.send(signUpRequest.getEmail(),
                     emailService.buildEmail(signUpRequest.getUsername(), link));
 
