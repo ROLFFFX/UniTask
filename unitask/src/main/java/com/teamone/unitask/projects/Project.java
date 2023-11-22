@@ -60,12 +60,14 @@ public class Project {
     @OneToMany(mappedBy = "projectBelonged")
     private Collection<TimeSlot> timeSlots;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "projectBelonged")
-    private Collection<Task> tasks;
+    private Set<Task> tasks;
 
     @OneToMany(mappedBy = "projectId")
     private Collection<Meeting> meetings;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "projectId")
     private Set<Hyperlink> hyperlinks = new HashSet<>();
 
@@ -117,11 +119,11 @@ public class Project {
         this.timeSlots = timeSlots;
     }
 
-    public Collection<Task> getTasks() {
+    public Set<Task> getTasks() {
         return tasks;
     }
 
-    public void setTasks(Collection<Task> tasks) {
+    public void setTasks(Set<Task> tasks) {
         this.tasks = tasks;
     }
 

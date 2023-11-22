@@ -74,17 +74,21 @@ public class User {
 //    @ManyToMany(mappedBy = "usersParticipated", cascade = CascadeType.ALL)
 //    private Collection<Project> projectsJoined = new ArrayList<>();
 
+    @JsonIgnore
     @OneToMany(mappedBy = "user")
     private Collection<ConfirmationToken> confirmationTokens;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "masterUserId")
-    private Collection<Project> mastered_projects;
+    private Set<Project> mastered_projects;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "userAssigned")
     private Collection<TimeSlot> has_timeslots;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "taskMemberAssigned")
-    private Collection<Task> tasks;
+    private Set<Task> tasks;
 
 
     /**
@@ -182,11 +186,11 @@ public class User {
         this.confirmationTokens = confirmationTokens;
     }
 
-    public Collection<Project> getMastered_projects() {
+    public Set<Project> getMastered_projects() {
         return mastered_projects;
     }
 
-    public void setMastered_projects(Collection<Project> mastered_projects) {
+    public void setMastered_projects(Set<Project> mastered_projects) {
         this.mastered_projects = mastered_projects;
     }
 
@@ -198,11 +202,11 @@ public class User {
         this.has_timeslots = has_timeslots;
     }
 
-    public Collection<Task> getTasks() {
+    public Set<Task> getTasks() {
         return tasks;
     }
 
-    public void setTasks(Collection<Task> tasks) {
+    public void setTasks(Set<Task> tasks) {
         this.tasks = tasks;
     }
 }
