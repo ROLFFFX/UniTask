@@ -45,9 +45,32 @@ public class MeetingController {
         }
     }
 
-    //TODO: delete event
+    //delete event, respond with the deleted meeting
+    @DeleteMapping("/meeting/{projectId}/{meetingId}")
+    public ResponseEntity<Meeting> deleteMeeting(@PathVariable Long projectId,
+                                                       @PathVariable Long meetingId) {
+        try {
+            Meeting cur_meetings = meetingService.delete(projectId, meetingId);
+            return new ResponseEntity<>(cur_meetings, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
 
 
-    //TODO: update event
+    //update event, respond with updated meeting
+    @PutMapping("/meeting/{projectId}")
+    public ResponseEntity<Meeting> updateMeeting(@PathVariable Long projectId,
+                                                 @RequestBody Meeting meeting) {
+        try {
+            Meeting updatedMeeting = meetingService.update(projectId, meeting);
+            if (updatedMeeting == null) {
+                return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+            }
+            return new ResponseEntity<>(updatedMeeting, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
 
 }
