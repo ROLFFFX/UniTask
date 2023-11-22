@@ -178,7 +178,7 @@ public class AuthController {
             confirmationTokenService.saveConfirmationToken(confirmationToken);
             // create email link and send email;
             //TODO: need to modify when deploy;
-            String link = "https://unitask-backend-impl-72c59f313288.herokuapp.com/api/auth/confirmSignUp?token=" + signupToken;
+            String link = "http://localhost:8080/api/auth/confirmSignUp?token=" + signupToken;
             emailService.send(signUpRequest.getEmail(),
                     emailService.buildEmail(signUpRequest.getUsername(), link));
 
@@ -186,6 +186,12 @@ public class AuthController {
             return ResponseEntity.ok(new MessageResponse("Email sent!"));
         } else {
             User user = userRepository.getByEmail(signUpRequest.getEmail());
+
+            // update user info
+            user.setPassword(signUpRequest.getPassword());
+            user.setUsername(signUpRequest.getUsername());
+
+            userRepository.save(user);
 
             // generate register token;
             String signupToken = UUID.randomUUID().toString();
@@ -199,7 +205,7 @@ public class AuthController {
             confirmationTokenService.saveConfirmationToken(confirmationToken);
             // create email link and send email;
             //TODO: need to modify when deploy;
-            String link = "https://unitask-backend-impl-72c59f313288.herokuapp.com/api/auth/confirmSignUp?token=" + signupToken;
+            String link = "http://localhost:8080/api/auth/confirmSignUp?token=" + signupToken;
             emailService.send(signUpRequest.getEmail(),
                     emailService.buildEmail(signUpRequest.getUsername(), link));
 
@@ -208,7 +214,7 @@ public class AuthController {
         }
     }
 
-    @GetMapping(path = "confirmSignUp")
+    @GetMapping(path = "/confirmSignUp")
     @Transactional
     public ResponseEntity<?> confirmSignUp(@RequestParam("token") String token) {
         // get token;
@@ -227,7 +233,7 @@ public class AuthController {
         // token is confirmed;
         confirmationTokenService.setConfirmedAt(token);
 
-        User user = userRepository.getReferenceById(confirmationToken.getId());
+        User user = userRepository.getReferenceById(confirmationToken.getUser().getId());
 
         user.setEnabled(true);
 
