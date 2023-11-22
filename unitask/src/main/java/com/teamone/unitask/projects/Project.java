@@ -57,6 +57,7 @@ public class Project {
 //    @JsonManagedReference
 //    private Collection<User> users_participated;
 
+    @JsonManagedReference("project-timeslots")
     @OneToMany(mappedBy = "projectBelonged")
     private Collection<TimeSlot> timeSlots;
 
@@ -64,6 +65,7 @@ public class Project {
     @OneToMany(mappedBy = "projectBelonged")
     private Set<Task> tasks;
 
+    @JsonManagedReference("project-meeting")
     @OneToMany(mappedBy = "projectId")
     private Collection<Meeting> meetings;
 
