@@ -1,6 +1,5 @@
 package com.teamone.unitask.meetings;
 
-import com.teamone.unitask.meetings.Meeting;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
