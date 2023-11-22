@@ -53,15 +53,13 @@ public class Task {
 //    @JoinColumn(name = "parent_task_Id")
 //    private Task parentTaskId = null;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @ManyToOne(fetch = FetchType.LAZY, optional = false, cascade = CascadeType.ALL)
     @JoinColumn(name = "project_id")
-    @JsonIgnore
     private Project projectBelonged;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "user_id")
-    @JsonIgnore
-    private User taskMemberAssigned = null;
+    private User taskMemberAssigned;
 
     /**
      * mapped by

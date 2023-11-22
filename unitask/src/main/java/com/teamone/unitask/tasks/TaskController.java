@@ -8,6 +8,7 @@ import com.teamone.unitask.projects.ProjectRepository;
 import com.teamone.unitask.projects.ProjectService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -33,7 +34,7 @@ public class TaskController {
 
 //    @CrossOrigin(origins = "https://uni-task-beta-front.vercel.app/", allowCredentials = "true")
 @CrossOrigin(origins = "http://localhost:3000", allowCredentials = "true")
-@PostMapping(path = "/createTask", consumes = "application/json")
+@PostMapping(path = "/createTask", consumes={MediaType.APPLICATION_JSON_UTF8_VALUE} )
     public ResponseEntity<Task> creatNewTask(@RequestBody Task requestTask,
                                                       @RequestParam(name = "taskId") Long taskId,
                                                       @RequestParam(name = "projectTitle") String projectTitle,
@@ -42,7 +43,7 @@ public class TaskController {
 
         // update assigned user;
         if (username != null) {
-            if (!userRepository.existsByUsername(username)) {
+            if (userRepository.existsByUsername(username)) {
                 User assignedUser = userRepository.getByUsername(username);
                 newTask.setTaskMemberAssigned(assignedUser);
             }
@@ -56,8 +57,13 @@ public class TaskController {
             }
         }
         // update project assigned
-        Project projectAssigned = projectRepository.findByProjectTitle(projectTitle);
-        newTask.setProjectBelonged(projectAssigned);
+        if (projectRepository.existsByProjectTitle(projectTitle)) {
+            Project projectAssigned = projectRepository.findByProjectTitle(projectTitle);
+            newTask.setProjectBelonged(projectAssigned);
+        } else {
+            return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+        }
+
 
         taskRepository.save(newTask);
 
