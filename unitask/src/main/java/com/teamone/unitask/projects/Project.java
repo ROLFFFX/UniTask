@@ -79,7 +79,12 @@ public class Project {
     private Collection<Meeting> meetings;
 
     @JsonIgnore
-    @OneToMany(mappedBy = "projectId", cascade = CascadeType.PERSIST)
+    @OneToMany(mappedBy = "projectId",
+            cascade = {
+                    CascadeType.PERSIST,
+                    CascadeType.MERGE,
+                    CascadeType.REFRESH
+            })
     private Set<Hyperlink> hyperlinks = new HashSet<>();
 
     /**
