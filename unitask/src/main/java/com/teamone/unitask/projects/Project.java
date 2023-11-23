@@ -1,17 +1,15 @@
 package com.teamone.unitask.projects;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.teamone.unitask.hyperlinks.Hyperlink;
 import com.teamone.unitask.meetings.Meeting;
 import com.teamone.unitask.onboard.usermodels.User;
+import com.teamone.unitask.report.Report;
 import com.teamone.unitask.tasks.Task;
 import com.teamone.unitask.timeslots.TimeSlot;
-import org.hibernate.annotations.OnDelete;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotBlank;
 import java.time.LocalDateTime;
 import java.util.*;
 
@@ -86,6 +84,15 @@ public class Project {
                     CascadeType.REFRESH
             })
     private Set<Hyperlink> hyperlinks = new HashSet<>();
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "projectId",
+            cascade = {
+                    CascadeType.PERSIST,
+                    CascadeType.MERGE,
+                    CascadeType.REFRESH
+            })
+    private Set<Report> reports = new HashSet<>();
 
     /**
      * methods
@@ -165,5 +172,13 @@ public class Project {
 
     public void setWorkSpaceCreationTime(LocalDateTime workSpaceCreationTime) {
         this.workSpaceCreationTime = workSpaceCreationTime;
+    }
+
+    public Set<Report> getReports() {
+        return reports;
+    }
+
+    public void setReports(Set<Report> reports) {
+        this.reports = reports;
     }
 }

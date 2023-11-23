@@ -19,7 +19,7 @@ public class HyperlinkController {
     //    @CrossOrigin(origins = "https://uni-task-beta-front.vercel.app/", allowCredentials = "true")
     @CrossOrigin(origins = "http://localhost:3000", allowCredentials = "true")
     @PostMapping("/createHyperlink/{projectTitle}")
-    public ResponseEntity<?> createHyperlink(@RequestBody Hyperlink hyperlink,
+    public ResponseEntity<Hyperlink> createHyperlink(@RequestBody Hyperlink hyperlink,
                                              @PathVariable("projectTitle") String projectTitle) {
         Hyperlink requestHyperlink = hyperlinkService.createHyperlink(hyperlink, projectTitle);
 
@@ -46,7 +46,7 @@ public class HyperlinkController {
     //    @CrossOrigin(origins = "https://uni-task-beta-front.vercel.app/", allowCredentials = "true")
     @CrossOrigin(origins = "http://localhost:3000", allowCredentials = "true")
     @PutMapping("/editHyperlink/{id}")
-    public ResponseEntity<?> updateHyperlink(@PathVariable("id") Long hyperlinkId, @RequestBody Hyperlink hyperlink) {
+    public ResponseEntity<Hyperlink> updateHyperlink(@PathVariable("id") Long hyperlinkId, @RequestBody Hyperlink hyperlink) {
 
         Hyperlink hyperlinkToEdit = hyperlinkService.editHyperlinkByHyperlinkId(hyperlinkId, hyperlink);
 
