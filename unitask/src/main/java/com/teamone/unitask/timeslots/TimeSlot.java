@@ -1,5 +1,7 @@
 package com.teamone.unitask.timeslots;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.teamone.unitask.onboard.usermodels.User;
 import com.teamone.unitask.projects.Project;
 import lombok.AllArgsConstructor;
@@ -7,6 +9,7 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 import java.util.Set;
 
@@ -24,21 +27,23 @@ public class TimeSlot {
     @Column(name = "timeslot_id")
     private Long timeSlotId;
 
-    @NotBlank
+    @NotNull
     private LocalDateTime startTime;
 
-    @NotBlank
+    @NotNull
     private LocalDateTime endTime;
 
     /**
      * foreign keys
      */
 
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JsonBackReference("user-timeslots")
+    @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     @JoinColumn(name = "user_id")
     private User userAssigned;
 
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JsonBackReference("project-timeslots")
+    @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     @JoinColumn(name = "project_id")
     private Project projectBelonged;
 
