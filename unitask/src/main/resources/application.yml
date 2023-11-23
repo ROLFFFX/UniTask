@@ -6,7 +6,7 @@ server:
 spring:
     jpa:
         hibernate:
-            ddl-auto:  create
+            ddl-auto:  update
     datasource:
         url: jdbc:mysql://unitask-mysql.mysql.database.azure.com/onboard
         username: TeamOneMySQL
