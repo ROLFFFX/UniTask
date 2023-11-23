@@ -1,6 +1,8 @@
 package com.teamone.unitask.hyperlinks;
 
 import com.teamone.unitask.projects.Project;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
@@ -30,8 +32,9 @@ public class Hyperlink {
      * foreign keys
      */
 
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "project_id")
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private Project projectId;
 
     /**

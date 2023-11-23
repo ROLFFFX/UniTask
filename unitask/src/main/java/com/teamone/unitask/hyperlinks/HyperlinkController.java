@@ -2,6 +2,7 @@ package com.teamone.unitask.hyperlinks;
 
 import com.teamone.unitask.onboard.payload.response.MessageResponse;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -13,36 +14,53 @@ import java.util.List;
 public class HyperlinkController {
 
     @Autowired
-    HyperlinkRepository hyperlinkRepository;
+    HyperlinkService hyperlinkService;
 
-    @PostMapping("/createHyperlink")
-    public ResponseEntity<?> createHyperlink(@RequestBody Hyperlink hyperlink) {
-        try {
-            hyperlinkRepository.save(hyperlink);
-            return ResponseEntity.ok(new MessageResponse("New hyperlink created!"));
-        } catch (Exception e) {
-            return ResponseEntity.badRequest().body(new MessageResponse("Error: Cannot create hyperlink."));
+    //    @CrossOrigin(origins = "https://uni-task-beta-front.vercel.app/", allowCredentials = "true")
+    @CrossOrigin(origins = "http://localhost:3000", allowCredentials = "true")
+    @PostMapping("/createHyperlink/{projectTitle}")
+    public ResponseEntity<?> createHyperlink(@RequestBody Hyperlink hyperlink,
+                                             @PathVariable("projectTitle") String projectTitle) {
+        Hyperlink requestHyperlink = hyperlinkService.createHyperlink(hyperlink, projectTitle);
+
+        if (requestHyperlink == null) {
+            return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+        } else {
+            return new ResponseEntity<>(requestHyperlink, HttpStatus.CREATED);
         }
     }
 
-    @GetMapping("/getAllHyperlinks")
-    public List<Hyperlink> getAllHyperlinks() {
-        return hyperlinkRepository.findAll();
+    //    @CrossOrigin(origins = "https://uni-task-beta-front.vercel.app/", allowCredentials = "true")
+    @CrossOrigin(origins = "http://localhost:3000", allowCredentials = "true")
+    @GetMapping("/getAllHyperlinks/{projectTitle}")
+    public ResponseEntity<List<Hyperlink>> getAllHyperlinks(@PathVariable("projectTitle") String projectTitle) {
+        List<Hyperlink> requestListHyperLink = hyperlinkService.getHyperlinksByProjectTitle(projectTitle);
+
+        if (requestListHyperLink == null) {
+            return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+        } else {
+            return new ResponseEntity<>(requestListHyperLink, HttpStatus.OK);
+        }
     }
 
+    //    @CrossOrigin(origins = "https://uni-task-beta-front.vercel.app/", allowCredentials = "true")
+    @CrossOrigin(origins = "http://localhost:3000", allowCredentials = "true")
+    @PutMapping("/editHyperlink/{id}")
+    public ResponseEntity<?> updateHyperlink(@PathVariable("id") Long hyperlinkId, @RequestBody Hyperlink hyperlink) {
+
+        Hyperlink hyperlinkToEdit = hyperlinkService.editHyperlinkByHyperlinkId(hyperlinkId, hyperlink);
+
+        return new ResponseEntity<>(hyperlinkToEdit, HttpStatus.OK);
+    }
+
+    //    @CrossOrigin(origins = "https://uni-task-beta-front.vercel.app/", allowCredentials = "true")
+    @CrossOrigin(origins = "http://localhost:3000", allowCredentials = "true")
     @DeleteMapping("/deleteHyperlink/{id}")
-    public ResponseEntity<?> deleteHyperlink(@PathVariable("id") Long id) {
-        try {
-            hyperlinkRepository.deleteById(id);
-            return ResponseEntity.ok(new MessageResponse("Hyperlink has been deleted."));
-        } catch (Exception e) {
-            return ResponseEntity.badRequest().body(new MessageResponse("Error: Cannot delete the hyperlink."));
-        }
-    }
+    public ResponseEntity<Hyperlink> deleteHyperlink(@PathVariable("id") Long hyperlinkId) {
 
-//    @PutMapping("/editHyperlink/{id}")
-//    public ResponseEntity<?> editHyperlink(@PathVariable("id") Long id, @RequestBody Hyperlink hyperlink) {
-//
-//    }
+        Hyperlink hyperlinkToDelete = hyperlinkService.deleteHyperlinkByHyperlinkId(hyperlinkId);
+
+        return new ResponseEntity<>(hyperlinkToDelete, HttpStatus.OK);
+    }
 
 }

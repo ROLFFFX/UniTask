@@ -1,5 +1,6 @@
 package com.teamone.unitask.hyperlinks;
 
+import com.teamone.unitask.exception.ResourceNotFoundException;
 import com.teamone.unitask.projects.Project;
 import com.teamone.unitask.projects.ProjectRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,27 +33,40 @@ public class HyperlinkService {
         return requestHyperlink;
     }
 
-    public List<Hyperlink> getAllHyperlinkByProjectTitle(String projectTitle) {
+    public List<Hyperlink> getHyperlinksByProjectTitle(String projectTitle) {
+
+        if (!projectRepository.existsByProjectTitle(projectTitle)) {
+            return null;
+        }
 
         Project curProject = projectRepository.findByProjectTitle(projectTitle);
 
-        return hyperlinkRepository.findHyperlinksByProjectId(curProject);
+        List<Hyperlink> requestListHyperlinks = hyperlinkRepository.getHyperlinksByProjectId(curProject);
+
+        return requestListHyperlinks;
     }
 
-//    public Hyperlink editHyperlinkByHyperlinkId(Long hyperlinkId) {
-//
-//        // check if hyperlink existed;
-//        if (!hyperlinkRepository.existsByHyperlinkId(hyperlinkId)) {
-//            return null;
-//        }
-//
-//        // get hyperlink and modify its fields
-//        Hyperlink curHyperlink = hyperlinkRepository.getHyperlinkByHyperlinkId(hyperlinkId);
-//
-//
-//    }
+    public Hyperlink editHyperlinkByHyperlinkId(Long hyperlinkId, Hyperlink newHyperlink) {
 
-//    public Hyperlink deleteHyperlinkByHyperlinkId(Long hyperlinkId) {
-//
-//    }
+        // get hyperlink and modify its fields
+        Hyperlink curHyperlink = hyperlinkRepository.findById(hyperlinkId).
+                orElseThrow(() -> new ResourceNotFoundException("Hyperlink not found with id: " + hyperlinkId));
+
+        curHyperlink.setTitle(newHyperlink.getTitle());
+        curHyperlink.setUrl(newHyperlink.getUrl());
+
+        hyperlinkRepository.save(curHyperlink);
+
+        return curHyperlink;
+    }
+
+    public Hyperlink deleteHyperlinkByHyperlinkId(Long hyperlinkId) {
+
+        Hyperlink hyperlinkToDelete = hyperlinkRepository.findById(hyperlinkId).
+                orElseThrow(() -> new ResourceNotFoundException("Hyperlink not found with id: " + hyperlinkId));
+
+        hyperlinkRepository.deleteById(hyperlinkToDelete.getHyperlinkId());
+
+        return hyperlinkToDelete;
+    }
 }

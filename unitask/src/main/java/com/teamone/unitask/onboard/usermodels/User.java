@@ -8,6 +8,8 @@ import com.teamone.unitask.onboard.usermodels.Role;
 import com.teamone.unitask.projects.Project;
 import com.teamone.unitask.tasks.Task;
 import com.teamone.unitask.timeslots.TimeSlot;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
@@ -89,8 +91,13 @@ public class User {
     private Collection<TimeSlot> has_timeslots;
 
     @JsonIgnore
-    @OneToMany(mappedBy = "taskMemberAssigned")
-    private Set<Task> tasks;
+    @OneToMany(mappedBy = "taskMemberAssigned",
+            cascade = {
+                CascadeType.PERSIST,
+                CascadeType.MERGE,
+                CascadeType.REFRESH
+            })
+    private Set<Task> tasks = new HashSet<>();
 
 
     /**

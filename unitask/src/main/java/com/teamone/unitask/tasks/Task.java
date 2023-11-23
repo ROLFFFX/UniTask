@@ -42,6 +42,8 @@ public class Task {
 
     private Long parentTaskId = null;
 
+    private LocalDateTime taskCreationTime = LocalDateTime.now();
+
     /**
      * foreign keys
      */
@@ -53,12 +55,14 @@ public class Task {
 //    @JoinColumn(name = "parent_task_Id")
 //    private Task parentTaskId = null;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false, cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "project_id")
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private Project projectBelonged;
 
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private User taskMemberAssigned;
 
     /**
@@ -159,4 +163,13 @@ public class Task {
 //    public void setChildrenTasks(Set<Task> childrenTasks) {
 //        this.childrenTasks = childrenTasks;
 //    }
+
+
+    public LocalDateTime getTaskCreationTime() {
+        return taskCreationTime;
+    }
+
+    public void setTaskCreationTime(LocalDateTime taskCreationTime) {
+        this.taskCreationTime = taskCreationTime;
+    }
 }

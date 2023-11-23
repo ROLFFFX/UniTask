@@ -15,4 +15,6 @@ public interface HyperlinkRepository extends JpaRepository<Hyperlink, Long> {
     Boolean existsByHyperlinkId(Long hyperlinkId);
 
     Hyperlink getHyperlinkByHyperlinkId(Long hyperlinkId);
+
+    List<Hyperlink> getHyperlinksByProjectId(Project projectId);
 }

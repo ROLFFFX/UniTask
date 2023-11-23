@@ -8,9 +8,11 @@ import com.teamone.unitask.meetings.Meeting;
 import com.teamone.unitask.onboard.usermodels.User;
 import com.teamone.unitask.tasks.Task;
 import com.teamone.unitask.timeslots.TimeSlot;
+import org.hibernate.annotations.OnDelete;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
+import java.time.LocalDateTime;
 import java.util.*;
 
 @Entity
@@ -31,6 +33,8 @@ public class Project {
 
     @Column(nullable = false)
     private String projectTitle;
+
+    private LocalDateTime workSpaceCreationTime = LocalDateTime.now();
 
     /**
      * foreign keys
@@ -62,7 +66,12 @@ public class Project {
     private Collection<TimeSlot> timeSlots;
 
     @JsonIgnore
-    @OneToMany(mappedBy = "projectBelonged")
+    @OneToMany(mappedBy = "projectBelonged",
+            cascade = {
+                    CascadeType.PERSIST,
+                    CascadeType.MERGE,
+                    CascadeType.REFRESH
+            })
     private Set<Task> tasks;
 
     @JsonManagedReference("project-meeting")
@@ -70,7 +79,12 @@ public class Project {
     private Collection<Meeting> meetings;
 
     @JsonIgnore
-    @OneToMany(mappedBy = "projectId")
+    @OneToMany(mappedBy = "projectId",
+            cascade = {
+                    CascadeType.PERSIST,
+                    CascadeType.MERGE,
+                    CascadeType.REFRESH
+            })
     private Set<Hyperlink> hyperlinks = new HashSet<>();
 
     /**
@@ -143,5 +157,13 @@ public class Project {
 
     public void setHyperlinks(Set<Hyperlink> hyperlinks) {
         this.hyperlinks = hyperlinks;
+    }
+
+    public LocalDateTime getWorkSpaceCreationTime() {
+        return workSpaceCreationTime;
+    }
+
+    public void setWorkSpaceCreationTime(LocalDateTime workSpaceCreationTime) {
+        this.workSpaceCreationTime = workSpaceCreationTime;
     }
 }
