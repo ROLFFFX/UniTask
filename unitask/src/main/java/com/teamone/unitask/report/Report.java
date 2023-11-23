@@ -59,7 +59,7 @@ public class Report {
         this.memberComment = memberComment;
     }
 
-    public Long getReviewId() {
+    public Long getReportId() {
         return reportId;
     }
 
