@@ -60,10 +60,12 @@ public class TimeSlotController {
 
     //TODO: respond with a list of timeslots(length >= 30min) that correspond to the common timeslots in a project
     @GetMapping("/timeslot/overlap/{projectId}")
-    public ResponseEntity<List<TimeSlot>> commonTimeSlot(@PathVariable Long projectId){
-        try{
+    public ResponseEntity<List<TimeSlot>> commonTimeSlot(@PathVariable Long projectId) {
+        try {
             List<TimeSlot> commonList = timeSlotService.calcCommon(projectId);
             return new ResponseEntity<>(commonList, HttpStatus.OK);
+        }catch (IllegalArgumentException e){
+            return new ResponseEntity<>(null, HttpStatus.EXPECTATION_FAILED);
         }catch(Exception e){
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }

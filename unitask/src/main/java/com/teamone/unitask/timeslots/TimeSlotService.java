@@ -18,9 +18,14 @@ import org.springframework.stereotype.Service;
 import javax.validation.constraints.Null;
 import java.sql.Time;
 import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.*;
 import java.util.stream.Collectors;
+
+import java.util.Set.*;
+
+import static java.util.Collections.sort;
 
 @Service
 public class TimeSlotService {
@@ -70,56 +75,66 @@ public class TimeSlotService {
         timeSlotRepository.deleteById(timeSlotId);
     }
 
-    public List<TimeSlot> calcCommon(Long projectId) {
-        List<TimeSlot> projectTS = new ArrayList<>(projectRepository.findByProjectId(projectId).getTimeSlots());
+    public List<TimeSlot> calcCommon(Long projectId) throws IllegalArgumentException{
+
+        List<TimeSlot> projectTS;
+        Set<User> tsUser;
+        Map<LocalDateTime, Set<User>> stTime2Users;
+
+        projectTS = new ArrayList<>(projectRepository.findByProjectId(projectId).getTimeSlots());
 
         //set of users that has submitted some timeslots to the project
-        Set<User> tsUser = new HashSet<>();
+        tsUser = new HashSet<>();
         projectTS.forEach(ts -> tsUser.add(ts.getUserAssigned()));
 
-        // map timeslots to the set of users that share the timeslot
-        Map<TimeSlot, Set<User>> ts2Users = new HashMap<>();
-        for (TimeSlot ts : projectTS) {ts2Users.computeIfAbsent(ts, k -> new HashSet<>()).add(ts.getUserAssigned());}
+        // map timeslots(marked by start time) to the set of users that share the timeslot
+        stTime2Users = new HashMap<>();
+        for (TimeSlot ts : projectTS) {stTime2Users.computeIfAbsent(ts.getStartTime(), k -> new HashSet<>()).add(ts.getUserAssigned());}
 
-        // Filter timeslots -> only common timeslots
-        projectTS = ts2Users.entrySet().stream()
+        //Filter map timeslots -> only common timeslots shared by all users
+        //create a set of startTimes that correspond to the common timeslots
+        Set<LocalDateTime> tempSet = stTime2Users.entrySet().stream()
                 .filter(entry -> entry.getValue().containsAll(tsUser))
                 .map(Map.Entry::getKey)
-                .toList();
+                .collect(Collectors.toSet());
+        //convert set to a list
+        List<LocalDateTime> commonStTime = new ArrayList<>(tempSet);
+
+        //if(tsUser.size()==2){ throw new IllegalArgumentException();}
+        if(commonStTime.isEmpty()){ return null;}
 
         //merge consecutive timeslots into larger timeslots
-        projectTS.sort(Comparator.comparing(TimeSlot::getStartTime)); //sort by start time in ascending order
+        //projectTS.sort(Comparator.comparing(TimeSlot::getStartTime)); //sort by start time in ascending order
+        sort(commonStTime); //sort in temporal order
 
-        List<TimeSlot> commonTS = new ArrayList<>();
-        TimeSlot curCommonTS = new TimeSlot();
+//        List<TimeSlot> testReturn = new ArrayList<>();
+//        for(LocalDateTime stTime:commonStTime){
+//            TimeSlot ts = new TimeSlot();
+//            ts.setStartTime(stTime);
+//            ts.setEndTime(stTime.plusMinutes(30L));
+//            testReturn.add(ts);
+//        }
 
-        ListIterator<TimeSlot> i = projectTS.listIterator(0);
-        TimeSlot cur = projectTS.get(0);
-        TimeSlot prev = projectTS.get(0);
-        while (i.hasNext()) {
-            if(i.hasPrevious()){ //not first time slot
-                prev = i.previous();
-                cur = i.next();
+        //merge consecutive timeslots
+        List<TimeSlot> commonTS = new ArrayList<>(); //result list
+        LocalDateTime disjoint = commonStTime.get(0); //first disjoint is start
+        int itr = 0;
+
+        while(itr<commonStTime.size()) {
+            TimeSlot curCommon = new TimeSlot();
+            curCommon.setStartTime(disjoint);
+
+            //find the next disjoint or reach the end (the end is the last disjoint)
+            while (itr < commonStTime.size() - 1 && commonStTime.get(itr).until(commonStTime.get(itr + 1), ChronoUnit.MINUTES) == 30L) {
+                itr++;
             }
-            if (!i.hasPrevious() || !cur.getStartTime().equals(prev.getEndTime())) { //(first timeslot or) disjoint 1 ~ starttime
-                curCommonTS.setStartTime(cur.getStartTime());
-                while (i.hasNext()) {
-                    cur = i.next();
-                    prev = i.previous();
-                    if (!cur.getStartTime().equals(prev.getEndTime())) { //disjoint 2 ~ endtime
-                        curCommonTS.setEndTime(prev.getEndTime());
-                        commonTS.add(curCommonTS);
-                        break;
-                    }
-                    i.next();
-                }
-                if (!i.hasNext()) {//no disjoint 2, reached last, curEnd ~ endtime
-                    curCommonTS.setEndTime(cur.getEndTime());
-                    commonTS.add(curCommonTS);
-                    break;
-                }
-            }
-            i.next();
+            disjoint = commonStTime.get(itr).plusMinutes(30L);//left of the disjoint; end time of the current elem; end time of commonTS
+            curCommon.setEndTime(disjoint);
+            commonTS.add(curCommon);
+
+            if(itr == commonStTime.size() - 1){break;}//if itr is the last in the list
+            disjoint = commonStTime.get(itr+1);//right of the disjoint; start time of the next elem; start time of commonTS
+            itr++;
         }
 
         return commonTS;
