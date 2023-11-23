@@ -16,6 +16,8 @@ public class HyperlinkController {
     @Autowired
     HyperlinkService hyperlinkService;
 
+    //    @CrossOrigin(origins = "https://uni-task-beta-front.vercel.app/", allowCredentials = "true")
+    @CrossOrigin(origins = "http://localhost:3000", allowCredentials = "true")
     @PostMapping("/createHyperlink/{projectTitle}")
     public ResponseEntity<?> createHyperlink(@RequestBody Hyperlink hyperlink,
                                              @PathVariable("projectTitle") String projectTitle) {
@@ -28,6 +30,8 @@ public class HyperlinkController {
         }
     }
 
+    //    @CrossOrigin(origins = "https://uni-task-beta-front.vercel.app/", allowCredentials = "true")
+    @CrossOrigin(origins = "http://localhost:3000", allowCredentials = "true")
     @GetMapping("/getAllHyperlinks/{projectTitle}")
     public ResponseEntity<List<Hyperlink>> getAllHyperlinks(@PathVariable("projectTitle") String projectTitle) {
         List<Hyperlink> requestListHyperLink = hyperlinkService.getHyperlinksByProjectTitle(projectTitle);
@@ -39,6 +43,8 @@ public class HyperlinkController {
         }
     }
 
+    //    @CrossOrigin(origins = "https://uni-task-beta-front.vercel.app/", allowCredentials = "true")
+    @CrossOrigin(origins = "http://localhost:3000", allowCredentials = "true")
     @PutMapping("/editHyperlink/{id}")
     public ResponseEntity<?> updateHyperlink(@PathVariable("id") Long hyperlinkId, @RequestBody Hyperlink hyperlink) {
 
@@ -47,6 +53,8 @@ public class HyperlinkController {
         return new ResponseEntity<>(hyperlinkToEdit, HttpStatus.OK);
     }
 
+    //    @CrossOrigin(origins = "https://uni-task-beta-front.vercel.app/", allowCredentials = "true")
+    @CrossOrigin(origins = "http://localhost:3000", allowCredentials = "true")
     @DeleteMapping("/deleteHyperlink/{id}")
     public ResponseEntity<Hyperlink> deleteHyperlink(@PathVariable("id") Long hyperlinkId) {
 
