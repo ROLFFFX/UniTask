@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.config.ConfigDataResourceNotFoundException;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class TaskService {
 
@@ -44,6 +46,12 @@ public class TaskService {
 
         Task taskToDelete = taskRepository.findById(taskId).
                 orElseThrow(() -> new ResourceNotFoundException("Task not found with id: " + taskId));
+
+        List<Task> childrenTasks = taskRepository.findByParentTaskId(taskId);
+
+        for(Task task : childrenTasks) {
+            taskRepository.deleteById(task.getTaskId());
+        }
 
         taskRepository.deleteById(taskId);
 
