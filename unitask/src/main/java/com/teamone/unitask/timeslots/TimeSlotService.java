@@ -11,13 +11,16 @@ import com.teamone.unitask.projects.Project;
 import com.teamone.unitask.projects.ProjectRepository;
 import org.springframework.beans.NotWritablePropertyException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import javax.validation.constraints.Null;
+import java.sql.Time;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 public class TimeSlotService {
@@ -46,13 +49,8 @@ public class TimeSlotService {
         return timeSlotRepository.saveAll(timeSlots);
     }
 
-    public List<TimeSlot> get(Long projectId, String token) throws ResourceNotFoundException{
-        User thisUser;
-        try{
-            thisUser = userService.getUserEmailFromToken(token);
-        }catch (IllegalArgumentException e){
-            throw new ResourceNotFoundException("failed");
-        }
+    public List<TimeSlot> get(Long projectId, String token){
+        User thisUser = userService.getUserEmailFromToken(token);
         Set<TimeSlot> timeSlots = new HashSet<>(projectRepository.findByProjectId(projectId).getTimeSlots());
         //intersection:
         timeSlots.retainAll(thisUser.getHas_timeslots());
@@ -70,5 +68,60 @@ public class TimeSlotService {
 
     public void deleteOneTS(Long timeSlotId) {
         timeSlotRepository.deleteById(timeSlotId);
+    }
+
+    public List<TimeSlot> calcCommon(Long projectId) {
+        List<TimeSlot> projectTS = new ArrayList<>(projectRepository.findByProjectId(projectId).getTimeSlots());
+
+        //set of users that has submitted some timeslots to the project
+        Set<User> tsUser = new HashSet<>();
+        projectTS.forEach(ts -> tsUser.add(ts.getUserAssigned()));
+
+        // map timeslots to the set of users that share the timeslot
+        Map<TimeSlot, Set<User>> ts2Users = new HashMap<>();
+        for (TimeSlot ts : projectTS) {ts2Users.computeIfAbsent(ts, k -> new HashSet<>()).add(ts.getUserAssigned());}
+
+        // Filter timeslots -> only common timeslots
+        projectTS = ts2Users.entrySet().stream()
+                .filter(entry -> entry.getValue().containsAll(tsUser))
+                .map(Map.Entry::getKey)
+                .toList();
+
+        //merge consecutive timeslots into larger timeslots
+        projectTS.sort(Comparator.comparing(TimeSlot::getStartTime)); //sort by start time in ascending order
+
+        List<TimeSlot> commonTS = new ArrayList<>();
+        TimeSlot curCommonTS = new TimeSlot();
+
+        ListIterator<TimeSlot> i = projectTS.listIterator(0);
+        TimeSlot cur = projectTS.get(0);
+        TimeSlot prev = projectTS.get(0);
+        while (i.hasNext()) {
+            if(i.hasPrevious()){ //not first time slot
+                prev = i.previous();
+                cur = i.next();
+            }
+            if (!i.hasPrevious() || !cur.getStartTime().equals(prev.getEndTime())) { //(first timeslot or) disjoint 1 ~ starttime
+                curCommonTS.setStartTime(cur.getStartTime());
+                while (i.hasNext()) {
+                    cur = i.next();
+                    prev = i.previous();
+                    if (!cur.getStartTime().equals(prev.getEndTime())) { //disjoint 2 ~ endtime
+                        curCommonTS.setEndTime(prev.getEndTime());
+                        commonTS.add(curCommonTS);
+                        break;
+                    }
+                    i.next();
+                }
+                if (!i.hasNext()) {//no disjoint 2, reached last, curEnd ~ endtime
+                    curCommonTS.setEndTime(cur.getEndTime());
+                    commonTS.add(curCommonTS);
+                    break;
+                }
+            }
+            i.next();
+        }
+
+        return commonTS;
     }
 }
