@@ -71,10 +71,14 @@ export default function InviteNewMemberModal({
               variant="h6"
               component="h2"
               textAlign="center"
+              sx={{ fontFamily: "Inter, sans-serif" }}
             >
               Invite New Team Member
             </Typography>
-            <Typography id="modal-modal-description" sx={{ mt: 2 }}>
+            <Typography
+              id="modal-modal-description"
+              sx={{ mt: 2, fontFamily: "Inter, sans-serif" }}
+            >
               Please enter the email of team member you want to invite in the
               textfield below. Make sure team member already registered using
               this email.
@@ -113,10 +117,14 @@ export default function InviteNewMemberModal({
               variant="h6"
               component="h2"
               textAlign="center"
+              sx={{ fontFamily: "Inter, sans-serif" }}
             >
               Invite User Error
             </Typography>
-            <Typography id="error-modal-description" sx={{ mt: 2 }}>
+            <Typography
+              id="error-modal-description"
+              sx={{ mt: 2, fontFamily: "Inter, sans-serif" }}
+            >
               An error occurred while inviting the user. Please make sure that
               the member you are inviting has registered with this email.
             </Typography>

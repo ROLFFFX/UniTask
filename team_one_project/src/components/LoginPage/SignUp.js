@@ -30,14 +30,20 @@ const modalStyle = {
   border: "2px solid #000",
   boxShadow: 24,
   p: 4,
+  display: "flex", // Add this line
+  flexDirection: "column", // Add this line
+  alignItems: "center",
 };
 
 export function SignUp() {
   const navigate = useNavigate();
-  const [showSuccessAlert, setShowSuccessAlert] = useState(false);
+  const [showSuccessAlert, setShowSuccessAlert] = useState(false); //default is true for testing purpose
   const [showFailureAlert, setShowFailureAlert] = useState(false);
   const handleClose = () => {
     setShowFailureAlert(false);
+  };
+  const handleCloseSuccessModal = () => {
+    setShowSuccessAlert(false);
   };
   const [user, setUser] = useState({
     firstName: "",
@@ -77,11 +83,11 @@ export function SignUp() {
         }
       );
       setShowSuccessAlert(true);
-      // console.log(JSON.stringify(response));   NOTE: response.data contains the JWT token.
-      // success alert on succesfully registered
-      setTimeout(() => {
-        navigate("/login");
-      }, 5000);
+      // // console.log(JSON.stringify(response));   NOTE: response.data contains the JWT token.
+      // // success alert on succesfully registered
+      // setTimeout(() => {
+      //   navigate("/login");
+      // }, 5000);
     } catch (error) {
       if (!error?.response) {
         alert("No Server Response!");
@@ -117,6 +123,38 @@ export function SignUp() {
             Sign Up
           </Typography>
           <Box component="form" noValidate onSubmit={onSubmit} sx={{ mt: 3 }}>
+            {/* sign up success pop up modal */}
+            <Modal
+              open={showSuccessAlert}
+              onClose={handleCloseSuccessModal}
+              aria-labelledby="modal-modal-title"
+              aria-describedby="modal-modal-description"
+            >
+              <Box sx={modalStyle}>
+                <Typography id="modal-modal-title" variant="h6" component="h2">
+                  Registration Success!
+                </Typography>
+                <Typography id="modal-modal-description" sx={{ mt: 2 }}>
+                  Thank you for registering with us! We've sent a{" "}
+                  <span style={{ fontWeight: "bold" }}>verification email</span>{" "}
+                  to your provided address. Please check your email and click on
+                  the verification link within{" "}
+                  <span style={{ fontWeight: "bold" }}>15 minutes</span> to
+                  complete your registration.
+                </Typography>
+                <Button
+                  onClick={() => {
+                    navigate("/login");
+                  }}
+                  color="inherit"
+                  autoFocus
+                  sx={{ mt: 2, color: "white", fontSize: "12px" }}
+                >
+                  I've clicked it. Sign in!
+                </Button>
+              </Box>
+            </Modal>
+            {/* sign up failure pop up modal */}
             <Modal
               open={showFailureAlert}
               onClose={handleClose}
@@ -206,16 +244,6 @@ export function SignUp() {
             >
               Sign Up
             </Button>
-            {showSuccessAlert && (
-              <Alert
-                severity="success"
-                iconMapping={{
-                  success: <CheckCircleOutlineIcon fontSize="inherit" />,
-                }}
-              >
-                Registration successful! Please check your email...
-              </Alert>
-            )}
             <Grid container justifyContent="flex-end">
               <Grid item>
                 <Link href="/login" variant="body2" color="inherit">

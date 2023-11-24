@@ -44,7 +44,7 @@ const fadeIn = `
 export default function WelcomePage() {
   const navigate = useNavigate();
   const handleClick = () => {
-    navigate("./login");
+    navigate("./login/signup");
   };
 
   const GetStartedButton = () => {

@@ -80,7 +80,13 @@ export default function UserProfile() {
           }}
         >
           <PortraitIcon style={{ marginRight: 8 }} />
-          <Typography sx={{ color: "#343A40", fontSize: 20 }}>
+          <Typography
+            sx={{
+              color: "#343A40",
+              fontSize: 20,
+              fontFamily: "Inter, sans-serif",
+            }}
+          >
             Your Profile
           </Typography>
         </Box>
@@ -97,6 +103,7 @@ export default function UserProfile() {
               paddingLeft: 4,
               paddingRight: 4,
               fontSize: 14,
+              fontFamily: "Inter, sans-serif",
             }}
           >
             <span style={{ fontWeight: "bold" }}>Username:</span>{" "}
@@ -113,6 +120,7 @@ export default function UserProfile() {
               paddingLeft: 4,
               paddingRight: 4,
               fontSize: 14,
+              fontFamily: "Inter, sans-serif",
             }}
           >
             <span style={{ fontWeight: "bold" }}>Email: </span>
@@ -135,6 +143,7 @@ export default function UserProfile() {
               paddingRight: 4,
               fontSize: 14,
               flexGrow: 1,
+              fontFamily: "Inter, sans-serif",
             }}
           >
             <span style={{ fontWeight: "bold" }}>Current Workspace:</span>{" "}

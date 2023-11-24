@@ -108,11 +108,22 @@ export function OB_landing() {
               boxShadow: "0 3px 5px rgba(0, 0, 0, 0.3)",
             }}
           >
-            <Typography component="h1" variant="h4" align="center">
+            <Typography
+              component="h1"
+              variant="h4"
+              align="center"
+              style={{ fontFamily: "Inter, sans-serif" }}
+            >
               Welcome to UniTask
             </Typography>
 
-            <Typography component="h1" variant="subtitle1" align="center">
+            <Typography
+              component="h1"
+              variant="subtitle1"
+              align="center"
+              marginTop={3}
+              style={{ fontFamily: "Inter, sans-serif" }}
+            >
               Let's create your first workspace now! Workspace is the shared
               environment of your team where you can edit & view the status of
               the project with your teammates.
@@ -145,10 +156,17 @@ export function OB_landing() {
             <React.Fragment>
               {activeStep === steps.length ? (
                 <React.Fragment>
-                  <Typography variant="h5" gutterBottom>
+                  <Typography
+                    variant="h5"
+                    gutterBottom
+                    style={{ fontFamily: "Inter, sans-serif" }}
+                  >
                     Onboarding Process is complete!
                   </Typography>
-                  <Typography variant="subtitle1">
+                  <Typography
+                    variant="subtitle1"
+                    style={{ fontFamily: "Inter, sans-serif" }}
+                  >
                     Congratulations! You just created your workspace. Let's go
                     to your workspace now!
                   </Typography>
