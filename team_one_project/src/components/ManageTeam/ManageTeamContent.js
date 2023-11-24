@@ -4,23 +4,20 @@ import GroupRemoveIcon from "@mui/icons-material/GroupRemove";
 import {
   Box,
   Divider,
-  List,
+  IconButton,
   ListItem,
   ListItemText,
   Typography,
-  Paper,
-  IconButton,
-  useScrollTrigger,
 } from "@mui/material";
-import Button from "@mui/material/Button";
-import React, { useEffect, useState } from "react";
-import InviteNewMemberModal from "./InviteNewMemberModal";
-import useAuth from "../../hooks/useAuth";
-import axios from "axios";
 import Backdrop from "@mui/material/Backdrop";
+import Button from "@mui/material/Button";
 import CircularProgress from "@mui/material/CircularProgress";
-import { ENDPOINT_URL } from "../../hooks/useConfig";
+import axios from "axios";
+import React, { useEffect, useState } from "react";
 import { FixedSizeList } from "react-window";
+import useAuth from "../../hooks/useAuth";
+import { ENDPOINT_URL } from "../../hooks/useConfig";
+import InviteNewMemberModal from "./InviteNewMemberModal";
 
 //render individual member in react window
 function renderMemberItem(props, teamMembers, handleRemoveUser) {
@@ -31,9 +28,9 @@ function renderMemberItem(props, teamMembers, handleRemoveUser) {
       key={member.userEmail}
       style={{
         ...style,
-        border: "1px solid black",
-        borderRadius: 5,
-        marginTop: "5px",
+        // border: "1px solid black", //to add border for each inidividual member rendered
+        // borderRadius: 5,
+        // marginTop: "5px",
         boxSizing: "border-box", // to ensure total width includes padding and borders.
         width: "100%",
       }}
@@ -169,7 +166,7 @@ export default function ManageTeamContent() {
             <span style={{ fontWeight: "bold" }}>{auth.selectedWorkspace}</span>
           </Typography>
         </Box>
-        <Divider sx={{ width: "100%", padding: 1 }}></Divider>
+        <Divider sx={{ width: "100%", padding: 1 }} />
         <Box
           style={{
             display: "flex",

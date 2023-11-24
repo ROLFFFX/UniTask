@@ -78,49 +78,65 @@ export default function PermanentDrawer() {
   };
   return (
     <ThemeProvider theme={barTheme}>
-      <Drawer
-        sx={{
-          width: drawerWidth,
-          flexShrink: 0,
-          "& .MuiDrawer-root": {
-            position: "absolute",
-          },
-          "& .MuiDrawer-paper": {
+      <Box sx={{ boxSizing: "border-box" }}>
+        <Drawer
+          sx={{
             width: drawerWidth,
-            boxSizing: "border-box",
-            position: "absolute",
-          },
-        }}
-        variant="permanent"
-        anchor="left"
-      >
-        <Divider />
-        <Toolbar />
-        <List>
-          {sidebar_upper.map((text, index) => (
-            <ListItem key={index} disablePadding>
-              {displayIcon(index)}
-              <ListItemButton onClick={() => handleClick(index)}>
-                <ListItemText primary={text} />
-              </ListItemButton>
-            </ListItem>
-          ))}
-        </List>
-        <Divider />
-        <List>
-          {sidebar_lower.map((text, index) => (
-            <ListItem key={index} disablePadding>
-              {displayIcon(index + 5)}
-              <ListItemButton onClick={() => handleClick(index + 5)}>
-                <ListItemText primary={text} />
-              </ListItemButton>
-            </ListItem>
-          ))}
-        </List>
-        {/* spacer used to align logout button with bottom of drawer */}
-        <Box style={{ flexGrow: 1 }} />
-        <LogOutButton></LogOutButton>
-      </Drawer>
+            flexShrink: 0,
+            "& .MuiDrawer-root": {
+              position: "absolute",
+            },
+            "& .MuiDrawer-paper": {
+              width: drawerWidth,
+              boxSizing: "border-box",
+              position: "absolute",
+            },
+          }}
+          variant="permanent"
+          anchor="left"
+        >
+          <Divider />
+          <Toolbar />
+          <List>
+            {sidebar_upper.map((text, index) => (
+              <ListItem key={index} disablePadding>
+                {displayIcon(index)}
+                <ListItemButton onClick={() => handleClick(index)}>
+                  <ListItemText
+                    primary={text}
+                    sx={{
+                      "& .MuiListItemText-primary": {
+                        fontFamily: "Inter, sans-serif",
+                      },
+                    }}
+                  />
+                </ListItemButton>
+              </ListItem>
+            ))}
+          </List>
+          <Divider />
+          <List>
+            {sidebar_lower.map((text, index) => (
+              <ListItem key={index} disablePadding>
+                {displayIcon(index + 5)}
+                <ListItemButton onClick={() => handleClick(index + 5)}>
+                  <ListItemText
+                    primary={text}
+                    sx={{
+                      "& .MuiListItemText-primary": {
+                        fontFamily: "Inter, sans-serif",
+                      },
+                    }}
+                  />
+                </ListItemButton>
+              </ListItem>
+            ))}
+          </List>
+          {/* spacer used to align logout button with bottom of drawer */}
+          <Box style={{ flexGrow: 1 }} />
+          <LogOutButton></LogOutButton>
+        </Drawer>
+      </Box>
     </ThemeProvider>
   );
 }
