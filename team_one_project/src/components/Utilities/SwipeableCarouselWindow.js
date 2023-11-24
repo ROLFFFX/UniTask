@@ -11,7 +11,7 @@ const slideData = [
   {
     title: "Interactive Dashboard",
     content:
-      "Stay informed and motivated with our interactive dashboard. Visualize your team's progress in real time, making it easier to track milestones and celebrate achievements",
+      "Stay informed and motivated with our interactive dashboard. Visualize your team's progress in real time, making it easier to track milestones and celebrate achievements.",
   },
   {
     title: "Intuitive Task Assignment System",
