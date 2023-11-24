@@ -22,6 +22,7 @@ import ListItemText from "@mui/material/ListItemText";
 import TextField from "@mui/material/TextField";
 import AddLinkIcon from "@mui/icons-material/AddLink";
 import LinkIcon from "@mui/icons-material/Link";
+import { ENDPOINT_URL } from "../../hooks/useConfig";
 
 import { useEffect, useState } from "react";
 import { v4 as uuidv4 } from "uuid";
@@ -30,71 +31,88 @@ import UniTaskLogo_new from "../../images/UniTaskLOGO.PNG";
 import { ButtonGroup, ThemeProvider } from "@mui/material";
 
 import axios from "axios";
+import {useCookies} from "react-cookie";
+import useAuth from "../../hooks/useAuth";
 
 export function TopAppBar() {
+  const { auth } = useAuth();
+  const projectTitle = auth.selectedWorkspace;
+
   const [linksList, setLinksList] = useState([]);
-  async function getLinksList() {
-    // try {
-    //   const response = await axios.get("endpoint URL", {
-    //     params: {
-    //       //to be filled if any
-    //     },
-    //   });
-    //   console.log(response.data);
-    //   setLinksList(response.data);
-    // } catch (error) {
-    //   console.error("Error getting list", error);
-    // }
+
+  const getLinksList = async () => {
+    try {
+      const response = await axios.get(`${ENDPOINT_URL}hyperlinks/getAllHyperlinks/${projectTitle}`,
+      //const response = await axios.get(`http://localhost:8080/getAllHyperlinks/${projectTitle}`,
+          {
+            headers: {
+              Authorization: `Bearer ${auth.user.userJWT}`,
+            }
+          });
+      console.log("got links list", response.data);
+      setLinksList(response.data);
+    } catch (error) {
+      console.error("Error getting list", error);
+    }
   }
 
   useEffect(() => {
     getLinksList();
   }, []);
 
-  async function updateLinksList(newlist) {
-    /*e.preventDefault();*/
-    console.log("updated list", newlist);
+
+  async function updateLinksList(editedlink, thisid) {
+    //e.preventDefault();
+    console.log("edited link", editedlink);
     try {
-      const response = await axios.put("endpoint URL", newlist, {
-        params: {
-          //to be filled if any
-        },
-        headers: { "Content-Type": "application/json" },
-      });
+        const response = await axios.put(`${ENDPOINT_URL}hyperlinks/editHyperlink/${thisid}`,
+        //const response = await axios.put(`http://localhost:8080/editHyperlink/${editedlink.id}`,
+            editedlink,
+            {
+              headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${auth.user.userJWT}`,
+              }
+            });
     } catch (error) {
       console.error("Error updating list:", error);
     }
   }
 
-  async function deleteLinksList() {
+
+  async function deleteLinksList(thisid) {
     try {
-      const response = await axios.delete("endpoint URL", {
-        params: {
-          //to be filled if any
-        },
+      const response = await axios.delete(`${ENDPOINT_URL}hyperlinks/deleteHyperlink/${thisid}`,
+        //const response = await axios.delete(`http://localhost:8080/editHyperlink/${deletedlink.id}`,
+            {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${auth.user.userJWT}`,
+        }
       });
     } catch (error) {
-      console.error("Error deleting list", error);
+      console.error("Error deleting link", error);
     }
   }
 
-  async function submitLinksList(newlist) {
+  async function submitLinksList(newlink) {
     // e.preventDefault();
-    console.log("submitted linkslist", newlist);
-    // try {
-    //   const response = await axios.post(
-    //       "endpoint URL",
-    //       newlist,
-    //       {
-    //         params: {
-    //           //to be filled if any
-    //         },
-    //         headers: { "Content-Type": "application/json" },
-    //       }
-    //   );
-    // } catch (error) {
-    //   console.error("Error submitting list", error);
-    // }
+    try {
+      const response = await axios.post(`${ENDPOINT_URL}hyperlinks/createHyperlink/${projectTitle}`,
+      //const response = await axios.post(`http://localhost:8080/createHyperlink/${projectTitle}`,
+          newlink,
+          {
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${auth.user.userJWT}`,
+            }
+          }
+      );
+      newlink.hyperlinkId = response.data.hyperlinkId;
+      console.log("submitted link", newlink);
+    } catch (error) {
+      console.error("Error submitting list", error);
+    }
   }
 
   const [anchorElNav, setAnchorElNav] = React.useState(null);
@@ -137,27 +155,16 @@ export function TopAppBar() {
     if (!linkName || !link) {
       return;
     }
-    const newlist = [
-      ...linksList,
-      {
-        Lk:
+    const newlink = {
+        url:
           link.startsWith("http://") || link.startsWith("https://")
             ? link
             : `http://${link}`,
-        name: linkName,
-        id: uuidv4(), //to have a stable key attribute for the item
-        icon: null,
-      },
-    ];
-    setLinksList(newlist);
-    if (linksList.length === 0) {
-      //if the list is empty before updating
-      console.log("current usestate list:", linksList);
-      submitLinksList(newlist);
-    } else {
-      console.log("current usestate list:", linksList);
-      updateLinksList(newlist);
-    }
+        title: linkName,
+    };
+    setLinksList([...linksList,newlink]);
+    console.log("current usestate list:", linksList);
+    submitLinksList(newlink);
   }
 
   function editLinks(thisid) {
@@ -165,32 +172,25 @@ export function TopAppBar() {
       return;
     }
     const editedItem = {
-      Lk:
+      url:
         link.startsWith("http://") || link.startsWith("https://")
           ? link
           : `http://${link}`,
-      name: linkName,
-      id: thisid,
-      icon: null,
+      title: linkName
     };
-    const index = linksList.findIndex((item) => item.id === thisid);
+    const index = linksList.findIndex((item) => item.hyperlinkId === thisid);
     const newlist = linksList.with(index, editedItem);
     setLinksList(newlist);
     console.log("current usestate list:", linksList);
-    updateLinksList(newlist);
+    updateLinksList(editedItem, thisid);
   }
 
-  function removeLinks(id) {
-    const newlist = linksList.filter((userlink) => userlink.id !== id);
+  //TODO: newlink
+  function removeLinks(thisid) {
+    const newlist = linksList.filter((userlink) => userlink.hyperlinkId !== thisid);
     setLinksList(newlist);
-    if (newlist.length === 0) {
-      //if linksList after remove is empty
-      console.log("current usestate list:", linksList);
-      deleteLinksList(newlist);
-    } else {
-      console.log("current usestate list:", linksList);
-      updateLinksList(newlist);
-    }
+    console.log("current usestate list:", linksList);
+    deleteLinksList(thisid);
   }
 
   const toggleDrawer = (event) => {
@@ -218,12 +218,12 @@ export function TopAppBar() {
       </ListItemButton>
       <form noValidate autoComplete={"off"}>
         {linksList.map((userlink) =>
-          itAction === userlink.id ? (
+          itAction === userlink.hyperlinkId ? (
             <ListItem>
               <TextField
                 label="Edit Name"
                 variant="outlined"
-                defaultValue={userlink.name}
+                defaultValue={userlink.title}
                 onChange={(event) => changeName(event)}
                 error={!linkName}
                 helperText={!linkName ? "Name Cannot Be Empty" : null}
@@ -231,7 +231,7 @@ export function TopAppBar() {
               <TextField
                 label="Edit Link"
                 variant="outlined"
-                defaultValue={userlink.Lk}
+                defaultValue={userlink.url}
                 onChange={(event) => changeLink(event)}
                 error={!link}
                 helperText={!link ? "Link Cannot Be Empty" : null}
@@ -240,7 +240,7 @@ export function TopAppBar() {
                 <Button
                   onClick={() => {
                     if (link && linkName) {
-                      editLinks(userlink.id);
+                      editLinks(userlink.hyperlinkId);
                       setitAction("Static");
                       setLink("");
                       setLinkName("");
@@ -254,7 +254,7 @@ export function TopAppBar() {
             </ListItem>
           ) : (
             <ListItem
-              key={userlink.id}
+              key={userlink.hyperlinkId}
               onMouseOver={() =>
                 itAction !== "Static" && itAction !== "Remove or Change?"
                   ? null
@@ -268,19 +268,18 @@ export function TopAppBar() {
               disablePadding
             >
               <ListItemButton
-                href={userlink.Lk}
+                href={userlink.url}
                 target="_blank"
                 rel="noopener noreferrer"
               >
-                <ListItemIcon>{userlink.icon}</ListItemIcon>
-                <ListItemText primary={userlink.name} />
+                <ListItemText primary={userlink.title} />
               </ListItemButton>
 
               {itAction === "Remove or Change?" ? (
                 <ButtonGroup>
                   <Button
                     onClick={() => {
-                      removeLinks(userlink.id);
+                      removeLinks(userlink.hyperlinkId);
                       setitAction("Static");
                     }}
                   >
@@ -289,9 +288,9 @@ export function TopAppBar() {
                   <Button
                     onClick={() => {
                       setAction("Display");
-                      setitAction(userlink.id);
-                      setLinkName(userlink.name);
-                      setLink(userlink.Lk);
+                      setitAction(userlink.hyperlinkId);
+                      setLinkName(userlink.title);
+                      setLink(userlink.url);
                     }}
                   >
                     Edit
