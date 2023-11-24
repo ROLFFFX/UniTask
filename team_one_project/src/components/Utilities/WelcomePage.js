@@ -56,7 +56,7 @@ export default function WelcomePage() {
           backgroundColor: "#E9ECEF",
           color: "#212529",
           fontSize: "14px",
-          marginTop: "30px",
+          marginTop: "20px",
           padding: "20px 40px",
           animation: "fadeIn 2s ease-in",
         }}
@@ -72,6 +72,7 @@ export default function WelcomePage() {
       style={{
         width: "100vw",
         height: "100vh",
+        overflow: "hidden",
       }}
       bgcolor="#212529"
     >
