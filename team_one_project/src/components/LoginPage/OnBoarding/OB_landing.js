@@ -61,6 +61,7 @@ export function OB_landing() {
         );
         console.log(response.data);
       } catch (error) {
+        alert("Error: This Workspace Name is Already Taken!");
         console.error("There was an error!", error);
       }
     }
