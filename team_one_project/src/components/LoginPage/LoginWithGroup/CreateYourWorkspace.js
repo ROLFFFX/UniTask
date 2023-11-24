@@ -27,7 +27,10 @@ export default function CreateYourWorkspace() {
       >
         <Box style={{ display: "flex", alignItems: "center" }}>
           <AddCircleOutlineIcon style={{ marginRight: 8 }} />
-          <Typography sx={{ color: "#343A40", fontSize: 25 }}>
+          <Typography
+            sx={{ color: "#343A40", fontSize: 25 }}
+            style={{ fontFamily: "Inter, sans-serif" }}
+          >
             Create Your Workspace
           </Typography>
         </Box>
@@ -56,6 +59,7 @@ export default function CreateYourWorkspace() {
               paddingRight: 4,
               marginTop: 3,
             }}
+            style={{ fontFamily: "Inter, sans-serif" }}
             justifyContent="left"
           >
             We require each user to possess their own workspace to use our app.
@@ -68,6 +72,7 @@ export default function CreateYourWorkspace() {
               paddingRight: 4,
               marginTop: 3,
             }}
+            style={{ fontFamily: "Inter, sans-serif" }}
           >
             If the list on your right is empty, please proceed to click the
             button below to establish your own workspace.
@@ -81,6 +86,7 @@ export default function CreateYourWorkspace() {
               marginTop: 3,
               marginBottom: 4,
             }}
+            style={{ fontFamily: "Inter, sans-serif" }}
           >
             If you are currently waiting for your teammates to invite your to
             their workspace, please refresh the page periodically.
