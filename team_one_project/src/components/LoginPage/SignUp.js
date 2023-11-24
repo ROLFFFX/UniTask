@@ -1,24 +1,24 @@
+import { Modal } from "@mui/material";
+import Backdrop from "@mui/material/Backdrop";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
+import CircularProgress from "@mui/material/CircularProgress";
 import Container from "@mui/material/Container";
 import CssBaseline from "@mui/material/CssBaseline";
 import Grid from "@mui/material/Grid";
 import Link from "@mui/material/Link";
 import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
-import { Modal } from "@mui/material";
 import { ThemeProvider } from "@mui/material/styles";
 import axios from "axios";
 import * as React from "react";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { ENDPOINT_URL } from "../../hooks/useConfig";
 import { BottomSVG } from "./LoginStyling/BottomSVG";
 import { TopSVG } from "./LoginStyling/TopSVG";
 import theme from "./LoginStyling/theme";
 import { PasswordInput } from "./PasswordInput";
-import { Alert } from "@mui/material";
-import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
-import { ENDPOINT_URL } from "../../hooks/useConfig";
 
 const modalStyle = {
   position: "absolute",
@@ -39,6 +39,8 @@ export function SignUp() {
   const navigate = useNavigate();
   const [showSuccessAlert, setShowSuccessAlert] = useState(false); //default is true for testing purpose
   const [showFailureAlert, setShowFailureAlert] = useState(false);
+  const [backdropOpen, setBackdropOpen] = useState(false); //loading page
+
   const handleClose = () => {
     setShowFailureAlert(false);
   };
@@ -64,8 +66,8 @@ export function SignUp() {
   };
 
   const onSubmit = async (e) => {
+    setBackdropOpen(true); //display loading page
     e.preventDefault();
-
     const modifyUser = {
       username: `${user.firstName} ${user.lastName}`,
       email: user.email,
@@ -96,6 +98,8 @@ export function SignUp() {
       }
       //@todo: implement more custom error messages.
       console.error("Error Caught on Sign Up: ", error);
+    } finally {
+      setBackdropOpen(false);
     }
   };
 
@@ -123,6 +127,13 @@ export function SignUp() {
             Sign Up
           </Typography>
           <Box component="form" noValidate onSubmit={onSubmit} sx={{ mt: 3 }}>
+            {/* loading state */}
+            <Backdrop
+              sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }}
+              open={backdropOpen}
+            >
+              <CircularProgress color="inherit" />
+            </Backdrop>
             {/* sign up success pop up modal */}
             <Modal
               open={showSuccessAlert}

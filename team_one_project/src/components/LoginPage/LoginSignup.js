@@ -19,6 +19,9 @@ import { useState } from "react";
 import { Modal } from "@mui/material";
 import { useCookies } from "react-cookie";
 import { ENDPOINT_URL } from "../../hooks/useConfig";
+import Backdrop from "@mui/material/Backdrop";
+
+import CircularProgress from "@mui/material/CircularProgress";
 
 const modalStyle = {
   position: "absolute",
@@ -37,6 +40,8 @@ export function LoginSignup() {
   const { auth, setAuth } = useAuth();
   const [showFailureAlert, setShowFailureAlert] = useState(false);
   const [showBadCredential, setBadCredential] = useState(false);
+  const [backdropOpen, setBackdropOpen] = useState(false); //loading page
+
   const handleClose = () => {
     setShowFailureAlert(false);
   };
@@ -51,6 +56,7 @@ export function LoginSignup() {
     }
   }, [auth, navigate]);
   const handleSubmit = async (e) => {
+    setBackdropOpen(true); //display loading page
     e.preventDefault();
     var data = new FormData(e.currentTarget);
     const userEmail = data.get("email");
@@ -87,6 +93,8 @@ export function LoginSignup() {
         //   navigate("/login/signup");
         // }, 3000);
       }
+    } finally {
+      setBackdropOpen(false);
     }
   };
 
@@ -95,6 +103,12 @@ export function LoginSignup() {
       <TopSVG></TopSVG>
       <Container component="main" maxWidth="xs">
         <CssBaseline />
+        <Backdrop
+          sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }}
+          open={backdropOpen}
+        >
+          <CircularProgress color="inherit" />
+        </Backdrop>
         <Modal
           open={showFailureAlert}
           onClose={handleClose}
