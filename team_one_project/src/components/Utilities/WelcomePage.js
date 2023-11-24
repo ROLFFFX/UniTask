@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import unitaskIcon from "../../images/UTLogo.png";
 import SwipeableCarouselWinodw from "./SwipeableCarouselWindow";
 
-const slideInFromLeft = `
+const slideInFromAbove = `
 @keyframes fadeSlideIn {
   from {
     transform: translateY(-100%);
@@ -12,6 +12,30 @@ const slideInFromLeft = `
   }
   to {
     transform: translateY(0);
+    opacity: 1;
+  }
+}
+`;
+
+const slideInFromBelow = `
+@keyframes slideInFromBelow {
+  from {
+    transform: translateY(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+`;
+
+const fadeIn = `
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
     opacity: 1;
   }
 }
@@ -34,6 +58,7 @@ export default function WelcomePage() {
           fontSize: "14px",
           marginTop: "30px",
           padding: "20px 40px",
+          animation: "fadeIn 2s ease-in",
         }}
         onClick={handleClick}
       >
@@ -50,11 +75,14 @@ export default function WelcomePage() {
       }}
       bgcolor="#212529"
     >
+      <style>{fadeIn}</style>
+      <style>{slideInFromBelow}</style>
+      <style>{slideInFromAbove}</style>
       <Grid container direction="row">
         <Grid item xs={12}>
           {/* Welcome Header */}
           <Box marginTop={5} style={{ animation: "fadeSlideIn 1.5s ease-out" }}>
-            <style>{slideInFromLeft}</style>
+            {/* <style>{slideInFromAbove}</style> */}
             <Grid container direction="row">
               <Grid
                 item
@@ -105,7 +133,8 @@ export default function WelcomePage() {
           <Grid item xs={12}></Grid>
           {/* introduction line below header */}
           <Grid item xs={12}>
-            <Box>
+            <Box style={{ animation: "slideInFromBelow 1.5s ease-out" }}>
+              {/* <style>{slideInFromBelow}</style> */}
               <Typography
                 fontSize="20px"
                 style={{ fontFamily: "Montserrat, sans-serif" }}
@@ -136,7 +165,15 @@ export default function WelcomePage() {
           </Grid>
           {/* sliding menu */}
           <Grid item xs={12}>
-            <SwipeableCarouselWinodw />
+            <Box
+              style={{
+                opacity: 0,
+                animation: "slideInFromBelow 2s ease-out 0.5s forwards",
+              }}
+            >
+              <style>{slideInFromBelow}</style>
+              <SwipeableCarouselWinodw />
+            </Box>
           </Grid>
         </Grid>
       </Grid>
