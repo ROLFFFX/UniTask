@@ -73,16 +73,4 @@ public class MeetingController {
         }
     }
 
-    //TODO: clear all timeslots that belongs to a project
-    @DeleteMapping("/meeting/{projectTitle}")
-    public ResponseEntity<Meeting> clearProjectTimeslots(@PathVariable String projectTitle,
-                                                 @PathVariable Long meetingId) {
-        try {
-            Meeting cur_meetings = meetingService.delete(projectTitle, meetingId);
-            return new ResponseEntity<>(cur_meetings, HttpStatus.OK);
-        } catch (Exception e) {
-            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-    }
-
 }

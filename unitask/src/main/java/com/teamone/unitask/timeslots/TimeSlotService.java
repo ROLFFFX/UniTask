@@ -140,4 +140,9 @@ public class TimeSlotService {
 
         return commonTS;
     }
+
+    public void clearProjTS(String projectTitle) {
+        Set<TimeSlot> timeSlots = new HashSet<>(projectRepository.findByProjectTitle(projectTitle).getTimeSlots());
+        timeSlotRepository.deleteAllInBatch(new ArrayList<>(timeSlots));
+    }
 }

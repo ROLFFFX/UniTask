@@ -82,4 +82,14 @@ public class TimeSlotController {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
+    @DeleteMapping("/timeslot/clearall/{projectTitle}")
+    public ResponseEntity<HttpStatus> clearAllProjectTS(@PathVariable String projectTitle) {
+        try {
+            timeSlotService.clearProjTS(projectTitle);
+            return new ResponseEntity<>(HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
 }

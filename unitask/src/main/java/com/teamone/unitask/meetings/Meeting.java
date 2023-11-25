@@ -7,6 +7,7 @@ import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
+import java.time.ZonedDateTime;
 
 @Entity
 @Table(name = "meeting")
@@ -28,11 +29,11 @@ public class Meeting {
 
     @NotNull
     @Column(name="start_time")
-    private LocalDateTime startTime;
+    private ZonedDateTime startTime;
 
     @NotNull
     @Column(name="end_time")
-    private LocalDateTime endTime;
+    private ZonedDateTime endTime;
 
     /**
      * foreign keys
@@ -52,7 +53,7 @@ public class Meeting {
 
     }
 
-    public Meeting(String title, LocalDateTime startTime, LocalDateTime endTime) {
+    public Meeting(String title, ZonedDateTime startTime, ZonedDateTime endTime) {
         this.title = title;
         this.startTime = startTime;
         this.endTime = endTime;
@@ -74,19 +75,19 @@ public class Meeting {
         this.title = title;
     }
 
-    public LocalDateTime getStartTime() {
+    public ZonedDateTime getStartTime() {
         return startTime;
     }
 
-    public void setStartTime(LocalDateTime startTime) {
+    public void setStartTime(ZonedDateTime startTime) {
         this.startTime = startTime;
     }
 
-    public LocalDateTime getEndTime() {
+    public ZonedDateTime getEndTime() {
         return endTime;
     }
 
-    public void setEndTime(LocalDateTime endTime) {
+    public void setEndTime(ZonedDateTime endTime) {
         this.endTime = endTime;
     }
 
