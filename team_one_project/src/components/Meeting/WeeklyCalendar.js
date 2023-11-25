@@ -239,7 +239,7 @@ const WeeklyCalendar = () => {
     //(AVALIABLE TIME SLOTS) Get meeting time slots
     const fetchAvaliable = async () => {
         try {
-            const response = await axios.get(`${ENDPOINT_URL}api/test/meeting/${projectTitle}`,
+            const response = await axios.get(`${ENDPOINT_URL}api/test/timeslot/overlap/${projectTitle}`,
                 {
                     headers: {
                         Authorization: `Bearer ${auth.user.userJWT}`,
@@ -290,7 +290,7 @@ const WeeklyCalendar = () => {
     const fetchMeetings = async () => {
         console.log("fetchMeetings");
         try {
-            const response = await axios.get(`${ENDPOINT_URL}api/test/timeslot/overlap/${projectTitle}`,
+            const response = await axios.get(`${ENDPOINT_URL}api/test/meeting/${projectTitle}`,
                 {
                     headers: {
                         Authorization: `Bearer ${auth.user.userJWT}`,
