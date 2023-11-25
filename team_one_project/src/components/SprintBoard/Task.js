@@ -10,8 +10,6 @@ import editIcon from "../../images/edit.png";
 import settingsIcon from "../../images/dots.png";
 
 function Task({ taskData, onDelete, onEdit }) {
-  console.log("Task to be processed: ");
-  console.log(taskData);
   const [subtasks, setSubtasks] = useState([]);
   const [newSubtask, setNewSubtask] = useState("");
   const [isAddingSubtask, setIsAddingSubtask] = useState(false);

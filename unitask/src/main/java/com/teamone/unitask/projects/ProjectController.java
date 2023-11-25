@@ -33,23 +33,21 @@ public class ProjectController {
     @Autowired
     ProjectRepository projectRepository;
 
-//    @CrossOrigin(origins = "https://uni-task-beta-front.vercel.app/", allowCredentials = "true")
-@CrossOrigin(origins = "http://localhost:3000", allowCredentials = "true")
-@PostMapping("/createNewWorkspace")
+    //    @CrossOrigin(origins = "https://uni-task-beta-front.vercel.app/", allowCredentials = "true")
+    @CrossOrigin(origins = "http://localhost:3000", allowCredentials = "true")
+    @PostMapping("/createNewWorkspace")
     public ResponseEntity<Project> createProject(@RequestBody Project requestProject,
                                                  @RequestHeader("Authorization") String header) {
-        User curUser = userService.getUserEmailFromToken(header);
-        Project _project = null;
-
         if (projectRepository.existsByProjectTitle(requestProject.getProjectTitle())) {
-            _project = projectRepository.findByProjectTitle(requestProject.getProjectTitle());
-            curUser.addProject(_project);
-        } else {
-            curUser.addProject(requestProject);
-            projectRepository.save(requestProject);
-            _project = requestProject;
+//            _project = projectRepository.findByProjectTitle(requestProject.getProjectTitle());
+//            curUser.addProject(_project);
+            return new ResponseEntity<>(null, HttpStatus.FORBIDDEN);
         }
 
+        User curUser = userService.getUserEmailFromToken(header);
+        Project _project = requestProject;
+        projectRepository.save(_project);
+        curUser.addProject(_project);
         userRepository.save(curUser);
 
         return new ResponseEntity<>(_project, HttpStatus.CREATED);

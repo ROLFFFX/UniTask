@@ -1,5 +1,6 @@
 package com.teamone.unitask.tasks;
 
+import com.teamone.unitask.onboard.usermodels.User;
 import com.teamone.unitask.projects.Project;
 import com.teamone.unitask.tasks.Task;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -17,4 +18,6 @@ public interface TaskRepository extends JpaRepository<Task, Long> {
     List<Task> findByParentTaskId(Long parentTaskId);
 
     boolean existsByTaskId(Long id);
+
+    List<Task> findTasksByTaskMemberAssignedAndProjectBelonged(User memberAssigned, Project projectBelonged);
 }

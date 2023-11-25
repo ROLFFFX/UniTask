@@ -1,66 +1,35 @@
 import { Box } from "@mui/material";
-import Task from "./Task";
-import Popper from "@mui/material/Popper";
-import React, { useState, useEffect } from "react";
-import "../../App.css";
-import add_button_favicon from "../../images/add_button_favicon.png";
-import chevron_favicon from "../../images/chevron_favicon.png";
-import circle_blue_favicon from "../../images/circle_blue_favicon.png";
-import circle_orange_favicon from "../../images/circle_orange_favicon.png";
-import deleteIcon from "../../images/delete.png";
-import editIcon from "../../images/edit.png";
-import settingsIcon from "../../images/dots.png";
-import "./MainSprintBoard.css";
-import { v4 as uuidv4 } from "uuid";
-import axios from "axios";
-import { ENDPOINT_URL } from "../../hooks/useConfig";
 import Backdrop from "@mui/material/Backdrop";
-import useAuth from "../../hooks/useAuth";
 import CircularProgress from "@mui/material/CircularProgress";
-
-const dummyTaskfromBackend = [
-  {
-    taskID: 1,
-    taskName: "API implementation",
-    userName: "Alec",
-    status: "Todo",
-    duedate: "2023-12-01",
-    taskPoints: "8",
-  }, //userName is assignee
-  {
-    taskID: 2,
-    taskName: "Clear up css",
-    userName: "Alec",
-    status: "Todo",
-    duedate: "2023-12-01",
-    taskPoints: "5",
-  }, //userName is assignee
-  // {
-  //   taskID: 3,
-  //   taskName: "In progress task",
-  //   userName: "Sichen",
-  //   status: "Doing",
-  //   duedate: "2023-12-01",
-  //   taskPoints: "3",
-  // }, //userName is assignee
-  // {
-  //   taskID: 4,
-  //   taskName: "Done task",
-  //   userName: "Rolf",
-  //   status: "Done",
-  //   duedate: "2023-12-01",
-  //   taskPoints: "1",
-  // }, //userName is assignee
-];
+import Popper from "@mui/material/Popper";
+import axios from "axios";
+import React, { useEffect, useState } from "react";
+import "../../App.css";
+import useAuth from "../../hooks/useAuth";
+import { ENDPOINT_URL } from "../../hooks/useConfig";
+import add_button_favicon from "../../images/add_button_favicon.png";
+import "./MainSprintBoard.css";
+import Task from "./Task";
 
 export function MainSprintBoard() {
-  const { auth } = useAuth();
-  const [backdropOpen, setBackdropOpen] = useState(false); //loading page
+  /* useState Declarations-------------------------------------------------------------------------------------------------------------------- */
+  const { auth } = useAuth(); // auth state to retrieve project title, currently signed in user email and user name
+  const [backdropOpen, setBackdropOpen] = useState(false); // loading page controller
+  const [users, setUsers] = useState([]); // state to store team members
+  const projectTitle = auth.selectedWorkspace; // project title
+  const [anchorEl, setAnchorEl] = useState(null); // adding task popper controller
+  const open = Boolean(anchorEl); // adding task popper controller
+  const [teamName, setTeamName] = useState(projectTitle); //teamName is initialized as the projectTitle and updated at global auth state.
+  const [unformattedTasks, setUnformattedTasks] = useState(); //state to store raw tasks fetched from GET
+  const [tasks, setTasks] = useState([]); // state to store all tasks fetched from GET
+  const [taskNameInput, setTaskNameInput] = useState(""); // state to store task name input for adding new task
+  const [assigneeInput, setAssigneeInput] = useState(""); // state to store assignee input for adding new task
+  const [dueDateInput, setDueDateInput] = useState(""); // state to store expected complete time for adding new task
+  const [taskPointsInput, setTaskPointsInput] = useState(1); // state to store taskpoints for adding new task
+  /* End of useState Declarations-------------------------------------------------------------------------------------------------------------------- */
 
-  /* Helper functions for request cycles */
-  /* First Step: Getting project members */
-  const [users, setUsers] = useState([]);
-  const projectTitle = auth.selectedWorkspace;
+  /* Requests declarations-------------------------------------------------------------------------------------------------------------------- */
+  // GET Method for fetching Team Members in current workpsace
   const fetchTeamMembers = async () => {
     setBackdropOpen(true); //display loading page
     try {
@@ -82,28 +51,8 @@ export function MainSprintBoard() {
       setBackdropOpen(false);
     }
   };
-  useEffect(() => {
-    // This useEffect hook will refetch the team members for initial rendering. The dependency list is not finalized.
-    fetchTeamMembers();
-  }, []);
-  const refreshTeamMembers = () => {
-    //refetch team member, specifically used after success invitation
-    fetchTeamMembers(); // Re-fetch team members
-  };
-  /* First Step: End of Getting project members */
 
-  // From MUI Popper.js tutorial:
-  const [anchorEl, setAnchorEl] = useState(null);
-  const open = Boolean(anchorEl);
-
-  const [teamName, setTeamName] = useState(projectTitle); //teamName is initialized as the projectTitle initialized and updated at global auth state.
-  const [tasks, setTasks] = useState([]);
-  const [taskNameInput, setTaskNameInput] = useState("");
-  const [assigneeInput, setAssigneeInput] = useState("");
-  const [dueDateInput, setDueDateInput] = useState("");
-  const [taskPointsInput, setTaskPointsInput] = useState(1);
-
-  const [unformattedTasks, setUnformattedTasks] = useState();
+  // GET Method for fetching all Tasks in current workspace
   const fetchAllTasks = async () => {
     try {
       const response = await axios.get(
@@ -114,7 +63,6 @@ export function MainSprintBoard() {
           },
         }
       );
-      // console.log(response); //this response contains all tasks
       setUnformattedTasks(response.data);
       console.log("Done fetching tasks successfully!");
     } catch (error) {
@@ -122,40 +70,14 @@ export function MainSprintBoard() {
     }
   };
 
-  // Reformat task data from backend into taskData format
-  // const unpackTaskData = (backendTasks) => {
-  //   // Process each list (task with its subtasks)
-  //   const reformattedTasks = backendTasks.map((taskList) => {
-  //     const [mainTask, ...subTasks] = taskList;
-  //     return {
-  //       taskID: mainTask.taskId,
-  //       title: mainTask.title,
-  //       assignee: "Yuxuan Shi", // to be adjusted mainTask.userName
-  //       dueDate: mainTask.expectedCompleteTime,
-  //       status: mainTask.status,
-  //       taskPoints: mainTask.taskPoints,
-  //       subtaskList: subTasks.map((subTask) => ({
-  //         taskID: subTask.taskId,
-  //         title: subTask.title,
-  //         assignee: subTask.userName, // todo
-  //         dueDate: subTask.expectedCompleteTime,
-  //         status: subTask.status,
-  //         taskPoints: subTask.taskPoints,
-  //         // Add more fields if necessary
-  //       })),
-  //     };
-  //   });
-
-  //   setTasks(reformattedTasks);
-  // };
+  // Helper function for formatting raw data from GET Method
   const unpackTaskData = (backendTasks) => {
     const reformattedTasks = backendTasks.flatMap((taskList) => {
       const [mainTask, ...subTasks] = taskList;
-
       return {
         taskID: mainTask.taskId,
         title: mainTask.title,
-        assignee: "Yuxuan Shi", // to be adjusted, mainTask.userName
+        assignee: "Unassigned",
         dueDate: mainTask.expectedCompleteTime,
         status: mainTask.status,
         taskPoints: mainTask.taskPoints,
@@ -169,63 +91,12 @@ export function MainSprintBoard() {
         })),
       };
     });
-
-    console.log(reformattedTasks); // Debugging line
     setTasks(reformattedTasks);
   };
 
-  useEffect(() => {
-    fetchAllTasks();
-    // GET all tasks from backend
-  }, []);
-
-  useEffect(() => {
-    if (unformattedTasks) {
-      unpackTaskData(unformattedTasks);
-    }
-  }, [unformattedTasks]);
-
-  // Show task creation popup menu
-  const openTaskPopup = (event) => {
-    setAnchorEl(anchorEl ? null : event.currentTarget);
-  };
-
-  // Close task popup menu and submit data
-  const closeTaskPopup = () => {
-    setAnchorEl(null); // Close popup window
-    // if (taskNameInput) {
-    // TODO: send data to backend
-    const taskData = {
-      title: taskNameInput.valueOf(),
-      assignee: assigneeInput.valueOf(),
-      dueDate: dueDateInput.valueOf(),
-      status: "Not Started",
-      taskPoints: taskPointsInput.valueOf(),
-      //parentTaskID: null, // TODO: set parent ID if applicable
-      //numLayers: 1, // TODO: calculate layer count
-      subtaskList: [],
-    };
-
-    createTask(taskData);
-
-    // Reset input fields
-    setTaskNameInput("");
-    setTaskPointsInput(1);
-    setAssigneeInput("Unassigned");
-    setDueDateInput("");
-    // }
-  };
-
-  //axios.post new Task
+  // POST Method for adding new Task
   const createTask = (taskData) => {
-    // // Add the new task to the tasks array
-    // setTasks([...tasks, taskData]);    Task State should be handled by the Get Method
-    // console.log("This is the task info before inserting into db: ");
-    // console.log(taskData); // Fix bug where tasks list is always one behind
-    // TODO: insert data into database
-
     // Step 1: Format the request body to be sent
-    // convert date object
     let dateObject = new Date(taskData.dueDate);
     let isoDateString = dateObject.toISOString();
     const requestBody = {
@@ -238,8 +109,6 @@ export function MainSprintBoard() {
     const taskId = -1; //create Task only create parent task, hence taskId is null. **should be long
     const username = taskData.assignee;
     const jwt = auth.user.userJWT;
-    // console.log(requestBody);
-    //start post request to create new task
     axios
       .post(
         `${ENDPOINT_URL}tasks/createTask?taskId=${taskId}&projectTitle=${projectTitle}&username=${assignee}`,
@@ -261,10 +130,54 @@ export function MainSprintBoard() {
       .finally(fetchAllTasks());
   };
 
+  // DELETE Method for Delete Given Task
+  const deleteTask = (taskId) => {
+    const updatedTasks = tasks.filter((task) => task.id !== taskId);
+    setTasks(updatedTasks);
+  };
+
+  // PUT Method for Updating Task Info
+  const editTask = (newTaskData) => {
+    const updatedTasks = tasks.map((task) =>
+      task.id === newTaskData.id ? newTaskData : task
+    );
+    setTasks(updatedTasks);
+  };
+  /* End of request declarations-------------------------------------------------------------------------------------------------------------------- */
+
+  /* Other Helper Functions-------------------------------------------------------------------------------------------------------------------- */
+  // Controller: open adding new task popper
+  const openTaskPopup = (event) => {
+    setAnchorEl(anchorEl ? null : event.currentTarget);
+  };
+
+  // Controller: close adding new task popper
+  // when closing popper, it also handles submitting the request and calls POST Method for adding new task
+  const closeTaskPopup = () => {
+    setAnchorEl(null); // Close popup window
+    const taskData = {
+      title: taskNameInput.valueOf(),
+      assignee: assigneeInput.valueOf(),
+      dueDate: dueDateInput.valueOf(),
+      status: "Not Started",
+      taskPoints: taskPointsInput.valueOf(),
+      //parentTaskID: null, // TODO: set parent ID if applicable
+      //numLayers: 1, // TODO: calculate layer count
+      subtaskList: [],
+    };
+    createTask(taskData);
+    // Reset input fields
+    setTaskNameInput("");
+    setTaskPointsInput(1);
+    setAssigneeInput("Unassigned");
+    setDueDateInput("");
+    // }
+  };
+
+  // Drag & Drop functionality
   const onDragOver = (e) => {
     e.preventDefault(); // Allow drop
   };
-
   const onDrop = (e, targetContainerId) => {
     e.preventDefault(); // Allow drop
     const taskId = Number(e.dataTransfer.getData("text/plain"));
@@ -284,28 +197,36 @@ export function MainSprintBoard() {
         (task) => task.taskID === taskId
       );
       const draggedTask = updatedTasks[taskIndex];
-
       // Remove the task from its current position
       updatedTasks.splice(taskIndex, 1);
-
       // Insert the task at the bottom of the column
       updatedTasks.push({ ...draggedTask, status: newStatus });
-
       return updatedTasks;
     });
   };
+  /* End of Other Helper Functions-------------------------------------------------------------------------------------------------------------------- */
 
-  const deleteTask = (taskId) => {
-    const updatedTasks = tasks.filter((task) => task.id !== taskId);
-    setTasks(updatedTasks);
-  };
+  /* useEffect Declarations-------------------------------------------------------------------------------------------------------------------- */
+  /* useEffect order should not be altered as it strictly instructs the rendering order logic */
+  useEffect(() => {
+    fetchAllTasks();
+    // GET all tasks from backend
+  }, []);
 
-  const editTask = (newTaskData) => {
-    const updatedTasks = tasks.map((task) =>
-      task.id === newTaskData.id ? newTaskData : task
-    );
-    setTasks(updatedTasks);
+  useEffect(() => {
+    if (unformattedTasks) {
+      unpackTaskData(unformattedTasks);
+    }
+  }, [unformattedTasks]);
+  useEffect(() => {
+    // This useEffect hook will refetch the team members for initial rendering. The dependency list is not finalized.
+    fetchTeamMembers();
+  }, []);
+  const refreshTeamMembers = () => {
+    //refetch team member, specifically used after success invitation
+    fetchTeamMembers(); // Re-fetch team members
   };
+  /* End of useEffect Declarations-------------------------------------------------------------------------------------------------------------------- */
 
   return (
     <React.Fragment>
@@ -378,23 +299,6 @@ export function MainSprintBoard() {
                 </button>
               </Box>
             </Popper>
-            {/* <div
-              className="grid-item"
-              id="tasksColumn"
-              onDragOver={onDragOver}
-              onDrop={(e) => onDrop(e, "tasksColumn")}
-            >
-              {tasks
-                .filter((task) => task.status.includes("Not Started"))
-                .map((task) => (
-                  <Task
-                    key={task.id}
-                    taskData={task}
-                    onDelete={deleteTask}
-                    onEdit={editTask}
-                  />
-                ))}
-            </div> */}
             <div
               className="grid-item"
               id="tasksColumn"
