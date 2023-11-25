@@ -155,7 +155,7 @@ export function MainSprintBoard() {
       title: task.title,
       status: newStatus,
       taskPoints: task.taskPoints,
-      expectedCompleteTime: formatDate, // Make sure this is in the correct format
+      expectedCompleteTime: formattedDate, // Make sure this is in the correct format
     };
 
     try {
@@ -213,6 +213,7 @@ export function MainSprintBoard() {
     // }
   };
 
+  // convert string "YYYY-MM-DD" to Date object
   const formatDate = (date) => {
     if (!date) return null;
     const d = new Date(date);
@@ -223,7 +224,8 @@ export function MainSprintBoard() {
     if (month.length < 2) month = "0" + month;
     if (day.length < 2) day = "0" + day;
 
-    return [year, month, day].join("-");
+    // Append a default time if your backend requires LocalDateTime
+    return [year, month, day].join("-") + "T00:00:00"; // Adjust time as needed
   };
 
   // Drag & Drop functionality

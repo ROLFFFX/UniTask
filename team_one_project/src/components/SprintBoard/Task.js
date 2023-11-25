@@ -128,7 +128,6 @@ function Task({ taskData, onDelete, onEdit, refreshTasks }) {
       setBackdropOpen(false);
     }
   };
-
   /* End of Request Declaration-------------------------------------------------------------------------------------------------------------------- */
 
   // useEffect(() => {
