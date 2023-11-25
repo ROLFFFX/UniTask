@@ -117,7 +117,7 @@ export function MainSprintBoard() {
     setBackdropOpen(true); //display loading page
     // Step 1: Format the request body to be sent
     let dateObject = new Date(taskData.dueDate);
-    let isoDateString = dateObject.toISOString();
+    let isoDateString = dateObject ? dateObject.toISOString() : null;
     const requestBody = {
       title: taskData.title,
       status: taskData.status,
@@ -232,32 +232,7 @@ export function MainSprintBoard() {
   const onDragOver = (e) => {
     e.preventDefault(); // Allow drop
   };
-  // const onDrop = (e, targetContainerId) => {
-  //   e.preventDefault(); // Allow drop
-  //   const taskId = Number(e.dataTransfer.getData("text/plain"));
-  //   const statusByColumn = {
-  //     // Dict with status values corresponding to each column
-  //     tasksColumn: "Not Started",
-  //     todoColumn: "Todo",
-  //     doingColumn: "Doing",
-  //     doneColumn: "Done",
-  //   };
-  //   const newStatus = statusByColumn[targetContainerId];
 
-  //   // Update task list to adjust status of dropped task
-  //   setTasks((prevTasks) => {
-  //     const updatedTasks = [...prevTasks];
-  //     const taskIndex = updatedTasks.findIndex(
-  //       (task) => task.taskID === taskId
-  //     );
-  //     const draggedTask = updatedTasks[taskIndex];
-  //     // Remove the task from its current position
-  //     updatedTasks.splice(taskIndex, 1);
-  //     // Insert the task at the bottom of the column
-  //     updatedTasks.push({ ...draggedTask, status: newStatus });
-  //     return updatedTasks;
-  //   });
-  // };
   const onDrop = (e, targetContainerId) => {
     e.preventDefault();
     const taskId = Number(e.dataTransfer.getData("text/plain"));
@@ -478,6 +453,10 @@ export function MainSprintBoard() {
               id="tasksColumn"
               onDragOver={onDragOver}
               onDrop={(e) => onDrop(e, "tasksColumn")}
+              style={{
+                overflowY: "auto", // Adds vertical scrollbar when needed
+                maxHeight: "calc(100vh - 185px)", // Adjust the 100px to account for headers/footers
+              }}
             >
               {tasks
                 .filter((task) =>
@@ -501,6 +480,10 @@ export function MainSprintBoard() {
               id="todoColumn"
               onDragOver={onDragOver}
               onDrop={(e) => onDrop(e, "todoColumn")}
+              style={{
+                overflowY: "auto", // Adds vertical scrollbar when needed
+                maxHeight: "calc(100vh - 185px)", // Adjust the 100px to account for headers/footers
+              }}
             >
               {tasks
                 .filter((task) => task.status.toLowerCase().includes("todo"))
@@ -522,6 +505,10 @@ export function MainSprintBoard() {
               id="doingColumn"
               onDragOver={onDragOver}
               onDrop={(e) => onDrop(e, "doingColumn")}
+              style={{
+                overflowY: "auto", // Adds vertical scrollbar when needed
+                maxHeight: "calc(100vh - 185px)", // Adjust the 100px to account for headers/footers
+              }}
             >
               {tasks
                 .filter((task) => task.status.toLowerCase().includes("doing"))
@@ -543,6 +530,10 @@ export function MainSprintBoard() {
               id="doneColumn"
               onDragOver={onDragOver}
               onDrop={(e) => onDrop(e, "doneColumn")}
+              style={{
+                overflowY: "auto", // Adds vertical scrollbar when needed
+                maxHeight: "calc(100vh - 185px)", // Adjust the 100px to account for headers/footers
+              }}
             >
               {tasks
                 .filter((task) => task.status.toLowerCase().includes("done"))
