@@ -54,6 +54,7 @@ export function MainSprintBoard() {
 
   // GET Method for fetching all Tasks in current workspace
   const fetchAllTasks = async () => {
+    setBackdropOpen(true); //display loading page
     try {
       const response = await axios.get(
         `${ENDPOINT_URL}tasks/getAllTask?projectTitle=${projectTitle}`,
@@ -67,24 +68,41 @@ export function MainSprintBoard() {
       console.log("Done fetching tasks successfully!");
     } catch (error) {
       console.error("Error fetching tasks: ", error);
+    } finally {
+      setBackdropOpen(false);
     }
   };
 
   // Helper function for formatting raw data from GET Method
+  // Controls the intermediate stage of converting raw data to what's rendered on page
   const unpackTaskData = (backendTasks) => {
     const reformattedTasks = backendTasks.flatMap((taskList) => {
       const [mainTask, ...subTasks] = taskList;
+      // console.log("Unpacking..");
+      // // console.log(mainTask);
+      // console.log(subTasks);
+      // console.log("Unpacking..done");
+
       return {
         taskID: mainTask.taskId,
         title: mainTask.title,
-        assignee: "Unassigned",
-        dueDate: mainTask.expectedCompleteTime,
+        // render task member assigned if there is one, else "Unassigneds"
+        assignee:
+          mainTask.taskMemberAssigned && mainTask.taskMemberAssigned.username
+            ? mainTask.taskMemberAssigned.username
+            : "Unassigned",
+        dueDate: mainTask.expectedCompleteTime
+          ? mainTask.expectedCompleteTime.split("T")[0] //Extract only the Date part, excluding time in day
+          : null,
         status: mainTask.status,
         taskPoints: mainTask.taskPoints,
         subtaskList: subTasks.map((subTask) => ({
           taskID: subTask.taskId,
           title: subTask.title,
-          assignee: subTask.userName, // Adjust based on your data
+          assignee:
+            subTask.taskMemberAssigned && subTask.taskMemberAssigned.username
+              ? subTask.taskMemberAssigned.username
+              : "Unassigned",
           dueDate: subTask.expectedCompleteTime,
           status: subTask.status,
           taskPoints: subTask.taskPoints,
@@ -96,6 +114,7 @@ export function MainSprintBoard() {
 
   // POST Method for adding new Task
   const createTask = (taskData) => {
+    setBackdropOpen(true); //display loading page
     // Step 1: Format the request body to be sent
     let dateObject = new Date(taskData.dueDate);
     let isoDateString = dateObject.toISOString();
@@ -107,8 +126,6 @@ export function MainSprintBoard() {
     };
     const assignee = taskData.assignee;
     const taskId = -1; //create Task only create parent task, hence taskId is null. **should be long
-    const username = taskData.assignee;
-    const jwt = auth.user.userJWT;
     axios
       .post(
         `${ENDPOINT_URL}tasks/createTask?taskId=${taskId}&projectTitle=${projectTitle}&username=${assignee}`,
@@ -127,7 +144,29 @@ export function MainSprintBoard() {
       .catch((error) => {
         console.error("Error creating task:", error);
       })
-      .finally(fetchAllTasks());
+      .finally(fetchAllTasks(), setBackdropOpen(false));
+  };
+
+  // PUT Method for updating Task Status
+  const updateTaskStatus = async (task, newStatus) => {
+    const url = `${ENDPOINT_URL}tasks/updateTask?taskId=${task.taskID}&username=null`; // Adjust the URL as needed
+    const formattedDate = formatDate(task.dueDate); // Format the date
+    const payload = {
+      title: task.title,
+      status: newStatus,
+      taskPoints: task.taskPoints,
+      expectedCompleteTime: formatDate, // Make sure this is in the correct format
+    };
+
+    try {
+      const response = await axios.put(url, payload, {
+        headers: { Authorization: `Bearer ${auth.user.userJWT}` },
+      });
+      console.log("Task status updated:", response.data);
+      fetchAllTasks(); // Refresh the task list after updating
+    } catch (error) {
+      console.error("Error updating task status:", error);
+    }
   };
 
   // DELETE Method for Delete Given Task
@@ -174,15 +213,53 @@ export function MainSprintBoard() {
     // }
   };
 
+  const formatDate = (date) => {
+    if (!date) return null;
+    const d = new Date(date);
+    let month = "" + (d.getMonth() + 1);
+    let day = "" + d.getDate();
+    let year = d.getFullYear();
+
+    if (month.length < 2) month = "0" + month;
+    if (day.length < 2) day = "0" + day;
+
+    return [year, month, day].join("-");
+  };
+
   // Drag & Drop functionality
   const onDragOver = (e) => {
     e.preventDefault(); // Allow drop
   };
+  // const onDrop = (e, targetContainerId) => {
+  //   e.preventDefault(); // Allow drop
+  //   const taskId = Number(e.dataTransfer.getData("text/plain"));
+  //   const statusByColumn = {
+  //     // Dict with status values corresponding to each column
+  //     tasksColumn: "Not Started",
+  //     todoColumn: "Todo",
+  //     doingColumn: "Doing",
+  //     doneColumn: "Done",
+  //   };
+  //   const newStatus = statusByColumn[targetContainerId];
+
+  //   // Update task list to adjust status of dropped task
+  //   setTasks((prevTasks) => {
+  //     const updatedTasks = [...prevTasks];
+  //     const taskIndex = updatedTasks.findIndex(
+  //       (task) => task.taskID === taskId
+  //     );
+  //     const draggedTask = updatedTasks[taskIndex];
+  //     // Remove the task from its current position
+  //     updatedTasks.splice(taskIndex, 1);
+  //     // Insert the task at the bottom of the column
+  //     updatedTasks.push({ ...draggedTask, status: newStatus });
+  //     return updatedTasks;
+  //   });
+  // };
   const onDrop = (e, targetContainerId) => {
-    e.preventDefault(); // Allow drop
+    e.preventDefault();
     const taskId = Number(e.dataTransfer.getData("text/plain"));
     const statusByColumn = {
-      // Dict with status values corresponding to each column
       tasksColumn: "Not Started",
       todoColumn: "Todo",
       doingColumn: "Doing",
@@ -190,20 +267,22 @@ export function MainSprintBoard() {
     };
     const newStatus = statusByColumn[targetContainerId];
 
-    // Update task list to adjust status of dropped task
     setTasks((prevTasks) => {
       const updatedTasks = [...prevTasks];
       const taskIndex = updatedTasks.findIndex(
         (task) => task.taskID === taskId
       );
-      const draggedTask = updatedTasks[taskIndex];
-      // Remove the task from its current position
-      updatedTasks.splice(taskIndex, 1);
-      // Insert the task at the bottom of the column
-      updatedTasks.push({ ...draggedTask, status: newStatus });
+      if (taskIndex > -1) {
+        const updatedTask = { ...updatedTasks[taskIndex], status: newStatus };
+        updatedTasks.splice(taskIndex, 1);
+        updatedTasks.push(updatedTask);
+
+        updateTaskStatus(updatedTask, newStatus); // Update task status in backend
+      }
       return updatedTasks;
     });
   };
+
   /* End of Other Helper Functions-------------------------------------------------------------------------------------------------------------------- */
 
   /* useEffect Declarations-------------------------------------------------------------------------------------------------------------------- */
@@ -228,6 +307,16 @@ export function MainSprintBoard() {
   };
   /* End of useEffect Declarations-------------------------------------------------------------------------------------------------------------------- */
 
+  if (backdropOpen || !unformattedTasks || !tasks) {
+    return (
+      <Backdrop
+        sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }}
+        open={backdropOpen}
+      >
+        <CircularProgress color="inherit" />
+      </Backdrop>
+    );
+  }
   return (
     <React.Fragment>
       <Backdrop
@@ -311,10 +400,11 @@ export function MainSprintBoard() {
                 )
                 .map((task) => (
                   <Task
-                    key={task.taskID} // Make sure this is the correct unique identifier
+                    key={task.taskId} // Make sure this is the correct unique identifier
                     taskData={task}
                     onDelete={deleteTask}
                     onEdit={editTask}
+                    refreshTasks={fetchAllTasks} // pass down prop to control rerender of tasks
                   />
                 ))}
             </div>
@@ -331,10 +421,11 @@ export function MainSprintBoard() {
                 .filter((task) => task.status.toLowerCase().includes("todo"))
                 .map((task) => (
                   <Task
-                    key={task.id}
+                    key={task.taskID}
                     taskData={task}
                     onDelete={deleteTask}
                     onEdit={editTask}
+                    refreshTasks={fetchAllTasks} // pass down prop to control rerender of tasks
                   />
                 ))}
             </div>
@@ -351,10 +442,11 @@ export function MainSprintBoard() {
                 .filter((task) => task.status.toLowerCase().includes("doing"))
                 .map((task) => (
                   <Task
-                    key={task.id}
+                    key={task.taskID}
                     taskData={task}
                     onDelete={deleteTask}
                     onEdit={editTask}
+                    refreshTasks={fetchAllTasks} // pass down prop to control rerender of tasks
                   />
                 ))}
             </div>
@@ -371,10 +463,11 @@ export function MainSprintBoard() {
                 .filter((task) => task.status.toLowerCase().includes("done"))
                 .map((task) => (
                   <Task
-                    key={task.id}
+                    key={task.taskID}
                     taskData={task}
                     onDelete={deleteTask}
                     onEdit={editTask}
+                    refreshTasks={fetchAllTasks} // pass down prop to control rerender of tasks
                   />
                 ))}
             </div>
