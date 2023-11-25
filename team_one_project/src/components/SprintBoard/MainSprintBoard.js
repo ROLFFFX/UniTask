@@ -348,7 +348,7 @@ export function MainSprintBoard() {
             <Popper id={"createTaskMenu"} open={open} anchorEl={anchorEl}>
               <Box
                 className="popupContent"
-                style={{ fontFamily: "Inter, sans-serif" }}
+                sx={{ fontFamily: "Inter, sans-serif", fontSize: "15px" }}
               >
                 <span>Title: </span>
                 <input
@@ -356,6 +356,7 @@ export function MainSprintBoard() {
                   id="taskNameInput"
                   value={taskNameInput}
                   onChange={(e) => setTaskNameInput(e.target.value)}
+                  style={{ marginLeft: "10px" }}
                 ></input>
                 <br></br>
                 <br></br>
@@ -365,7 +366,10 @@ export function MainSprintBoard() {
                   id="assigneeInput"
                   value={assigneeInput}
                   onChange={(e) => setAssigneeInput(e.target.value)}
-                  style={{ fontFamily: "Inter, sans-serif" }}
+                  style={{
+                    marginLeft: "10px",
+                    fontFamily: "Inter, sans-serif",
+                  }}
                 >
                   <option value="Unassigned">Unassigned</option>
                   {users.map((user, index) => (
@@ -386,7 +390,10 @@ export function MainSprintBoard() {
                   id="dueDateInput"
                   value={dueDateInput}
                   onChange={(e) => setDueDateInput(e.target.value)}
-                  style={{ fontFamily: "Inter, sans-serif" }}
+                  style={{
+                    fontFamily: "Inter, sans-serif",
+                    marginLeft: "10px",
+                  }}
                 ></input>
                 <br></br>
                 <br></br>
@@ -396,6 +403,7 @@ export function MainSprintBoard() {
                   id="taskPointsInput"
                   value={taskPointsInput}
                   onChange={(e) => setTaskPointsInput(e.target.value)}
+                  style={{ marginLeft: "10px" }}
                 ></input>
 
                 <button

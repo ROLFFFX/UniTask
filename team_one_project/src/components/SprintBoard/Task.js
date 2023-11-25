@@ -164,7 +164,6 @@ function Task({ taskData, onDelete, onEdit, refreshTasks }) {
       >
         <CircularProgress color="inherit" />
       </Backdrop>
-
       <div
         className={"task"}
         key={taskData.taskID}
