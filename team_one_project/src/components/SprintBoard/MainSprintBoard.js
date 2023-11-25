@@ -328,10 +328,14 @@ export function MainSprintBoard() {
         <CircularProgress color="inherit" />
       </Backdrop>
       <Box sx={{ marginLeft: "200px" }}>
-        <title>Taskboard</title>
+        <title style={{ fontFamily: "Inter, sans-serif" }}>Taskboard</title>
         <div id="main">
           <div className="grid-container" id="board">
-            <div className="grid-item" id="tasksHeader">
+            <div
+              className="grid-item"
+              id="tasksHeader"
+              style={{ fontFamily: "Inter, sans-serif" }}
+            >
               Tasks
               <img
                 id="addTaskButton"
@@ -342,7 +346,10 @@ export function MainSprintBoard() {
               ></img>
             </div>
             <Popper id={"createTaskMenu"} open={open} anchorEl={anchorEl}>
-              <Box className="popupContent">
+              <Box
+                className="popupContent"
+                style={{ fontFamily: "Inter, sans-serif" }}
+              >
                 <span>Title: </span>
                 <input
                   type="text"
@@ -358,10 +365,15 @@ export function MainSprintBoard() {
                   id="assigneeInput"
                   value={assigneeInput}
                   onChange={(e) => setAssigneeInput(e.target.value)}
+                  style={{ fontFamily: "Inter, sans-serif" }}
                 >
                   <option value="Unassigned">Unassigned</option>
                   {users.map((user, index) => (
-                    <option key={index} value={user}>
+                    <option
+                      key={index}
+                      value={user}
+                      style={{ fontFamily: "Inter, sans-serif" }}
+                    >
                       {user}
                     </option>
                   ))}
@@ -374,6 +386,7 @@ export function MainSprintBoard() {
                   id="dueDateInput"
                   value={dueDateInput}
                   onChange={(e) => setDueDateInput(e.target.value)}
+                  style={{ fontFamily: "Inter, sans-serif" }}
                 ></input>
                 <br></br>
                 <br></br>
@@ -385,7 +398,11 @@ export function MainSprintBoard() {
                   onChange={(e) => setTaskPointsInput(e.target.value)}
                 ></input>
 
-                <button id="closeTaskPopupButton" onClick={closeTaskPopup}>
+                <button
+                  id="closeTaskPopupButton"
+                  onClick={closeTaskPopup}
+                  style={{ fontFamily: "Inter, sans-serif" }}
+                >
                   Submit
                 </button>
               </Box>

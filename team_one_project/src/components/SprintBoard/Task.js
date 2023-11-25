@@ -6,6 +6,10 @@ import axios from "axios";
 import { ENDPOINT_URL } from "../../hooks/useConfig";
 import Backdrop from "@mui/material/Backdrop";
 import CircularProgress from "@mui/material/CircularProgress";
+import Menu from "@mui/material/Menu";
+import MenuItem from "@mui/material/MenuItem";
+import EditIcon from "@mui/icons-material/Edit";
+import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 
 function Task({ taskData, onDelete, onEdit, refreshTasks }) {
   /* Hooks Declarations-------------------------------------------------------------------------------------------------------------------- */
@@ -16,6 +20,8 @@ function Task({ taskData, onDelete, onEdit, refreshTasks }) {
   const [AddSub, setAddSub] = useState("idle");
   const [ShowSub, setShowSub] = useState("expand");
   const [backdropOpen, setBackdropOpen] = useState(false); // loading page controller
+  const [anchorEl, setAnchorEl] = React.useState(null); //controller: modify task drop down list
+  const open = Boolean(anchorEl);
 
   // Used to reference the current task being dragged
   const elementRef = useRef(null);
@@ -74,16 +80,15 @@ function Task({ taskData, onDelete, onEdit, refreshTasks }) {
   };
   const [isSettingsOpen, setIsSettingsOpen] = useState(false);
 
-  const deleteTask = () => {
-    onDelete(taskData.id);
+  const handleTaskMenu = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+  const handleCloseTaskMenu = () => {
+    setAnchorEl(null);
   };
 
-  const editTask = () => {
-    const newTaskName = prompt("Enter new task name");
-    if (newTaskName) {
-      const newTaskData = { ...taskData, title: newTaskName };
-      onEdit(newTaskData);
-    }
+  const handleDeleteTask = () => {
+    deleteTask();
   };
   /* End of Helper Methods-------------------------------------------------------------------------------------------------------------------- */
 
@@ -128,11 +133,28 @@ function Task({ taskData, onDelete, onEdit, refreshTasks }) {
       setBackdropOpen(false);
     }
   };
-  /* End of Request Declaration-------------------------------------------------------------------------------------------------------------------- */
 
-  // useEffect(() => {
-  //   console.log(taskData);
-  // }, []);
+  // DELETE Method to delete a task
+  const deleteTask = async () => {
+    setBackdropOpen(true); // Display loading backdrop
+    const taskId = taskData.taskID;
+    const url = `${ENDPOINT_URL}tasks/deleteTask?taskId=${taskId}`;
+    try {
+      const response = await axios.delete(url, {
+        headers: {
+          Authorization: `Bearer ${auth.user.userJWT}`,
+        },
+      });
+      console.log("Task deleted successfully:", response.data);
+      refreshTasks(); // Refresh the tasks to reflect the deletion
+    } catch (error) {
+      console.error("Error deleting the task:", error);
+    } finally {
+      setBackdropOpen(false);
+      handleCloseTaskMenu(); // Close the task menu
+    }
+  };
+  /* End of Request Declaration-------------------------------------------------------------------------------------------------------------------- */
 
   return (
     <React.Fragment>
@@ -150,6 +172,7 @@ function Task({ taskData, onDelete, onEdit, refreshTasks }) {
         ref={elementRef}
         onDragStart={(e) => drag(e)}
         onDragEnd={endDrag}
+        style={{ fontFamily: "Inter, sans-serif" }}
       >
         <div className="taskHeader">
           <div className="taskTitleLabel">{taskData.title}</div>
@@ -167,7 +190,44 @@ function Task({ taskData, onDelete, onEdit, refreshTasks }) {
               className="button newSubtaskButton"
               onClick={() => setIsAddingSubtask(true)}
             ></button>
-            <button className="button optionsButton"></button>
+            <button
+              className="button optionsButton"
+              id="demo-positioned-button"
+              aria-controls={open ? "demo-positioned-menu" : undefined}
+              aria-haspopup="true"
+              aria-expanded={open ? "true" : undefined}
+              onClick={(e) => handleTaskMenu(e)}
+            ></button>
+            <Menu
+              id="demo-positioned-menu"
+              aria-labelledby="demo-positioned-button"
+              anchorEl={anchorEl}
+              open={open}
+              onClose={handleCloseTaskMenu}
+              anchorOrigin={{
+                vertical: "top",
+                horizontal: "left",
+              }}
+              transformOrigin={{
+                vertical: "top",
+                horizontal: "left",
+              }}
+            >
+              <MenuItem
+                onClick={handleCloseTaskMenu}
+                style={{ fontFamily: "Inter, sans-serif", fontSize: "14px" }}
+              >
+                <EditIcon sx={{ marginRight: 1 }} />
+                Modify Task
+              </MenuItem>
+              <MenuItem
+                onClick={handleDeleteTask}
+                style={{ fontFamily: "Inter, sans-serif", fontSize: "14px" }}
+              >
+                <DeleteForeverIcon sx={{ marginRight: 1 }} />
+                Delete Task
+              </MenuItem>
+            </Menu>
           </div>
         </div>
 
@@ -178,9 +238,26 @@ function Task({ taskData, onDelete, onEdit, refreshTasks }) {
               <li className={"subtask"} key={subtask.taskID}>
                 <input
                   type="checkbox"
+                  style={{ display: "none" }}
+                  id={`custom-checkbox-${subtask.taskID}`}
                   checked={subtask.status === "Done"}
                   onChange={() => handleCheckboxChange(subtask)}
                 />
+                <label
+                  htmlFor={`custom-checkbox-${subtask.taskID}`}
+                  style={{
+                    display: "inline-block",
+                    width: "13px",
+                    height: "13px",
+                    backgroundColor:
+                      subtask.status === "Done" ? "#343A40" : "white",
+                    border: "1px solid #ccc",
+                    borderRadius: "50%",
+                    cursor: "pointer",
+                    marginRight: "10px",
+                    verticalAlign: "middle",
+                  }}
+                ></label>
                 {subtask.title}
               </li>
             ))}
