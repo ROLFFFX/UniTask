@@ -10,6 +10,24 @@ import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
+import Typography from "@mui/material/Typography";
+import Modal from "@mui/material/Modal";
+import Box from "@mui/material/Box";
+import Button from "@mui/material/Button";
+import Grid from "@mui/material/Grid";
+
+const modalStyle = {
+  position: "absolute",
+  top: "50%",
+  left: "50%",
+  transform: "translate(-50%, -50%)",
+  width: 400,
+  bgcolor: "background.paper",
+  border: "2px solid #000",
+  boxShadow: 24,
+  p: 4,
+  textAlign: "center",
+};
 
 function Task({ taskData, onDelete, onEdit, refreshTasks }) {
   /* Hooks Declarations-------------------------------------------------------------------------------------------------------------------- */
@@ -21,7 +39,14 @@ function Task({ taskData, onDelete, onEdit, refreshTasks }) {
   const [ShowSub, setShowSub] = useState("expand");
   const [backdropOpen, setBackdropOpen] = useState(false); // loading page controller
   const [anchorEl, setAnchorEl] = React.useState(null); //controller: modify task drop down list
-  const open = Boolean(anchorEl);
+  const open = Boolean(anchorEl); //controller: modify task drop down list
+  const [openDeleteConfirm, setOpenDeleteConfirm] = useState(false);
+  const handleOpenDeleteConfirm = () => {
+    setOpenDeleteConfirm(true);
+  };
+  const handleCloseDeleteConfirm = () => {
+    setOpenDeleteConfirm(false);
+  };
 
   // Used to reference the current task being dragged
   const elementRef = useRef(null);
@@ -88,7 +113,7 @@ function Task({ taskData, onDelete, onEdit, refreshTasks }) {
   };
 
   const handleDeleteTask = () => {
-    deleteTask();
+    setOpenDeleteConfirm(true);
   };
   /* End of Helper Methods-------------------------------------------------------------------------------------------------------------------- */
 
@@ -164,6 +189,57 @@ function Task({ taskData, onDelete, onEdit, refreshTasks }) {
       >
         <CircularProgress color="inherit" />
       </Backdrop>
+      {/* Delete Task Confirmation Pop Up Window */}
+      <Modal
+        open={openDeleteConfirm}
+        onClose={handleCloseDeleteConfirm}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+      >
+        <Box sx={modalStyle}>
+          <Typography
+            id="modal-modal-title"
+            variant="h6"
+            component="h2"
+            style={{ fontFamily: "Inter, sans-serif" }}
+          >
+            Warning!!
+          </Typography>
+          <Typography
+            id="modal-modal-description"
+            sx={{ mt: 2 }}
+            style={{ fontFamily: "Inter, sans-serif" }}
+          >
+            The deletion of a task is an irreversible action. Please confirm
+            that you wish to permanently remove this task.
+          </Typography>
+          <Grid container marginTop={5}>
+            <Grid item xs={6}>
+              <Button
+                variant="outlined"
+                color="inherit"
+                onClick={() => {
+                  handleCloseDeleteConfirm();
+                  handleCloseTaskMenu();
+                }}
+              >
+                Cancel
+              </Button>
+            </Grid>
+            <Grid item xs={6}>
+              <Button
+                variant="outlined"
+                color="error"
+                onClick={() => {
+                  deleteTask();
+                }}
+              >
+                I want to delete it
+              </Button>
+            </Grid>
+          </Grid>
+        </Box>
+      </Modal>
       <div
         className={"task"}
         key={taskData.taskID}
