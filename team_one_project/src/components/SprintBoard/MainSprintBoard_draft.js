@@ -1,4 +1,4 @@
-import { Box, Button, Typography, Grid } from "@mui/material";
+import { Box } from "@mui/material";
 import Backdrop from "@mui/material/Backdrop";
 import CircularProgress from "@mui/material/CircularProgress";
 import Popper from "@mui/material/Popper";
@@ -10,6 +10,8 @@ import { ENDPOINT_URL } from "../../hooks/useConfig";
 import add_button_favicon from "../../images/add_button_favicon.png";
 import "./MainSprintBoard.css";
 import Task from "./Task";
+import { FixedSizeList as List } from "react-window";
+import AutoSizer from "react-virtualized-auto-sizer";
 
 export function MainSprintBoard() {
   /* useState Declarations-------------------------------------------------------------------------------------------------------------------- */
@@ -232,32 +234,7 @@ export function MainSprintBoard() {
   const onDragOver = (e) => {
     e.preventDefault(); // Allow drop
   };
-  // const onDrop = (e, targetContainerId) => {
-  //   e.preventDefault(); // Allow drop
-  //   const taskId = Number(e.dataTransfer.getData("text/plain"));
-  //   const statusByColumn = {
-  //     // Dict with status values corresponding to each column
-  //     tasksColumn: "Not Started",
-  //     todoColumn: "Todo",
-  //     doingColumn: "Doing",
-  //     doneColumn: "Done",
-  //   };
-  //   const newStatus = statusByColumn[targetContainerId];
 
-  //   // Update task list to adjust status of dropped task
-  //   setTasks((prevTasks) => {
-  //     const updatedTasks = [...prevTasks];
-  //     const taskIndex = updatedTasks.findIndex(
-  //       (task) => task.taskID === taskId
-  //     );
-  //     const draggedTask = updatedTasks[taskIndex];
-  //     // Remove the task from its current position
-  //     updatedTasks.splice(taskIndex, 1);
-  //     // Insert the task at the bottom of the column
-  //     updatedTasks.push({ ...draggedTask, status: newStatus });
-  //     return updatedTasks;
-  //   });
-  // };
   const onDrop = (e, targetContainerId) => {
     e.preventDefault();
     const taskId = Number(e.dataTransfer.getData("text/plain"));
@@ -283,6 +260,22 @@ export function MainSprintBoard() {
       }
       return updatedTasks;
     });
+  };
+
+  // for rendering each task in react window
+  const TaskRow = ({ index, style, data }) => {
+    const task = data[index];
+    return (
+      <div style={style}>
+        <Task
+          key={task.taskID}
+          taskData={task}
+          onDelete={deleteTask}
+          onEdit={editTask}
+          refreshTasks={fetchAllTasks}
+        />
+      </div>
+    );
   };
 
   /* End of Other Helper Functions-------------------------------------------------------------------------------------------------------------------- */
@@ -350,23 +343,6 @@ export function MainSprintBoard() {
                 className="popupContent"
                 sx={{ fontFamily: "Inter, sans-serif", fontSize: "15px" }}
               >
-                <Box
-                  style={{
-                    display: "flex",
-                    justifyContent: "center",
-                    alignItems: "center",
-                  }}
-                >
-                  <Typography
-                    sx={{
-                      fontFamily: "Inter, sans-serif",
-                      fontSize: "18px",
-                      marginBottom: 3,
-                    }}
-                  >
-                    Create New Task
-                  </Typography>
-                </Box>
                 <span>Title: </span>
                 <input
                   type="text"
@@ -423,76 +399,48 @@ export function MainSprintBoard() {
                   style={{ marginLeft: "10px" }}
                 ></input>
 
-                <Grid container>
-                  <Grid item xs={12}>
-                    <Box
-                      style={{
-                        display: "flex",
-                        justifyContent: "center",
-                        alignItems: "center",
-                        marginTop: "30px",
-                      }}
-                    >
-                      <Button
-                        onClick={closeTaskPopup}
-                        style={{
-                          fontFamily: "Inter, sans-serif",
-                        }}
-                        variant="outlined"
-                        color="inherit"
-                        disabled={
-                          !taskNameInput ||
-                          !assigneeInput ||
-                          !dueDateInput ||
-                          !taskPointsInput
-                        }
-                      >
-                        Submit
-                      </Button>
-                    </Box>
-                  </Grid>
-                  <Grid>
-                    <Box
-                      style={{
-                        display: "flex",
-                        justifyContent: "center",
-                        alignItems: "center",
-                        marginTop: "15px",
-                      }}
-                    >
-                      <Typography
-                        style={{
-                          fontFamily: "Inter, sans-serif",
-                          fontSize: "11.5px",
-                        }}
-                      >
-                        *Please Complete All Fields to Submit Form
-                      </Typography>
-                    </Box>
-                  </Grid>
-                </Grid>
+                <button
+                  id="closeTaskPopupButton"
+                  onClick={closeTaskPopup}
+                  style={{ fontFamily: "Inter, sans-serif" }}
+                >
+                  Submit
+                </button>
               </Box>
             </Popper>
+            {/* Not Started Column */}
             <div
               className="grid-item"
               id="tasksColumn"
               onDragOver={onDragOver}
               onDrop={(e) => onDrop(e, "tasksColumn")}
             >
-              {tasks
-                .filter((task) =>
-                  task.status.toLowerCase().includes("not started")
-                )
-                .map((task) => (
-                  <Task
-                    key={task.taskId} // Make sure this is the correct unique identifier
-                    taskData={task}
-                    onDelete={deleteTask}
-                    onEdit={editTask}
-                    refreshTasks={fetchAllTasks} // pass down prop to control rerender of tasks
-                  />
-                ))}
+              <AutoSizer disableHeight>
+                {({ width }) => (
+                  <List
+                    height={660} // Adjust height as needed
+                    itemCount={
+                      tasks.filter((task) => task.status === "Not Started")
+                        .length
+                    }
+                    itemSize={110} // Adjust item size as needed
+                    width={width}
+                  >
+                    {({ index, style }) => (
+                      <Task
+                        key={tasks[index].taskID}
+                        taskData={tasks[index]}
+                        style={style}
+                        onDelete={deleteTask}
+                        onEdit={editTask}
+                        refreshTasks={fetchAllTasks}
+                      />
+                    )}
+                  </List>
+                )}
+              </AutoSizer>
             </div>
+            {/* TODO Column */}
             <div className="grid-item" id="todoHeader">
               TO DO
             </div>
