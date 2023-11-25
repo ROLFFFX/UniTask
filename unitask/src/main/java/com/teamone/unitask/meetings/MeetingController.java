@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@CrossOrigin(origins = "localhost:3000/meeting", maxAge = 3600)
+@CrossOrigin(origins = "http://localhost:3000", maxAge = 3600, allowCredentials = "true")
 @RestController
 @RequestMapping("/api/test")
 public class MeetingController {
@@ -19,10 +19,10 @@ public class MeetingController {
     public MeetingController(MeetingService meetingService){this.meetingService=meetingService;}
 
     //the list of events(meetings) selected by the group
-    @GetMapping("/meeting/{projectId}")
-    public ResponseEntity<List<Meeting>> getProjectMeetings(@PathVariable Long projectId) {
+    @GetMapping("/meeting/{projectTitle}")
+    public ResponseEntity<List<Meeting>> getProjectMeetings(@PathVariable String projectTitle) {
         try {
-          List<Meeting> meetings = meetingService.get(projectId);
+          List<Meeting> meetings = meetingService.get(projectTitle);
           if (meetings.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
           }
@@ -33,11 +33,11 @@ public class MeetingController {
     }
 
     //post a new event to the table, post it to the specific project
-    @PostMapping("/meeting/{projectId}")
-    public ResponseEntity<Meeting> createMeeting(@PathVariable Long projectId,
+    @PostMapping("/meeting/{projectTitle}")
+    public ResponseEntity<Meeting> createMeeting(@PathVariable String projectTitle,
                                                  @RequestBody Meeting meeting) {
         try {
-          Meeting new_meeting = meetingService.save(projectId, meeting.getTitle(),
+          Meeting new_meeting = meetingService.save(projectTitle, meeting.getTitle(),
           meeting.getStartTime(), meeting.getEndTime());
           return new ResponseEntity<>(new_meeting, HttpStatus.CREATED);
         } catch (Exception e) {
@@ -46,11 +46,11 @@ public class MeetingController {
     }
 
     //delete event, respond with the deleted meeting
-    @DeleteMapping("/meeting/{projectId}/{meetingId}")
-    public ResponseEntity<Meeting> deleteMeeting(@PathVariable Long projectId,
-                                                       @PathVariable Long meetingId) {
+    @DeleteMapping("/meeting/{projectTitle}/{meetingId}")
+    public ResponseEntity<Meeting> deleteMeeting(@PathVariable String projectTitle,
+                                                 @PathVariable Long meetingId) {
         try {
-            Meeting cur_meetings = meetingService.delete(projectId, meetingId);
+            Meeting cur_meetings = meetingService.delete(projectTitle, meetingId);
             return new ResponseEntity<>(cur_meetings, HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
@@ -59,11 +59,11 @@ public class MeetingController {
 
 
     //update event, respond with updated meeting
-    @PutMapping("/meeting/{projectId}")
-    public ResponseEntity<Meeting> updateMeeting(@PathVariable Long projectId,
+    @PutMapping("/meeting/{projectTitle}")
+    public ResponseEntity<Meeting> updateMeeting(@PathVariable String projectTitle,
                                                  @RequestBody Meeting meeting) {
         try {
-            Meeting updatedMeeting = meetingService.update(projectId, meeting);
+            Meeting updatedMeeting = meetingService.update(projectTitle, meeting);
             if (updatedMeeting == null) {
                 return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
             }

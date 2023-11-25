@@ -1,11 +1,14 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./SelectMeetingContent.css";
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
 import Button from '@mui/material/Button';
-import { useNavigate } from "react-router-dom";  // Make sure you have react-router-dom installed
+import { useNavigate } from "react-router-dom";
+import axios from 'axios';
+import {ENDPOINT_URL} from "../../hooks/useConfig";
+import useAuth from "../../hooks/useAuth";
 
 function getCurrentWeekDateRange(referenceDate) {
   const currentDate = new Date(referenceDate);
@@ -27,6 +30,7 @@ function getCurrentWeekDateRange(referenceDate) {
     formatOptions
   );
   const endDateString = endOfWeek.toLocaleDateString(undefined, formatOptions);
+  console.log(endDateString)
 
   return `${startDateString} - ${endDateString}`;
 }
@@ -34,37 +38,145 @@ function getCurrentWeekDateRange(referenceDate) {
 export function SelectMeetingContent() {
   const [referenceDate, setReferenceDate] = useState(new Date());
   const dateRange = getCurrentWeekDateRange(referenceDate);
+  const [fetchedSlots, setFetchedSlots] = useState([]);
+  const [newlySelectedSlots, setNewlySelectedSlots] = useState([]);
+
+  const { auth } = useAuth();
+  const projectTitle = auth.selectedWorkspace;
 
   const days = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
   const times = [
-    "09:00",
-    "10:00",
-    "11:00",
-    "12:00",
-    "13:00",
-    "14:00",
-    "15:00",
-    "16:00",
-    "17:00",
-    "18:00",
+    "00:00", "00:30",
+    "01:00", "01:30",
+    "02:00", "02:30",
+    "03:00", "03:30",
+    "04:00", "04:30",
+    "05:00", "05:30",
+    "06:00", "06:30",
+    "07:00", "07:30",
+    "08:00", "08:30",
+    "09:00", "09:30",
+    "10:00", "10:30",
+    "11:00", "11:30",
+    "12:00", "12:30", 
+    "13:00", "13:30",
+    "14:00", "14:30",
+    "15:00", "15:30",
+    "16:00", "16:30",
+    "17:00", "17:30",
+    "18:00", "18:30",
+    "19:00", "19:30",
+    "20:00", "20:30",
+    "21:00", "21:30",
+    "22:00", "22:30",
+    "23:00", "23:30"
   ];
-  const [selectedSlots, setSelectedSlots] = useState([]);
+  
 
-  const toggleSlotSelection = (day, time) => {
-    const startDate = new Date(referenceDate);
-    startDate.setDate(referenceDate.getDate() - (referenceDate.getDay() === 0 ? 6 : referenceDate.getDay() - 1));
-    const slotKey = `${startDate.toISOString().slice(0, 10)}-${day}-${time}`;
-    setSelectedSlots((prevSlots) =>
-      prevSlots.includes(slotKey)
-        ? prevSlots.filter((slot) => slot !== slotKey)
-        : [...prevSlots, slotKey]
-    );
+  const deleteAllUserTimeSlots = async () => {
+    try {
+      /*// Fetch the current slots to get their IDs
+      const bookingsResponse = await axios.get(`${ENDPOINT_URL}api/test/timeslot/${projectTitle}`, {
+        headers: {
+          Authorization: `Bearer ${auth.user.userJWT}`,
+        }
+      });
+
+      // Send a DELETE request for each booking
+      const deleteRequests = bookingsResponse.data.map(booking => {
+        return axios.delete(`${ENDPOINT_URL}api/test/timeslot/${booking.id}`);
+      });
+
+      // Wait for all DELETE requests to finish
+      await Promise.all(deleteRequests);*/
+
+      //deleteAll that belongs to a user
+      const response = await axios.delete(`${ENDPOINT_URL}api/test/timeslot/${projectTitle}`, {
+        headers: {
+          Authorization: `Bearer ${auth.user.userJWT}`,
+        }
+      });
+
+      console.log('All time slots for the user have been deleted successfully');
+      //Update the state to reflect the changes in the UI
+      setFetchedSlots([]);
+      setNewlySelectedSlots([]);
+    } catch (error) {
+      console.error('Error deleting user time slots:', error);
+    }
   };
+
+  
+  useEffect(() => {
+    const fetchBookedTimeSlots = async () => {
+      try {
+        const response = await axios.get(`${ENDPOINT_URL}api/test/timeslot/${projectTitle}`, {
+        //const response = await axios.get(`http://localhost:8080/api/test/timeslot/${projectTitle}`, {
+          headers: {
+            Authorization: `Bearer ${auth.user.userJWT}`,
+          }
+        });
+  
+        // Assuming response data format is: [{ startTime: 'ISODateString', endTime: 'ISODateString' }]
+        const bookedTimeSlots = response.data.map(booking => {
+          const start = new Date(booking.startTime); // Convert startTime to Date object
+          // If necessary, adjust for time zone here
+          // For example, if your calendar is in EST and backend sends UTC:
+          // start.setHours(start.getHours() - timeZoneOffset);
+  
+          return start; // We only need the start time for displaying in the calendar
+        });
+  
+        setFetchedSlots(bookedTimeSlots);
+      } catch (error) {
+        console.error('Error fetching booked time slots:', error);
+      }
+    };
+  
+    fetchBookedTimeSlots();
+  }, [referenceDate]); // Fetch data when component mounts and when referenceDate changes
+  
+
+const toggleSlotSelection = (day, time) => { 
+  const startDate = new Date(referenceDate);
+
+  // Convert day to number (0 = Monday, 6 = Sunday)
+  const dayNumber = days.indexOf(day);
+
+  // Parse time
+  const [hours, minutes] = time.split(':').map(Number);
+
+  // Set day and time on startDate
+  startDate.setDate(startDate.getDate() - (startDate.getDay() === 0 ? 6 : startDate.getDay() - 1) + dayNumber);
+  startDate.setHours(hours, minutes, 0, 0);
+
+  // Check if the slot is already booked (exists in fetchedSlots)
+  const isAlreadyBooked = fetchedSlots.some(slot => slot.getTime() === startDate.getTime());
+
+  if (!isAlreadyBooked) {
+    // Update newly selected slots if it's not already booked
+    setNewlySelectedSlots((prevSlots) => 
+      prevSlots.some((slot) => slot.getTime() === startDate.getTime())
+        ? prevSlots.filter((slot) => slot.getTime() !== startDate.getTime())
+        : [...prevSlots, startDate]
+    );
+  } else {
+    setFailureMessage("This time slot is already selected");
+    setIsFailureModalOpen(true);
+    // Maybe show a message to the user that this slot is already booked
+    console.log('This time slot is already booked.');
+  }
+};
+
 
   const moveToPreviousWeek = () => {
     const newDate = new Date(referenceDate);
     newDate.setDate(newDate.getDate() - 7);
     setReferenceDate(newDate);
+  };
+  const handleGoToMainCalendar = () => {
+    // Navigate to the main calendar page route
+    navigate("/meeting");
   };
 
   const moveToNextWeek = () => {
@@ -75,11 +187,85 @@ export function SelectMeetingContent() {
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const navigate = useNavigate();
+  
+  
+  const [isFailureModalOpen, setIsFailureModalOpen] = useState(false);
+  const [failureMessage, setFailureMessage] = useState('');
+  
 
-  const handleConfirmSelection = () => {
-    console.log("Confirmed slots:", selectedSlots);
-    setIsModalOpen(true);  // Open the modal
-  };
+  const handleConfirmSelection = async () => { //送后端
+    if (newlySelectedSlots.length === 0) {
+      // No new slots were selected
+      setFailureMessage("No new time slots were selected.");
+      setIsFailureModalOpen(true);
+      return; // Exit the function early
+    }
+    // Convert the newly selected time slots to UTC ISO strings and
+    // create an object for each slot with startTime and endTime
+    const newBookings = newlySelectedSlots.map(slot => {
+      const startTime = new Date(slot.getTime());
+      const endTime = new Date(slot.getTime() + 30 * 60 * 1000); // Add 30 minutes
+
+      return {
+        startTime: startTime.toISOString(),
+        endTime: endTime.toISOString()
+      };
+    });
+  
+    try {
+      // Send each booking as an individual object to the backend
+      /*for (const booking of newBookings) {
+        await axios.post('http://localhost:3001/bookings', booking, {
+          headers: {
+            'Content-Type': 'application/json',
+          }
+        });
+      }*/
+      await axios.post(`${ENDPOINT_URL}api/test/timeslot/${projectTitle}`,
+          newBookings, {
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${auth.user.userJWT}`,
+          }
+      });
+      console.log('Booking successful!');
+      
+      // Update fetchedSlots with the newly selected slots
+         setFetchedSlots(prev => [...prev, ...newlySelectedSlots]);
+      // Clear newly selected slots
+      setNewlySelectedSlots([]);
+      // Close the modal
+      setIsModalOpen(true);
+    } catch (error) {
+      console.error('Error sending booking data to backend:', error);
+    }
+};
+
+// const handleConfirmSelection = async () => {
+//   // ... existing code ...
+
+//   // Retrieve JWT token from storage (localStorage or cookies, based on your implementation)
+//   const token = localStorage.getItem('jwtToken'); // Replace 'jwtToken' with your actual token key
+
+//   try {
+//     const headers = {
+//       'Content-Type': 'application/json',
+//       'Authorization': `Bearer ${token}` // Include the JWT token in the Authorization header
+//     };
+
+//     // Send each booking as an individual object to the backend
+//     for (const booking of newBookings) {
+//       await axios.post('http://localhost:3001/bookings', booking, { headers });
+//     }
+    
+//     // ... rest of the code ...
+//   } catch (error) {
+//     // ... error handling code ...
+//   }
+// };
+
+
+
 
   const handleCloseModal = () => {
     setIsModalOpen(false);  // Close the modal
@@ -89,6 +275,8 @@ export function SelectMeetingContent() {
     // Navigate to the route where your weekly calendar is located
     navigate("/meeting");
   };
+
+
   return (
     <div className="mainMeetingContainer">
       <div className="calendar">
@@ -112,40 +300,59 @@ export function SelectMeetingContent() {
             ))}
           </div>
           {times.map((time) => (
-            <div className="row" key={time}>
-              <div className="cell timeLabel">{time}</div>
-              {days.map((day) => {
-                const startDate = new Date(referenceDate);
-                startDate.setDate(referenceDate.getDate() - (referenceDate.getDay() === 0 ? 6 : referenceDate.getDay() - 1));
-                const slotKey = `${startDate.toISOString().slice(0, 10)}-${day}-${time}`;
-                return (
-                  <button
-                    aria-label={`Select ${time} on ${day}`}
-                    className={`cell timeSlot ${
-                        selectedSlots.includes(slotKey) ? "selected" : ""
-                    }`}
-                    key={day}
-                    onClick={() => toggleSlotSelection(day, time)}
-                  ></button>
-                );
-              })}
-            </div>
-          ))}
+  <div className="row" key={time}>
+    <div className="cell timeLabel">{time}</div>
+    {days.map((day) => {
+      const startDate = new Date(referenceDate);
+      startDate.setDate(referenceDate.getDate() - (referenceDate.getDay() === 0 ? 6 : referenceDate.getDay() - 1));
+      
+      const dayNumber = days.indexOf(day);
+      const [hours, minutes] = time.split(':').map(Number);
+      startDate.setDate(startDate.getDate() + dayNumber);
+      startDate.setHours(hours, minutes, 0, 0);
+      
+      const slotKey = startDate.getTime();
+      const isSelected = [...fetchedSlots, ...newlySelectedSlots].some((slot) => slot.getTime() === slotKey);
+
+      
+      return (
+        <button
+          aria-label={`Select ${time} on ${day}`}
+          className={`cell timeSlot ${isSelected ? "selected" : ""}`}
+          key={day}
+          onClick={() => toggleSlotSelection(day, time)}
+        ></button>
+      );
+    })}
+  </div>
+))}
+
         </div>
         <div className="selectedSlots">
-          <h3>Selected Times:</h3>
+          <h3>Selected Times (in EST):</h3>
           <ul>
-            {selectedSlots.map((slot) => (
-              <li key={slot}>{slot.replace("-", " at ")}</li>
+            {[...fetchedSlots, ...newlySelectedSlots].map((slot, index) => (
+              <li key={index}>
+                {slot.toLocaleString('en-US')}
+              </li>
             ))}
           </ul>
         </div>
         <div className="actions">
-          <button className="button-clear" onClick={() => setSelectedSlots([])}>
+          <button className="button-clear" onClick={() => {
+            setNewlySelectedSlots([]); // Clear newly selected slots
+            setFetchedSlots([]); // Optionally, clear fetched slots as well
+          }}>
             Clear Selection
           </button>
+          <button className="button-delete" onClick={deleteAllUserTimeSlots}>
+          Delete All Time Slots
+        </button>
           <button className="button-confirm" onClick={handleConfirmSelection}>
             Confirm Selection
+          </button>
+          <button className="button-back" onClick={handleGoToMainCalendar}>
+            Back to Main Calendar
           </button>
         </div>
       </div>
@@ -158,9 +365,17 @@ export function SelectMeetingContent() {
         <DialogActions>
           <Button onClick={handleGoBackToWeeklyCalendar}>Go Back to Weekly Calendar</Button>
         </DialogActions>
-      </Dialog>
+      </Dialog> 
+      
+      <Dialog open={isFailureModalOpen} onClose={() => setIsFailureModalOpen(false)}>
+        <DialogTitle>Selection Failed</DialogTitle>
+        <DialogContent>
+        <p>{failureMessage}</p>
+        </DialogContent>
+        <DialogActions>
+         <Button onClick={() => setIsFailureModalOpen(false)}>Close</Button>
+        </DialogActions>
+          </Dialog>
     </div>
   );
-  
-
-}
+    }
