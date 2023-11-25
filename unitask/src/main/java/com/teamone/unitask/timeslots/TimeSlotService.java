@@ -44,8 +44,8 @@ public class TimeSlotService {
         this.projectRepository=projectRepository;
         this.userService=userService;
     }
-    public List<TimeSlot> save(Long projectId, String token, List<TimeSlot> timeSlots){
-        Project thisProj = projectRepository.findByProjectId(projectId);
+    public List<TimeSlot> save(String projectTitle, String token, List<TimeSlot> timeSlots){
+        Project thisProj = projectRepository.findByProjectTitle(projectTitle);
         User thisUser = userService.getUserEmailFromToken(token);
         for (TimeSlot ts : timeSlots) {
             ts.setProjectBelonged(thisProj);
@@ -54,17 +54,17 @@ public class TimeSlotService {
         return timeSlotRepository.saveAll(timeSlots);
     }
 
-    public List<TimeSlot> get(Long projectId, String token){
+    public List<TimeSlot> get(String projectTitle, String token){
         User thisUser = userService.getUserEmailFromToken(token);
-        Set<TimeSlot> timeSlots = new HashSet<>(projectRepository.findByProjectId(projectId).getTimeSlots());
+        Set<TimeSlot> timeSlots = new HashSet<>(projectRepository.findByProjectTitle(projectTitle).getTimeSlots());
         //intersection:
         timeSlots.retainAll(thisUser.getHas_timeslots());
         return new ArrayList<>(timeSlots);
     }
 
-    public void deleteAllTS(Long projectId, String token) {
+    public void deleteAllTS(String projectTitle, String token) {
         User thisUser = userService.getUserEmailFromToken(token);
-        Set<TimeSlot> timeSlots = new HashSet<>(projectRepository.findByProjectId(projectId).getTimeSlots());
+        Set<TimeSlot> timeSlots = new HashSet<>(projectRepository.findByProjectTitle(projectTitle).getTimeSlots());
         //intersection:
         timeSlots.retainAll(thisUser.getHas_timeslots());
         timeSlotRepository.deleteAllInBatch(new ArrayList<>(timeSlots));
@@ -75,13 +75,13 @@ public class TimeSlotService {
         timeSlotRepository.deleteById(timeSlotId);
     }
 
-    public List<TimeSlot> calcCommon(Long projectId) throws IllegalArgumentException{
+    public List<TimeSlot> calcCommon(String projectTitle) throws IllegalArgumentException{
 
         List<TimeSlot> projectTS;
         Set<User> tsUser;
         Map<LocalDateTime, Set<User>> stTime2Users;
 
-        projectTS = new ArrayList<>(projectRepository.findByProjectId(projectId).getTimeSlots());
+        projectTS = new ArrayList<>(projectRepository.findByProjectTitle(projectTitle).getTimeSlots());
 
         //set of users that has submitted some timeslots to the project
         tsUser = new HashSet<>();

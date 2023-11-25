@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.*;
 
-@CrossOrigin(origins = "localhost:3000/meeting", maxAge = 3600)
+@CrossOrigin(origins = "http://localhost:3000", maxAge = 3600, allowCredentials = "true")
 @RestController
 @RequestMapping("/api/test")
 public class TimeSlotController {
@@ -19,11 +19,11 @@ public class TimeSlotController {
 
 
     //get the list of timeslots by the userId
-    @GetMapping("/timeslot/{projectId}")
-    public ResponseEntity<List<TimeSlot>> getUserTimeSlots(@PathVariable Long projectId,
+    @GetMapping("/timeslot/{projectTitle}")
+    public ResponseEntity<List<TimeSlot>> getUserTimeSlots(@PathVariable String projectTitle,
                                                            @RequestHeader("Authorization") String token) {
         try {
-            List<TimeSlot> timeSlots = timeSlotService.get(projectId, token);
+            List<TimeSlot> timeSlots = timeSlotService.get(projectTitle, token);
             if (timeSlots.isEmpty()) {
                 return new ResponseEntity<>(HttpStatus.NO_CONTENT);
             }
@@ -34,12 +34,12 @@ public class TimeSlotController {
     }
 
     //post a list of timeslots
-    @PostMapping("/timeslot/{projectId}")
-    public ResponseEntity<List<TimeSlot>> createListTimeSlots(@PathVariable Long projectId,
+    @PostMapping("/timeslot/{projectTitle}")
+    public ResponseEntity<List<TimeSlot>> createListTimeSlots(@PathVariable String projectTitle,
                                                               @RequestHeader("Authorization") String token,
                                                               @RequestBody List<TimeSlot> timeSlots) {
         try {
-            timeSlotService.save(projectId, token, timeSlots);
+            timeSlotService.save(projectTitle, token, timeSlots);
             return new ResponseEntity<>(timeSlots, HttpStatus.CREATED);
         } catch (Exception e) {
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
@@ -47,11 +47,11 @@ public class TimeSlotController {
     }
 
     //delete list of timeslots
-    @DeleteMapping("/timeslot/{projectId}")
-    public ResponseEntity<HttpStatus> deleteAllTimeSlots(@PathVariable Long projectId,
+    @DeleteMapping("/timeslot/{projectTitle}")
+    public ResponseEntity<HttpStatus> deleteAllTimeSlots(@PathVariable String projectTitle,
                                                          @RequestHeader("Authorization") String token) {
         try {
-            timeSlotService.deleteAllTS(projectId, token);
+            timeSlotService.deleteAllTS(projectTitle, token);
             return new ResponseEntity<>(HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
@@ -59,10 +59,10 @@ public class TimeSlotController {
     }
 
     //TODO: respond with a list of timeslots(length >= 30min) that correspond to the common timeslots in a project
-    @GetMapping("/timeslot/overlap/{projectId}")
-    public ResponseEntity<List<TimeSlot>> commonTimeSlot(@PathVariable Long projectId) {
+    @GetMapping("/timeslot/overlap/{projectTitle}")
+    public ResponseEntity<List<TimeSlot>> commonTimeSlot(@PathVariable String projectTitle) {
         try {
-            List<TimeSlot> commonList = timeSlotService.calcCommon(projectId);
+            List<TimeSlot> commonList = timeSlotService.calcCommon(projectTitle);
             return new ResponseEntity<>(commonList, HttpStatus.OK);
         }catch (IllegalArgumentException e){
             return new ResponseEntity<>(null, HttpStatus.EXPECTATION_FAILED);
