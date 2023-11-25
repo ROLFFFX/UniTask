@@ -11,6 +11,7 @@ import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
+import java.time.ZonedDateTime;
 import java.util.Set;
 
 @Entity
@@ -28,10 +29,10 @@ public class TimeSlot {
     private Long timeSlotId;
 
     @NotNull
-    private LocalDateTime startTime;
+    private ZonedDateTime startTime;
 
     @NotNull
-    private LocalDateTime endTime;
+    private ZonedDateTime endTime;
 
     /**
      * foreign keys
@@ -62,19 +63,19 @@ public class TimeSlot {
         this.timeSlotId = timeSlotId;
     }
 
-    public LocalDateTime getStartTime() {
+    public ZonedDateTime getStartTime() {
         return startTime;
     }
 
-    public void setStartTime(LocalDateTime startTime) {
+    public void setStartTime(ZonedDateTime startTime) {
         this.startTime = startTime;
     }
 
-    public LocalDateTime getEndTime() {
+    public ZonedDateTime getEndTime() {
         return endTime;
     }
 
-    public void setEndTime(LocalDateTime endTime) {
+    public void setEndTime(ZonedDateTime endTime) {
         this.endTime = endTime;
     }
 
