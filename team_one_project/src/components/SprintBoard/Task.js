@@ -1,25 +1,19 @@
-import React, { useState, useRef } from "react";
-import points_icon from "../../images/points.png";
+import React, { useRef, useState } from "react";
 import calendar_icon from "../../images/calendar.png";
-import chevron_favicon from "../../images/chevron_favicon.png";
-import circle_blue_favicon from "../../images/circle_blue_favicon.png";
-import circle_orange_favicon from "../../images/circle_orange_favicon.png";
-import add_button_favicon from "../../images/add_button_favicon.png";
-import deleteIcon from "../../images/delete.png";
-import editIcon from "../../images/edit.png";
-import settingsIcon from "../../images/dots.png";
+import points_icon from "../../images/points.png";
 
 function Task({ taskData, onDelete, onEdit }) {
+  /* Hooks Declarations-------------------------------------------------------------------------------------------------------------------- */
   const [subtasks, setSubtasks] = useState([]);
   const [newSubtask, setNewSubtask] = useState("");
   const [isAddingSubtask, setIsAddingSubtask] = useState(false);
-
   const [AddSub, setAddSub] = useState("idle");
   const [ShowSub, setShowSub] = useState("expand");
-
   // Used to reference the current task being dragged
   const elementRef = useRef(null);
+  /* End of Hooks Declarations-------------------------------------------------------------------------------------------------------------------- */
 
+  /* Helper Methods-------------------------------------------------------------------------------------------------------------------- */
   const addSubtask = () => {
     setSubtasks([...subtasks, newSubtask]);
     taskData.subtaskList = subtasks;
@@ -27,14 +21,12 @@ function Task({ taskData, onDelete, onEdit }) {
     setNewSubtask("");
     setIsAddingSubtask(false);
   };
-
   // Add dragging capability
   // When item is dragged, give it the dragging class
   const drag = (e) => {
     if (elementRef.current) {
       elementRef.current.classList.add("dragging");
       e.dataTransfer.setData("text/plain", taskData.taskID);
-
       // If needed, can transfer task data
       //e.dataTransfer.setData('application/json', JSON.stringify(taskData)); // Transfer data to main app
     }
@@ -45,7 +37,6 @@ function Task({ taskData, onDelete, onEdit }) {
       elementRef.current.classList.remove("dragging");
     }
   };
-
   const [isSettingsOpen, setIsSettingsOpen] = useState(false);
 
   const deleteTask = () => {
@@ -59,6 +50,7 @@ function Task({ taskData, onDelete, onEdit }) {
       onEdit(newTaskData);
     }
   };
+  /* End of Helper Methods-------------------------------------------------------------------------------------------------------------------- */
 
   return (
     <div
