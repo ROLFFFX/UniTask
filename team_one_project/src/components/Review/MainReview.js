@@ -92,6 +92,7 @@ export function MainReview() {
   const handleCloseDeleteConfirm = () => {
     setOpenDeleteConfirm(false);
   };
+  const [modifyMode, setModifyMode] = useState(false);
 
   /* End of Hooks Declrations-------------------------------------------------------------------------------------------------------------------- */
 
@@ -120,6 +121,17 @@ export function MainReview() {
   const handleDeleteRecord = () => {
     // selectedRecord is the record to be deleted. / .reportId
     handleOpenDeleteConfirm();
+  };
+
+  // handles modify a record. changes the modify mode.
+  const handleModifyRecord = () => {
+    setModifyMode(true);
+    // @todo: when modify mode is true, textfield should be enabled and ready for listening to new change
+  };
+
+  // handles submitting PUT request.
+  const handleSubmitModifyRecord = () => {
+    setModifyMode(true); // last step: change back to normal mode
   };
 
   /* End of Helper Functions Declrations-------------------------------------------------------------------------------------------------------------------- */
@@ -355,7 +367,7 @@ export function MainReview() {
                 </Box>
               </Box>
             </Grid>
-            {/* View Report ------------------------------------------------------------------------------------------------------------------------------------------*/}
+            {/* View Record ------------------------------------------------------------------------------------------------------------------------------------------*/}
             <Grid
               item
               xs={4}
@@ -467,27 +479,59 @@ export function MainReview() {
                         xs={12}
                         style={{ display: "flex", justifyContent: "center" }}
                       >
-                        {/* Modify Button */}
-                        <Button
-                          variant="outlined"
-                          color="inherit"
-                          sx={{ marginTop: "15px", fontSize: "12px" }}
-                        >
-                          modify record
-                        </Button>
-                        {/* Delete Button */}
-                        <Button
-                          variant="outlined"
-                          color="inherit"
-                          sx={{
-                            marginTop: "15px",
-                            marginLeft: "15px",
-                            fontSize: "12px",
-                          }}
-                          onClick={handleDeleteRecord}
-                        >
-                          Delete record
-                        </Button>
+                        <div>
+                          {modifyMode ? (
+                            <>
+                              <Button
+                                variant="outlined"
+                                color="inherit"
+                                sx={{ marginTop: "15px", fontSize: "12px" }}
+                                onClick={() => {
+                                  setModifyMode(false);
+                                }}
+                              >
+                                Cancel
+                              </Button>
+                              <Button
+                                variant="outlined"
+                                color="inherit"
+                                sx={{
+                                  marginTop: "15px",
+                                  marginLeft: "15px",
+                                  fontSize: "12px",
+                                }}
+                                onClick={handleSubmitModifyRecord}
+                              >
+                                submit change
+                              </Button>
+                            </>
+                          ) : (
+                            <>
+                              {/* Modify Button */}
+                              <Button
+                                variant="outlined"
+                                color="inherit"
+                                sx={{ marginTop: "15px", fontSize: "12px" }}
+                                onClick={handleModifyRecord}
+                              >
+                                modify record
+                              </Button>
+                              {/* Delete Button */}
+                              <Button
+                                variant="outlined"
+                                color="inherit"
+                                sx={{
+                                  marginTop: "15px",
+                                  marginLeft: "15px",
+                                  fontSize: "12px",
+                                }}
+                                onClick={handleDeleteRecord}
+                              >
+                                Delete record
+                              </Button>
+                            </>
+                          )}
+                        </div>
                       </Grid>
                     </Grid>
                   ) : (
