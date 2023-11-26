@@ -31,10 +31,10 @@ public class Task {
     private Long taskId;
 
     @NotBlank
-    private String title;
+    private String title = "Add a title";
 
     @NotBlank
-    private String status = "Not started";
+    private String status = "Not Started";
 
     private LocalDateTime expectedCompleteTime;
 
