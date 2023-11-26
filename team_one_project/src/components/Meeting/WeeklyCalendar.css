@@ -2,11 +2,55 @@
 
 /* calendar event */
 .calendar_default_event_inner {
-    background: #2e78d6;
+    background: #000000;
     color: #fff;
     border: none;
-    border-radius: 5px;
+    border-radius: 0px;
     font-size: 10pt;
-    padding: 5px;
-    opacity: 0.8;
+    padding: 2px;
+    opacity: 0.4;
+}
+
+.calendar_black_event_inner {
+    background: rgb(0, 0, 0);
+    color: #fff;
+    border: none;
+    border-radius: 0px;
+    font-size: 10pt;
+    padding: 2px;
+    opacity: 1;
+}
+/* adjusting the built-in theme */
+
+.week-navigation .button-prev,
+.week-navigation .button-next,
+.week-navigation .button-new-meeting {
+    background-color: black;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    margin: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.week-navigation .button-prev:hover,
+.week-navigation .button-next:hover,
+.week-navigation .button-new-meeting:hover {
+    background-color: #333333;
+}
+
+.week-navigation button {
+    /* Additional styles for the 'Edit Meeting Time Slot' button */
+    background-color: black;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    margin: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.week-navigation button:hover {
+    background-color: #333333;
 }

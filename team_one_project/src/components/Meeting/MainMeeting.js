@@ -4,7 +4,11 @@ import { WeeklyCalendar } from "./WeeklyCalendar";
 
 export function MainMeeting() {
   return (
-    <Box style={{ marginLeft: "200px" }}>
+    <Box style={{
+        marginLeft: "200px",
+        overflowY: "auto", // Adds vertical scrollbar when needed
+        maxHeight: "calc(100vh - 200px)", // Adjust the 100px to account for headers/footers
+    }}>
       <Grid container spacing={2}>
         <Grid item xs={12}>
           {" "}
@@ -13,5 +17,6 @@ export function MainMeeting() {
         </Grid>
       </Grid>
     </Box>
+
   );
 }

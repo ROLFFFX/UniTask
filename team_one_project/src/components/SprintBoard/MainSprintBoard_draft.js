@@ -1,4 +1,4 @@
-import { Box, Button, Typography, Grid } from "@mui/material";
+import { Box } from "@mui/material";
 import Backdrop from "@mui/material/Backdrop";
 import CircularProgress from "@mui/material/CircularProgress";
 import Popper from "@mui/material/Popper";
@@ -10,6 +10,8 @@ import { ENDPOINT_URL } from "../../hooks/useConfig";
 import add_button_favicon from "../../images/add_button_favicon.png";
 import "./MainSprintBoard.css";
 import Task from "./Task";
+import { FixedSizeList as List } from "react-window";
+import AutoSizer from "react-virtualized-auto-sizer";
 
 export function MainSprintBoard() {
   /* useState Declarations-------------------------------------------------------------------------------------------------------------------- */
@@ -117,7 +119,7 @@ export function MainSprintBoard() {
     setBackdropOpen(true); //display loading page
     // Step 1: Format the request body to be sent
     let dateObject = new Date(taskData.dueDate);
-    let isoDateString = dateObject ? dateObject.toISOString() : null;
+    let isoDateString = dateObject.toISOString();
     const requestBody = {
       title: taskData.title,
       status: taskData.status,
@@ -260,6 +262,22 @@ export function MainSprintBoard() {
     });
   };
 
+  // for rendering each task in react window
+  const TaskRow = ({ index, style, data }) => {
+    const task = data[index];
+    return (
+      <div style={style}>
+        <Task
+          key={task.taskID}
+          taskData={task}
+          onDelete={deleteTask}
+          onEdit={editTask}
+          refreshTasks={fetchAllTasks}
+        />
+      </div>
+    );
+  };
+
   /* End of Other Helper Functions-------------------------------------------------------------------------------------------------------------------- */
 
   /* useEffect Declarations-------------------------------------------------------------------------------------------------------------------- */
@@ -325,23 +343,6 @@ export function MainSprintBoard() {
                 className="popupContent"
                 sx={{ fontFamily: "Inter, sans-serif", fontSize: "15px" }}
               >
-                <Box
-                  style={{
-                    display: "flex",
-                    justifyContent: "center",
-                    alignItems: "center",
-                  }}
-                >
-                  <Typography
-                    sx={{
-                      fontFamily: "Inter, sans-serif",
-                      fontSize: "18px",
-                      marginBottom: 3,
-                    }}
-                  >
-                    Create New Task
-                  </Typography>
-                </Box>
                 <span>Title: </span>
                 <input
                   type="text"
@@ -398,80 +399,48 @@ export function MainSprintBoard() {
                   style={{ marginLeft: "10px" }}
                 ></input>
 
-                <Grid container>
-                  <Grid item xs={12}>
-                    <Box
-                      style={{
-                        display: "flex",
-                        justifyContent: "center",
-                        alignItems: "center",
-                        marginTop: "30px",
-                      }}
-                    >
-                      <Button
-                        onClick={closeTaskPopup}
-                        style={{
-                          fontFamily: "Inter, sans-serif",
-                        }}
-                        variant="outlined"
-                        color="inherit"
-                        disabled={
-                          !taskNameInput ||
-                          !assigneeInput ||
-                          !dueDateInput ||
-                          !taskPointsInput
-                        }
-                      >
-                        Submit
-                      </Button>
-                    </Box>
-                  </Grid>
-                  <Grid>
-                    <Box
-                      style={{
-                        display: "flex",
-                        justifyContent: "center",
-                        alignItems: "center",
-                        marginTop: "15px",
-                      }}
-                    >
-                      <Typography
-                        style={{
-                          fontFamily: "Inter, sans-serif",
-                          fontSize: "11.5px",
-                        }}
-                      >
-                        *Please Complete All Fields to Submit Form
-                      </Typography>
-                    </Box>
-                  </Grid>
-                </Grid>
+                <button
+                  id="closeTaskPopupButton"
+                  onClick={closeTaskPopup}
+                  style={{ fontFamily: "Inter, sans-serif" }}
+                >
+                  Submit
+                </button>
               </Box>
             </Popper>
+            {/* Not Started Column */}
             <div
               className="grid-item"
               id="tasksColumn"
               onDragOver={onDragOver}
               onDrop={(e) => onDrop(e, "tasksColumn")}
-              style={{
-                overflowY: "auto", // Adds vertical scrollbar when needed
-                maxHeight: "calc(100vh - 185px)", // Adjust the 100px to account for headers/footers
-              }}
             >
-              {tasks
-                .filter((task) =>
-                  task.status.toLowerCase().includes("not started")
-                )
-                .map((task) => (
-                  <Task
-                    key={task.taskId} // Make sure this is the correct unique identifier
-                    taskData={task}
-                    onDelete={deleteTask}
-                    onEdit={editTask}
-                    refreshTasks={fetchAllTasks} // pass down prop to control rerender of tasks
-                  />
-                ))}
+              <AutoSizer disableHeight>
+                {({ width }) => (
+                  <List
+                    height={660} // Adjust height as needed
+                    itemCount={
+                      tasks.filter((task) => task.status === "Not Started")
+                        .length
+                    }
+                    itemSize={110} // Adjust item size as needed
+                    width={width}
+                  >
+                    {({ index, style }) => (
+                      <Task
+                        key={tasks[index].taskID}
+                        taskData={tasks[index]}
+                        style={style}
+                        onDelete={deleteTask}
+                        onEdit={editTask}
+                        refreshTasks={fetchAllTasks}
+                      />
+                    )}
+                  </List>
+                )}
+              </AutoSizer>
             </div>
+            {/* TODO Column */}
             <div className="grid-item" id="todoHeader">
               TO DO
             </div>
@@ -480,10 +449,6 @@ export function MainSprintBoard() {
               id="todoColumn"
               onDragOver={onDragOver}
               onDrop={(e) => onDrop(e, "todoColumn")}
-              style={{
-                overflowY: "auto", // Adds vertical scrollbar when needed
-                maxHeight: "calc(100vh - 185px)", // Adjust the 100px to account for headers/footers
-              }}
             >
               {tasks
                 .filter((task) => task.status.toLowerCase().includes("todo"))
@@ -505,10 +470,6 @@ export function MainSprintBoard() {
               id="doingColumn"
               onDragOver={onDragOver}
               onDrop={(e) => onDrop(e, "doingColumn")}
-              style={{
-                overflowY: "auto", // Adds vertical scrollbar when needed
-                maxHeight: "calc(100vh - 185px)", // Adjust the 100px to account for headers/footers
-              }}
             >
               {tasks
                 .filter((task) => task.status.toLowerCase().includes("doing"))
@@ -530,10 +491,6 @@ export function MainSprintBoard() {
               id="doneColumn"
               onDragOver={onDragOver}
               onDrop={(e) => onDrop(e, "doneColumn")}
-              style={{
-                overflowY: "auto", // Adds vertical scrollbar when needed
-                maxHeight: "calc(100vh - 185px)", // Adjust the 100px to account for headers/footers
-              }}
             >
               {tasks
                 .filter((task) => task.status.toLowerCase().includes("done"))
