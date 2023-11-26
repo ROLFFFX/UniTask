@@ -44,7 +44,7 @@ export default function PermanentDrawer() {
     "Dashboard",
     "Task Board",
     "Meeting Schedule",
-    "Inspect & Adapt",
+    "Report & Review",
   ];
   const sidebar_lower = ["Manage Workspace", "Account"]; // Setting page is currently disabled. Adding "Setting" will enable setting page again.
   const navigate = useNavigate();
