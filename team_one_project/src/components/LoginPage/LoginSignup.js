@@ -100,8 +100,12 @@ export function LoginSignup() {
 
   return (
     <ThemeProvider theme={theme}>
-      <TopSVG></TopSVG>
-      <Container component="main" maxWidth="xs">
+      <TopSVG style={{ position: "absolute", zindex: "-1" }}></TopSVG>
+      <Container
+        component="main"
+        maxWidth="xs"
+        style={{ position: "relative", zIndex: 1 }}
+      >
         <CssBaseline />
         <Backdrop
           sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }}
@@ -222,7 +226,7 @@ export function LoginSignup() {
           </Box>
         </Box>
       </Container>
-      <BottomSVG></BottomSVG>
+      <BottomSVG style={{ position: "absolute", zindex: "-1" }}></BottomSVG>
     </ThemeProvider>
   );
 }
