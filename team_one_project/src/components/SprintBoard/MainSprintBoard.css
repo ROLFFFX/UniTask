@@ -59,7 +59,7 @@ body {
     minmax(0, 1fr)
   ); /* Ensure even column width */
   /* Set row height to extend down most of the page, unless specified otherwise */
-  grid-template-rows: auto minmax(calc(75vh), auto);
+  grid-template-rows: auto minmax(calc(80vh), auto);
   padding: 10px;
   margin-bottom: 20px;
 }

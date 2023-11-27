@@ -139,7 +139,7 @@ export function MainSprintBoard() {
       .then((response) => {
         // refetch all tasks and rerender page
         fetchAllTasks();
-        console.log("Task created:", response.data); // @todo: response.data contains the created task info.
+        console.log("Task created:", response.data); // response.data contains the created task info.
       })
       .catch((error) => {
         console.error("Error creating task:", error);
@@ -238,7 +238,7 @@ export function MainSprintBoard() {
     const taskId = Number(e.dataTransfer.getData("text/plain"));
     const statusByColumn = {
       tasksColumn: "Not Started",
-      todoColumn: "Todo",
+      todoColumn: "To Do",
       doingColumn: "Doing",
       doneColumn: "Done",
     };
@@ -486,7 +486,7 @@ export function MainSprintBoard() {
               }}
             >
               {tasks
-                .filter((task) => task.status.toLowerCase().includes("todo"))
+                .filter((task) => task.status.toLowerCase().includes("to do"))
                 .map((task) => (
                   <Task
                     key={task.taskID}
