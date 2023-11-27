@@ -1,11 +1,11 @@
-import React, { useState, useEffect } from "react";
+import React, {useEffect, useState} from "react";
 import "./SelectMeetingContent.css";
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
 import Button from '@mui/material/Button';
-import { useNavigate } from "react-router-dom";
+import {useNavigate} from "react-router-dom";
 import axios from 'axios';
 import {ENDPOINT_URL} from "../../hooks/useConfig";
 import useAuth from "../../hooks/useAuth";
@@ -116,18 +116,18 @@ export function SelectMeetingContent() {
             Authorization: `Bearer ${auth.user.userJWT}`,
           }
         });
-  
-        // Assuming response data format is: [{ startTime: 'ISODateString', endTime: 'ISODateString' }]
-        const bookedTimeSlots = response.data.map(booking => {
-          const start = new Date(booking.startTime); // Convert startTime to Date object
-          // If necessary, adjust for time zone here
-          // For example, if your calendar is in EST and backend sends UTC:
-          // start.setHours(start.getHours() - timeZoneOffset);
-  
-          return start; // We only need the start time for displaying in the calendar
-        });
-  
+
+
+
+         // Assuming response data format is: [{ startTime: 'ISODateString', endTime: 'ISODateString' }]
+        if(response.data.length !== 0){
+          const bookedTimeSlots = response.data.map(booking => {
+            // Convert startTime to Date object
+           return new Date(booking.startTime); // We only need the start time for displaying in the calendar
+         });
+
         setFetchedSlots(bookedTimeSlots);
+        }
       } catch (error) {
         console.error('Error fetching booked time slots:', error);
       }
