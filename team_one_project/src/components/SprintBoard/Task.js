@@ -59,7 +59,7 @@ function Task({ taskData, onDelete, onEdit, refreshTasks }) {
     const newSubtaskObj = {
       title: newSubtask,
       expectedCompleteTime: "2023-12-01T12:00:00", // dummy date, subtask won't need that
-      status: "Not started",
+      status: "Not Started",
       taskPoints: 1,
     };
     // Update the subtaskList with the new subtask appended at last
@@ -87,7 +87,7 @@ function Task({ taskData, onDelete, onEdit, refreshTasks }) {
   const handleCheckboxChange = (subtask) => {
     const updatedSubtask = {
       ...subtask,
-      status: subtask.status === "Done" ? "Not started" : "Done",
+      status: subtask.status === "Done" ? "Not Started" : "Done",
     };
 
     // Update state instead of mutating prop directly
