@@ -71,7 +71,7 @@ export function TeamProgress(TaskDistributionData) {
               <Typography
                 style={{ fontFamily: "Inter, sans-serif", fontSize: "14px" }}
               >
-                Taskpoints Achieved by Team members.
+                Taskpoints Achieved by Team Members.
               </Typography>
             </Grid>
           </Grid>

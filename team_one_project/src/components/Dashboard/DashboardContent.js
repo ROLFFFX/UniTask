@@ -154,8 +154,6 @@ export function DashboardContent() {
   ) {
     return (
       <React.Fragment>
-        {console.log("allTasks: ")}
-        {console.log(allTasks)}
         {/* loading state */}
         <Backdrop
           sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }}
@@ -191,7 +189,7 @@ export function DashboardContent() {
                 maxHeight="calc((100vh - 64px) * 0.2)"
                 overflow="hidden"
               >
-                <ProgressBar />
+                <ProgressBar progressBarData={ProgressBarData} />
               </Grid>
               {/* <ProductBacklog /> */}
             </Grid>
