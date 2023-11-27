@@ -10,9 +10,9 @@ import TextField from "@mui/material/TextField";
 import Backdrop from "@mui/material/Backdrop";
 import CircularProgress from "@mui/material/CircularProgress";
 
+// Text field styling for modify record
 const textFieldStyle = {
   width: "100%",
-
   "& .Mui-disabled": {
     fontFamily: "Inter, sans-serif",
     WebkitTextFillColor: "#212529", // Override text color for webkit browsers
@@ -22,8 +22,35 @@ const textFieldStyle = {
     fontSize: 15,
     fontFamily: "Inter, sans-serif",
   },
+  "& .MuiOutlinedInput-root": {
+    "& fieldset": {
+      borderColor: "#ADB5BD", // Style for outline
+    },
+    "&:hover fieldset": {
+      borderColor: "#212529", // Style on hover
+    },
+    "&.Mui-focused fieldset": {
+      borderColor: "#212529", // Style when the input is focused
+    },
+    "& input": {
+      color: "#212529", // Style for user input
+      fontSize: 15, // Font size for input
+      fontFamily: "Inter, sans-serif", // Font family for input
+    },
+    "& textarea": {
+      color: "#212529", // Style for textarea (for multiline)
+      fontSize: 15, // Font size for textarea
+      fontFamily: "Inter, sans-serif", // Font family for textarea
+    },
+  },
+  "& .MuiInputLabel-root.Mui-focused": {
+    color: "#212529",
+    fontSize: 15, // Font size for label when input is focused
+    fontFamily: "Inter, sans-serif", // Font family for label when input is focused
+  },
 };
 
+// Text field styling for add record
 const addNewRecordTextFieldStyle = {
   width: "100%",
   "& label": {
@@ -92,13 +119,15 @@ export function MainReview() {
   const handleCloseDeleteConfirm = () => {
     setOpenDeleteConfirm(false);
   };
-  const [modifyMode, setModifyMode] = useState(false);
+  const [modifyMode, setModifyMode] = useState(false); // controls the mode of view page.
+  const [modifiedRecord, setModifiedRecord] = useState({}); // keep track of changes in modify mode
 
   /* End of Hooks Declrations-------------------------------------------------------------------------------------------------------------------- */
 
   /* Helper Functions Declrations-------------------------------------------------------------------------------------------------------------------- */
   // handles the clicking of review list on left
   const handleListItemClick = (index, record) => {
+    setModifyMode(false);
     setSelectedIndex(index);
     setSelectedRecord(record);
   };
@@ -123,14 +152,26 @@ export function MainReview() {
     handleOpenDeleteConfirm();
   };
 
+  // handles the evenet of modifying the textfield in modify change
+  const handleModifyInputChange = (e) => {
+    const { name, value } = e.target;
+    setModifiedRecord((prevState) => ({
+      ...prevState,
+      [name]: value,
+    }));
+  };
+
   // handles modify a record. changes the modify mode.
   const handleModifyRecord = () => {
     setModifyMode(true);
-    // @todo: when modify mode is true, textfield should be enabled and ready for listening to new change
+    setModifiedRecord({ ...selectedRecord });
   };
 
   // handles submitting PUT request.
   const handleSubmitModifyRecord = () => {
+    updateModifyRecord();
+    // console.log("Updated Record:", modifiedRecord); // Log the modified record
+    // @todo: when modify mode is true, textfield should be enabled and ready for listening to new change
     setModifyMode(true); // last step: change back to normal mode
   };
 
@@ -204,6 +245,36 @@ export function MainReview() {
       setBackdropOpen(false);
     }
   };
+
+  // PUT Method to modify a record
+  const updateModifyRecord = async () => {
+    setBackdropOpen(true); //display loading page
+    const reportId = modifiedRecord.reportId;
+    console.log("Tmodified record is: ");
+    console.log(modifiedRecord);
+    const url = `${ENDPOINT_URL}reports/editReport/${reportId}`;
+    const formattedModifiedRecord = {
+      reportName: modifiedRecord.reportName,
+      accomplishment: modifiedRecord.accomplishment,
+      feedback: modifiedRecord.feedback,
+      memberComment: modifiedRecord.memberComment,
+    };
+    try {
+      const response = await axios.put(url, formattedModifiedRecord, {
+        headers: {
+          Authorization: `Bearer ${auth.user.userJWT}`,
+        },
+      });
+      fetchAllRecords(); // if success, refetch page to reflect newest change
+      console.log("Successfully updated new record!");
+    } catch (error) {
+      alert("Input is too long!");
+      console.error("Error caught on adding new records: ", error);
+    } finally {
+      setBackdropOpen(false);
+    }
+  };
+
   /* End of Requests Declrations-------------------------------------------------------------------------------------------------------------------- */
 
   /* useEffect Declrations-------------------------------------------------------------------------------------------------------------------- */
@@ -417,60 +488,72 @@ export function MainReview() {
                       {/* Record Title */}
                       <Grid item xs={12}>
                         <TextField
-                          id="outlined-multiline-static"
+                          id="record-title"
                           label="Record Title"
                           multiline
                           rows={1}
+                          name="reportName"
+                          onChange={handleModifyInputChange}
                           value={
-                            selectedRecord ? selectedRecord.reportName : "None"
+                            modifyMode
+                              ? modifiedRecord.reportName
+                              : selectedRecord?.reportName || ""
                           }
-                          disabled
+                          disabled={!modifyMode}
                           sx={textFieldStyle}
                         />
                       </Grid>
                       {/* Accomplishment This Week */}
                       <Grid item xs={12} marginTop="15px">
                         <TextField
-                          id="outlined-multiline-static"
+                          id="accomplishment"
                           label="Accomplishment This Week"
                           multiline
                           rows={4}
+                          name="accomplishment"
+                          onChange={handleModifyInputChange}
                           value={
-                            selectedRecord
-                              ? selectedRecord.accomplishment
-                              : "None"
+                            modifyMode
+                              ? modifiedRecord.accomplishment
+                              : selectedRecord?.accomplishment || ""
                           }
-                          disabled
+                          disabled={!modifyMode}
                           sx={textFieldStyle}
                         />
                       </Grid>
                       {/* FeedBack from Others */}
                       <Grid item xs={12} marginTop="15px">
                         <TextField
-                          id="outlined-multiline-static"
+                          id="feedback"
                           label="FeedBack from Others"
+                          name="feedback"
                           multiline
                           rows={4}
                           value={
-                            selectedRecord ? selectedRecord.feedback : "None"
+                            modifyMode
+                              ? modifiedRecord.feedback
+                              : selectedRecord?.feedback || ""
                           }
-                          disabled
+                          onChange={handleModifyInputChange}
+                          disabled={!modifyMode}
                           sx={textFieldStyle}
                         />
                       </Grid>
                       {/* Any comment & memo from team? */}
                       <Grid item xs={12} marginTop="15px">
                         <TextField
-                          id="outlined-multiline-static"
+                          id="memberComment"
                           label="Any Comment & Memo from Team?"
+                          name="memberComment"
                           multiline
                           rows={3}
                           value={
-                            selectedRecord
-                              ? selectedRecord.memberComment
-                              : "None"
+                            modifyMode
+                              ? modifiedRecord.memberComment
+                              : selectedRecord?.memberComment || ""
                           }
-                          disabled
+                          onChange={handleModifyInputChange}
+                          disabled={!modifyMode}
                           sx={textFieldStyle}
                         />
                       </Grid>
