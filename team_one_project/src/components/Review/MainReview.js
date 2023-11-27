@@ -509,7 +509,7 @@ export function MainReview() {
                           id="accomplishment"
                           label="Accomplishment This Week"
                           multiline
-                          rows={4}
+                          rows={3}
                           name="accomplishment"
                           onChange={handleModifyInputChange}
                           value={
@@ -528,7 +528,7 @@ export function MainReview() {
                           label="FeedBack from Others"
                           name="feedback"
                           multiline
-                          rows={4}
+                          rows={3}
                           value={
                             modifyMode
                               ? modifiedRecord.feedback
@@ -696,7 +696,7 @@ export function MainReview() {
                         name="accomplishment"
                         label="Accomplishment This Week"
                         multiline
-                        rows={4}
+                        rows={3}
                         sx={addNewRecordTextFieldStyle}
                         onChange={handleInputChangeWhenAdding}
                         value={addNewRecord.accomplishment}
@@ -709,7 +709,7 @@ export function MainReview() {
                         name="feedback"
                         label="FeedBack from Others"
                         multiline
-                        rows={4}
+                        rows={3}
                         sx={addNewRecordTextFieldStyle}
                         onChange={handleInputChangeWhenAdding}
                         value={addNewRecord.feedback}
