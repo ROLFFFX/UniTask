@@ -15,6 +15,7 @@ import Modal from "@mui/material/Modal";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Grid from "@mui/material/Grid";
+import { Tooltip } from "@mui/material";
 
 const modalStyle = {
   position: "absolute",
@@ -250,7 +251,22 @@ function Task({ taskData, onDelete, onEdit, refreshTasks }) {
         style={{ fontFamily: "Inter, sans-serif" }}
       >
         <div className="taskHeader">
-          <div className="taskTitleLabel">{taskData.title}</div>
+          <Tooltip
+            title={
+              <Typography
+                style={{ fontFamily: "Inter, sans-serif", fontSize: "12px" }}
+              >
+                {taskData.title}
+              </Typography>
+            }
+            arrow
+            placement="top"
+            TransitionProps={{ timeout: 600 }}
+          >
+            <div className="taskTitleLabel" style={{ fontSize: "14px" }}>
+              {taskData.title}
+            </div>
+          </Tooltip>
           <div className="buttonsContainer">
             <button
               className={`button showSubtaskButton ${
@@ -306,35 +322,56 @@ function Task({ taskData, onDelete, onEdit, refreshTasks }) {
           </div>
         </div>
 
-        <div className="assigneeLabel">{taskData.assignee}</div>
+        <div
+          className="assigneeLabel"
+          style={{ fontSize: "13px", marginLeft: "-10px" }}
+        >
+          {taskData.assignee}
+        </div>
         {ShowSub === "expand" && taskData.subtaskList ? (
           <ul className={"subtaskList"}>
             {taskData.subtaskList.map((subtask, index) => (
-              <li className={"subtask"} key={subtask.taskID}>
-                <input
-                  type="checkbox"
-                  style={{ display: "none" }}
-                  id={`custom-checkbox-${subtask.taskID}`}
-                  checked={subtask.status === "Done"}
-                  onChange={() => handleCheckboxChange(subtask)}
-                />
-                <label
-                  htmlFor={`custom-checkbox-${subtask.taskID}`}
-                  style={{
-                    display: "inline-block",
-                    width: "13px",
-                    height: "13px",
-                    backgroundColor:
-                      subtask.status === "Done" ? "#343A40" : "white",
-                    border: "1px solid #ccc",
-                    borderRadius: "50%",
-                    cursor: "pointer",
-                    marginRight: "10px",
-                    verticalAlign: "middle",
-                  }}
-                ></label>
-                {subtask.title}
-              </li>
+              <Tooltip
+                title={
+                  <Typography
+                    style={{
+                      fontFamily: "Inter, sans-serif",
+                      fontSize: "12px",
+                    }}
+                  >
+                    {subtask.title}
+                  </Typography>
+                }
+                arrow
+                placement="top"
+                TransitionProps={{ timeout: 600 }}
+              >
+                <li className={"subtask"} key={subtask.taskID}>
+                  <input
+                    type="checkbox"
+                    style={{ display: "none" }}
+                    id={`custom-checkbox-${subtask.taskID}`}
+                    checked={subtask.status === "Done"}
+                    onChange={() => handleCheckboxChange(subtask)}
+                  />
+                  <label
+                    htmlFor={`custom-checkbox-${subtask.taskID}`}
+                    style={{
+                      display: "inline-block",
+                      width: "13px",
+                      height: "13px",
+                      backgroundColor:
+                        subtask.status === "Done" ? "#343A40" : "white",
+                      border: "1px solid #ccc",
+                      borderRadius: "50%",
+                      cursor: "pointer",
+                      marginRight: "10px",
+                      verticalAlign: "middle",
+                    }}
+                  ></label>
+                  {subtask.title}
+                </li>
+              </Tooltip>
             ))}
           </ul>
         ) : null}
