@@ -105,8 +105,12 @@ export function SignUp() {
 
   return (
     <ThemeProvider theme={theme}>
-      <TopSVG />
-      <Container component="main" maxWidth="xs">
+      <TopSVG style={{ position: "absolute", zindex: "-1" }} />
+      <Container
+        component="main"
+        maxWidth="xs"
+        style={{ position: "relative", zIndex: 1 }}
+      >
         <CssBaseline />
         <Box
           sx={{
@@ -265,7 +269,10 @@ export function SignUp() {
           </Box>
         </Box>
       </Container>
-      <BottomSVG sx={{ margin: 0, padding: 0 }} />
+      <BottomSVG
+        sx={{ margin: 0, padding: 0 }}
+        style={{ position: "absolute", zindex: "-1" }}
+      />
     </ThemeProvider>
   );
 }
