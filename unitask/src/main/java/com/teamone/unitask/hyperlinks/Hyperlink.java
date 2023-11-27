@@ -8,11 +8,15 @@ import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 
+
+/**
+ * The Hyperlink entity;
+ */
 @Entity
 @Table(name = "hyperlink")
 public class Hyperlink {
 
-    /**
+    /*
      * fields
      */
 
@@ -21,25 +25,29 @@ public class Hyperlink {
     @Column(name = "hyperlink_id")
     private Long hyperlinkId;
 
+    // the name of the hyperlink;
     @NotBlank
     private String title;
 
+    // url of the hyperlink;
     @NotBlank
-    @Size(max = 500)
+    @Size(max = 1000)
     private String url;
 
-    /**
+    /*
      * foreign keys
      */
 
+    // the project that the hyperlink is at;
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "project_id")
     @OnDelete(action = OnDeleteAction.CASCADE)
     private Project projectId;
 
-    /**
-     * methods
+    /*
+     * methods; the constructors, and getters and setters for each field
      */
+
 
     public Hyperlink() {
 
@@ -52,10 +60,6 @@ public class Hyperlink {
 
     public Long getHyperlinkId() {
         return hyperlinkId;
-    }
-
-    public void setHyperlinkId(Long hyperlinkId) {
-        this.hyperlinkId = hyperlinkId;
     }
 
     public String getTitle() {

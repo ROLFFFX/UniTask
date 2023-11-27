@@ -10,6 +10,7 @@ import com.teamone.unitask.tasks.Task;
 import com.teamone.unitask.timeslots.TimeSlot;
 
 import javax.persistence.*;
+import javax.validation.constraints.Size;
 import java.time.LocalDateTime;
 import java.util.*;
 
@@ -30,6 +31,7 @@ public class Project {
     private Long projectId;
 
     @Column(nullable = false)
+    @Size(max = 1000)
     private String projectTitle;
 
     private LocalDateTime workSpaceCreationTime = LocalDateTime.now();

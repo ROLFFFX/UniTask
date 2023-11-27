@@ -8,6 +8,10 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+
+/**
+ * The Service class for the Hyperlink Page;
+ */
 @Service
 public class HyperlinkService {
 
@@ -17,6 +21,11 @@ public class HyperlinkService {
     @Autowired
     ProjectRepository projectRepository;
 
+
+    /*
+     * take a Hyperlink object and the project title as input, store the new Hyperlink Object into the database;
+     * if the project title is invalid, return null;
+     */
     public Hyperlink createHyperlink(Hyperlink requestHyperlink, String projectTitle) {
 
         // if given project does not exist, return null;
@@ -33,6 +42,10 @@ public class HyperlinkService {
         return requestHyperlink;
     }
 
+    /*
+     * take the project title as input; return a list of Hyperlink object that has the given project as the foreign key
+     * for the projectId field; return null if the project title is invalid;
+     */
     public List<Hyperlink> getHyperlinksByProjectTitle(String projectTitle) {
 
         if (!projectRepository.existsByProjectTitle(projectTitle)) {
@@ -46,6 +59,9 @@ public class HyperlinkService {
         return requestListHyperlinks;
     }
 
+    /*
+     * take the project title as input
+     */
     public Hyperlink editHyperlinkByHyperlinkId(Long hyperlinkId, Hyperlink newHyperlink) {
 
         // get hyperlink and modify its fields
