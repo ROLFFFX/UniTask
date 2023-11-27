@@ -22,17 +22,17 @@ public class Report {
     private Long reportId;
 
     @NotBlank
-    @Size(max = 300)
+    @Size(max = 1000)
     private String reportName;
 
     @NotBlank
-    @Size(max = 3000)
+    @Size(max = 6000)
     private String accomplishment;
 
-    @Size(max = 3000)
+    @Size(max = 6000)
     private String feedback;
 
-    @Size(max = 3000)
+    @Size(max = 6000)
     private String memberComment;
 
     /**
