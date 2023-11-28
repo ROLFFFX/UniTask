@@ -69,6 +69,17 @@ public class TimeSlotController {
         }
     }
 
+    //list of usernames that has submitted any available timeslots to this project
+    @GetMapping("/timeslot/members/{projectTitle}")
+    public ResponseEntity<List<String>> membersSubmitted(@PathVariable String projectTitle) {
+        try {
+            List<String> commonList = timeSlotService.membersSubmitted(projectTitle);
+            return new ResponseEntity<>(commonList, HttpStatus.OK);
+        }catch(Exception e){
+            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
     //confirm whether there are any timeslots selected in the group
     @GetMapping("/timeslot/inSession/{projectTitle}")
     public ResponseEntity<Boolean> inSession(@PathVariable String projectTitle) {

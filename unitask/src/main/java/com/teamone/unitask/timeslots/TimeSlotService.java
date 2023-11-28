@@ -108,14 +108,6 @@ public class TimeSlotService {
         //projectTS.sort(Comparator.comparing(TimeSlot::getStartTime)); //sort by start time in ascending order
         sort(commonStTime); //sort in temporal order
 
-//        List<TimeSlot> testReturn = new ArrayList<>();
-//        for(LocalDateTime stTime:commonStTime){
-//            TimeSlot ts = new TimeSlot();
-//            ts.setStartTime(stTime);
-//            ts.setEndTime(stTime.plusMinutes(30L));
-//            testReturn.add(ts);
-//        }
-
         //merge consecutive timeslots
         List<TimeSlot> commonTS = new ArrayList<>(); //result list
         ZonedDateTime disjoint = commonStTime.get(0); //first disjoint is start
@@ -149,5 +141,17 @@ public class TimeSlotService {
     public Boolean projNonEmpty(String projectTitle) {
         Project thisProj = projectRepository.findByProjectTitle(projectTitle);
         return !thisProj.getTimeSlots().isEmpty();
+    }
+
+    public List<String> membersSubmitted(String projectTitle) {
+        List<TimeSlot> projectTS = new ArrayList<>(projectRepository.findByProjectTitle(projectTitle).getTimeSlots());
+        Set<User> tsUser = new HashSet<>();
+        projectTS.forEach(ts -> tsUser.add(ts.getUserAssigned()));
+
+        List<String> userNames = tsUser.stream()
+                .map(User::getUsername)
+                .collect(Collectors.toList());
+
+        return userNames;
     }
 }

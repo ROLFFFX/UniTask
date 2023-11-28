@@ -11,9 +11,6 @@ import java.util.List;
 @RequestMapping("/api/test")
 public class MeetingController {
 
-/*    @Autowired
-    MeetingRepository meetingRepository;
-    */
     private final MeetingService meetingService;
 
     public MeetingController(MeetingService meetingService){this.meetingService=meetingService;}
