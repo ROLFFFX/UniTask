@@ -1,4 +1,4 @@
-import { Backdrop, Box, CircularProgress, Grid } from "@mui/material";
+import { Backdrop, Box, CircularProgress, Divider, Grid } from "@mui/material";
 import axios from "axios";
 import * as React from "react";
 import useAuth from "../../hooks/useAuth";
@@ -7,6 +7,7 @@ import { TeamProgress } from "./TeamProgress";
 import { BurndownChart } from "./BurndownChart";
 import ProgressBar from "./ProgressBar";
 import TaskView from "./TaskView";
+import "./TaskList.css";
 
 export function DashboardContent() {
   /* Hooks Declarations-------------------------------------------------------------------------------------------------------------------- */
@@ -17,7 +18,6 @@ export function DashboardContent() {
   const [ProgressBarData, setProgressBarData] = React.useState(); // Progress Bar: task done / undone
   const [formattedTeamMembers, setFormattedTeamMembers] = React.useState(); // team members
   const [allTasks, setAllTasks] = React.useState();
-
   /* End of Hooks Declarations-------------------------------------------------------------------------------------------------------------------- */
 
   /* Requests Declarations-------------------------------------------------------------------------------------------------------------------- */
@@ -171,21 +171,22 @@ export function DashboardContent() {
         >
           <Grid container>
             {/* Grid For Left Side Bar */}
-            <Grid container item xs={7}>
+            <Grid container item xs={7} style={{ position: "relative" }}>
               {/* Grid for task list */}
               <Grid
                 item
                 xs={12}
-                height="calc((100vh - 64px) * 0.8)"
-                maxHeight="calc((100vh - 64px) * 0.8)"
+                height="calc(100vh - 64px)"
+                maxHeight="calc(100vh - 64px)"
                 overflow="hidden"
+                className="custom-scrollbar"
               >
                 <TaskView
                   taskData={allTasks}
                   formattedTeamMembers={formattedTeamMembers}
                 />
               </Grid>
-              {/* Grid for PorgressBar */}
+              {/* Grid for PorgressBar
               <Grid
                 item
                 xs={12}
@@ -194,8 +195,18 @@ export function DashboardContent() {
                 overflow="hidden"
               >
                 <ProgressBar progressBarData={ProgressBarData} />
-              </Grid>
-              {/* <ProductBacklog /> */}
+              </Grid> */}
+              <Divider
+                orientation="vertical"
+                flexItem
+                style={{
+                  position: "absolute",
+                  right: 0,
+                  top: "5%",
+                  height: "90%",
+                  zIndex: 1, // adjust z-index as needed
+                }}
+              />
             </Grid>
             <Grid item container xs={5}>
               <Grid
@@ -214,9 +225,7 @@ export function DashboardContent() {
                 maxHeight="calc((100vh - 64px)/2)"
                 overflow="hidden"
               >
-                <Grid item>
-                  <BurndownChart />
-                </Grid>
+                <ProgressBar progressBarData={ProgressBarData} />
               </Grid>
             </Grid>
           </Grid>
