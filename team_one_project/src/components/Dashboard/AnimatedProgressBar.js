@@ -35,7 +35,7 @@ export default function AnimatedProgressBar({ progressData }) {
 
   return (
     <Box display="flex" justifyContent="center" alignItems="center">
-      <svg viewBox="0 0 400 400" width="60%" height="60%">
+      <svg viewBox="0 0 400 400" width="100%" height="100%">
         <VictoryPie
           standalone={false}
           animate={{ duration: 1000 }}
@@ -48,7 +48,18 @@ export default function AnimatedProgressBar({ progressData }) {
           style={{
             data: {
               fill: ({ datum }) => {
-                const color = datum.y > 30 ? "green" : "red";
+                let color;
+                if (percent <= 20) {
+                  color = "#99e2b4";
+                } else if (percent <= 40) {
+                  color = "#78c6a3";
+                } else if (percent <= 60) {
+                  color = "#56ab91";
+                } else if (percent <= 80) {
+                  color = "#469d89";
+                } else {
+                  color = "#248277";
+                }
                 return datum.x === 1 ? color : "transparent";
               },
             },
