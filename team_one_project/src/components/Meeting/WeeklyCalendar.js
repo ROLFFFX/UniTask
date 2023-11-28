@@ -186,7 +186,7 @@ const WeeklyCalendar = () => {
             start: updatedStart,
             end: updatedEnd,
             id: TEMP_EVENT_ID,
-            text: "Select Time Range",
+            text: "Selected Time Range",
             backColor: "purple",
         }));
         dp.update();
@@ -423,7 +423,10 @@ const WeeklyCalendar = () => {
                 start: new DayPilot.Date(adjustedStartTime),
                 end: new DayPilot.Date(adjustedEndTime),
                 text: meeting.title,
-                cssClass: "calendar_black_event_inner"
+                cssClass: "calendar_black_event_inner",
+                //disallow dragging the events
+                moveDisabled: true,
+                resizeDisabled: true,
             };
         });
     };
