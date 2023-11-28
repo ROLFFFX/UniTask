@@ -12,6 +12,10 @@
     pointer-events: none;
 }
 
+.temp-selection {
+    padding: 2px;
+}
+
 .membersList {
     display: flex;
     flex-direction: row;

@@ -188,6 +188,9 @@ const WeeklyCalendar = () => {
             id: TEMP_EVENT_ID,
             text: "Selected Time Range",
             backColor: "purple",
+            cssClass: "temp-selection",
+            moveDisabled: true,
+            resizeDisabled: true
         }));
         dp.update();
     };
@@ -203,6 +206,9 @@ const WeeklyCalendar = () => {
         startTime.setMinutes(startTime.getMinutes() + startTime.getTimezoneOffset());
         endTime.setMinutes(endTime.getMinutes() + endTime.getTimezoneOffset());
 
+        let startTimeDisplay = formatTimeForDisplay(startTime);
+        let endTimeDisplay = formatTimeForDisplay(endTime);
+
         // convert to ISO String
         startTime = startTime.toISOString();
         endTime = endTime.toISOString()
@@ -216,7 +222,7 @@ const WeeklyCalendar = () => {
         const title = titleResponse.result;
 
         // Confirmation for creating a meeting for the selected time range
-        const confirmationResponse = await DayPilot.Modal.confirm(`Create a meeting from ${startTime} to ${endTime}?`);
+        const confirmationResponse = await DayPilot.Modal.confirm(`Create a meeting "${title}" from ${startTimeDisplay} to ${endTimeDisplay}?`);
         if (!confirmationResponse || confirmationResponse.canceled) {
             clearSelection();
             return;
@@ -256,29 +262,70 @@ const WeeklyCalendar = () => {
         setSelectedRange(null);
     }
 
-    //edit meeting
-    const editEvent = async (e) => {
+    const formatTimeForDisplay = (date) => {
+        const options = { year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false };
+        return date.toLocaleString('en-US', options);
+    };
+
+    //edit meeting time (when dragged/extended/shortened)
+    const editEventTime = async args => {
+
+        const timeZoneOffset = getTimeZoneOffsetInHours();
+
+        //adjust time difference
+        let startTAdj = args.newStart.toDate();
+        startTAdj.setHours(startTAdj.getHours() + timeZoneOffset);
+        let endTAdj = args.newEnd.toDate();
+        endTAdj.setHours(endTAdj.getHours() + timeZoneOffset);
+
+        let startTDisplay = formatTimeForDisplay(startTAdj);
+        let endTDisplay = formatTimeForDisplay(endTAdj);
+
+        const result = await DayPilot.Modal.confirm(`Reschedule "${args.e.data.text}" to ${startTDisplay} ~ ${endTDisplay}?`);
+        if (result.result) {
+            // User confirmed, proceed with the event move
+            try {
+                const updatedMeeting = {
+                    meetingId: args.e.data.id, // Assuming this is how your event data is structured
+                    title: args.e.data.text,
+                    startTime: startTAdj.toISOString(),
+                    endTime: endTAdj.toISOString(),
+                };
+                // Update request to the backend
+                const response = await axios.put(`${ENDPOINT_URL}api/test/meeting/${projectTitle}`, updatedMeeting, {
+                    headers: {
+                        Authorization: `Bearer ${auth.user.userJWT}`,
+                    },
+                });
+                setHandleRefresh([...handleRefresh]);
+            } catch (error) {
+                console.error('Error updating meeting:', error);
+            }
+        }
+    };
+
+    //edit meeting Title
+    const editEventTitle = async (e) => {
+
         // Prompt for new title
         const titleResponse = await DayPilot.Modal.prompt("New Title:", e.data.text);
         if (!titleResponse || titleResponse.canceled) return;
         const title = titleResponse.result;
 
-        // Prompt for new start time
-        const startTimeResponse = await DayPilot.Modal.prompt("New Start Time (YYYY-MM-DDTHH:MM):", e.data.start.toString("yyyy-MM-ddTHH:mm"));
-        if (!startTimeResponse || startTimeResponse.canceled) return;
-        const startTime = new Date(startTimeResponse.result).toISOString();
+        const timeZoneOffset = getTimeZoneOffsetInHours();
 
-        // Prompt for new end time
-        const endTimeResponse = await DayPilot.Modal.prompt("New End Time (YYYY-MM-DDTHH:MM):", e.data.end.toString("yyyy-MM-ddTHH:mm"));
-        if (!endTimeResponse || endTimeResponse.canceled) return;
-        const endTime = new Date(endTimeResponse.result).toISOString();
+        //adjust time difference
+        let startTAdj = e.data.start.toDate();
+        startTAdj.setHours(startTAdj.getHours() + timeZoneOffset);
+        let endTAdj = e.data.end.toDate();
+        endTAdj.setHours(endTAdj.getHours() + timeZoneOffset);
 
         try {
             const updatedMeeting = {
                 meetingId: e.data.id, // Assuming this is how your event data is structured
                 title: title,
-                startTime: startTime,
-                endTime: endTime
+                startTime: startTAdj.toISOString(),
+                endTime: endTAdj.toISOString(),
             };
             // Update request to the backend
             const response = await axios.put(`${ENDPOINT_URL}api/test/meeting/${projectTitle}`, updatedMeeting, {
@@ -288,13 +335,6 @@ const WeeklyCalendar = () => {
             });
 
             //console.log('Meeting updated:', response.data);
-
-            // Optionally, update the calendar with new event details
-            const dp = calendarRef.current.control;
-            e.data.text = title;
-            e.data.start = new DayPilot.Date(startTime);
-            e.data.end = new DayPilot.Date(endTime);
-            dp.events.update(e);
 
             // Trigger state update if necessary
             setHandleRefresh([...handleRefresh]); // Adjust this based on how your state is managed
@@ -425,8 +465,6 @@ const WeeklyCalendar = () => {
                 text: meeting.title,
                 cssClass: "calendar_black_event_inner",
                 //disallow dragging the events
-                moveDisabled: true,
-                resizeDisabled: true,
             };
         });
     };
@@ -511,6 +549,28 @@ const WeeklyCalendar = () => {
         });
     };
 
+    const getContextMenuForEvent = (event) => {
+        if (event.data.cssClass === "calendar_black_event_inner") {
+            return new DayPilot.Menu({
+                items: [
+                    {
+                        text: "Delete",
+                        onClick: async args => {
+                            await deleteMeeting(args.source);
+                        }
+                    },
+                    {
+                        text: "Rename",
+                        onClick: async args => {
+                            await editEventTitle(args.source);
+                        }
+                    }
+                ]
+            });
+        }
+        return null; // No context menu for events without the specific class
+    };
+
     //calendar default structure
     const [calendarConfig, setCalendarConfig] = useState({
         viewType: "Week",
@@ -519,24 +579,14 @@ const WeeklyCalendar = () => {
         startDate: startDate,
         allowEventOverlap: true,
         onTimeRangeSelected: args => onTimeRangeSelected(args),
-
-        // delete port implemented (Problem: newly created meeting can not be removed)
-        contextMenu: new DayPilot.Menu({
-            items: [
-                {
-                    text: "Delete",
-                    onClick: async args => {
-                        await deleteMeeting(args.source);
-                    }
-                },
-                {
-                    text: "Edit...",
-                    onClick: async args => {
-                        await editEvent(args.source);
-                    }
+        eventMoveHandling: "update",
+        eventResizeHandling: "update",
+        onEventRightClick: args => {
+                const contextMenu = getContextMenuForEvent(args.e);
+                if (contextMenu) {
+                    contextMenu.show(args.e);
                 }
-            ]
-        })
+        }
     });
 
     const goToPreviousWeek = () => {
@@ -641,6 +691,8 @@ const WeeklyCalendar = () => {
                     {...calendarConfig}
                     ref={calendarRef}
                     onTimeRangeSelected={onTimeRangeSelected}
+                    onEventResized={editEventTime}
+                    onEventMoved={editEventTime}
                 />
             </div>
         </div>
