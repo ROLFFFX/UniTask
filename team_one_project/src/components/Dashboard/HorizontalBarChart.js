@@ -15,7 +15,12 @@ export default function HorizontalBarChart({ progressData }) {
 
   return (
     <React.Fragment>
-      <Grid container alignItems="center" justifyContent="center">
+      <Grid
+        container
+        alignItems="center"
+        justifyContent="center"
+        height="calc((100vh - 64px)/2 * 0.85)"
+      >
         {/* To Do  */}
         <Tooltip
           title={
