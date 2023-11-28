@@ -12,13 +12,13 @@
 }
 
 .calendar_black_event_inner {
-    background: rgb(0, 0, 0);
+    background: rgb(160,32,240);
     color: #fff;
     border: none;
     border-radius: 0px;
     font-size: 10pt;
     padding: 2px;
-    opacity: 1;
+    opacity: 0.8;
 }
 /* adjusting the built-in theme */
 
