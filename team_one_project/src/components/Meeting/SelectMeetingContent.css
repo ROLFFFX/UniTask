@@ -1,11 +1,4 @@
-.mainMeetingContainer {
-  /* .container {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-      background-color: black;
-    } */
+
 
   .calendar {
     width: 90%;
@@ -136,4 +129,18 @@
     background-color: grey;
   }
 
+  .week-navigation-timeslots {
+    display:flex;
+    flex-direction: row;
+  }
+
+  .week-navigation-timeslots button {
+    /* Additional styles for the 'Edit Meeting Time Slot' button */
+    background-color: black;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    margin: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
 }
