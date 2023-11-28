@@ -1,6 +1,7 @@
 import { Grid, Typography } from "@mui/material";
 import React from "react";
 import AnimatedProgressBar from "./AnimatedProgressBar";
+import HorizontalBarChart from "./HorizontalBarChart";
 
 export default function ProgressBar(ProgressBarData) {
   return (
@@ -50,7 +51,9 @@ export default function ProgressBar(ProgressBarData) {
             <AnimatedProgressBar progressData={ProgressBarData} />
           </Grid>
           {/* Grid For Horizontal bar Chart  */}
-          <Grid item xs={9}></Grid>
+          <Grid item xs={9}>
+            <HorizontalBarChart progressData={ProgressBarData} />
+          </Grid>
         </Grid>
       </Grid>
     </React.Fragment>
