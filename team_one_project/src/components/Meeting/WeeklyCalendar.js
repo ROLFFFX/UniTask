@@ -297,6 +297,7 @@ const WeeklyCalendar = () => {
                         Authorization: `Bearer ${auth.user.userJWT}`,
                     },
                 });
+                clearSelection(); //cancel the create meeting action in progress
                 setHandleRefresh([...handleRefresh]);
             } catch (error) {
                 console.error('Error updating meeting:', error);
@@ -335,9 +336,8 @@ const WeeklyCalendar = () => {
             });
 
             //console.log('Meeting updated:', response.data);
-
-            // Trigger state update if necessary
-            setHandleRefresh([...handleRefresh]); // Adjust this based on how your state is managed
+            clearSelection(); //cancel the create meeting action in progress
+            setHandleRefresh([...handleRefresh]);
         } catch (error) {
             console.error('Error updating meeting:', error);
         }
