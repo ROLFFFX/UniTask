@@ -6,6 +6,7 @@ import { ENDPOINT_URL } from "../../hooks/useConfig";
 import { TeamProgress } from "./TeamProgress";
 import { BurndownChart } from "./BurndownChart";
 import ProgressBar from "./ProgressBar";
+import TaskView from "./TaskView";
 
 export function DashboardContent() {
   /* Hooks Declarations-------------------------------------------------------------------------------------------------------------------- */
@@ -178,7 +179,12 @@ export function DashboardContent() {
                 height="calc((100vh - 64px) * 0.8)"
                 maxHeight="calc((100vh - 64px) * 0.8)"
                 overflow="hidden"
-              ></Grid>
+              >
+                <TaskView
+                  taskData={allTasks}
+                  formattedTeamMembers={formattedTeamMembers}
+                />
+              </Grid>
               {/* Grid for PorgressBar */}
               <Grid
                 item
@@ -220,12 +226,7 @@ export function DashboardContent() {
   } else {
     return (
       <React.Fragment>
-        <Backdrop
-          sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }}
-          open={backdropOpen}
-        >
-          <CircularProgress color="inherit" />
-        </Backdrop>
+        <h2>generating content...</h2>
       </React.Fragment>
     );
   }
