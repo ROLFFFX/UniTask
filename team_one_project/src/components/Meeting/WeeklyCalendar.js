@@ -435,7 +435,7 @@ const WeeklyCalendar = () => {
                 text: "common available time",
                 start: new DayPilot.Date(adjustedStartTime),
                 end: new DayPilot.Date(adjustedEndTime),
-                cssClass: "calendar_default_event_inner",
+                cssClass: "available_slots",
                 //make timeslots static
                 moveDisabled: true,
                 resizeDisabled: true,
@@ -632,7 +632,7 @@ const WeeklyCalendar = () => {
                     disablePadding
                     subheader={
                         <ListSubheader component="div" id="nested-list-subheader">
-                            Members Who Have Submitted Their Available Time:
+                            There's a Group Polling Session in Progress... Members Who Have Submitted Their Available Time:
                         </ListSubheader>
                     }
                 >

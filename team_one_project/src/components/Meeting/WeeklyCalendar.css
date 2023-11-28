@@ -4,12 +4,25 @@
 .calendar_default_event_inner {
     background: #000000;
     color: #fff;
-    border: none;
     border-radius: 0px;
     font-size: 10pt;
     padding: 2px;
     opacity: 0.4;
     pointer-events: none;
+}
+
+.available_slots{
+    background: #000000;
+    color: #fff;
+    border-radius: 0px;
+    font-size: 10pt;
+    padding: 2px;
+    opacity: 0.4;
+    pointer-events: none;
+}
+
+#nested-list-subheader{
+    color: purple;
 }
 
 .temp-selection {
@@ -28,9 +41,10 @@
 .calendar_black_event_inner {
     background: rgb(100,0,200);
     color: #fff;
-    border: none;
-    border-radius: 0px;
+    border-color: white;
+    border-width: 2px;
     font-size: 10pt;
+    margin-right: 10px;
     /*padding: 2px;*/
     opacity: 0.8;
 }
