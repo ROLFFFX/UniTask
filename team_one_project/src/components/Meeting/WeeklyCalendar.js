@@ -1,4 +1,9 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect} from 'react';
+import List from '@mui/material/List';
+import ListItem from '@mui/material/ListItem';
+import ListItemText from '@mui/material/ListItemText';
+import ListSubheader from '@mui/material/ListSubheader';
+
 import { DayPilot, DayPilotCalendar, DayPilotNavigator } from "@daypilot/daypilot-lite-react";
 import './WeeklyCalendar.css';
 import { useNavigate } from "react-router-dom";
@@ -59,6 +64,25 @@ const WeeklyCalendar = () => {
             console.log(response.data);
         }catch (e){
             console.error('Error Confirming Existing Project Timeslots:', e);
+        }
+    }
+
+    const [membersList, setMembersList] = useState([]);
+    //get list of members who has submitted their available times
+    const fetchSubmittedMembers = async () => {
+        let returnlist = [];
+        try{
+            const response = await axios.get(`${ENDPOINT_URL}api/test/timeslot/members/${projectTitle}`,
+                {
+                    headers: {
+                        Authorization: `Bearer ${auth.user.userJWT}`,
+                    },
+                }
+            );
+            if (response.data.length>0) {setMembersList(response.data);}
+            console.log(response.data);
+        }catch (e){
+            console.error('Error Fetching Members Who Has Submitted Timeslots:', e);
         }
     }
 
@@ -515,6 +539,7 @@ const WeeklyCalendar = () => {
     useEffect(() => {
         const initializeCalendar = async () => {
             fetchInSession();
+            fetchSubmittedMembers();
             const [available, meetings] = await Promise.all([fetchAvaliable(), fetchMeetings()]);
 
             const processedAvailable = adjustTimeZoneAvaliable(available);
@@ -537,44 +562,62 @@ const WeeklyCalendar = () => {
     }, [startDate, handleRefresh]);
 
     return (
-        <div className="week-navigation" style={styles.wrap}>
-            <div className="button-row" style={styles.header}>
-                <button className="button-prev" onClick={goToPreviousWeek}>
-                    &lt; Previous Week
-                </button>
-                <button className="button-next" onClick={goToNextWeek}>
-                    Next Week &gt;
-                </button>
-                {inSession? (
-                    <div>
-                        <button onClick={() => navigate("/meeting/selectmeeting")}>
-                            Edit Your Available Time
-                        </button>
-                        <button className="button-clear-slots" onClick={clearAvailableSlots}>
-                            End Session
-                        </button>
-                    </div>
-                ) : (
-                    <button onClick={() => navigate("/meeting/selectmeeting")}>
-                        Start A Group Meeting Poll Session
+        <div className={"main-container"}>
+            {inSession?(
+                <List
+                    subheader={
+                        <ListSubheader component="div" id="nested-list-subheader">
+                            Members Who Has Submitted Their Available Time:
+                        </ListSubheader>
+                    }
+                >
+                    {membersList.map((name, index) => (
+                        <ListItem key = {index}>
+                            <ListItemText primary={name}/>
+                        </ListItem>
+                    ))}
+                </List>
+            ):null
+            }
+            <div className="week-navigation" style={styles.wrap}>
+                <div className="button-row" style={styles.header}>
+                    <button className="button-prev" onClick={goToPreviousWeek}>
+                        &lt; Previous Week
                     </button>
-                )}
-            </div>
-            {selectedRange ? (
-                <div>
-                    <button onClick={createMeeting}>Create Meeting</button>
-                    <button onClick={clearSelection}>Cancel</button>
+                    <button className="button-next" onClick={goToNextWeek}>
+                        Next Week &gt;
+                    </button>
+                    {inSession? (
+                        <div>
+                            <button onClick={() => navigate("/meeting/selectmeeting")}>
+                                Edit Your Available Time
+                            </button>
+                            <button className="button-clear-slots" onClick={clearAvailableSlots}>
+                                End Session
+                            </button>
+                        </div>
+                    ) : (
+                        <button onClick={() => navigate("/meeting/selectmeeting")}>
+                            Start A Group Meeting Poll Session
+                        </button>
+                    )}
                 </div>
-                ) : (
-                    <div className="button-placeholder"></div>
-            )}
-            <DayPilotCalendar
-                key={calendarConfig.cellDuration}
-                style={styles.calendar}
-                {...calendarConfig}
-                ref={calendarRef}
-                onTimeRangeSelected={onTimeRangeSelected}
-            />
+                {selectedRange ? (
+                    <div>
+                        <button onClick={createMeeting}>Create Meeting</button>
+                        <button onClick={clearSelection}>Cancel</button>
+                    </div>
+                    ) : (
+                        <div className="button-placeholder"></div>
+                )}
+                <DayPilotCalendar
+                    key={calendarConfig.cellDuration}
+                    style={styles.calendar}
+                    {...calendarConfig}
+                    ref={calendarRef}
+                    onTimeRangeSelected={onTimeRangeSelected}
+                />
+            </div>
         </div>
     );
 
