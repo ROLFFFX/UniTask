@@ -4,7 +4,7 @@ import ListItem from '@mui/material/ListItem';
 import ListItemText from '@mui/material/ListItemText';
 import ListSubheader from '@mui/material/ListSubheader';
 
-import { DayPilot, DayPilotCalendar, DayPilotNavigator } from "@daypilot/daypilot-lite-react";
+import { DayPilot, DayPilotCalendar, DayPilotNavigator, DayPilotScheduler } from "@daypilot/daypilot-lite-react";
 import './WeeklyCalendar.css';
 import { useNavigate } from "react-router-dom";
 import axios from 'axios';
@@ -16,7 +16,7 @@ const styles = {
     wrap: {
         justifyContent: "center",
         alignItems: "center",
-        height: "100vh",
+        //height: "100vh",
         padding: "0 50px"
     },
     calendar: {
@@ -29,9 +29,10 @@ const styles = {
         width: "100%",
         maxWidth: "800px",
         marginBottom: "10px",
-        marginTop:"50px"
+        marginTop:"10px"
     },
 };
+
 
 const WeeklyCalendar = () => {
 
@@ -41,7 +42,7 @@ const WeeklyCalendar = () => {
 
     const [handleRefresh, setHandleRefresh] = useState([]);
 
-    const calendarRef = useRef();
+    const calendarRef = useRef(null);
 
     const navigate = useNavigate();
 
@@ -106,7 +107,7 @@ const WeeklyCalendar = () => {
                     endTime: avaliable.endTime
                 });
             }
-
+            console.log("fetched availableTS",avaliableTimeSlots);
             return avaliableTimeSlots;
         } catch (error) {
             console.error('Error fetching avaliableTimeSlots:', error);
@@ -185,8 +186,11 @@ const WeeklyCalendar = () => {
             start: updatedStart,
             end: updatedEnd,
             id: TEMP_EVENT_ID,
-            text: "Select Time Range",
+            text: "Selected Time Range",
             backColor: "purple",
+            cssClass: "temp-selection",
+            moveDisabled: true,
+            resizeDisabled: true
         }));
         dp.update();
     };
@@ -202,6 +206,9 @@ const WeeklyCalendar = () => {
         startTime.setMinutes(startTime.getMinutes() + startTime.getTimezoneOffset());
         endTime.setMinutes(endTime.getMinutes() + endTime.getTimezoneOffset());
 
+        let startTimeDisplay = formatTimeForDisplay(startTime);
+        let endTimeDisplay = formatTimeForDisplay(endTime);
+
         // convert to ISO String
         startTime = startTime.toISOString();
         endTime = endTime.toISOString()
@@ -215,7 +222,7 @@ const WeeklyCalendar = () => {
         const title = titleResponse.result;
 
         // Confirmation for creating a meeting for the selected time range
-        const confirmationResponse = await DayPilot.Modal.confirm(`Create a meeting from ${startTime} to ${endTime}?`);
+        const confirmationResponse = await DayPilot.Modal.confirm(`Create a meeting "${title}" from ${startTimeDisplay} to ${endTimeDisplay}?`);
         if (!confirmationResponse || confirmationResponse.canceled) {
             clearSelection();
             return;
@@ -255,29 +262,70 @@ const WeeklyCalendar = () => {
         setSelectedRange(null);
     }
 
-    //edit meeting
-    const editEvent = async (e) => {
+    const formatTimeForDisplay = (date) => {
+        const options = { year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false };
+        return date.toLocaleString('en-US', options);
+    };
+
+    //edit meeting time (when dragged/extended/shortened)
+    const editEventTime = async args => {
+
+        const timeZoneOffset = getTimeZoneOffsetInHours();
+
+        //adjust time difference
+        let startTAdj = args.newStart.toDate();
+        startTAdj.setHours(startTAdj.getHours() + timeZoneOffset);
+        let endTAdj = args.newEnd.toDate();
+        endTAdj.setHours(endTAdj.getHours() + timeZoneOffset);
+
+        let startTDisplay = formatTimeForDisplay(startTAdj);
+        let endTDisplay = formatTimeForDisplay(endTAdj);
+
+        const result = await DayPilot.Modal.confirm(`Reschedule "${args.e.data.text}" to ${startTDisplay} ~ ${endTDisplay}?`);
+        if (result.result) {
+            // User confirmed, proceed with the event move
+            try {
+                const updatedMeeting = {
+                    meetingId: args.e.data.id, // Assuming this is how your event data is structured
+                    title: args.e.data.text,
+                    startTime: startTAdj.toISOString(),
+                    endTime: endTAdj.toISOString(),
+                };
+                // Update request to the backend
+                const response = await axios.put(`${ENDPOINT_URL}api/test/meeting/${projectTitle}`, updatedMeeting, {
+                    headers: {
+                        Authorization: `Bearer ${auth.user.userJWT}`,
+                    },
+                });
+                setHandleRefresh([...handleRefresh]);
+            } catch (error) {
+                console.error('Error updating meeting:', error);
+            }
+        }
+    };
+
+    //edit meeting Title
+    const editEventTitle = async (e) => {
+
         // Prompt for new title
         const titleResponse = await DayPilot.Modal.prompt("New Title:", e.data.text);
         if (!titleResponse || titleResponse.canceled) return;
         const title = titleResponse.result;
 
-        // Prompt for new start time
-        const startTimeResponse = await DayPilot.Modal.prompt("New Start Time (YYYY-MM-DDTHH:MM):", e.data.start.toString("yyyy-MM-ddTHH:mm"));
-        if (!startTimeResponse || startTimeResponse.canceled) return;
-        const startTime = new Date(startTimeResponse.result).toISOString();
+        const timeZoneOffset = getTimeZoneOffsetInHours();
 
-        // Prompt for new end time
-        const endTimeResponse = await DayPilot.Modal.prompt("New End Time (YYYY-MM-DDTHH:MM):", e.data.end.toString("yyyy-MM-ddTHH:mm"));
-        if (!endTimeResponse || endTimeResponse.canceled) return;
-        const endTime = new Date(endTimeResponse.result).toISOString();
+        //adjust time difference
+        let startTAdj = e.data.start.toDate();
+        startTAdj.setHours(startTAdj.getHours() + timeZoneOffset);
+        let endTAdj = e.data.end.toDate();
+        endTAdj.setHours(endTAdj.getHours() + timeZoneOffset);
 
         try {
             const updatedMeeting = {
                 meetingId: e.data.id, // Assuming this is how your event data is structured
                 title: title,
-                startTime: startTime,
-                endTime: endTime
+                startTime: startTAdj.toISOString(),
+                endTime: endTAdj.toISOString(),
             };
             // Update request to the backend
             const response = await axios.put(`${ENDPOINT_URL}api/test/meeting/${projectTitle}`, updatedMeeting, {
@@ -287,13 +335,6 @@ const WeeklyCalendar = () => {
             });
 
             //console.log('Meeting updated:', response.data);
-
-            // Optionally, update the calendar with new event details
-            const dp = calendarRef.current.control;
-            e.data.text = title;
-            e.data.start = new DayPilot.Date(startTime);
-            e.data.end = new DayPilot.Date(endTime);
-            dp.events.update(e);
 
             // Trigger state update if necessary
             setHandleRefresh([...handleRefresh]); // Adjust this based on how your state is managed
@@ -377,23 +418,32 @@ const WeeklyCalendar = () => {
 
     //(AVALIABLE TIME SLOTS) Fix time difference between the ISO string and the local time
     const adjustTimeZoneAvaliable = (meetings) => {
-        const thirtyMinMeetings = convertTo30MinSlots(meetings);
-        console.log("30mins", thirtyMinMeetings)
+        // const thirtyMinMeetings = convertTo30MinSlots(meetings);
+        // console.log("30mins", thirtyMinMeetings)
         const timeZoneOffset = getTimeZoneOffsetInHours();
 
-        return thirtyMinMeetings.map(meeting => {
-            let adjustedStartTime = new Date(meeting.start);
+        const processedTS = []
+        // return thirtyMinMeetings.map(meeting => {
+        meetings.forEach(meeting => {
+            let adjustedStartTime = new Date(meeting.startTime);
             adjustedStartTime.setHours(adjustedStartTime.getHours() - timeZoneOffset);
 
-            let adjustedEndTime = new Date(meeting.end);
+            let adjustedEndTime = new Date(meeting.endTime);
             adjustedEndTime.setHours(adjustedEndTime.getHours() - timeZoneOffset);
 
-            return {
+            processedTS.push({
+                text: "common available time",
                 start: new DayPilot.Date(adjustedStartTime),
                 end: new DayPilot.Date(adjustedEndTime),
-                cssClass: "calendar_default_event_inner"
-            };
-        });
+                cssClass: "calendar_default_event_inner",
+                //make timeslots static
+                moveDisabled: true,
+                resizeDisabled: true,
+                contextMenuDisabled: true
+            });
+        })
+        console.log("processedTS", processedTS);
+        return processedTS;
     };
 
 
@@ -413,7 +463,8 @@ const WeeklyCalendar = () => {
                 start: new DayPilot.Date(adjustedStartTime),
                 end: new DayPilot.Date(adjustedEndTime),
                 text: meeting.title,
-                cssClass: "calendar_black_event_inner"
+                cssClass: "calendar_black_event_inner",
+                //disallow dragging the events
             };
         });
     };
@@ -498,6 +549,28 @@ const WeeklyCalendar = () => {
         });
     };
 
+    const getContextMenuForEvent = (event) => {
+        if (event.data.cssClass === "calendar_black_event_inner") {
+            return new DayPilot.Menu({
+                items: [
+                    {
+                        text: "Delete",
+                        onClick: async args => {
+                            await deleteMeeting(args.source);
+                        }
+                    },
+                    {
+                        text: "Rename",
+                        onClick: async args => {
+                            await editEventTitle(args.source);
+                        }
+                    }
+                ]
+            });
+        }
+        return null; // No context menu for events without the specific class
+    };
+
     //calendar default structure
     const [calendarConfig, setCalendarConfig] = useState({
         viewType: "Week",
@@ -506,24 +579,14 @@ const WeeklyCalendar = () => {
         startDate: startDate,
         allowEventOverlap: true,
         onTimeRangeSelected: args => onTimeRangeSelected(args),
-
-        // delete port implemented (Problem: newly created meeting can not be removed)
-        contextMenu: new DayPilot.Menu({
-            items: [
-                {
-                    text: "Delete",
-                    onClick: async args => {
-                        await deleteMeeting(args.source);
-                    }
-                },
-                {
-                    text: "Edit...",
-                    onClick: async args => {
-                        await editEvent(args.source);
-                    }
+        eventMoveHandling: "update",
+        eventResizeHandling: "update",
+        onEventRightClick: args => {
+                const contextMenu = getContextMenuForEvent(args.e);
+                if (contextMenu) {
+                    contextMenu.show(args.e);
                 }
-            ]
-        })
+        }
     });
 
     const goToPreviousWeek = () => {
@@ -541,20 +604,21 @@ const WeeklyCalendar = () => {
             fetchSubmittedMembers();
             const [available, meetings] = await Promise.all([fetchAvaliable(), fetchMeetings()]);
 
+            //console.log("available",available);
             const processedAvailable = adjustTimeZoneAvaliable(available);
             const adjustedMeetings = adjustTimeZoneMeet(meetings);
 
             // Filter out conflicting slots
-            const nonConflictingAvailable = filterConflictingSlots(processedAvailable, adjustedMeetings);
+            //const nonConflictingAvailable = filterConflictingSlots(processedAvailable, adjustedMeetings);
 
             // Combine non-conflicting available slots and meetings
-            const combinedEvents = [...nonConflictingAvailable, ...adjustedMeetings];
-
+            const combinedEvents = [...processedAvailable, ...adjustedMeetings];
             setCalendarConfig(prevConfig => ({
                 ...prevConfig,
                 events: combinedEvents,
                 startDate: startDate
             }));
+            //console.log("processedAvailable",processedAvailable);
         };
 
         initializeCalendar();
@@ -564,17 +628,23 @@ const WeeklyCalendar = () => {
         <div className={"main-container"}>
             {inSession?(
                 <List
+                    className={"membersListWrap"}
+                    disablePadding
                     subheader={
                         <ListSubheader component="div" id="nested-list-subheader">
                             Members Who Have Submitted Their Available Time:
                         </ListSubheader>
                     }
                 >
-                    {membersList.map((name, index) => (
-                        <ListItem key = {index}>
-                            <ListItemText primary={name}/>
-                        </ListItem>
-                    ))}
+                    <ListItem>
+                        <List className={"membersList"}>
+                            {membersList.map((name, index) => (
+                                <ListItem key = {index}>
+                                    <ListItemText primary={name}/>
+                                </ListItem>
+                            ))}
+                        </List>
+                    </ListItem>
                 </List>
             ):null
             }
@@ -621,6 +691,8 @@ const WeeklyCalendar = () => {
                     {...calendarConfig}
                     ref={calendarRef}
                     onTimeRangeSelected={onTimeRangeSelected}
+                    onEventResized={editEventTime}
+                    onEventMoved={editEventTime}
                 />
             </div>
         </div>

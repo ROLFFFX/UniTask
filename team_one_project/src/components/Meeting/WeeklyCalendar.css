@@ -9,6 +9,20 @@
     font-size: 10pt;
     padding: 2px;
     opacity: 0.4;
+    pointer-events: none;
+}
+
+.temp-selection {
+    padding: 2px;
+}
+
+.membersList {
+    display: flex;
+    flex-direction: row;
+}
+
+.main-container {
+    height: 100%;
 }
 
 .calendar_black_event_inner {
@@ -17,7 +31,7 @@
     border: none;
     border-radius: 0px;
     font-size: 10pt;
-    padding: 2px;
+    /*padding: 2px;*/
     opacity: 0.8;
 }
 /* adjusting the built-in theme */

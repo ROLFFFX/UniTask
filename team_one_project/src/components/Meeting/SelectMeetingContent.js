@@ -261,8 +261,18 @@ const toggleSlotSelection = (day, time) => {
           <button className="button-confirm" onClick={handleConfirmSelection}>
             Confirm Selection
           </button>
+          <div className="selectedSlots">
+            <h3>Selected Times (in EST):</h3>
+            <ul>
+              {[...fetchedSlots, ...newlySelectedSlots].map((slot, index) => (
+                <li key={index}>
+                  {slot.toLocaleString('en-US')}
+                </li>
+              ))}
+            </ul>
+          </div>
         </div>
-        <div className="week-navigation">
+        <div className="week-navigation-timeslots">
           <button className="button-prev" onClick={moveToPreviousWeek}>
             &lt; Previous Week
           </button>
@@ -281,43 +291,32 @@ const toggleSlotSelection = (day, time) => {
             ))}
           </div>
           {times.map((time) => (
-  <div className="row" key={time}>
-    <div className="cell timeLabel">{time}</div>
-    {days.map((day) => {
-      const startDate = new Date(referenceDate);
-      startDate.setDate(referenceDate.getDate() - (referenceDate.getDay() === 0 ? 6 : referenceDate.getDay() - 1));
-      
-      const dayNumber = days.indexOf(day);
-      const [hours, minutes] = time.split(':').map(Number);
-      startDate.setDate(startDate.getDate() + dayNumber);
-      startDate.setHours(hours, minutes, 0, 0);
-      
-      const slotKey = startDate.getTime();
-      const isSelected = [...fetchedSlots, ...newlySelectedSlots].some((slot) => slot.getTime() === slotKey);
+            <div className="row" key={time}>
+              <div className="cell timeLabel">{time}</div>
+              {days.map((day) => {
+                const startDate = new Date(referenceDate);
+                startDate.setDate(referenceDate.getDate() - (referenceDate.getDay() === 0 ? 6 : referenceDate.getDay() - 1));
 
-      
-      return (
-        <button
-          aria-label={`Select ${time} on ${day}`}
-          className={`cell timeSlot ${isSelected ? "selected" : ""}`}
-          key={day}
-          onClick={() => toggleSlotSelection(day, time)}
-        ></button>
-      );
-    })}
-  </div>
-))}
+                const dayNumber = days.indexOf(day);
+                const [hours, minutes] = time.split(':').map(Number);
+                startDate.setDate(startDate.getDate() + dayNumber);
+                startDate.setHours(hours, minutes, 0, 0);
 
-        </div>
-        <div className="selectedSlots">
-          <h3>Selected Times (in EST):</h3>
-          <ul>
-            {[...fetchedSlots, ...newlySelectedSlots].map((slot, index) => (
-              <li key={index}>
-                {slot.toLocaleString('en-US')}
-              </li>
-            ))}
-          </ul>
+                const slotKey = startDate.getTime();
+                const isSelected = [...fetchedSlots, ...newlySelectedSlots].some((slot) => slot.getTime() === slotKey);
+
+
+                return (
+                  <button
+                    aria-label={`Select ${time} on ${day}`}
+                    className={`cell timeSlot ${isSelected ? "selected" : ""}`}
+                    key={day}
+                    onClick={() => toggleSlotSelection(day, time)}
+                  ></button>
+                );
+              })}
+            </div>
+          ))}
         </div>
       </div>
   

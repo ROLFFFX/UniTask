@@ -7,7 +7,7 @@ export function SelectMeeting() {
   return (
     <Box style={{ marginLeft: "240px",
                 overflowY: "auto", // Adds vertical scrollbar when needed
-                maxHeight: "calc(100vh - 200px)", // Adjust the 100px to account for headers/footers
+                maxHeight: "calc(100vh - 100px)", // Adjust the 100px to account for headers/footers
     }}>
       <Grid>
         <Grid item xs={12}>
