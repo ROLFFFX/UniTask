@@ -297,6 +297,7 @@ const WeeklyCalendar = () => {
                         Authorization: `Bearer ${auth.user.userJWT}`,
                     },
                 });
+                clearSelection(); //cancel the create meeting action in progress
                 setHandleRefresh([...handleRefresh]);
             } catch (error) {
                 console.error('Error updating meeting:', error);
@@ -335,9 +336,8 @@ const WeeklyCalendar = () => {
             });
 
             //console.log('Meeting updated:', response.data);
-
-            // Trigger state update if necessary
-            setHandleRefresh([...handleRefresh]); // Adjust this based on how your state is managed
+            clearSelection(); //cancel the create meeting action in progress
+            setHandleRefresh([...handleRefresh]);
         } catch (error) {
             console.error('Error updating meeting:', error);
         }
@@ -435,7 +435,7 @@ const WeeklyCalendar = () => {
                 text: "common available time",
                 start: new DayPilot.Date(adjustedStartTime),
                 end: new DayPilot.Date(adjustedEndTime),
-                cssClass: "calendar_default_event_inner",
+                cssClass: "available_slots",
                 //make timeslots static
                 moveDisabled: true,
                 resizeDisabled: true,
@@ -632,7 +632,7 @@ const WeeklyCalendar = () => {
                     disablePadding
                     subheader={
                         <ListSubheader component="div" id="nested-list-subheader">
-                            Members Who Have Submitted Their Available Time:
+                            There's a Group Polling Session in Progress... Members Who Have Submitted Their Available Time:
                         </ListSubheader>
                     }
                 >
