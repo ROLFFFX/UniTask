@@ -43,57 +43,115 @@ const WeeklyCalendar = () => {
     //get the start date
     const [startDate, setStartDate] = useState(new DayPilot.Date());
 
-    //add the new meeting
-    const handleNewMeeting = async () => {
-        const titleResponse = await DayPilot.Modal.prompt("Title:", "");
-        if (!titleResponse || titleResponse.canceled) return;
+    const [selectedRange, setSelectedRange] = useState(null);
+
+    const TEMP_EVENT_ID = 'temp-selected-range';
+    const onTimeRangeSelected = args => {
+        const newStart = new Date(args.start);
+        const newEnd = new Date(args.end);
+
+        // Adjust for time zone offset
+        newStart.setMinutes(newStart.getMinutes() - newStart.getTimezoneOffset());
+        newEnd.setMinutes(newEnd.getMinutes() - newEnd.getTimezoneOffset());
+
+        let updatedStart, updatedEnd;
+
+        if (selectedRange) {
+            const currentStart = new Date(selectedRange.start);
+            const currentEnd = new Date(selectedRange.end);
+
+            if (newStart <= currentEnd && newEnd >= currentStart) {
+                updatedStart = newStart < currentStart ? newStart : currentStart;
+                updatedEnd = newEnd > currentEnd ? newEnd : currentEnd;
+            } else {
+                updatedStart = newStart;
+                updatedEnd = newEnd;
+            }
+        } else {
+            updatedStart = newStart;
+            updatedEnd = newEnd;
+        }
+
+        const newRange = { start: updatedStart, end: updatedEnd };
+        setSelectedRange(newRange);
+        localStorage.setItem('selectedRange', JSON.stringify(newRange));//to display the selected range without refreshing the page
+
+        // Update the calendar with a temporary event
+        const dp = calendarRef.current.control;
+        if (dp.events.find(TEMP_EVENT_ID)) {dp.events.remove(TEMP_EVENT_ID);}
+        dp.events.add(new DayPilot.Event({
+            start: updatedStart,
+            end: updatedEnd,
+            id: TEMP_EVENT_ID,
+            text: "Select Time Range",
+            backColor: "purple",
+        }));
+        dp.update();
+    };
+
+    const createMeeting = async () => {
+        if (!selectedRange) return;
+
+        // Convert start and end times to ISO string format
+        let startTime = new Date(selectedRange.start);
+        let endTime = new Date(selectedRange.end);
+
+        // Adjust for time zone offset
+        startTime.setMinutes(startTime.getMinutes() + startTime.getTimezoneOffset());
+        endTime.setMinutes(endTime.getMinutes() + endTime.getTimezoneOffset());
+
+        // convert to ISO String
+        startTime = startTime.toISOString();
+        endTime = endTime.toISOString()
+
+        // Open a modal to get meeting details
+        const titleResponse = await DayPilot.Modal.prompt("Title for the meeting:", "");
+        if (!titleResponse || titleResponse.canceled) {
+            clearSelection();
+            return;
+        }
         const title = titleResponse.result;
 
-        const startTimeResponse = await DayPilot.Modal.prompt("Start Time (YYYY-MM-DDTHH:MM):", "");
-        if (!startTimeResponse || startTimeResponse.canceled) return;
-        const startTime = new Date(startTimeResponse.result).toISOString();
+        // Confirmation for creating a meeting for the selected time range
+        const confirmationResponse = await DayPilot.Modal.confirm(`Create a meeting from ${startTime} to ${endTime}?`);
+        if (!confirmationResponse || confirmationResponse.canceled) {
+            clearSelection();
+            return;
+        }
 
-        const endTimeResponse = await DayPilot.Modal.prompt("End Time (YYYY-MM-DDTHH:MM):", "");
-        if (!endTimeResponse || endTimeResponse.canceled) return;
-        const endTime = new Date(endTimeResponse.result).toISOString();
+        // Create a new meeting object with the selected time range
+        const newMeeting = {
+            title: title,
+            startTime: startTime,
+            endTime: endTime
+        };
 
         try {
-            const newMeeting = {
-                id: 5,
-                title: title,
-                startTime: startTime,
-                endTime: endTime
-            };
-
+            // Send the newMeeting data to your backend or handle it as needed
             const response = await axios.post(`${ENDPOINT_URL}api/test/meeting/${projectTitle}`
                 , newMeeting, {
-                headers: {
-                    Authorization: `Bearer ${auth.user.userJWT}`,
-                },
-            });
+                    headers: {
+                        Authorization: `Bearer ${auth.user.userJWT}`,
+                    },
+                });
+
             console.log('Meeting created:', response.data);
             console.log("response", response.status);
-            //setHandleRefresh([...handleRefresh, newMeeting]); // Update state to trigger a refresh
-
-            // New code: Custom confirmation prompt
-            if (response.status === 201) { // not sure 200 or 201 Check if meeting creation was successful
-                console.log('Meeting created:', response.data);
-                setHandleRefresh([...handleRefresh, newMeeting]); // Update state to trigger a refresh
-
-                // Show confirmation prompt
-                DayPilot.Modal.confirm("Do you want to clear all the available time slots?")
-                    .then(result => {
-                        if (result.result) {
-                            clearAvailableSlots(); // Call function to clear slots if "OK" is clicked
-                        }
-                        // If "Cancel" is clicked, do nothing
-                    });
-            }
-            setHandleRefresh([...handleRefresh, newMeeting]); // Update state to trigger a refresh
-        } catch (error) {
-            console.error('Error creating meeting:', error);
+        } catch (error){
+            console.error('Error creating meeting:', error.response ? error.response.data : error);
         }
+
+        clearSelection();
+        setHandleRefresh([...handleRefresh, newMeeting]); // Update state to trigger a refresh
     };
+
+    const clearSelection = () => {
+        // Remove the temporary event and clear selection
+        const dp = calendarRef.current.control;
+        dp.events.remove(TEMP_EVENT_ID);
+        localStorage.removeItem('selectedRange');
+        setSelectedRange(null);
+    }
 
     //edit meeting
     const editEvent = async (e) => {
@@ -392,6 +450,9 @@ const WeeklyCalendar = () => {
         durationBarVisible: false,
         timeRangeSelectedHandling: "Enabled",
         startDate: startDate,
+        timeRangeSelectedHandling: "Enabled",
+        allowEventOverlap: true,
+        onTimeRangeSelected: args => onTimeRangeSelected(args),
 
         // delete port implemented (Problem: newly created meeting can not be removed)
         contextMenu: new DayPilot.Menu({
@@ -445,16 +506,13 @@ const WeeklyCalendar = () => {
     }, [startDate, handleRefresh]);
 
     return (
-        <div style={styles.wrap}>
-            <div className="week-navigation" style={styles.header}>
+        <div className="week-navigation" style={styles.wrap}>
+            <div className="button-row" style={styles.header}>
                 <button className="button-prev" onClick={goToPreviousWeek}>
                     &lt; Previous Week
                 </button>
                 <button className="button-next" onClick={goToNextWeek}>
                     Next Week &gt;
-                </button>
-                <button className="button-new-meeting" onClick={handleNewMeeting}>
-                  New Meeting
                 </button>
                 <button onClick={() => navigate("/meeting/selectmeeting")}>
                     Edit Meeting Time Slot
@@ -463,11 +521,20 @@ const WeeklyCalendar = () => {
                     Clear All Available Time Slots
                 </button>
             </div>
+            {selectedRange ? (
+                <div>
+                    <button onClick={createMeeting}>Create Meeting</button>
+                    <button onClick={clearSelection}>Cancel</button>
+                </div>
+                ) : (
+                    <div className="button-placeholder"></div>
+            )}
             <DayPilotCalendar
                 key={calendarConfig.cellDuration}
                 style={styles.calendar}
                 {...calendarConfig}
                 ref={calendarRef}
+                onTimeRangeSelected={onTimeRangeSelected}
             />
         </div>
     );
