@@ -470,33 +470,32 @@ const WeeklyCalendar = () => {
     //Clear All Avaliable time slots
     const clearAvailableSlots = async () => {
 
-        // Confirmation dialog
-        const isConfirmed = DayPilot.Modal.confirm("Are you sure you want to end this scheduling session? Members' available time submissions will be cleared. ");
-
-        // If the user clicks 'Cancel', stop the function
-        if (!isConfirmed) {
-            return;
-        }
-
-        try {
-            // Make a request to your backend to delete all available time slots
-            const response = await axios.delete(`${ENDPOINT_URL}api/test/timeslot/clearall/${projectTitle}`,
-                {
-                    headers: {
-                        Authorization: `Bearer ${auth.user.userJWT}`,
-                    },
+        DayPilot.Modal.confirm("Are you sure you want to end this scheduling session? Members' available time submissions will be cleared. ")
+            .then(async function(result) {
+                if (!result.result) { // User clicked 'Cancel'
+                    return;
                 }
-            );
 
-            setHandleRefresh([...handleRefresh]);
+                try {
+                    // Make a request to your backend to delete all available time slots
+                    const response = await axios.delete(`${ENDPOINT_URL}api/test/timeslot/clearall/${projectTitle}`,
+                        {
+                            headers: {
+                                Authorization: `Bearer ${auth.user.userJWT}`,
+                            },
+                        }
+                    );
 
-            if (response.status === 201) { //not sure 200 or 201
-                console.log('All available time slots cleared');
-                // You may want to update your UI or state here as needed
-            }
-        } catch (error) {
-            console.error('Error clearing available time slots:', error);
-        }
+                    setHandleRefresh([...handleRefresh]);
+
+                    if (response.status === 201) { //not sure 200 or 201
+                        console.log('All available time slots cleared');
+                        // You may want to update your UI or state here as needed
+                    }
+                } catch (error) {
+                    console.error('Error clearing available time slots:', error);
+                }
+        });
     };
 
     //calendar default structure
@@ -567,7 +566,7 @@ const WeeklyCalendar = () => {
                 <List
                     subheader={
                         <ListSubheader component="div" id="nested-list-subheader">
-                            Members Who Has Submitted Their Available Time:
+                            Members Who Have Submitted Their Available Time:
                         </ListSubheader>
                     }
                 >
@@ -581,6 +580,12 @@ const WeeklyCalendar = () => {
             }
             <div className="week-navigation" style={styles.wrap}>
                 <div className="button-row" style={styles.header}>
+                    {inSession?(
+                            <h2>Common Availability Overview</h2>
+                        ):(
+                            <h2>Current Group Schedule</h2>
+                        )
+                    }
                     <button className="button-prev" onClick={goToPreviousWeek}>
                         &lt; Previous Week
                     </button>
@@ -598,7 +603,7 @@ const WeeklyCalendar = () => {
                         </div>
                     ) : (
                         <button onClick={() => navigate("/meeting/selectmeeting")}>
-                            Start A Group Meeting Poll Session
+                            Start A Group Scheduling Session
                         </button>
                     )}
                 </div>

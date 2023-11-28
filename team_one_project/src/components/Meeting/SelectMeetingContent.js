@@ -238,15 +238,29 @@ const toggleSlotSelection = (day, time) => {
       <div className="calendar">
         <div>
           <h1>Select Your Available Times</h1>
-        {selected?(
-              <button className="button-back" onClick={handleGoToMainCalendar}>
-                Schedule Meetings
+        </div>
+        <div className="actions">
+          {/*<button className="button-clear" onClick={() => {
+            setNewlySelectedSlots([]); // Clear newly selected slots
+            setFetchedSlots([]); // Optionally, clear fetched slots as well
+          }}>
+            Clear Selection
+          </button>*/}
+          {selected?(
+              <button className="button-confirm" onClick={handleGoToMainCalendar}>
+                Schedule New Events / Check Common Availability
               </button>
           ):(
-              <button className="button-back" onClick={handleGoToMainCalendar}>
-                Cancel
+              <button className="button-confirm" onClick={handleGoToMainCalendar}>
+                Back To Current Group Schedule
               </button>
           )}
+          <button className="button-delete" onClick={deleteAllUserTimeSlots}>
+            Clear All My Selections
+          </button>
+          <button className="button-confirm" onClick={handleConfirmSelection}>
+            Confirm Selection
+          </button>
         </div>
         <div className="week-navigation">
           <button className="button-prev" onClick={moveToPreviousWeek}>
@@ -304,20 +318,6 @@ const toggleSlotSelection = (day, time) => {
               </li>
             ))}
           </ul>
-        </div>
-        <div className="actions">
-          {/*<button className="button-clear" onClick={() => {
-            setNewlySelectedSlots([]); // Clear newly selected slots
-            setFetchedSlots([]); // Optionally, clear fetched slots as well
-          }}>
-            Clear Selection
-          </button>*/}
-          <button className="button-delete" onClick={deleteAllUserTimeSlots}>
-          Delete All Time Slots
-          </button>
-          <button className="button-confirm" onClick={handleConfirmSelection}>
-            Confirm Selection
-          </button>
         </div>
       </div>
   
