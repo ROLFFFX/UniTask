@@ -83,8 +83,8 @@ const WeeklyCalendar = () => {
             start: updatedStart,
             end: updatedEnd,
             id: TEMP_EVENT_ID,
-            text: "Create New Meeting",
-            backColor: "purple"
+            text: "Select Time Range",
+            backColor: "purple",
         }));
         dp.update();
     };
@@ -107,14 +107,17 @@ const WeeklyCalendar = () => {
         // Open a modal to get meeting details
         const titleResponse = await DayPilot.Modal.prompt("Title for the meeting:", "");
         if (!titleResponse || titleResponse.canceled) {
-            setSelectedRange(null); // Reset selection
+            clearSelection();
             return;
         }
         const title = titleResponse.result;
 
         // Confirmation for creating a meeting for the selected time range
         const confirmationResponse = await DayPilot.Modal.confirm(`Create a meeting from ${startTime} to ${endTime}?`);
-        if (!confirmationResponse || confirmationResponse.canceled) return;
+        if (!confirmationResponse || confirmationResponse.canceled) {
+            clearSelection();
+            return;
+        }
 
         // Create a new meeting object with the selected time range
         const newMeeting = {
@@ -138,22 +141,17 @@ const WeeklyCalendar = () => {
             console.error('Error creating meeting:', error.response ? error.response.data : error);
         }
 
+        clearSelection();
         setHandleRefresh([...handleRefresh, newMeeting]); // Update state to trigger a refresh
+    };
 
+    const clearSelection = () => {
         // Remove the temporary event and clear selection
         const dp = calendarRef.current.control;
         dp.events.remove(TEMP_EVENT_ID);
         localStorage.removeItem('selectedRange');
         setSelectedRange(null);
-    };
-
-    // Update your calendarConfig state
-    useEffect(() => {
-        setCalendarConfig(prevConfig => ({
-            ...prevConfig,
-            onTimeRangeSelected: args => onTimeRangeSelected(args)
-        }));
-    }, [/* any dependencies here */]);
+    }
 
     //edit meeting
     const editEvent = async (e) => {
@@ -508,8 +506,8 @@ const WeeklyCalendar = () => {
     }, [startDate, handleRefresh]);
 
     return (
-        <div style={styles.wrap}>
-            <div className="week-navigation" style={styles.header}>
+        <div className="week-navigation" style={styles.wrap}>
+            <div className="button-row" style={styles.header}>
                 <button className="button-prev" onClick={goToPreviousWeek}>
                     &lt; Previous Week
                 </button>
@@ -522,10 +520,15 @@ const WeeklyCalendar = () => {
                 <button className="button-clear-slots" onClick={clearAvailableSlots}>
                     Clear All Available Time Slots
                 </button>
-                {selectedRange && (
-                    <button onClick={createMeeting}>Create Meeting</button>
-                )}
             </div>
+            {selectedRange ? (
+                <div>
+                    <button onClick={createMeeting}>Create Meeting</button>
+                    <button onClick={clearSelection}>Cancel</button>
+                </div>
+                ) : (
+                    <div className="button-placeholder"></div>
+            )}
             <DayPilotCalendar
                 key={calendarConfig.cellDuration}
                 style={styles.calendar}

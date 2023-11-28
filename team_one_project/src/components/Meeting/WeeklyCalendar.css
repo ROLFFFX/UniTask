@@ -12,7 +12,7 @@
 }
 
 .calendar_black_event_inner {
-    background: rgb(160,32,240);
+    background: rgb(100,0,200);
     color: #fff;
     border: none;
     border-radius: 0px;
@@ -34,6 +34,12 @@
     transition: background-color 0.3s;
 }
 
+.week-navigation {
+    display: flex;
+    flex-direction: column; /* Stack sections vertically */
+    align-items: start; /* Align sections to the start */
+}
+
 .week-navigation .button-prev:hover,
 .week-navigation .button-next:hover,
 .week-navigation .button-new-meeting:hover {
@@ -50,6 +56,19 @@
     cursor: pointer;
     transition: background-color 0.3s;
 }
+
+.button-row {
+    display: flex;
+    flex-direction: row; /* Align these buttons horizontally */
+    gap: 10px; /* Spacing between buttons */
+}
+
+.button-placeholder {
+    height: 40px; /* Adjust the height to match your button height */
+    margin-bottom: 10px; /* Add margin to match the gap if needed */
+    visibility: hidden; /* Make the placeholder invisible */
+}
+
 
 .week-navigation button:hover {
     background-color: #333333;
