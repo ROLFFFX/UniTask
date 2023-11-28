@@ -7,7 +7,7 @@ export function MainMeeting() {
     <Box style={{
         marginLeft: "200px",
         overflowY: "auto", // Adds vertical scrollbar when needed
-        maxHeight: "calc(100vh - 200px)", // Adjust the 100px to account for headers/footers
+        maxHeight: "calc(100vh - 100px)", // Adjust the 100px to account for headers/footers
     }}>
       <Grid container spacing={2}>
         <Grid item xs={12}>
