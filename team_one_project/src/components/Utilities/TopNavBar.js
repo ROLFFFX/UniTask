@@ -31,7 +31,7 @@ import UniTaskLogo_new from "../../images/UniTaskLOGO.PNG";
 import { ButtonGroup, ThemeProvider } from "@mui/material";
 
 import axios from "axios";
-import {useCookies} from "react-cookie";
+import { useCookies } from "react-cookie";
 import useAuth from "../../hooks/useAuth";
 
 export function TopAppBar() {
@@ -42,54 +42,58 @@ export function TopAppBar() {
 
   const getLinksList = async () => {
     try {
-      const response = await axios.get(`${ENDPOINT_URL}hyperlinks/getAllHyperlinks/${projectTitle}`,
-      //const response = await axios.get(`http://localhost:8080/getAllHyperlinks/${projectTitle}`,
-          {
-            headers: {
-              Authorization: `Bearer ${auth.user.userJWT}`,
-            }
-          });
-      console.log("got links list", response.data);
+      const response = await axios.get(
+        `${ENDPOINT_URL}hyperlinks/getAllHyperlinks/${projectTitle}`,
+        //const response = await axios.get(`http://localhost:8080/getAllHyperlinks/${projectTitle}`,
+        {
+          headers: {
+            Authorization: `Bearer ${auth.user.userJWT}`,
+          },
+        }
+      );
+      // console.log("got links list", response.data);
       setLinksList(response.data);
     } catch (error) {
       console.error("Error getting list", error);
     }
-  }
+  };
 
   useEffect(() => {
     getLinksList();
   }, []);
 
-
   async function updateLinksList(editedlink, thisid) {
     //e.preventDefault();
-    console.log("edited link", editedlink);
+    // console.log("edited link", editedlink);
     try {
-        const response = await axios.put(`${ENDPOINT_URL}hyperlinks/editHyperlink/${thisid}`,
+      const response = await axios.put(
+        `${ENDPOINT_URL}hyperlinks/editHyperlink/${thisid}`,
         //const response = await axios.put(`http://localhost:8080/editHyperlink/${editedlink.id}`,
-            editedlink,
-            {
-              headers: {
-                "Content-Type": "application/json",
-                Authorization: `Bearer ${auth.user.userJWT}`,
-              }
-            });
+        editedlink,
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${auth.user.userJWT}`,
+          },
+        }
+      );
     } catch (error) {
       console.error("Error updating list:", error);
     }
   }
 
-
   async function deleteLinksList(thisid) {
     try {
-      const response = await axios.delete(`${ENDPOINT_URL}hyperlinks/deleteHyperlink/${thisid}`,
+      const response = await axios.delete(
+        `${ENDPOINT_URL}hyperlinks/deleteHyperlink/${thisid}`,
         //const response = await axios.delete(`http://localhost:8080/editHyperlink/${deletedlink.id}`,
-            {
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${auth.user.userJWT}`,
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${auth.user.userJWT}`,
+          },
         }
-      });
+      );
     } catch (error) {
       console.error("Error deleting link", error);
     }
@@ -98,18 +102,19 @@ export function TopAppBar() {
   async function submitLinksList(newlink) {
     // e.preventDefault();
     try {
-      const response = await axios.post(`${ENDPOINT_URL}hyperlinks/createHyperlink/${projectTitle}`,
-      //const response = await axios.post(`http://localhost:8080/createHyperlink/${projectTitle}`,
-          newlink,
-          {
-            headers: {
-                "Content-Type": "application/json",
-                Authorization: `Bearer ${auth.user.userJWT}`,
-            }
-          }
+      const response = await axios.post(
+        `${ENDPOINT_URL}hyperlinks/createHyperlink/${projectTitle}`,
+        //const response = await axios.post(`http://localhost:8080/createHyperlink/${projectTitle}`,
+        newlink,
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${auth.user.userJWT}`,
+          },
+        }
       );
       newlink.hyperlinkId = response.data.hyperlinkId;
-      console.log("submitted link", newlink);
+      // console.log("submitted link", newlink);
     } catch (error) {
       console.error("Error submitting list", error);
     }
@@ -156,14 +161,14 @@ export function TopAppBar() {
       return;
     }
     const newlink = {
-        url:
-          link.startsWith("http://") || link.startsWith("https://")
-            ? link
-            : `http://${link}`,
-        title: linkName,
+      url:
+        link.startsWith("http://") || link.startsWith("https://")
+          ? link
+          : `http://${link}`,
+      title: linkName,
     };
-    setLinksList([...linksList,newlink]);
-    console.log("current usestate list:", linksList);
+    setLinksList([...linksList, newlink]);
+    // console.log("current usestate list:", linksList);
     submitLinksList(newlink);
   }
 
@@ -176,20 +181,22 @@ export function TopAppBar() {
         link.startsWith("http://") || link.startsWith("https://")
           ? link
           : `http://${link}`,
-      title: linkName
+      title: linkName,
     };
     const index = linksList.findIndex((item) => item.hyperlinkId === thisid);
     const newlist = linksList.with(index, editedItem);
     setLinksList(newlist);
-    console.log("current usestate list:", linksList);
+    // console.log("current usestate list:", linksList);
     updateLinksList(editedItem, thisid);
   }
 
   //TODO: newlink
   function removeLinks(thisid) {
-    const newlist = linksList.filter((userlink) => userlink.hyperlinkId !== thisid);
+    const newlist = linksList.filter(
+      (userlink) => userlink.hyperlinkId !== thisid
+    );
     setLinksList(newlist);
-    console.log("current usestate list:", linksList);
+    // console.log("current usestate list:", linksList);
     deleteLinksList(thisid);
   }
 

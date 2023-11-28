@@ -53,7 +53,6 @@ export function DashboardContent() {
   //   "Done": 13,
   //   "Doing": 15,
   //   "Not Started": 2
-  //   ...
   // }
   const fetchProgressBarData = async () => {
     setBackdropOpen(true); //display loading page
@@ -154,8 +153,6 @@ export function DashboardContent() {
   ) {
     return (
       <React.Fragment>
-        {console.log("allTasks: ")}
-        {console.log(allTasks)}
         {/* loading state */}
         <Backdrop
           sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }}
@@ -186,12 +183,11 @@ export function DashboardContent() {
               <Grid
                 item
                 xs={12}
-                border={1}
                 height="calc((100vh - 64px) * 0.2)"
                 maxHeight="calc((100vh - 64px) * 0.2)"
                 overflow="hidden"
               >
-                <ProgressBar />
+                <ProgressBar progressBarData={ProgressBarData} />
               </Grid>
               {/* <ProductBacklog /> */}
             </Grid>
@@ -211,7 +207,6 @@ export function DashboardContent() {
                 height="calc((100vh - 64px)/2)"
                 maxHeight="calc((100vh - 64px)/2)"
                 overflow="hidden"
-                border={1}
               >
                 <Grid item>
                   <BurndownChart />
