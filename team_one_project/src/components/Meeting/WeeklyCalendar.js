@@ -46,7 +46,7 @@ const WeeklyCalendar = () => {
     const [inSession, setInSession] = useState(false);
 
     //Your group is in session if there are any timeslots submitted
-    const fetchinSession = async () => {
+    const fetchInSession = async () => {
         try{
             const response = await axios.get(`${ENDPOINT_URL}api/test/timeslot/inSession/${projectTitle}`,
                 {
@@ -56,6 +56,7 @@ const WeeklyCalendar = () => {
                 }
             );
             setInSession(response.data);
+            console.log(response.data);
         }catch (e){
             console.error('Error Confirming Existing Project Timeslots:', e);
         }
@@ -504,6 +505,7 @@ const WeeklyCalendar = () => {
     // UseEffect for setting up calendar events
     useEffect(() => {
         const initializeCalendar = async () => {
+            fetchInSession();
             const [available, meetings] = await Promise.all([fetchAvaliable(), fetchMeetings()]);
 
             const processedAvailable = adjustTimeZoneAvaliable(available);
@@ -534,12 +536,20 @@ const WeeklyCalendar = () => {
                 <button className="button-next" onClick={goToNextWeek}>
                     Next Week &gt;
                 </button>
-                <button onClick={() => navigate("/meeting/selectmeeting")}>
-                    Edit Meeting Time Slot
-                </button>
-                <button className="button-clear-slots" onClick={clearAvailableSlots}>
-                    Clear All Available Time Slots
-                </button>
+                {inSession? (
+                    <div>
+                        <button onClick={() => navigate("/meeting/selectmeeting")}>
+                            Edit Your Available Time
+                        </button>
+                        <button className="button-clear-slots" onClick={clearAvailableSlots}>
+                            End Session
+                        </button>
+                    </div>
+                ) : (
+                    <button onClick={() => navigate("/meeting/selectmeeting")}>
+                        Start A Group Meeting Poll Session
+                    </button>
+                )}
             </div>
             {selectedRange ? (
                 <div>
