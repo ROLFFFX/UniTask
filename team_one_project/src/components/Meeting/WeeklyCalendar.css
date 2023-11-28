@@ -9,6 +9,16 @@
     font-size: 10pt;
     padding: 2px;
     opacity: 0.4;
+    pointer-events: none;
+}
+
+.membersList {
+    display: flex;
+    flex-direction: row;
+}
+
+.main-container {
+    height: 100%;
 }
 
 .calendar_black_event_inner {

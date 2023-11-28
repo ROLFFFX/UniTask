@@ -4,7 +4,7 @@ import ListItem from '@mui/material/ListItem';
 import ListItemText from '@mui/material/ListItemText';
 import ListSubheader from '@mui/material/ListSubheader';
 
-import { DayPilot, DayPilotCalendar, DayPilotNavigator } from "@daypilot/daypilot-lite-react";
+import { DayPilot, DayPilotCalendar, DayPilotNavigator, DayPilotScheduler } from "@daypilot/daypilot-lite-react";
 import './WeeklyCalendar.css';
 import { useNavigate } from "react-router-dom";
 import axios from 'axios';
@@ -16,7 +16,7 @@ const styles = {
     wrap: {
         justifyContent: "center",
         alignItems: "center",
-        height: "100vh",
+        //height: "100vh",
         padding: "0 50px"
     },
     calendar: {
@@ -29,9 +29,10 @@ const styles = {
         width: "100%",
         maxWidth: "800px",
         marginBottom: "10px",
-        marginTop:"50px"
+        marginTop:"10px"
     },
 };
+
 
 const WeeklyCalendar = () => {
 
@@ -41,7 +42,7 @@ const WeeklyCalendar = () => {
 
     const [handleRefresh, setHandleRefresh] = useState([]);
 
-    const calendarRef = useRef();
+    const calendarRef = useRef(null);
 
     const navigate = useNavigate();
 
@@ -106,7 +107,7 @@ const WeeklyCalendar = () => {
                     endTime: avaliable.endTime
                 });
             }
-
+            console.log("fetched availableTS",avaliableTimeSlots);
             return avaliableTimeSlots;
         } catch (error) {
             console.error('Error fetching avaliableTimeSlots:', error);
@@ -377,23 +378,32 @@ const WeeklyCalendar = () => {
 
     //(AVALIABLE TIME SLOTS) Fix time difference between the ISO string and the local time
     const adjustTimeZoneAvaliable = (meetings) => {
-        const thirtyMinMeetings = convertTo30MinSlots(meetings);
-        console.log("30mins", thirtyMinMeetings)
+        // const thirtyMinMeetings = convertTo30MinSlots(meetings);
+        // console.log("30mins", thirtyMinMeetings)
         const timeZoneOffset = getTimeZoneOffsetInHours();
 
-        return thirtyMinMeetings.map(meeting => {
-            let adjustedStartTime = new Date(meeting.start);
+        const processedTS = []
+        // return thirtyMinMeetings.map(meeting => {
+        meetings.forEach(meeting => {
+            let adjustedStartTime = new Date(meeting.startTime);
             adjustedStartTime.setHours(adjustedStartTime.getHours() - timeZoneOffset);
 
-            let adjustedEndTime = new Date(meeting.end);
+            let adjustedEndTime = new Date(meeting.endTime);
             adjustedEndTime.setHours(adjustedEndTime.getHours() - timeZoneOffset);
 
-            return {
+            processedTS.push({
+                text: "common available time",
                 start: new DayPilot.Date(adjustedStartTime),
                 end: new DayPilot.Date(adjustedEndTime),
-                cssClass: "calendar_default_event_inner"
-            };
-        });
+                cssClass: "calendar_default_event_inner",
+                //make timeslots static
+                moveDisabled: true,
+                resizeDisabled: true,
+                contextMenuDisabled: true
+            });
+        })
+        console.log("processedTS", processedTS);
+        return processedTS;
     };
 
 
@@ -541,20 +551,21 @@ const WeeklyCalendar = () => {
             fetchSubmittedMembers();
             const [available, meetings] = await Promise.all([fetchAvaliable(), fetchMeetings()]);
 
+            //console.log("available",available);
             const processedAvailable = adjustTimeZoneAvaliable(available);
             const adjustedMeetings = adjustTimeZoneMeet(meetings);
 
             // Filter out conflicting slots
-            const nonConflictingAvailable = filterConflictingSlots(processedAvailable, adjustedMeetings);
+            //const nonConflictingAvailable = filterConflictingSlots(processedAvailable, adjustedMeetings);
 
             // Combine non-conflicting available slots and meetings
-            const combinedEvents = [...nonConflictingAvailable, ...adjustedMeetings];
-
+            const combinedEvents = [...processedAvailable, ...adjustedMeetings];
             setCalendarConfig(prevConfig => ({
                 ...prevConfig,
                 events: combinedEvents,
                 startDate: startDate
             }));
+            //console.log("processedAvailable",processedAvailable);
         };
 
         initializeCalendar();
@@ -564,17 +575,23 @@ const WeeklyCalendar = () => {
         <div className={"main-container"}>
             {inSession?(
                 <List
+                    className={"membersListWrap"}
+                    disablePadding
                     subheader={
                         <ListSubheader component="div" id="nested-list-subheader">
                             Members Who Have Submitted Their Available Time:
                         </ListSubheader>
                     }
                 >
-                    {membersList.map((name, index) => (
-                        <ListItem key = {index}>
-                            <ListItemText primary={name}/>
-                        </ListItem>
-                    ))}
+                    <ListItem>
+                        <List className={"membersList"}>
+                            {membersList.map((name, index) => (
+                                <ListItem key = {index}>
+                                    <ListItemText primary={name}/>
+                                </ListItem>
+                            ))}
+                        </List>
+                    </ListItem>
                 </List>
             ):null
             }
