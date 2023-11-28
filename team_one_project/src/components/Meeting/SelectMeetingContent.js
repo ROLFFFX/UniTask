@@ -40,6 +40,7 @@ export function SelectMeetingContent() {
   const dateRange = getCurrentWeekDateRange(referenceDate);
   const [fetchedSlots, setFetchedSlots] = useState([]);
   const [newlySelectedSlots, setNewlySelectedSlots] = useState([]);
+  //const [refresh, setRefresh] = useState(false);
 
   const { auth } = useAuth();
   const projectTitle = auth.selectedWorkspace;
@@ -71,25 +72,11 @@ export function SelectMeetingContent() {
     "22:00", "22:30",
     "23:00", "23:30"
   ];
-  
+
+
 
   const deleteAllUserTimeSlots = async () => {
     try {
-      /*// Fetch the current slots to get their IDs
-      const bookingsResponse = await axios.get(`${ENDPOINT_URL}api/test/timeslot/${projectTitle}`, {
-        headers: {
-          Authorization: `Bearer ${auth.user.userJWT}`,
-        }
-      });
-
-      // Send a DELETE request for each booking
-      const deleteRequests = bookingsResponse.data.map(booking => {
-        return axios.delete(`${ENDPOINT_URL}api/test/timeslot/${booking.id}`);
-      });
-
-      // Wait for all DELETE requests to finish
-      await Promise.all(deleteRequests);*/
-
       //deleteAll that belongs to a user
       const response = await axios.delete(`${ENDPOINT_URL}api/test/timeslot/${projectTitle}`, {
         headers: {
@@ -104,9 +91,12 @@ export function SelectMeetingContent() {
     } catch (error) {
       console.error('Error deleting user time slots:', error);
     }
+    window.location.reload();
   };
 
-  
+  //whether the user has selected any available times
+  const [selected, setSelected] = new useState(false);
+
   useEffect(() => {
     const fetchBookedTimeSlots = async () => {
       try {
@@ -117,10 +107,9 @@ export function SelectMeetingContent() {
           }
         });
 
-
-
          // Assuming response data format is: [{ startTime: 'ISODateString', endTime: 'ISODateString' }]
         if(response.data.length !== 0){
+          setSelected(true);
           const bookedTimeSlots = response.data.map(booking => {
             // Convert startTime to Date object
            return new Date(booking.startTime); // We only need the start time for displaying in the calendar
@@ -213,14 +202,6 @@ const toggleSlotSelection = (day, time) => {
     });
   
     try {
-      // Send each booking as an individual object to the backend
-      /*for (const booking of newBookings) {
-        await axios.post('http://localhost:3001/bookings', booking, {
-          headers: {
-            'Content-Type': 'application/json',
-          }
-        });
-      }*/
       await axios.post(`${ENDPOINT_URL}api/test/timeslot/${projectTitle}`,
           newBookings, {
           headers: {
@@ -239,33 +220,8 @@ const toggleSlotSelection = (day, time) => {
     } catch (error) {
       console.error('Error sending booking data to backend:', error);
     }
+    window.location.reload();
 };
-
-// const handleConfirmSelection = async () => {
-//   // ... existing code ...
-
-//   // Retrieve JWT token from storage (localStorage or cookies, based on your implementation)
-//   const token = localStorage.getItem('jwtToken'); // Replace 'jwtToken' with your actual token key
-
-//   try {
-//     const headers = {
-//       'Content-Type': 'application/json',
-//       'Authorization': `Bearer ${token}` // Include the JWT token in the Authorization header
-//     };
-
-//     // Send each booking as an individual object to the backend
-//     for (const booking of newBookings) {
-//       await axios.post('http://localhost:3001/bookings', booking, { headers });
-//     }
-    
-//     // ... rest of the code ...
-//   } catch (error) {
-//     // ... error handling code ...
-//   }
-// };
-
-
-
 
   const handleCloseModal = () => {
     setIsModalOpen(false);  // Close the modal
@@ -280,7 +236,32 @@ const toggleSlotSelection = (day, time) => {
   return (
     <div className="mainMeetingContainer">
       <div className="calendar">
-        <h1>Select Time Slot</h1>
+        <div>
+          <h1>Select Your Available Times</h1>
+        </div>
+        <div className="actions">
+          {/*<button className="button-clear" onClick={() => {
+            setNewlySelectedSlots([]); // Clear newly selected slots
+            setFetchedSlots([]); // Optionally, clear fetched slots as well
+          }}>
+            Clear Selection
+          </button>*/}
+          {selected?(
+              <button className="button-confirm" onClick={handleGoToMainCalendar}>
+                Schedule New Events / Check Common Availability
+              </button>
+          ):(
+              <button className="button-confirm" onClick={handleGoToMainCalendar}>
+                Back To Current Group Schedule
+              </button>
+          )}
+          <button className="button-delete" onClick={deleteAllUserTimeSlots}>
+            Clear All My Selections
+          </button>
+          <button className="button-confirm" onClick={handleConfirmSelection}>
+            Confirm Selection
+          </button>
+        </div>
         <div className="week-navigation">
           <button className="button-prev" onClick={moveToPreviousWeek}>
             &lt; Previous Week
@@ -337,23 +318,6 @@ const toggleSlotSelection = (day, time) => {
               </li>
             ))}
           </ul>
-        </div>
-        <div className="actions">
-          <button className="button-clear" onClick={() => {
-            setNewlySelectedSlots([]); // Clear newly selected slots
-            setFetchedSlots([]); // Optionally, clear fetched slots as well
-          }}>
-            Clear Selection
-          </button>
-          <button className="button-delete" onClick={deleteAllUserTimeSlots}>
-          Delete All Time Slots
-        </button>
-          <button className="button-confirm" onClick={handleConfirmSelection}>
-            Confirm Selection
-          </button>
-          <button className="button-back" onClick={handleGoToMainCalendar}>
-            Schedule Meetings
-          </button>
         </div>
       </div>
   
