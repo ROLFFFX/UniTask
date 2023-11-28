@@ -48,14 +48,16 @@ public class HyperlinkService {
      */
     public List<Hyperlink> getHyperlinksByProjectTitle(String projectTitle) {
 
+        // if given project does not exist, return null;
         if (!projectRepository.existsByProjectTitle(projectTitle)) {
             return null;
         }
 
+        // else, get the project object from database, and get all 
         Project curProject = projectRepository.findByProjectTitle(projectTitle);
-
         List<Hyperlink> requestListHyperlinks = hyperlinkRepository.getHyperlinksByProjectId(curProject);
 
+        // return the List of Hyperlinks
         return requestListHyperlinks;
     }
 

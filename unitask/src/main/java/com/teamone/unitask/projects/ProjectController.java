@@ -12,6 +12,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Set;
 
@@ -136,5 +137,19 @@ public class ProjectController {
     }
 
 //    @PutMapping
+
+    //    @CrossOrigin(origins = "https://uni-task-beta-front.vercel.app/", allowCredentials = "true")
+    @CrossOrigin(origins = "http://localhost:3000", allowCredentials = "true")
+    @GetMapping(path = "/creationTime/{projectTitle}")
+    public ResponseEntity<LocalDateTime> getWorkspaceCreationTime(@PathVariable("projectTitle") String projectTitle) {
+
+        if (!projectRepository.existsByProjectTitle(projectTitle)) {
+            return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+        } else {
+            LocalDateTime creationTime = projectRepository.findByProjectTitle(projectTitle).getWorkSpaceCreationTime();
+            return new ResponseEntity<>(creationTime, HttpStatus.OK);
+        }
+    }
+
 
 }
