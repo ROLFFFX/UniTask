@@ -352,7 +352,7 @@ const toggleSlotSelection = (day, time) => {
             Confirm Selection
           </button>
           <button className="button-back" onClick={handleGoToMainCalendar}>
-            Back to Main Calendar
+            Schedule Meetings
           </button>
         </div>
       </div>
@@ -362,9 +362,9 @@ const toggleSlotSelection = (day, time) => {
         <DialogContent>
           <p>Your time slots have been successfully selected.</p>
         </DialogContent>
-        <DialogActions>
+        {/*<DialogActions>
           <Button onClick={handleGoBackToWeeklyCalendar}>Go Back to Weekly Calendar</Button>
-        </DialogActions>
+        </DialogActions>*/}
       </Dialog> 
       
       <Dialog open={isFailureModalOpen} onClose={() => setIsFailureModalOpen(false)}>

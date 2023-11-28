@@ -58,14 +58,23 @@ public class TimeSlotController {
         }
     }
 
-    //TODO: respond with a list of timeslots(length >= 30min) that correspond to the common timeslots in a project
+    //respond with a list of timeslots(length >= 30min) that correspond to the common timeslots in a project
     @GetMapping("/timeslot/overlap/{projectTitle}")
     public ResponseEntity<List<TimeSlot>> commonTimeSlot(@PathVariable String projectTitle) {
         try {
             List<TimeSlot> commonList = timeSlotService.calcCommon(projectTitle);
             return new ResponseEntity<>(commonList, HttpStatus.OK);
-        }catch (IllegalArgumentException e){
-            return new ResponseEntity<>(null, HttpStatus.EXPECTATION_FAILED);
+        }catch(Exception e){
+            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    //confirm whether there are any timeslots selected in the group
+    @GetMapping("/timeslot/inSession/{projectTitle}")
+    public ResponseEntity<Boolean> inSession(@PathVariable String projectTitle) {
+        try {
+            Boolean inSession = timeSlotService.projNonEmpty(projectTitle);
+            return new ResponseEntity<>(inSession ,HttpStatus.OK);
         }catch(Exception e){
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }

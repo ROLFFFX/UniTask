@@ -43,6 +43,84 @@ const WeeklyCalendar = () => {
     //get the start date
     const [startDate, setStartDate] = useState(new DayPilot.Date());
 
+    const [inSession, setInSession] = useState(false);
+
+    //Your group is in session if there are any timeslots submitted
+    const fetchInSession = async () => {
+        try{
+            const response = await axios.get(`${ENDPOINT_URL}api/test/timeslot/inSession/${projectTitle}`,
+                {
+                    headers: {
+                        Authorization: `Bearer ${auth.user.userJWT}`,
+                    },
+                }
+            );
+            setInSession(response.data);
+            console.log(response.data);
+        }catch (e){
+            console.error('Error Confirming Existing Project Timeslots:', e);
+        }
+    }
+
+    //(AVALIABLE TIME SLOTS) Get common time slots
+    const fetchAvaliable = async () => {
+        try {
+            const response = await axios.get(`${ENDPOINT_URL}api/test/timeslot/overlap/${projectTitle}`,
+                {
+                    headers: {
+                        Authorization: `Bearer ${auth.user.userJWT}`,
+                    },
+                }
+            );
+            const avaliableTimeSlots = [];
+
+            // Iterate over the response data and process each meeting
+            for (let i = 0; i < response.data.length; i++) {
+                const avaliable = response.data[i];
+                avaliableTimeSlots.push({
+                    startTime: avaliable.startTime,
+                    endTime: avaliable.endTime
+                });
+            }
+
+            return avaliableTimeSlots;
+        } catch (error) {
+            console.error('Error fetching avaliableTimeSlots:', error);
+            return []; // Return an empty array in case of error
+        }
+    };
+
+    //(MEETING) Get current meetings
+    const fetchMeetings = async () => {
+        console.log("fetchMeetings");
+        try {
+            const response = await axios.get(`${ENDPOINT_URL}api/test/meeting/${projectTitle}`,
+                {
+                    headers: {
+                        Authorization: `Bearer ${auth.user.userJWT}`,
+                    },
+                }
+            );
+            const meetings = [];
+
+            // Iterate over the response data and process each meeting
+            for (let i = 0; i < response.data.length; i++) {
+                const meeting = response.data[i];
+                meetings.push({
+                    meetingId: meeting.meetingId,
+                    title: meeting.title,
+                    startTime: meeting.startTime,
+                    endTime: meeting.endTime
+                });
+            }
+
+            return meetings;
+        } catch (error) {
+            console.error('Error fetching meetings:', error);
+            return []; // Return an empty array in case of error
+        }
+    };
+
     const [selectedRange, setSelectedRange] = useState(null);
 
     const TEMP_EVENT_ID = 'temp-selected-range';
@@ -236,7 +314,7 @@ const WeeklyCalendar = () => {
     };
 
 
-    // convert time slots to 30 mins duration
+    //TODO: convert time slots to 30 mins duration
     const convertTo30MinSlots = (meetings) => {
         const slots = [];
 
@@ -294,34 +372,6 @@ const WeeklyCalendar = () => {
         });
     };
 
-    //(AVALIABLE TIME SLOTS) Get meeting time slots
-    const fetchAvaliable = async () => {
-        try {
-            const response = await axios.get(`${ENDPOINT_URL}api/test/timeslot/overlap/${projectTitle}`,
-                {
-                    headers: {
-                        Authorization: `Bearer ${auth.user.userJWT}`,
-                    },
-                }
-            );
-            const avaliableTimeSlots = [];
-
-            // Iterate over the response data and process each meeting
-            for (let i = 0; i < response.data.length; i++) {
-                const avaliable = response.data[i];
-                avaliableTimeSlots.push({
-                    startTime: avaliable.startTime,
-                    endTime: avaliable.endTime
-                });
-            }
-
-            return avaliableTimeSlots;
-        } catch (error) {
-            console.error('Error fetching avaliableTimeSlots:', error);
-            return []; // Return an empty array in case of error
-        }
-    };
-
 
     //(MEETING) Fix time difference between the ISO string and the local time
     const adjustTimeZoneMeet = (meetings) => {
@@ -344,43 +394,12 @@ const WeeklyCalendar = () => {
         });
     };
 
-    //(MEETING) Get meeting time slots
-    const fetchMeetings = async () => {
-        console.log("fetchMeetings");
-        try {
-            const response = await axios.get(`${ENDPOINT_URL}api/test/meeting/${projectTitle}`,
-                {
-                    headers: {
-                        Authorization: `Bearer ${auth.user.userJWT}`,
-                    },
-                }
-            );
-            const meetings = [];
-
-            // Iterate over the response data and process each meeting
-            for (let i = 0; i < response.data.length; i++) {
-                const meeting = response.data[i];
-                meetings.push({
-                    meetingId: meeting.meetingId,
-                    title: meeting.title,
-                    startTime: meeting.startTime,
-                    endTime: meeting.endTime
-                });
-            }
-
-            return meetings;
-        } catch (error) {
-            console.error('Error fetching meetings:', error);
-            return []; // Return an empty array in case of error
-        }
-    };
-
-    // (COMBINE) Function to check if two time periods overlap
+    //TODO: (COMBINE) Function to check if two time periods overlap
     const doTimesOverlap = (start1, end1, start2, end2) => {
         return start1 < end2 && start2 < end1;
     };
 
-    // (COMBINE) Function to filter out available slots that conflict with meetings
+    //TODO: (COMBINE) Function to filter out available slots that conflict with meetings
     const filterConflictingSlots = (availableSlots, meetings) => {
         return availableSlots.filter(availableSlot => {
             const availableStart = new Date(availableSlot.start);
@@ -395,7 +414,7 @@ const WeeklyCalendar = () => {
         });
     };
 
-    //Buttons for clear all avaliable time slots prompt
+    //TODO: Buttons for clear all avaliable time slots prompt
     const customConfirm = (message) => {
         return new Promise(resolve => {
             DayPilot.Modal.showHtml(`
@@ -426,6 +445,15 @@ const WeeklyCalendar = () => {
 
     //Clear All Avaliable time slots
     const clearAvailableSlots = async () => {
+
+        // Confirmation dialog
+        const isConfirmed = DayPilot.Modal.confirm("Are you sure you want to end this scheduling session? Members' available time submissions will be cleared. ");
+
+        // If the user clicks 'Cancel', stop the function
+        if (!isConfirmed) {
+            return;
+        }
+
         try {
             // Make a request to your backend to delete all available time slots
             const response = await axios.delete(`${ENDPOINT_URL}api/test/timeslot/clearall/${projectTitle}`,
@@ -435,7 +463,10 @@ const WeeklyCalendar = () => {
                     },
                 }
             );
-            if (response.status === 200) { //not sure 200 or 201
+
+            setHandleRefresh([...handleRefresh]);
+
+            if (response.status === 201) { //not sure 200 or 201
                 console.log('All available time slots cleared');
                 // You may want to update your UI or state here as needed
             }
@@ -450,7 +481,6 @@ const WeeklyCalendar = () => {
         durationBarVisible: false,
         timeRangeSelectedHandling: "Enabled",
         startDate: startDate,
-        timeRangeSelectedHandling: "Enabled",
         allowEventOverlap: true,
         onTimeRangeSelected: args => onTimeRangeSelected(args),
 
@@ -484,6 +514,7 @@ const WeeklyCalendar = () => {
     // UseEffect for setting up calendar events
     useEffect(() => {
         const initializeCalendar = async () => {
+            fetchInSession();
             const [available, meetings] = await Promise.all([fetchAvaliable(), fetchMeetings()]);
 
             const processedAvailable = adjustTimeZoneAvaliable(available);
@@ -514,12 +545,20 @@ const WeeklyCalendar = () => {
                 <button className="button-next" onClick={goToNextWeek}>
                     Next Week &gt;
                 </button>
-                <button onClick={() => navigate("/meeting/selectmeeting")}>
-                    Edit Meeting Time Slot
-                </button>
-                <button className="button-clear-slots" onClick={clearAvailableSlots}>
-                    Clear All Available Time Slots
-                </button>
+                {inSession? (
+                    <div>
+                        <button onClick={() => navigate("/meeting/selectmeeting")}>
+                            Edit Your Available Time
+                        </button>
+                        <button className="button-clear-slots" onClick={clearAvailableSlots}>
+                            End Session
+                        </button>
+                    </div>
+                ) : (
+                    <button onClick={() => navigate("/meeting/selectmeeting")}>
+                        Start A Group Meeting Poll Session
+                    </button>
+                )}
             </div>
             {selectedRange ? (
                 <div>

@@ -145,4 +145,9 @@ public class TimeSlotService {
         Set<TimeSlot> timeSlots = new HashSet<>(projectRepository.findByProjectTitle(projectTitle).getTimeSlots());
         timeSlotRepository.deleteAllInBatch(new ArrayList<>(timeSlots));
     }
+
+    public Boolean projNonEmpty(String projectTitle) {
+        Project thisProj = projectRepository.findByProjectTitle(projectTitle);
+        return !thisProj.getTimeSlots().isEmpty();
+    }
 }
