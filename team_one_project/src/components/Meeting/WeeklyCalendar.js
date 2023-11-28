@@ -445,6 +445,15 @@ const WeeklyCalendar = () => {
 
     //Clear All Avaliable time slots
     const clearAvailableSlots = async () => {
+
+        // Confirmation dialog
+        const isConfirmed = DayPilot.Modal.confirm("Are you sure you want to end this scheduling session? Members' available time submissions will be cleared. ");
+
+        // If the user clicks 'Cancel', stop the function
+        if (!isConfirmed) {
+            return;
+        }
+
         try {
             // Make a request to your backend to delete all available time slots
             const response = await axios.delete(`${ENDPOINT_URL}api/test/timeslot/clearall/${projectTitle}`,
