@@ -435,7 +435,10 @@ const WeeklyCalendar = () => {
                     },
                 }
             );
-            if (response.status === 200) { //not sure 200 or 201
+
+            setHandleRefresh([...handleRefresh]);
+
+            if (response.status === 201) { //not sure 200 or 201
                 console.log('All available time slots cleared');
                 // You may want to update your UI or state here as needed
             }
