@@ -74,6 +74,9 @@ export default function BurndownChart({ processedData }) {
             fontWeight: "bold",
             color: "#212529",
           }}
+          border={1}
+          padding={1}
+          borderRadius={2}
         >
           Group's Total Task Progression
         </Typography>

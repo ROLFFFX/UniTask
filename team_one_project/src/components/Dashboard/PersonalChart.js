@@ -115,7 +115,7 @@ const PersonalChart = ({ processedPersonalData }) => {
             style={{
               position: "absolute",
               left: "28%",
-              top: "15%",
+              top: "20%",
               transform: "translate(-50%, -50%)",
               display: "flex",
               alignItems: "center",
@@ -130,6 +130,9 @@ const PersonalChart = ({ processedPersonalData }) => {
                 fontWeight: "bold",
                 color: "#212529",
               }}
+              border={1}
+              padding={1}
+              borderRadius={2}
             >
               Personal Task Progression
             </Typography>
