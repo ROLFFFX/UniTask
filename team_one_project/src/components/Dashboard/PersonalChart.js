@@ -5,8 +5,10 @@ import {
   VictoryScatter,
   VictoryAxis,
 } from "victory";
-import { Grid, Typography, Box } from "@mui/material";
+import { Grid, Typography, Box, Tooltip } from "@mui/material";
 import AdsClickIcon from "@mui/icons-material/AdsClick";
+import Breadcrumbs from "@mui/material/Breadcrumbs";
+import Link from "@mui/material/Link";
 
 const cartesianInterpolations = [
   "basis",
@@ -24,15 +26,37 @@ const cartesianInterpolations = [
 
 const polarInterpolations = ["basis", "cardinal", "catmullRom", "linear"];
 
-const InterpolationSelect = ({ currentValue, values, onChange }) => (
-  <select onChange={onChange} value={currentValue} style={{ width: 75 }}>
-    {values.map((value) => (
-      <option value={value} key={value}>
-        {value}
-      </option>
-    ))}
-  </select>
-);
+// renders interpolation options
+const InterpolationSelect = ({ currentValue, values, onChange }) => {
+  return (
+    <div
+      style={{
+        display: "flex",
+        flexWrap: "wrap",
+        gap: "14px",
+      }}
+    >
+      {values.map((value) => (
+        <Link
+          key={value}
+          component="button"
+          color={currentValue === value ? "#495057" : "#212529"}
+          onClick={() => onChange(value)}
+          style={{
+            cursor: "pointer",
+            textDecoration: currentValue === value ? "underline" : "none", // underline selected item
+            fontSize: "14px",
+            fontFamily: "Inter, sans-serif",
+            marginTop: "10px",
+          }}
+          href="#separators"
+        >
+          {value}
+        </Link>
+      ))}
+    </div>
+  );
+};
 
 const PersonalChart = ({ processedPersonalData }) => {
   console.log(processedPersonalData);
@@ -44,6 +68,10 @@ const PersonalChart = ({ processedPersonalData }) => {
     const width = (window.innerWidth - 200) * (8 / 12);
     const height = (window.innerHeight - 64) * 0.45;
     setChartSize({ width, height });
+  };
+
+  const handleInterpolationChange = (value) => {
+    setInterpolation(value);
   };
 
   useEffect(() => {
@@ -83,7 +111,49 @@ const PersonalChart = ({ processedPersonalData }) => {
       <Box position="relative">
         <Grid container>
           {/* Grid for header */}
-          <Grid item xs={6}>
+          <div
+            style={{
+              position: "absolute",
+              left: "28%",
+              top: "15%",
+              transform: "translate(-50%, -50%)",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              border: 1,
+            }}
+          >
+            <Typography
+              style={{
+                fontFamily: "Inter, sans-serif",
+                fontSize: "14px",
+                fontWeight: "bold",
+                color: "#212529",
+              }}
+            >
+              Personal Task Progression
+            </Typography>
+            <AdsClickIcon sx={{ marginLeft: "15px" }} />
+          </div>
+          <Tooltip
+            title={
+              <Typography
+                style={{ fontFamily: "Inter, sans-serif", fontSize: "14px" }}
+              >
+                <strong>Personal Chart Guide:</strong>
+                <br />
+                <br />- <strong>Data Insights:</strong> This graph represents
+                the progression of cumulative tasks achieved over time be you.
+                <br />
+                <br />- <strong>Interpolations:</strong> Choose the
+                interpolation menu above to customize your view. We have 11
+                options to offer!
+              </Typography>
+            }
+            arrow
+            placement="top"
+            TransitionProps={{ timeout: 600 }}
+          >
             <div
               style={{
                 position: "absolute",
@@ -95,31 +165,15 @@ const PersonalChart = ({ processedPersonalData }) => {
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "center",
-                border: 1,
+                // border: 1,
+                // color: "red",
+                zIndex: 1000,
               }}
-            >
-              <Typography
-                style={{
-                  fontFamily: "Inter, sans-serif",
-                  fontSize: "14px",
-                  fontWeight: "bold",
-                  color: "#212529",
-                }}
-              >
-                Personal Task Progression
-              </Typography>
-              <AdsClickIcon sx={{ marginLeft: "15px" }} />
-            </div>
-          </Grid>
-          <Grid item xs={6}>
+            ></div>
+          </Tooltip>
+          <Grid item xs={12}>
             <div
               style={{
-                position: "absolute",
-                left: "28%",
-                top: "6%",
-                transform: "translate(-50%, -50%)",
-                width: "300px", // Diameter of the circle
-                height: "40px", // Diameter of the circle
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "center",
@@ -130,7 +184,7 @@ const PersonalChart = ({ processedPersonalData }) => {
               <InterpolationSelect
                 currentValue={interpolation}
                 values={polar ? polarInterpolations : cartesianInterpolations}
-                onChange={(event) => setInterpolation(event.target.value)}
+                onChange={setInterpolation}
               />
               {/* The commented part below allows to change to polar view, which i have no clue what it does */}
               {/* <input

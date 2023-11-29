@@ -56,21 +56,40 @@ export default function DataVisualization(props) {
                     fontFamily: "Inter, sans-serif",
                     fontSize: "14px",
                   }}
-                  onClick={() => props.onToggleViewChange("Table Task View")}
+                  onClick={() => props.onToggleViewChange("Data Visual View")}
                 >
-                  Table Task View
+                  Data Visualization
                 </MenuItem>
                 <MenuItem
                   style={{
                     fontFamily: "Inter, sans-serif",
                     fontSize: "14px",
                   }}
-                  onClick={() => props.onToggleViewChange("Dashboard")}
+                  onClick={() => props.onToggleViewChange("Table Task View")}
                 >
-                  Data Visualization
+                  Table Task View
                 </MenuItem>
               </Menu>
             </Dropdown>
+          </Grid>
+          <Grid
+            item
+            xs={9}
+            style={{
+              display: "flex",
+              // justifyContent: "center",
+              alignItems: "center",
+            }}
+          >
+            <Typography
+              style={{
+                fontFamily: "Inter, sans-serif",
+                fontSize: "14px",
+                borderColor: "#6C757D",
+              }}
+            >
+              Click "Data Visual View" to Change View Mode.
+            </Typography>
           </Grid>
         </Grid>
         {/* Grid for actual content */}

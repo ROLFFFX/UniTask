@@ -110,18 +110,18 @@ export default function TaskView(props) {
                     fontFamily: "Inter, sans-serif",
                     fontSize: "14px",
                   }}
-                  onClick={() => props.onToggleViewChange("Table Task View")}
+                  onClick={() => props.onToggleViewChange("Data Visual View")}
                 >
-                  Table Task View
+                  Data Visualization
                 </MenuItem>
                 <MenuItem
                   style={{
                     fontFamily: "Inter, sans-serif",
                     fontSize: "14px",
                   }}
-                  onClick={() => props.onToggleViewChange("Data Visual View")}
+                  onClick={() => props.onToggleViewChange("Table Task View")}
                 >
-                  Data Visualization
+                  Table Task View
                 </MenuItem>
               </Menu>
             </Dropdown>
