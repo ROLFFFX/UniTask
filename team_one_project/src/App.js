@@ -12,6 +12,7 @@ import { PageNotFound } from "./components/PageNotFound/PageNotFound";
 import { MainReview } from "./components/Review/MainReview";
 import { MainSetting } from "./components/Setting/MainSetting";
 
+import LoginWithGroup from "./components/LoginPage/LoginWithGroup/LoginWithGroup";
 import { OB_landing } from "./components/LoginPage/OnBoarding/OB_landing";
 import { SignUp } from "./components/LoginPage/SignUp";
 import { ManageTeam } from "./components/ManageTeam/ManageTeam";
@@ -19,7 +20,6 @@ import { SelectMeeting } from "./components/Meeting/SelectMeeting";
 import RequireAuth from "./components/RequireAuth";
 import PermanentDrawer from "./components/Utilities/PermanentDrawer";
 import { TopAppBar } from "./components/Utilities/TopNavBar";
-import LoginWithGroup from "./components/LoginPage/LoginWithGroup/LoginWithGroup";
 import WelcomePage from "./components/Utilities/WelcomePage";
 
 function Layout({ children }) {
