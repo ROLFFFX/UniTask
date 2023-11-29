@@ -1,6 +1,8 @@
-import React, { useState, useEffect } from "react";
-import { Box, Divider, Grid } from "@mui/material";
+import { Divider, Grid } from "@mui/material";
+import React, { useEffect, useState } from "react";
 import BurndownChart from "./BurndownChart";
+import PersonalChart from "./PersonalChart";
+import useAuth from "../../hooks/useAuth";
 
 function processTaskData(tasks, currentDateStr, creationDateStr) {
   const creationDate = new Date(creationDateStr);
@@ -9,7 +11,6 @@ function processTaskData(tasks, currentDateStr, creationDateStr) {
   const totalDays = Math.ceil((currentDate - creationDate) / oneDay);
   const intervalDays = 3;
   const numberOfIntervals = Math.ceil(totalDays / intervalDays);
-
   let intervals = [];
   for (let i = 0; i < numberOfIntervals; i++) {
     intervals.push({
@@ -17,7 +18,6 @@ function processTaskData(tasks, currentDateStr, creationDateStr) {
       b: 0,
     });
   }
-
   tasks.forEach((task) => {
     if (task.status === "Done") {
       const taskCompleteTime = new Date(task.expectedCompleteTime);
@@ -32,16 +32,17 @@ function processTaskData(tasks, currentDateStr, creationDateStr) {
       }
     }
   });
-
   // Adjust the last interval's key to be the current date
   if (intervals.length > 0) {
     intervals[intervals.length - 1].key = currentDate;
   }
-
   return intervals;
 }
 
 export default function VisualCharts(props) {
+  const { auth } = useAuth();
+  const currentUserEmail = auth.user.userEmail;
+  console.log(auth);
   const [formattedTasks, setFormattedTasks] = useState();
   // map over and format tasks. formattedTasks will contain all formatted main tasks
   useEffect(() => {
@@ -74,6 +75,7 @@ export default function VisualCharts(props) {
 
   return (
     <React.Fragment>
+      {console.log(formattedTasks)}
       {/* Grid for entire data visual view */}
       <Grid
         container
@@ -82,9 +84,6 @@ export default function VisualCharts(props) {
         style={{ overflow: "auto", justifyContent: "center", display: "flex" }}
         width="calc((100vw - 200px)*8/12)"
       >
-        {/* Grid item for BurndownChart */}
-        {/* Grid for info bar */}
-        {/* <Grid item xs={1} border={1}></Grid> */}
         {/* Grid for Burndown Chart */}
         <Grid
           item
@@ -95,7 +94,7 @@ export default function VisualCharts(props) {
         >
           <BurndownChart processedData={processedData} />
         </Grid>
-        {/* Grid for other charts */}
+        {/* Grid for Personal Burndown Chart */}
         <Grid
           item
           xs={12}
@@ -104,17 +103,9 @@ export default function VisualCharts(props) {
           overflow="hidden"
         >
           <Divider />
+          <PersonalChart />
         </Grid>
       </Grid>
     </React.Fragment>
-    // <Box
-    //   height="calc((100vh - 64px) * 0.9)"
-    //   maxHeight="calc((100vh - 64px) * 0.9)"
-    //   style={{ overflow: "auto", justifyContent: "center", display: "flex" }}
-    //   className="custom-scrollbar"
-    //   border={1}
-    // >
-    //   VisualCharts
-    // </Box>
   );
 }
