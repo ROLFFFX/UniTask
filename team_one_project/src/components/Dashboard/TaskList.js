@@ -39,13 +39,28 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 export default function TaskList(props) {
   // Extract taskData and formattedTeamMembers from props once
   const { taskData, formattedTeamMembers } = props.props;
-
   const [formattedTaskData, setFormattedTaskData] = useState([]);
 
+  const applyFilter = () => {
+    // Check if formattedTeamMembers is defined and not null
+    if (formattedTeamMembers) {
+      // Filter tasks by the selected team member
+      return taskData
+        .map((taskList) => taskList[0])
+        .filter(
+          (task) => task.taskMemberAssigned.username === formattedTeamMembers
+        );
+    } else {
+      // If formattedTeamMembers is null, use all tasks
+      return taskData.map((taskList) => taskList[0]);
+    }
+  };
+
+  // Use useEffect to listen to changes in formattedTeamMembers
   useEffect(() => {
-    const formattedData = taskData.map((taskList) => taskList[0]);
-    setFormattedTaskData(formattedData);
-  }, [taskData]);
+    const updatedTaskData = applyFilter();
+    setFormattedTaskData(updatedTaskData);
+  }, [formattedTeamMembers, taskData]);
 
   const formatAssigneeName = (name) => {
     if (name.length > 10) {
