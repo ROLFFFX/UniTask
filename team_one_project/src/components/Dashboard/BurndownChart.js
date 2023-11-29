@@ -85,15 +85,20 @@ export default function BurndownChart({ processedData }) {
             style={{ fontFamily: "Inter, sans-serif", fontSize: "14px" }}
           >
             <strong>Interactive Graph Guide:</strong>
-            <br />- <strong>Zoom:</strong>Click and drag horizontally on the
+            <br />
+            <br />- <strong>Data Insights:</strong> This graph represents the
+            progression of cumulative tasks achieved over time. Adjust the view
+            to focus on specific intervals and analyze your team's performance
+            against planned milestones.
+            <br />
+            <br />- <strong>Zoom:</strong> Click and drag horizontally on the
             main chart area to zoom in on a specific time period.
+            <br />
             <br />- <strong>Brush:</strong> Use the smaller chart below to
             adjust the visible window of the main chart.
-            <br />- <strong>Data Insights:</strong> This graph represents the
-            progression of cumulative tasks achieved over time. The dashed line
-            indicates the expected trend based on initial projections. Adjust
-            the view to focus on specific intervals and analyze your team's
-            performance against planned milestones.
+            <br />
+            <br />- <strong>Trend Line:</strong> The dashed line indicates the
+            expected trend based on initial projections.
           </Typography>
         }
         arrow
