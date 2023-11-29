@@ -187,16 +187,6 @@ export function DashboardContent() {
                   formattedTeamMembers={formattedTeamMembers}
                 />
               </Grid>
-              {/* Grid for PorgressBar
-              <Grid
-                item
-                xs={12}
-                height="calc((100vh - 64px) * 0.2)"
-                maxHeight="calc((100vh - 64px) * 0.2)"
-                overflow="hidden"
-              >
-                <ProgressBar progressBarData={ProgressBarData} />
-              </Grid> */}
               <Divider
                 orientation="vertical"
                 flexItem
@@ -209,7 +199,21 @@ export function DashboardContent() {
                 }}
               />
             </Grid>
-            <Grid item container xs={5}>
+            {/* Grid for middle nav part. */}
+            <Grid item xs={1} style={{ position: "relative" }}>
+              <Divider
+                orientation="vertical"
+                flexItem
+                style={{
+                  position: "absolute",
+                  right: 0,
+                  top: "5%",
+                  height: "90%",
+                  zIndex: 1, // adjust z-index as needed
+                }}
+              />
+            </Grid>
+            <Grid item container xs={4}>
               <Grid
                 item
                 xs={12}

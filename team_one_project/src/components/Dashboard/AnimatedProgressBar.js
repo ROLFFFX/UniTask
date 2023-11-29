@@ -38,7 +38,7 @@ export default function AnimatedProgressBar({ progressData }) {
   }
 
   return (
-    <Grid container xs={12}>
+    <Grid container>
       <Grid item xs={12}>
         <Box
           display="flex"

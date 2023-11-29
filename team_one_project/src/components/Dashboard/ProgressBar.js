@@ -49,7 +49,7 @@ export default function ProgressBar(ProgressBarData) {
             </Typography>
           </Grid>
           {/* Grid for intro under Big Header */}
-          <Grid item xs={8}>
+          <Grid item xs={9}>
             <Typography
               style={{ fontFamily: "Inter, sans-serif", fontSize: "14px" }}
               align="right"
@@ -58,7 +58,7 @@ export default function ProgressBar(ProgressBarData) {
               See You Progress in Circular/Linear View:
             </Typography>
           </Grid>
-          <Grid item xs={4}>
+          <Grid item xs={3}>
             <Box align="left">
               <GreySwitch onChange={handleSwitchChange} />
             </Box>
