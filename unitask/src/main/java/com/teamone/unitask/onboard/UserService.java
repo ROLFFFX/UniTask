@@ -17,6 +17,10 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+
+/**
+ * The service class for the User entity
+ */
 @Service
 public class UserService {
 
@@ -48,8 +52,9 @@ public class UserService {
     ProjectRepository projectRepository;
 
 
-    // method to detect whether a user is a project member of certain project
-    // given the jwt token;
+    /*
+     * method to detect whether a user is a project member of certain project given the jwt token;
+     */
     public Boolean isProjectMember(String header, Project requestProject) {
 
         User thisUser = getUserEmailFromToken(header);
@@ -66,7 +71,9 @@ public class UserService {
         return ifExisted;
     }
 
-    // Extract user email from the JWT;
+    /*
+     * Extract user email from the JWT;
+     */
     public User getUserEmailFromToken(String header) {
         String jwtToken = extractTokenFromAuthorizationHeader(header);
         String email = jwtUtils.getUserNameFromJwtToken(jwtToken);
@@ -80,7 +87,9 @@ public class UserService {
     }
 
 
-    // helper method of getUserEmailFromToken;
+    /*
+     * helper method of getUserEmailFromToken;
+     */
     private String extractTokenFromAuthorizationHeader(String authorizationHeader) {
 
         if (authorizationHeader != null && authorizationHeader.startsWith("Bearer ")) {

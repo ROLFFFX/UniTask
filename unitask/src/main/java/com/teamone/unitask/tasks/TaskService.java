@@ -8,6 +8,10 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+
+/**
+ * The service class for the task controller
+ */
 @Service
 public class TaskService {
 
@@ -17,6 +21,9 @@ public class TaskService {
     @Autowired
     UserRepository userRepository;
 
+    /*
+     * helper method for the updating a task;
+     */
     public Task updateTask(Task updatedTask, Long taskId, String username) {
 
         if (taskRepository.existsByTaskId(taskId)) {
@@ -42,6 +49,9 @@ public class TaskService {
 
     }
 
+    /*
+     * helper method for deleting an existing task by its id;
+     */
     public Task deleteTask(Long taskId) {
 
         Task taskToDelete = taskRepository.findById(taskId).

@@ -8,6 +8,10 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+
+/**
+ * The report controller class, mainly build APIs for the report web page
+ */
 @RestController
 @RequestMapping(path = "/reports")
 public class ReportController {
@@ -16,6 +20,9 @@ public class ReportController {
     ReportService reportService;
 
 
+    /*
+     * create the report object and store it in the database;
+     */
     //    @CrossOrigin(origins = "https://uni-task-beta-front.vercel.app/", allowCredentials = "true")
     @CrossOrigin(origins = "http://localhost:3000", allowCredentials = "true")
     @PostMapping(path = "/createReport/{projectTitle}")
@@ -31,6 +38,9 @@ public class ReportController {
         }
     }
 
+    /*
+     * get all report project in the given project;
+     */
     //    @CrossOrigin(origins = "https://uni-task-beta-front.vercel.app/", allowCredentials = "true")
     @CrossOrigin(origins = "http://localhost:3000", allowCredentials = "true")
     @GetMapping(path = "/getListReports/{projectTitle}")
@@ -45,6 +55,9 @@ public class ReportController {
         }
     }
 
+    /*
+     * edit an existing report project;
+     */
     //    @CrossOrigin(origins = "https://uni-task-beta-front.vercel.app/", allowCredentials = "true")
     @CrossOrigin(origins = "http://localhost:3000", allowCredentials = "true")
     @PutMapping(path = "/editReport/{reportId}")
@@ -56,6 +69,9 @@ public class ReportController {
         return new ResponseEntity<>(reportToEdit, HttpStatus.OK);
     }
 
+    /*
+     * delete the given report project;
+     */
     //    @CrossOrigin(origins = "https://uni-task-beta-front.vercel.app/", allowCredentials = "true")
     @CrossOrigin(origins = "http://localhost:3000", allowCredentials = "true")
     @DeleteMapping(path = "/deleteReport/{reportId}")

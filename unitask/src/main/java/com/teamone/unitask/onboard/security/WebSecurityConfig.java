@@ -18,6 +18,9 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 
+/**
+ * Class implemented for the spring security
+ */
 @Configuration
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(

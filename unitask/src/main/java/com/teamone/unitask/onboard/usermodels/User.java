@@ -18,6 +18,9 @@ import javax.validation.constraints.Size;
 import java.util.*;
 
 
+/**
+ * The Entity class for user
+ */
 @Entity
 @Table(name = "users",
         uniqueConstraints = {

@@ -7,6 +7,11 @@ import org.springframework.mail.javamail.JavaMailSenderImpl;
 
 import java.util.Properties;
 
+
+/**
+ * The mail configuration class that configuring interaction with email service, email address and password are
+ * specified in here
+ */
 @Configuration
 public class MailConfiguration {
 

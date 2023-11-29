@@ -12,6 +12,10 @@ import org.springframework.web.bind.annotation.RequestHeader;
 
 import java.util.List;
 
+
+/**
+ * The service class for the project controller
+ */
 @Service
 public class ProjectService {
 

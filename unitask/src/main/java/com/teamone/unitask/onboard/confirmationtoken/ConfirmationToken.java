@@ -7,6 +7,9 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
+/**
+ * The Confirmation Token entity
+ */
 @Entity
 @Table(name = "confirmation_token")
 @NoArgsConstructor
@@ -16,25 +19,31 @@ public class ConfirmationToken {
      * fields
      */
 
+    // confirmation token id, the key of the table;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    // UUID generated token, should be unique;
     @Column(nullable = false)
     private String token;
 
+    // object creation time;
     @Column(nullable = false)
     private LocalDateTime createdAt;
 
+    // object expiration time;
     @Column(nullable = false)
     private LocalDateTime expiredAt;
 
+    // user confirmation time;
     private LocalDateTime confirmedAt;
 
     /**
      * foreign keys
      */
 
+    // user that the current confirmation token belonged;
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(nullable = false, name = "user_id")
     @JsonIgnore
@@ -54,10 +63,6 @@ public class ConfirmationToken {
 
     public Long getId() {
         return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
     }
 
     public String getToken() {

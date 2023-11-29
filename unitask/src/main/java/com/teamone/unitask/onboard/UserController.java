@@ -6,6 +6,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+
+/**
+ * The controller class for the User entity
+ */
 @RestController
 @RequestMapping(path = "users")
 public class UserController {
