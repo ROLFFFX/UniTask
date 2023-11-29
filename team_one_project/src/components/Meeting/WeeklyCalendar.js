@@ -684,7 +684,7 @@ const WeeklyCalendar = () => {
                     ) : (
                         <div>
                             {/*<button onClick={(e)=>handleShiftPage(e)}>*/}
-                            <button onClick={navigate("/meeting/selectmeeting")}>
+                            <button onClick={() => navigate("/meeting/selectmeeting")}>
                                 Start A Group Availability Poll
                             </button>
                             {/*<Popper id={open?'reminder-popper':undefined} open={open} anchorEl={anchorEl} placement="bottom" transition>
