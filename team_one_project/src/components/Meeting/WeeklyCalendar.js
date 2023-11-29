@@ -3,10 +3,11 @@ import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import ListItemText from '@mui/material/ListItemText';
 import ListSubheader from '@mui/material/ListSubheader';
-import Popper from '@mui/material/Popper';
+import ListItemButton from '@mui/material/ListItemButton';
+import Popover from '@mui/material/Popover';
 import Typography from '@mui/material/Typography';
 import Paper from '@mui/material/Paper';
-
+import Button from '@mui/material/Button';
 import { DayPilot, DayPilotCalendar, DayPilotNavigator, DayPilotScheduler } from "@daypilot/daypilot-lite-react";
 import './WeeklyCalendar.css';
 import { useNavigate } from "react-router-dom";
@@ -523,7 +524,7 @@ const WeeklyCalendar = () => {
     //Clear All Avaliable time slots
     const clearAvailableSlots = async () => {
 
-        DayPilot.Modal.confirm("Are you sure you want to end this scheduling session? Members' available time submissions will be cleared. ")
+        DayPilot.Modal.confirm("Are you sure you want to end this availability poll? Members' available time submissions will be cleared. ")
             .then(async function(result) {
                 if (!result.result) { // User clicked 'Cancel'
                     return;
@@ -599,13 +600,13 @@ const WeeklyCalendar = () => {
         setStartDate(startDate.addDays(7));
     };
 
-    // const [anchorEl, setAnchorEl] = useState(null);
-    // const open = Boolean(anchorEl);
+     const [anchorEl, setAnchorEl] = useState(null);
+     const open = Boolean(anchorEl);
 
-    // const handleShiftPage = (event) => {
-    //     setAnchorEl(!anchorEl ? null : event.currentTarget);
-    //     navigate("/meeting/selectmeeting");
-    // };
+     // const handleShiftPage = (event) => {
+     //     if(open){navigate("/meeting/selectmeeting");
+     //     }else{setAnchorEl(event.currentTarget);}
+     // };
 
     // UseEffect for setting up calendar events
     useEffect(() => {
@@ -642,7 +643,7 @@ const WeeklyCalendar = () => {
                     disablePadding
                     subheader={
                         <ListSubheader component="div" id="nested-list-subheader">
-                            There's a Group Polling Session in Progress... Members Who Have Submitted Their Available Time:
+                            There's a Group Availability Poll in Progress... Members Who Have Submitted Their Available Time:
                         </ListSubheader>
                     }
                 >
@@ -678,26 +679,56 @@ const WeeklyCalendar = () => {
                                 Edit Your Available Time
                             </button>
                             <button className="button-clear-slots" onClick={clearAvailableSlots}>
-                                End Session
+                                End Poll
                             </button>
                         </div>
                     ) : (
                         <div>
-                            {/*<button onClick={(e)=>handleShiftPage(e)}>*/}
-                            <button onClick={() => navigate("/meeting/selectmeeting")}>
+                            <button onClick={(e)=>setAnchorEl(e.currentTarget)}
+                                    aria-owns={open ? 'mouse-over-popover' : undefined}
+                                    aria-haspopup="true"
+                                    //onMouseOver={(e) => setAnchorEl(e.currentTarget)}
+                                    //onMouseLeave={() => setAnchorEl(null)}
+                            >
                                 Start A Group Availability Poll
                             </button>
-                            {/*<Popper id={open?'reminder-popper':undefined} open={open} anchorEl={anchorEl} placement="bottom" transition>
-                              <Paper style={{ padding: '10px' }}>
-                                <Typography variant="body1">
-                                  Reminder!
-                                </Typography>
-                                <Typography variant="body2" style={{ marginTop: '10px' }}>
-                                  Don't forget to remind your team to submit their available time!
-                                  Once done, common available times will be displayed on the group events calendar.
-                                </Typography>
-                              </Paper>
-                            </Popper>*/}
+                            <Popover id={'reminder-popper'} open={open} anchorEl={anchorEl}
+                                     anchorOrigin={{
+                                      vertical: 'bottom',
+                                      horizontal: 'left',
+                                    }}
+                                    transformOrigin={{
+                                      vertical: 'top',
+                                      horizontal: 'left',
+                                    }}
+                                     onClose={() => setAnchorEl(null)}
+                                    >
+                                <List>
+                                    <ListItem>
+                                        <ListItemText primary="Tip:"/>
+                                        <Button
+                                                id={'proceed-to-poll'}
+                                                onClick={() => navigate("/meeting/selectmeeting")}
+                                                color="secondary"
+                                                variant="contained"
+                                        >
+                                                Got it! Proceed to Poll
+                                        </Button>
+                                    </ListItem>
+                                    <ListItem>
+                                        <ListItemText primary="Please *remind your team* ⏰ 👥 to submit their available time," />
+                                    </ListItem>
+                                    <ListItem>
+                                        <ListItemText primary="and don't forget to *confirm your selection* ✅ before leaving the page!" />
+                                    </ListItem>
+                                    <ListItem>
+                                        <ListItemText primary="Once done, common available times will be displayed on this page," />
+                                    </ListItem>
+                                    <ListItem>
+                                        <ListItemText primary="so that you can come back and schedule your group events accordingly."/>
+                                    </ListItem>
+                                </List>
+                            </Popover>
                         </div>
                     )}
                 </div>
