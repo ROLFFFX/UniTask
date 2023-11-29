@@ -1,4 +1,12 @@
-import { Backdrop, Box, CircularProgress, Divider, Grid } from "@mui/material";
+import {
+  Backdrop,
+  Box,
+  Button,
+  CircularProgress,
+  Divider,
+  Grid,
+  Typography,
+} from "@mui/material";
 import axios from "axios";
 import * as React from "react";
 import useAuth from "../../hooks/useAuth";
@@ -9,6 +17,7 @@ import ProgressBar from "./ProgressBar";
 import TaskView from "./TaskView";
 import "./TaskList.css";
 import LinearProgress from "@mui/joy/LinearProgress";
+import DataVisualization from "./DataVisualization";
 
 export function DashboardContent() {
   /* Hooks Declarations-------------------------------------------------------------------------------------------------------------------- */
@@ -19,6 +28,8 @@ export function DashboardContent() {
   const [ProgressBarData, setProgressBarData] = React.useState(); // Progress Bar: task done / undone
   const [formattedTeamMembers, setFormattedTeamMembers] = React.useState(); // team members
   const [allTasks, setAllTasks] = React.useState();
+  const [toggleView, setToggleView] = React.useState("Data Visual View");
+  const [creationTime, setCreationTime] = React.useState();
   /* End of Hooks Declarations-------------------------------------------------------------------------------------------------------------------- */
 
   /* Requests Declarations-------------------------------------------------------------------------------------------------------------------- */
@@ -117,6 +128,26 @@ export function DashboardContent() {
       setBackdropOpen(false);
     }
   };
+
+  // GET Method for fetching Workspace Creation Time    ///projects/creationTime/{projectTitle}
+  const fetchWorkspaceCreationTime = async () => {
+    setBackdropOpen(true); //display loading page
+    try {
+      const response = await axios.get(
+        `${ENDPOINT_URL}projects/creationTime/${projectTitle}`,
+        {
+          headers: {
+            Authorization: `Bearer ${auth.user.userJWT}`,
+          },
+        }
+      );
+      setCreationTime(response.data);
+    } catch (error) {
+      console.error("Error fetching team members:", error);
+    } finally {
+      setBackdropOpen(false);
+    }
+  };
   /* End of Requests Declarations-------------------------------------------------------------------------------------------------------------------- */
   function reformatTaskDistribution(unformattedData) {
     const reformattedData = [];
@@ -127,6 +158,9 @@ export function DashboardContent() {
     return reformattedData;
   }
   /* Helper Functions Declarations-------------------------------------------------------------------------------------------------------------------- */
+  const handleToggleViewChange = (newView) => {
+    setToggleView(newView); // Assuming setToggleView is your state setter
+  };
 
   /* End of Helper Functions Declarations-------------------------------------------------------------------------------------------------------------------- */
 
@@ -136,6 +170,7 @@ export function DashboardContent() {
     fetchProgressBarData();
     fetchTeamMembers();
     fetchAllTasks();
+    fetchWorkspaceCreationTime();
   }, []);
 
   // @ todo: part inside this if statement is rendered after all data are fetched.
@@ -172,7 +207,7 @@ export function DashboardContent() {
         >
           <Grid container>
             {/* Grid For Left Side Bar */}
-            <Grid container item xs={7} style={{ position: "relative" }}>
+            <Grid container item xs={8} style={{ position: "relative" }}>
               {/* Grid for task list */}
               <Grid
                 item
@@ -182,10 +217,22 @@ export function DashboardContent() {
                 overflow="hidden"
                 className="custom-scrollbar"
               >
-                <TaskView
-                  taskData={allTasks}
-                  formattedTeamMembers={formattedTeamMembers}
-                />
+                {toggleView === "Table Task View" ? (
+                  <TaskView
+                    taskData={allTasks}
+                    formattedTeamMembers={formattedTeamMembers}
+                    toggleView={toggleView}
+                    onToggleViewChange={handleToggleViewChange}
+                  />
+                ) : (
+                  <DataVisualization
+                    taskData={allTasks}
+                    formattedTeamMembers={formattedTeamMembers}
+                    toggleView={toggleView}
+                    onToggleViewChange={handleToggleViewChange}
+                    workspaceCreationTime={creationTime}
+                  />
+                )}
               </Grid>
               <Divider
                 orientation="vertical"
@@ -199,20 +246,7 @@ export function DashboardContent() {
                 }}
               />
             </Grid>
-            {/* Grid for middle nav part. */}
-            <Grid item xs={1} style={{ position: "relative" }}>
-              <Divider
-                orientation="vertical"
-                flexItem
-                style={{
-                  position: "absolute",
-                  right: 0,
-                  top: "5%",
-                  height: "90%",
-                  zIndex: 1, // adjust z-index as needed
-                }}
-              />
-            </Grid>
+
             <Grid item container xs={4}>
               <Grid
                 item
