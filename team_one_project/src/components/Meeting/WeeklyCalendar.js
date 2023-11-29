@@ -3,6 +3,9 @@ import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import ListItemText from '@mui/material/ListItemText';
 import ListSubheader from '@mui/material/ListSubheader';
+import Popper from '@mui/material/Popper';
+import Typography from '@mui/material/Typography';
+import Paper from '@mui/material/Paper';
 
 import { DayPilot, DayPilotCalendar, DayPilotNavigator, DayPilotScheduler } from "@daypilot/daypilot-lite-react";
 import './WeeklyCalendar.css';
@@ -28,7 +31,6 @@ const styles = {
         alignItems: "center",
         width: "100%",
         maxWidth: "800px",
-        marginBottom: "10px",
         marginTop:"10px"
     },
 };
@@ -597,6 +599,14 @@ const WeeklyCalendar = () => {
         setStartDate(startDate.addDays(7));
     };
 
+    // const [anchorEl, setAnchorEl] = useState(null);
+    // const open = Boolean(anchorEl);
+
+    // const handleShiftPage = (event) => {
+    //     setAnchorEl(!anchorEl ? null : event.currentTarget);
+    //     navigate("/meeting/selectmeeting");
+    // };
+
     // UseEffect for setting up calendar events
     useEffect(() => {
         const initializeCalendar = async () => {
@@ -651,9 +661,9 @@ const WeeklyCalendar = () => {
             <div className="week-navigation" style={styles.wrap}>
                 <div className="button-row" style={styles.header}>
                     {inSession?(
-                            <h2>Common Availability Overview</h2>
+                            <h1>Common Availability Overview</h1>
                         ):(
-                            <h2>Current Group Schedule</h2>
+                            <h1>Group Events</h1>
                         )
                     }
                     <button className="button-prev" onClick={goToPreviousWeek}>
@@ -672,9 +682,23 @@ const WeeklyCalendar = () => {
                             </button>
                         </div>
                     ) : (
-                        <button onClick={() => navigate("/meeting/selectmeeting")}>
-                            Start A Group Scheduling Session
-                        </button>
+                        <div>
+                            {/*<button onClick={(e)=>handleShiftPage(e)}>*/}
+                            <button onClick={navigate("/meeting/selectmeeting")}>
+                                Start A Group Availability Poll
+                            </button>
+                            {/*<Popper id={open?'reminder-popper':undefined} open={open} anchorEl={anchorEl} placement="bottom" transition>
+                              <Paper style={{ padding: '10px' }}>
+                                <Typography variant="body1">
+                                  Reminder!
+                                </Typography>
+                                <Typography variant="body2" style={{ marginTop: '10px' }}>
+                                  Don't forget to remind your team to submit their available time!
+                                  Once done, common available times will be displayed on the group events calendar.
+                                </Typography>
+                              </Paper>
+                            </Popper>*/}
+                        </div>
                     )}
                 </div>
                 {selectedRange ? (
