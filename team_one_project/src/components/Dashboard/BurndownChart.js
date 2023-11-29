@@ -9,6 +9,7 @@ import {
   VictoryLine,
   VictoryTooltip,
 } from "victory";
+import AdsClickIcon from "@mui/icons-material/AdsClick";
 
 function calculateTrendLineData(processedData) {
   // Example: Calculate a simple linear trend from start to end
@@ -55,22 +56,33 @@ export default function BurndownChart({ processedData }) {
       <div
         style={{
           position: "absolute",
-          left: "50%",
-          top: "30%",
+          left: "28%",
+          top: "15%",
           transform: "translate(-50%, -50%)",
-          width: "130px", // Diameter of the circle
-          height: "130px", // Diameter of the circle
-          backgroundColor: "#bc4749",
-          borderRadius: "50%",
+          width: "300px", // Diameter of the circle
+          height: "40px", // Diameter of the circle
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
+          border: 1,
         }}
-      />
+      >
+        <Typography
+          style={{
+            fontFamily: "Inter, sans-serif",
+            fontSize: "14px",
+            fontWeight: "bold",
+            color: "#212529",
+          }}
+        >
+          Group's Total Task Progression
+        </Typography>
+        <AdsClickIcon sx={{ marginLeft: "15px" }} />
+      </div>
       <Tooltip
         title={
           <Typography
-            style={{ fontFamily: "Inter, sans-serif", fontSize: "12px" }}
+            style={{ fontFamily: "Inter, sans-serif", fontSize: "14px" }}
           >
             <strong>Interactive Graph Guide:</strong>
             <br />- <strong>Zoom:</strong>Click and drag horizontally on the
@@ -92,19 +104,19 @@ export default function BurndownChart({ processedData }) {
         <div
           style={{
             position: "absolute",
-            left: "50%",
-            top: "30%",
+            left: "28%",
+            top: "15%",
             transform: "translate(-50%, -50%)",
-            width: "130px", // Diameter of the circle
-            height: "130px", // Diameter of the circle
+            width: "300px", // Diameter of the circle
+            height: "40px", // Diameter of the circle
             backgroundColor: "transparent",
-            borderRadius: "50%",
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
+            border: 1,
             zIndex: 1000,
           }}
-        />
+        ></div>
       </Tooltip>
       <VictoryChart
         width={chartSize.width}
@@ -120,6 +132,7 @@ export default function BurndownChart({ processedData }) {
         <VictoryArea
           standalone={true}
           interpolation="natural"
+          style={{ data: { fill: "#778da9" } }}
           data={processedData}
           x="key"
           y="b"
@@ -129,7 +142,7 @@ export default function BurndownChart({ processedData }) {
           x="key"
           y="b"
           style={{
-            data: { stroke: "#ADB5BD", strokeWidth: 1, strokeDasharray: "3,3" },
+            data: { stroke: "#1b263b", strokeWidth: 1, strokeDasharray: "3,3" },
           }}
         />
       </VictoryChart>
@@ -148,6 +161,7 @@ export default function BurndownChart({ processedData }) {
         <VictoryAxis tickFormat={(x) => " "} />
         <VictoryArea
           interpolation="natural"
+          style={{ data: { fill: "#778da9" } }}
           data={processedData}
           x="key"
           y="b"
