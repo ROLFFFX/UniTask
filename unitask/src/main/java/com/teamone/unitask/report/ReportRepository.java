@@ -6,6 +6,10 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
+
+/**
+ * The repository class for the Report entity
+ */
 @Repository
 public interface ReportRepository extends JpaRepository<Report, Long> {
 

@@ -8,6 +8,9 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+/**
+ * The service class for the Report controller
+ */
 @Service
 public class ReportService {
 
@@ -17,6 +20,9 @@ public class ReportService {
     @Autowired
     ProjectRepository projectRepository;
 
+    /*
+     * helper method to create a new report;
+     */
     public Report createReport(Report requestReport, String projectTitle) {
 
         if (!projectRepository.existsByProjectTitle(projectTitle)) {
@@ -33,6 +39,9 @@ public class ReportService {
         return curReport;
     }
 
+    /*
+     * helper method to get all report in a project;
+     */
     public List<Report> getReportsByProjectTitle(String projectTitle) {
 
         if (!projectRepository.existsByProjectTitle(projectTitle)) {
@@ -46,6 +55,9 @@ public class ReportService {
         return listReports;
     }
 
+    /*
+     * helper method to edit an existing report;
+     */
     public Report editReport(Long reportId, Report report) {
 
         Report curReport = reportRepository.findById(reportId)
@@ -61,6 +73,9 @@ public class ReportService {
         return curReport;
     }
 
+    /*
+     * helper method to delete a report by its id;
+     */
     public Report deleteReportByReportId(Long reportId) {
 
         Report reportToDelete = reportRepository.findById(reportId)

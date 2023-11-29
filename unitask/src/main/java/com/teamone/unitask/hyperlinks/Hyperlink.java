@@ -16,10 +16,11 @@ import javax.validation.constraints.Size;
 @Table(name = "hyperlink")
 public class Hyperlink {
 
-    /*
+    /**
      * fields
      */
 
+    // hyperlink id, the key of the entity;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "hyperlink_id")
@@ -34,7 +35,7 @@ public class Hyperlink {
     @Size(max = 1000)
     private String url;
 
-    /*
+    /**
      * foreign keys
      */
 
@@ -44,7 +45,7 @@ public class Hyperlink {
     @OnDelete(action = OnDeleteAction.CASCADE)
     private Project projectId;
 
-    /*
+    /**
      * methods; the constructors, and getters and setters for each field
      */
 

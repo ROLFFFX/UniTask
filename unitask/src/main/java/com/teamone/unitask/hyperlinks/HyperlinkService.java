@@ -53,7 +53,7 @@ public class HyperlinkService {
             return null;
         }
 
-        // else, get the project object from database, and get all 
+        // else, get the project object from database, and get all hyperlink objects in the project;
         Project curProject = projectRepository.findByProjectTitle(projectTitle);
         List<Hyperlink> requestListHyperlinks = hyperlinkRepository.getHyperlinksByProjectId(curProject);
 
@@ -62,7 +62,7 @@ public class HyperlinkService {
     }
 
     /*
-     * take the project title as input
+     * take the project title as input;
      */
     public Hyperlink editHyperlinkByHyperlinkId(Long hyperlinkId, Hyperlink newHyperlink) {
 
@@ -70,21 +70,29 @@ public class HyperlinkService {
         Hyperlink curHyperlink = hyperlinkRepository.findById(hyperlinkId).
                 orElseThrow(() -> new ResourceNotFoundException("Hyperlink not found with id: " + hyperlinkId));
 
+        // replace the field values with the new values and save the updated object;
         curHyperlink.setTitle(newHyperlink.getTitle());
         curHyperlink.setUrl(newHyperlink.getUrl());
-
         hyperlinkRepository.save(curHyperlink);
 
+        // return the updated hyperlink object;
         return curHyperlink;
     }
 
+    /*
+     * delete a Hyperlink project;
+     */
     public Hyperlink deleteHyperlinkByHyperlinkId(Long hyperlinkId) {
 
+        // get the Hyperlink object by id from the database, throw the ResourceNotFoundException if the object
+        // is not found;
         Hyperlink hyperlinkToDelete = hyperlinkRepository.findById(hyperlinkId).
                 orElseThrow(() -> new ResourceNotFoundException("Hyperlink not found with id: " + hyperlinkId));
 
+        // delete the object;
         hyperlinkRepository.deleteById(hyperlinkToDelete.getHyperlinkId());
 
+        // return the deleted object;
         return hyperlinkToDelete;
     }
 }

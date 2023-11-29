@@ -9,20 +9,24 @@ import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 import java.time.ZonedDateTime;
 
+/**
+ * The Meeting entity
+ */
 @Entity
 @Table(name = "meeting")
 public class Meeting {
 
-    /**
+    /*
      * fields
      */
 
-
+    // meeting id, the key of the meeting table;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="meeting_id")
     private Long meetingId;
 
+    // meeting title, with default value "New Meeting";
     @NotBlank
     @Column(name="title")
     private String title = "New Meeting";

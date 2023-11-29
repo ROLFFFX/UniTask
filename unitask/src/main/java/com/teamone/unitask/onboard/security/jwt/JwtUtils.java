@@ -16,6 +16,9 @@ import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
 
 
+/**
+ * This class is a component class for the spring security implementation
+ */
 @Component
 public class JwtUtils {
 
@@ -27,6 +30,9 @@ public class JwtUtils {
     @Value("${unitask.app.jwtExpirationMs}")
     private int jwtExpirationMs;
 
+    /*
+     * generate token;
+     */
     public String generateJwtToken(Authentication authentication) {
 
         UserDetailsImpl userPrincipal = (UserDetailsImpl) authentication.getPrincipal();
@@ -49,6 +55,9 @@ public class JwtUtils {
                 .parseClaimsJws(token).getBody().getSubject();
     }
 
+    /*
+     * check if the given token is valid and throw errors to the front end when error is detected;
+     */
     public boolean validateJwtToken(String authToken) {
         try {
             Jwts.parserBuilder().setSigningKey(key()).build().parse(authToken);

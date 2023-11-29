@@ -18,6 +18,10 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+
+/**
+ * The component class for the spring security
+ */
 @Component
 public class AuthEntryPointJwt implements AuthenticationEntryPoint {
 

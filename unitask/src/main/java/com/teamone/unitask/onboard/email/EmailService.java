@@ -1,6 +1,5 @@
 package com.teamone.unitask.onboard.email;
 
-
 import lombok.AllArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -12,6 +11,10 @@ import org.springframework.stereotype.Service;
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
 
+
+/**
+ * Class that implements EmailSender interface
+ */
 @Service
 @AllArgsConstructor
 public class EmailService implements  EmailSender {
@@ -21,6 +24,9 @@ public class EmailService implements  EmailSender {
 
     private final JavaMailSender mailSender;
 
+    /*
+     * method to send email from unitask370@gmail.com;
+     */
     @Override
     @Async
     public void send(String to, String email) {
@@ -38,6 +44,9 @@ public class EmailService implements  EmailSender {
         }
     }
 
+    /*
+     * the email template;
+     */
     public String buildEmail(String name, String link) {
         return "<div style=\"font-family:Helvetica,Arial,sans-serif;font-size:16px;margin:0;color:#0b0c0c\">\n" +
                 "\n" +
