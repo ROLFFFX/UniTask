@@ -8,6 +8,21 @@ Team Member: Alec Berger, Jingyu(Eula) Wang, Sichen Liu, Yuxuan(ROLF) Shi, Yinsh
 
 ---
 
+# Technical Documentation
+Greetings. This is the technical documentation for UniTask Project.
+
+
+## Folder Structure
+UniTask operates on a Decoupled Architecture, with separated Front End and Back End. In this chapter, we will explain where you can locate each file.
+
+### Front End
+The entire **front end folder** lives in the team_one_project at project root. The folder has a traditional React project structure.
+#### public
+#### src
+#### package.json & package-lock.json
+
+---
+
 # Onboarding Process!
 
 ## React.js
