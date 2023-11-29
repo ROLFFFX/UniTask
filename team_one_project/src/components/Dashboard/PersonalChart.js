@@ -1,16 +1,12 @@
 import React, { useState, useEffect } from "react";
-import { VictoryChart, VictoryLine, VictoryScatter } from "victory";
+import {
+  VictoryChart,
+  VictoryLine,
+  VictoryScatter,
+  VictoryAxis,
+} from "victory";
 import { Grid, Typography, Box } from "@mui/material";
 import AdsClickIcon from "@mui/icons-material/AdsClick";
-
-const data = [
-  { x: 0, y: 0 },
-  { x: 1, y: 2 },
-  { x: 2, y: 1 },
-  { x: 3, y: 4 },
-  { x: 4, y: 3 },
-  { x: 5, y: 5 },
-];
 
 const cartesianInterpolations = [
   "basis",
@@ -38,7 +34,8 @@ const InterpolationSelect = ({ currentValue, values, onChange }) => (
   </select>
 );
 
-const PersonalChart = () => {
+const PersonalChart = ({ processedPersonalData }) => {
+  console.log(processedPersonalData);
   const [chartSize, setChartSize] = useState({ width: 0, height: 0 });
   const [interpolation, setInterpolation] = useState("linear");
   const [polar, setPolar] = useState(false);
@@ -54,6 +51,33 @@ const PersonalChart = () => {
     window.addEventListener("resize", calculateSize);
     return () => window.removeEventListener("resize", calculateSize);
   }, []);
+
+  //format data to [x, y] from [date, personalPoints]
+  const mapDataToChartFormat = (data) => {
+    return data.map((item, index) => {
+      return { x: index, y: item.personalPoints, date: item.key };
+    });
+  };
+
+  const chartData = mapDataToChartFormat(processedPersonalData);
+
+  // control displayed tick labels. cut off 2/3 of them and make them evenly distributed
+  const getTickValues = () => {
+    return chartData
+      .filter((_, index) => index % 3 === 0)
+      .map((point) => point.x); // Select every third label
+  };
+  // map them to their corresponding position by index
+  const formatTick = (tick) => {
+    const dataPoint = chartData.find((point) => point.x === tick);
+    return dataPoint
+      ? dataPoint.date.toLocaleDateString("en-US", {
+          month: "short",
+          day: "numeric",
+        })
+      : "";
+  };
+
   return (
     <React.Fragment>
       <Box position="relative">
@@ -129,13 +153,18 @@ const PersonalChart = () => {
               height={chartSize.height * 0.8}
               width={chartSize.width * 0.9}
             >
+              <VictoryAxis
+                tickValues={getTickValues()}
+                tickFormat={formatTick}
+              />
+              <VictoryAxis dependentAxis />
               <VictoryLine
                 interpolation={interpolation}
-                data={data}
+                data={chartData} // Use the processed chart data here
                 style={{ data: { stroke: "#c43a31" } }}
               />
               <VictoryScatter
-                data={data}
+                data={chartData} // Use the processed chart data here
                 size={5}
                 style={{ data: { fill: "#c43a31" } }}
               />
