@@ -248,11 +248,11 @@ const toggleSlotSelection = (day, time) => {
           </button>*/}
           {selected?(
               <button className="button-confirm" onClick={handleGoToMainCalendar}>
-                Schedule New Events / Check Common Availability
+                Check Common Availability / Back To Group Events Schedule
               </button>
           ):(
               <button className="button-confirm" onClick={handleGoToMainCalendar}>
-                Back To Current Group Schedule
+                Back To Group Events Schedule
               </button>
           )}
           <button className="button-delete" onClick={deleteAllUserTimeSlots}>
