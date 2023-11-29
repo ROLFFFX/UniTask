@@ -5,8 +5,15 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 import java.util.Set;
 
+
+/**
+ * The SignupRequest object, working as a wrapper for user sign up information
+ */
 public class SignupRequest {
 
+    /**
+     * fields
+     */
     @NotBlank
     @Size(min = 3, max = 20)
     private String username;
@@ -21,6 +28,11 @@ public class SignupRequest {
     @NotBlank
     @Size(min = 6, max = 40)
     private String password;
+
+
+    /**
+     * getters and setters
+     */
 
     public String getUsername() {
         return username;

@@ -2,6 +2,10 @@ package com.teamone.unitask.onboard.usermodels;
 
 import javax.persistence.*;
 
+
+/**
+ * The Role entity class
+ */
 @Entity
 @Table(name = "roles")
 public class Role {

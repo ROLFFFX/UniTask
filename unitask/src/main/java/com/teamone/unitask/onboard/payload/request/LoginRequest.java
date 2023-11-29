@@ -4,20 +4,15 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 
 
+/**
+ * The LoginRequest object that works as a wrapper for user login information
+ */
 public class LoginRequest {
 
     @NotBlank
     private String email;
     @NotBlank
     private String password;
-
-//    public String getUsername() {
-//        return username;
-//    }
-//
-//    public void setUsername(String username) {
-//        this.username = username;
-//    }
 
 
     public String getEmail() {

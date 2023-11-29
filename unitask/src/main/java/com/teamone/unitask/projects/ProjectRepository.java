@@ -7,6 +7,10 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 import java.util.Optional;
 
+
+/**
+ * The repository for the Project entity
+ */
 @Repository
 public interface ProjectRepository extends JpaRepository<Project, Long> {
 

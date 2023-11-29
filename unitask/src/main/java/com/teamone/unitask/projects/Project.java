@@ -14,6 +14,10 @@ import javax.validation.constraints.Size;
 import java.time.LocalDateTime;
 import java.util.*;
 
+
+/**
+ * The entity class for the Project table
+ */
 @Entity
 @Table(name = "project",
         uniqueConstraints = {

@@ -16,6 +16,10 @@ import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.Set;
 
+
+/**
+ * The task Entity class
+ */
 @Entity
 @Table(name = "task")
 @NoArgsConstructor

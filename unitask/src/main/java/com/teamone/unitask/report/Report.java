@@ -8,6 +8,10 @@ import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 
+
+/**
+ * The entity class for Report table
+ */
 @Entity
 @Table(name = "reports")
 public class Report {
