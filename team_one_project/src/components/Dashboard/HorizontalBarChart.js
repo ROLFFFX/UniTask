@@ -1,5 +1,6 @@
-import { Grid, LinearProgress, Typography, Tooltip } from "@mui/material";
-import React from "react";
+import { Grid, Typography, Tooltip } from "@mui/material";
+import LinearProgress from "@mui/joy/LinearProgress";
+import React, { useState } from "react";
 
 export default function HorizontalBarChart({ progressData }) {
   const total =
@@ -12,6 +13,9 @@ export default function HorizontalBarChart({ progressData }) {
     progressData.progressBarData["Not Started"];
   const doing = progressData.progressBarData["Doing"];
   const done = progressData.progressBarData["Done"];
+  const [hoverTODO, setHoverTODO] = useState(true); // needs 3 hover state
+  const [hoverDOING, setHoverDOING] = useState(true);
+  const [hoverDONE, setHoverDONE] = useState(true);
 
   return (
     <React.Fragment>
@@ -40,10 +44,12 @@ export default function HorizontalBarChart({ progressData }) {
             xs={12}
             height="calc((100vh - 64px) * 0.2 * 0.8 / 3)"
             alignItems="center"
+            onMouseEnter={() => setHoverTODO(false)}
+            onMouseLeave={() => setHoverTODO(true)}
           >
             <Grid
               item
-              xs={2}
+              xs={3}
               style={{
                 display: "flex",
                 justifyContent: "center",
@@ -54,16 +60,18 @@ export default function HorizontalBarChart({ progressData }) {
                 style={{
                   fontFamily: "Inter, sans-serif",
                   fontSize: "13px",
+                  fontWeight: "bold",
                 }}
               >
                 To Do: {((todo / total) * 100).toFixed(2)}%
               </Typography>
             </Grid>
-            <Grid item xs={9}>
+            <Grid item xs={8}>
               <LinearProgress
-                color="inherit"
-                variant="determinate"
+                color="neutral"
+                determinate={hoverTODO}
                 value={(todo / total) * 100}
+                sx={{ "--LinearProgress-thickness": "10px" }}
               />
             </Grid>
           </Grid>
@@ -87,10 +95,12 @@ export default function HorizontalBarChart({ progressData }) {
             xs={12}
             height="calc((100vh - 64px) * 0.2 * 0.8 / 3)"
             alignItems="center"
+            onMouseEnter={() => setHoverDOING(false)}
+            onMouseLeave={() => setHoverDOING(true)}
           >
             <Grid
               item
-              xs={2}
+              xs={3}
               style={{
                 display: "flex",
                 justifyContent: "center",
@@ -101,16 +111,18 @@ export default function HorizontalBarChart({ progressData }) {
                 style={{
                   fontFamily: "Inter, sans-serif",
                   fontSize: "13px",
+                  fontWeight: "bold",
                 }}
               >
                 Doing: {((doing / total) * 100).toFixed(2)}%
               </Typography>
             </Grid>
-            <Grid item xs={9}>
+            <Grid item xs={8}>
               <LinearProgress
-                color="inherit"
-                variant="determinate"
+                color="neutral"
+                determinate={hoverDOING}
                 value={(doing / total) * 100}
+                sx={{ "--LinearProgress-thickness": "10px" }}
               />
             </Grid>
           </Grid>
@@ -134,10 +146,12 @@ export default function HorizontalBarChart({ progressData }) {
             xs={12}
             height="calc((100vh - 64px) * 0.2 * 0.8 / 3)"
             alignItems="center"
+            onMouseEnter={() => setHoverDONE(false)}
+            onMouseLeave={() => setHoverDONE(true)}
           >
             <Grid
               item
-              xs={2}
+              xs={3}
               style={{
                 display: "flex",
                 justifyContent: "center",
@@ -148,16 +162,18 @@ export default function HorizontalBarChart({ progressData }) {
                 style={{
                   fontFamily: "Inter, sans-serif",
                   fontSize: "13px",
+                  fontWeight: "bold",
                 }}
               >
                 Done: {((done / total) * 100).toFixed(2)}%
               </Typography>
             </Grid>
-            <Grid item xs={9}>
+            <Grid item xs={8}>
               <LinearProgress
-                color="inherit"
-                variant="determinate"
+                color="neutral"
+                determinate={hoverDONE}
                 value={(done / total) * 100}
+                sx={{ "--LinearProgress-thickness": "8px" }}
               />
             </Grid>
           </Grid>

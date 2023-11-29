@@ -8,6 +8,7 @@ import { BurndownChart } from "./BurndownChart";
 import ProgressBar from "./ProgressBar";
 import TaskView from "./TaskView";
 import "./TaskList.css";
+import LinearProgress from "@mui/joy/LinearProgress";
 
 export function DashboardContent() {
   /* Hooks Declarations-------------------------------------------------------------------------------------------------------------------- */
@@ -235,7 +236,9 @@ export function DashboardContent() {
   } else {
     return (
       <React.Fragment>
-        <h2>generating content...</h2>
+        <Box display="flex" justifyContent="cneter" alignItems="center">
+          <LinearProgress color="neutral" variant={"soft"} />
+        </Box>
       </React.Fragment>
     );
   }
