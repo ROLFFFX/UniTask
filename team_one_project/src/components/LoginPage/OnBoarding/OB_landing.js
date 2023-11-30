@@ -48,7 +48,12 @@ export function OB_landing() {
     if (activeStep === 0) {
       // axios.post workspace name
       try {
-        if (workspaceName && workspaceName.trim().length > 0) {
+        // validate workspace name
+        if (
+          workspaceName &&
+          workspaceName.trim().length > 0 &&
+          workspaceName[workspaceName.length - 1] !== " "
+        ) {
           const response = await axios.post(
             `${ENDPOINT_URL}projects/createNewWorkspace`,
             {
@@ -62,7 +67,9 @@ export function OB_landing() {
           );
           setActiveStep((prevActiveStep) => prevActiveStep + 1);
         } else {
-          alert("Invalid Input");
+          alert(
+            "Invalid Workspace Name. Name should be valid character or numbers and should not end in whitesapce."
+          );
         }
         // console.log(response.data);
       } catch (error) {
