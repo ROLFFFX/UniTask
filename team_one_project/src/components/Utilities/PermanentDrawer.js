@@ -14,7 +14,6 @@ import ListItemButton from "@mui/material/ListItemButton";
 import ListItemText from "@mui/material/ListItemText";
 import * as React from "react";
 import { useNavigate } from "react-router-dom";
-import LogOutButton from "./LogOutButton";
 import barTheme from "./barTheme";
 
 const drawerWidth = 200;
@@ -38,6 +37,8 @@ export default function PermanentDrawer() {
         return (
           <SettingsApplicationsIcon sx={{ marginLeft: 1, color: "#495057" }} />
         );
+      default:
+        return;
     }
   };
   const sidebar_upper = [
@@ -134,7 +135,7 @@ export default function PermanentDrawer() {
           </List>
           {/* spacer used to align logout button with bottom of drawer */}
           <Box style={{ flexGrow: 1 }} />
-          <LogOutButton></LogOutButton>
+          {/* <LogOutButton></LogOutButton> */}
         </Drawer>
       </Box>
     </ThemeProvider>

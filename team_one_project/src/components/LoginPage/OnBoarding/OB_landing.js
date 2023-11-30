@@ -59,17 +59,13 @@ export function OB_landing() {
             },
           }
         );
-        console.log(response.data);
+        // console.log(response.data);
+        setActiveStep((prevActiveStep) => prevActiveStep + 1);
       } catch (error) {
         alert("Error: This Workspace Name is Already Taken!");
         console.error("There was an error!", error);
       }
     }
-    if (activeStep === 1) {
-      // @todo: axios.post
-      // alert(role);
-    }
-    setActiveStep((prevActiveStep) => prevActiveStep + 1);
   };
 
   const handleBack = () => {
@@ -83,7 +79,7 @@ export function OB_landing() {
   return (
     <React.Fragment>
       <ThemeProvider theme={theme}>
-        <TopSVG />
+        <TopSVG style={{ position: "absolute", zindex: "-1" }} />
         <CssBaseline />
         <AppBar
           position="absolute"
@@ -94,7 +90,12 @@ export function OB_landing() {
             borderBottom: (t) => `1px solid ${t.palette.divider}`,
           }}
         ></AppBar>
-        <Container component="main" maxWidth="sm" sx={{ mt: 2, mb: 4 }}>
+        <Container
+          component="main"
+          maxWidth="sm"
+          sx={{ mt: 2, mb: 4 }}
+          style={{ position: "relative", zIndex: 1 }}
+        >
           <Box
             sx={{
               marginTop: 15,
@@ -213,7 +214,12 @@ export function OB_landing() {
             </React.Fragment>
           </Box>
         </Container>
-        <BottomSVG />
+        <Box>
+          <BottomSVG
+            sx={{ margin: 0, padding: 0 }}
+            style={{ position: "absolute", zindex: "-1" }}
+          />
+        </Box>
       </ThemeProvider>
     </React.Fragment>
   );

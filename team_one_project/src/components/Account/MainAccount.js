@@ -1,7 +1,7 @@
-import React from "react";
-import { Box, Divider, Grid } from "@mui/material";
-import UserProfile from "./UserProfile";
+import { Grid } from "@mui/material";
 import { red } from "@mui/material/colors";
+import React from "react";
+import UserProfile from "./UserProfile";
 
 export function MainAccount() {
   return (

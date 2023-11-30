@@ -4,6 +4,10 @@ import TaskList from "./TaskList";
 import "./TaskList.css";
 import TextField from "@mui/material/TextField";
 import Autocomplete from "@mui/material/Autocomplete";
+import Dropdown from "@mui/joy/Dropdown";
+import Menu from "@mui/joy/Menu";
+import MenuButton from "@mui/joy/MenuButton";
+import MenuItem from "@mui/joy/MenuItem";
 
 const textFieldStyle = {
   "& .MuiInputBase-input": {
@@ -50,6 +54,12 @@ export default function TaskView(props) {
     props.formattedTeamMembers
   );
 
+  const [open, setOpen] = React.useState(false);
+
+  const handleOpenChange = React.useCallback((event, isOpen) => {
+    setOpen(isOpen);
+  }, []);
+
   useEffect(() => {
     if (value) {
       setFilteredMembers(
@@ -78,21 +88,43 @@ export default function TaskView(props) {
             xs={3}
             style={{
               display: "flex",
+              justifyContent: "center",
               alignItems: "center",
-              textAlign: "center",
             }}
             position="relative"
           >
-            <Typography
-              width="100vw"
-              style={{
-                fontFamily: "Inter, sans-serif",
-                fontSize: "18px",
-                fontWeight: "bold",
-              }}
-            >
-              Task Table View
-            </Typography>
+            <Dropdown open={open} onOpenChange={handleOpenChange}>
+              <MenuButton
+                style={{
+                  fontFamily: "Inter, sans-serif",
+                  fontSize: "18px",
+                  fontWeight: "bold",
+                  borderColor: "#6C757D",
+                }}
+              >
+                {props.toggleView}
+              </MenuButton>
+              <Menu>
+                <MenuItem
+                  style={{
+                    fontFamily: "Inter, sans-serif",
+                    fontSize: "14px",
+                  }}
+                  onClick={() => props.onToggleViewChange("Data Visual View")}
+                >
+                  Data Visualization
+                </MenuItem>
+                <MenuItem
+                  style={{
+                    fontFamily: "Inter, sans-serif",
+                    fontSize: "14px",
+                  }}
+                  onClick={() => props.onToggleViewChange("Table Task View")}
+                >
+                  Table Task View
+                </MenuItem>
+              </Menu>
+            </Dropdown>
             <Divider
               orientation="vertical"
               flexItem

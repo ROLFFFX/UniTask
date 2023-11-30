@@ -8,6 +8,64 @@ Team Member: Alec Berger, Jingyu(Eula) Wang, Sichen Liu, Yuxuan(ROLF) Shi, Yinsh
 
 ---
 
+# Technical Documentation
+Greetings. This is the technical documentation for UniTask Project.
+
+
+## Folder Structure
+UniTask operates on a Decoupled Architecture, with separated Front End and Back End. In this chapter, we will explain where you can locate each file.
+
+----
+### Front End
+The entire **front end folder** lives in the team_one_project at project root. The folder has a traditional React project structure. Let's first have a quick runthrough:
+
+----
+#### public
+public folder contains static files and assets.
+	-- index.html : home page of entire front end. Root of front end. Can be ignored.
+	-- manifest.json : information about the project in a JSON file. Can be ignored.
+	
+----
+#### package.json & package-lock.json
+these two files contains information of all dependencies used for the front end of UniTask. **Content of these two files should not be modified**
+
+----
+#### src
+src folder contains the source code of entire front end of UniTask. 
+##### Files:
+--	App.css (file): global css file for styling.
+-- App.test.js (file): simple unit test for the `App` component.
+-- reportWebVitals.js (file): performance testings.
+-- setupTests.js (file): test configurations.
+-- index.js (file): the entry point where the React app is initialized and rendered into the DOM.	
+-- App.js (file): Routers.
+##### Folders:
+-- components: source code for each components, actual meat of front end.
+-- context: context providers.
+-- hooks: custom hooks, mostly are global states.
+-- images: static assets of images, svgs and icons.
+
+## Details in src folder
+Since src folder contains the entire source code for our front end, I will elaborate on the three most important folders.
+
+### hooks
+Hooks folder contains two custom hooks.
+
+-- useAuth.js: ``useAuth`` hook is used everywhere an API call is used. It utilizes context API provided by React to achieve the management of global state. More specifically, it controls the global ``auth`` state which stores the ``userEmail, userJWT``, and some config info such as currently registered workspace.
+
+-- useConfig.js: useConfig is not technically a hook. It stores the ``base endpoint url`` for our back end for both local and deployed version. It exists simply to save the pain for replacing every endpoint url in request calls during deployment.
+
+----
+### context
+context folder contains AuthProvider that handles the authentication and authorization logic.
+
+AuthProvider.js: creates an authentication context for a React application using React's Context API and `react-cookie` for cookie management
+
+----
+### components
+
+---
+
 # Onboarding Process!
 
 ## React.js

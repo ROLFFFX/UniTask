@@ -1,34 +1,45 @@
+import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
+import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
+import { Box, Grid, Typography } from "@mui/material";
 import React from "react";
 import Slider from "react-slick";
-import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import { Button, Box, Typography, Grid } from "@mui/material";
-import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
-import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
-import PlaceHolderImage from "../../images/PlaceHolderImage.png";
+import "slick-carousel/slick/slick.css";
+import Dashboardview from "../../images/Dashboardview.png";
+import Dashboardview2 from "../../images/Dashboardview2.png";
+import Meetingview from "../../images/Meetingview.png";
+import ReportView from "../../images/ReportView.png";
+import Taskboardview from "../../images/Taskboardview.png";
 
 const slideData = [
   {
+    img: Dashboardview,
     title: "Interactive Dashboard",
     content:
       "Stay informed and motivated with our interactive dashboard. Visualize your team's progress in real time, making it easier to track milestones and celebrate achievements.",
   },
   {
+    img: Taskboardview,
+
     title: "Intuitive Task Assignment System",
     content:
       "UniTask elevates task management through its drag-and-drop functionality, allowing users to easily assign and organize tasks. This feature not only enhances visualization but also simplifies task creation. Moreover, UniTask empowers users to deconstruct and manage subtasks effectively, fostering collaborative and efficient team dynamics.",
   },
   {
+    img: Meetingview,
+
     title: "Effortless Meeting Scheduling",
     content:
       "Scheduling meetings is a breeze with UniTask. Our system mirrors the functionality of When2Meet, enabling users to select their availability and letting our algorithm propose optimal meeting times. This hassle-free approach ensures that finding the perfect time for team meetings is effortless and efficient.",
   },
   {
+    img: ReportView,
     title: "Reflective Review Page",
     content:
       "UniTask encourages continuous growth and reflection. Our review page allows users to submit weekly reflections on their progress, promoting self-awareness and team improvement.",
   },
   {
+    img: Dashboardview2,
     title: "Explore More",
     content:
       "UniTask is packed with additional features waiting to be explored. Each component is designed to enhance your project management experience, making it not just effective but enjoyable.",
@@ -90,7 +101,7 @@ export default function SwipeableCarouselWinodw() {
     prevArrow: <PrevArrow />,
   };
 
-  const Slide = ({ title, content }) => {
+  const Slide = ({ title, content, img }) => {
     return (
       <Box>
         <Typography
@@ -113,7 +124,7 @@ export default function SwipeableCarouselWinodw() {
           <Grid container>
             <Grid item xs={6}>
               <img
-                src={PlaceHolderImage}
+                src={img}
                 alt="Placeholder"
                 style={{ width: "100%", height: "100%", objectFit: "cover" }}
               />
@@ -148,7 +159,12 @@ export default function SwipeableCarouselWinodw() {
       >
         <Slider {...settings} style={{ padding: "0 50px" }}>
           {slideData.map((slide, index) => (
-            <Slide key={index} title={slide.title} content={slide.content} />
+            <Slide
+              key={index}
+              title={slide.title}
+              content={slide.content}
+              img={slide.img}
+            />
           ))}
         </Slider>
       </Box>

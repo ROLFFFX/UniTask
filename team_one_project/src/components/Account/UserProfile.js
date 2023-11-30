@@ -3,16 +3,21 @@ import ChangeCircleIcon from "@mui/icons-material/ChangeCircle";
 import EmailIcon from "@mui/icons-material/Email";
 import GroupsIcon from "@mui/icons-material/Groups";
 import PortraitIcon from "@mui/icons-material/Portrait";
-import { Box, Button, Divider, Toolbar, Typography } from "@mui/material";
-import React, { useEffect } from "react";
-import { useNavigate } from "react-router-dom";
-import LogOutButton from "../Utilities/LogOutButton";
-import useAuth from "../../hooks/useAuth";
-import { Backdrop } from "@mui/material";
-import { CircularProgress } from "@mui/material";
-import { useState } from "react";
-import { ENDPOINT_URL } from "../../hooks/useConfig";
+import {
+  Backdrop,
+  Box,
+  Button,
+  CircularProgress,
+  Divider,
+  Toolbar,
+  Typography,
+} from "@mui/material";
 import axios from "axios";
+import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import useAuth from "../../hooks/useAuth";
+import { ENDPOINT_URL } from "../../hooks/useConfig";
+import LogOutButton from "../Utilities/LogOutButton";
 
 export default function UserProfile() {
   const { auth, setAuth } = useAuth();
