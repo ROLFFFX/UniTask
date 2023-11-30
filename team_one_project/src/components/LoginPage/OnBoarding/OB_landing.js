@@ -48,23 +48,29 @@ export function OB_landing() {
     if (activeStep === 0) {
       // axios.post workspace name
       try {
-        const response = await axios.post(
-          `${ENDPOINT_URL}projects/createNewWorkspace`,
-          {
-            projectTitle: workspaceName,
-          },
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
+        if (workspaceName && workspaceName.trim().length > 0) {
+          const response = await axios.post(
+            `${ENDPOINT_URL}projects/createNewWorkspace`,
+            {
+              projectTitle: workspaceName,
             },
-          }
-        );
+            {
+              headers: {
+                Authorization: `Bearer ${token}`,
+              },
+            }
+          );
+          setActiveStep((prevActiveStep) => prevActiveStep + 1);
+        } else {
+          alert("Invalid Input");
+        }
         // console.log(response.data);
-        setActiveStep((prevActiveStep) => prevActiveStep + 1);
       } catch (error) {
         alert("Error: This Workspace Name is Already Taken!");
         console.error("There was an error!", error);
       }
+    } else {
+      setActiveStep((prevActiveStep) => prevActiveStep + 1);
     }
   };
 
