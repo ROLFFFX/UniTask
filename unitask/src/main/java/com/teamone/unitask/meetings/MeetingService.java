@@ -5,31 +5,52 @@ import com.teamone.unitask.projects.ProjectRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
 import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
 
+/**
+ * Service class for managing meeting data. It interacts with repositories to perform CRUD operations on meetings.
+ */
 @Service
 public class MeetingService {
     private final MeetingRepository meetingRepository;
     private final ProjectRepository projectRepository;
+
+    /**
+     * Constructs a MeetingService with necessary dependencies.
+     *
+     * @param meetingRepository Repository for meeting data access.
+     * @param projectRepository Repository for project data access.
+     */
     @Autowired
     public MeetingService(MeetingRepository meetingRepository,
                           ProjectRepository projectRepository)
     {
-        this.projectRepository=projectRepository;
-        this.meetingRepository=meetingRepository;
+        this.projectRepository = projectRepository;
+        this.meetingRepository = meetingRepository;
     }
 
-    //get the whole list of selected meetings of the project
+    /**
+     * Retrieves a list of meetings associated with a given project.
+     *
+     * @param projectTitle The title of the project.
+     * @return A list of meetings related to the specified project.
+     */
     public List<Meeting> get(String projectTitle){
-        List<Meeting> meetings = new ArrayList(projectRepository.findByProjectTitle(projectTitle).getMeetings());
-        return meetings;
+        return new ArrayList<>(projectRepository.findByProjectTitle(projectTitle).getMeetings());
     }
 
-    //save new meeting to the table, at the same time to the meetings list of the project
+    /**
+     * Creates and saves a new meeting for a specified project.
+     *
+     * @param projectTitle Title of the project to which the meeting is to be added.
+     * @param title        Title of the meeting.
+     * @param startTime    Start time of the meeting.
+     * @param endTime      End time of the meeting.
+     * @return The newly created and saved meeting.
+     */
     public Meeting save(String projectTitle, String title, ZonedDateTime startTime, ZonedDateTime endTime){
         Meeting new_meeting = new Meeting(title, startTime, endTime);
         Project thisProj = projectRepository.findByProjectTitle(projectTitle);
@@ -38,7 +59,14 @@ public class MeetingService {
         return new_meeting;
     }
 
-    //delete meeting; respond with the deleted meeting
+    /**
+     * Deletes a specified meeting from a project.
+     *
+     * @param projectTitle Title of the project from which the meeting is to be deleted.
+     * @param meetingId    ID of the meeting to be deleted.
+     * @return The deleted meeting.
+     * @throws NoSuchElementException if the meeting or project is not found.
+     */
     public Meeting delete(String projectTitle, Long meetingId) throws NoSuchElementException {
         Project project = projectRepository.findByProjectTitle(projectTitle);
         Meeting meeting = meetingRepository.findById(meetingId).orElse(null);
@@ -50,7 +78,15 @@ public class MeetingService {
         return meeting;
     }
 
-    //update meeting; respond with updated meeting
+
+    /**
+     * Updates a meeting's details.
+     *
+     * @param projectTitle  Title of the project where the meeting is located.
+     * @param updatedMeeting Meeting object with updated details.
+     * @return The updated meeting.
+     * @throws NoSuchElementException if the meeting or project is not found.
+     */
     public Meeting update(String projectTitle, Meeting updatedMeeting) throws NoSuchElementException {
         Project project = projectRepository.findByProjectTitle(projectTitle);
         Meeting existingMeeting = meetingRepository.findById(updatedMeeting.getMeetingId()).orElse(null);
@@ -63,20 +99,4 @@ public class MeetingService {
         }
         return meetingRepository.save(existingMeeting);
     }
-
 }
-
-
-//    //getAll for test
-//    public List<Meeting> getAll(@RequestBody Meeting meeting){
-//        List<Meeting> meetings = new ArrayList<Meeting>();
-//        meetings = meetingRepository.findAll();
-//        return meetings;
-//    }
-
-//    //get the whole list of selected meetings of the project
-//    public List<Meeting> get(Project project_id){
-//        List<Meeting> meetings = new ArrayList<Meeting>();
-//        meetingRepository.findByProjectId(project_id).forEach(meetings::add);
-//        return meetings;
-//    }
