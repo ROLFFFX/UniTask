@@ -6,6 +6,11 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+/**
+ * Rest Controller for managing meetings within a project.
+ * Supports operations such as retrieving, creating, updating, and deleting meetings.
+ * It is cross-origin enabled for frontend.
+ */
 @CrossOrigin(origins = "http://localhost:3000", maxAge = 3600, allowCredentials = "true")
 @RestController
 @RequestMapping("/api/test")
@@ -13,36 +18,59 @@ public class MeetingController {
 
     private final MeetingService meetingService;
 
-    public MeetingController(MeetingService meetingService){this.meetingService=meetingService;}
+    /**
+     * Constructor for MeetingController.
+     *
+     * @param meetingService The service used for managing meeting data.
+     */
+    public MeetingController(MeetingService meetingService){
+        this.meetingService=meetingService;
+    }
 
-    //the list of events(meetings) selected by the group
+    /**
+     * Retrieves a list of meetings associated with a specific project.
+     *
+     * @param projectTitle The title of the project for which meetings are requested.
+     * @return A response entity containing a list of meetings and the HTTP status.
+     */
     @GetMapping("/meeting/{projectTitle}")
     public ResponseEntity<List<Meeting>> getProjectMeetings(@PathVariable String projectTitle) {
         try {
-          List<Meeting> meetings = meetingService.get(projectTitle);
-          if (meetings.isEmpty()) {
-            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-          }
-          return new ResponseEntity<>(meetings, HttpStatus.OK);
+            List<Meeting> meetings = meetingService.get(projectTitle);
+            if (meetings.isEmpty()) {
+                return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+            }
+            return new ResponseEntity<>(meetings, HttpStatus.OK);
         } catch (Exception e) {
-          return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
-    //post a new event to the table, post it to the specific project
+    /**
+     * Creates a new meeting and adds it to a specific project.
+     *
+     * @param projectTitle The title of the project where the meeting will be added.
+     * @param meeting The meeting object to be created.
+     * @return A response entity containing the created meeting and the HTTP status.
+     */
     @PostMapping("/meeting/{projectTitle}")
     public ResponseEntity<Meeting> createMeeting(@PathVariable String projectTitle,
                                                  @RequestBody Meeting meeting) {
         try {
-          Meeting new_meeting = meetingService.save(projectTitle, meeting.getTitle(),
-          meeting.getStartTime(), meeting.getEndTime());
-          return new ResponseEntity<>(new_meeting, HttpStatus.CREATED);
+            Meeting new_meeting = meetingService.save(projectTitle, meeting.getTitle(), meeting.getStartTime(), meeting.getEndTime());
+            return new ResponseEntity<>(new_meeting, HttpStatus.CREATED);
         } catch (Exception e) {
-          return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
-    //delete event, respond with the deleted meeting
+    /**
+     * Deletes a specific meeting from a project.
+     *
+     * @param projectTitle The title of the project from which the meeting will be deleted.
+     * @param meetingId The ID of the meeting to be deleted.
+     * @return A response entity containing the deleted meeting and the HTTP status.
+     */
     @DeleteMapping("/meeting/{projectTitle}/{meetingId}")
     public ResponseEntity<Meeting> deleteMeeting(@PathVariable String projectTitle,
                                                  @PathVariable Long meetingId) {
@@ -54,8 +82,13 @@ public class MeetingController {
         }
     }
 
-
-    //update event, respond with updated meeting
+    /**
+     * Updates an existing meeting within a project.
+     *
+     * @param projectTitle The title of the project where the meeting is located.
+     * @param meeting The updated meeting information.
+     * @return A response entity containing the updated meeting and the HTTP status.
+     */
     @PutMapping("/meeting/{projectTitle}")
     public ResponseEntity<Meeting> updateMeeting(@PathVariable String projectTitle,
                                                  @RequestBody Meeting meeting) {
@@ -69,5 +102,4 @@ public class MeetingController {
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-
 }
