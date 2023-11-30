@@ -8,8 +8,8 @@ import LoginWithWorkspace from "./LoginWithWorkspace";
 export default function LoginWithGroup() {
   return (
     <React.Fragment>
-      <TopSVG />
-      <Grid container>
+      <TopSVG style={{ position: "absolute", zindex: "-1000" }} />
+      <Grid container style={{ position: "relative", zIndex: 1 }}>
         <Grid item xs={6} padding={3}>
           <CreateYourWorkspace />
         </Grid>
@@ -18,7 +18,7 @@ export default function LoginWithGroup() {
         </Grid>
       </Grid>
 
-      <BottomSVG />
+      <BottomSVG style={{ position: "absolute", zindex: "-1000" }} />
     </React.Fragment>
   );
 }
