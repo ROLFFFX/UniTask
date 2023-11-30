@@ -214,7 +214,7 @@ export function OB_landing() {
             </React.Fragment>
           </Box>
         </Container>
-        <Box border={1}>
+        <Box>
           <BottomSVG
             sx={{ margin: 0, padding: 0 }}
             style={{ position: "absolute", zindex: "-1" }}
