@@ -1,14 +1,14 @@
-import React, { useState, useEffect } from "react";
+import AdsClickIcon from "@mui/icons-material/AdsClick";
+import { Box, Grid, Tooltip, Typography } from "@mui/material";
+import Link from "@mui/material/Link";
+import React, { useEffect, useState } from "react";
 import {
+  VictoryAxis,
   VictoryChart,
   VictoryLine,
   VictoryScatter,
-  VictoryAxis,
 } from "victory";
-import { Grid, Typography, Box, Tooltip } from "@mui/material";
-import AdsClickIcon from "@mui/icons-material/AdsClick";
-import Breadcrumbs from "@mui/material/Breadcrumbs";
-import Link from "@mui/material/Link";
+import EmojiFoodBeverageIcon from "@mui/icons-material/EmojiFoodBeverage";
 
 const cartesianInterpolations = [
   "basis",
@@ -58,12 +58,27 @@ const InterpolationSelect = ({ currentValue, values, onChange }) => {
   );
 };
 
+// processedData = [
+//   {
+//     key: "Fri Dec 01 2023 00:08:55 GMT-0500 (Eastern Standard Time)",
+//     b: 100,
+//   },
+//   {
+//     key: "Fri Nov 30 2023 00:08:55 GMT-0500 (Eastern Standard Time)",
+//     b: 100,
+//   },
+// ];
 const PersonalChart = ({ processedPersonalData }) => {
   const [personalTotal, setPersonalTotal] = useState(0);
-  // console.log(processedPersonalData);
   const [chartSize, setChartSize] = useState({ width: 0, height: 0 });
   const [interpolation, setInterpolation] = useState("linear");
   const [polar, setPolar] = useState(false);
+  const [shouldRenderChart, setshouldRenderChart] = useState(true);
+
+  useEffect(() => {
+    let uniqueBValues = new Set(processedPersonalData.map((data) => data.b));
+    setshouldRenderChart(uniqueBValues.size > 1);
+  }, [processedPersonalData]);
 
   const calculateSize = () => {
     const width = (window.innerWidth - 200) * (8 / 12);
@@ -79,7 +94,7 @@ const PersonalChart = ({ processedPersonalData }) => {
     {
       let total = 0;
       processedPersonalData.map((data) => {
-        total += data.personalPoints;
+        total += data.b;
       });
       setPersonalTotal(total);
     }
@@ -91,115 +106,105 @@ const PersonalChart = ({ processedPersonalData }) => {
     return () => window.removeEventListener("resize", calculateSize);
   }, []);
 
-  //format data to [x, y] from [date, personalPoints]
+  // Format data for the chart: converting 'key' to a readable date format for the X-axis
   const mapDataToChartFormat = (data) => {
     return data.map((item, index) => {
-      return { x: index, y: item.personalPoints, date: item.key };
+      const formattedDate = new Date(item.key).toLocaleDateString("en-US", {
+        month: "short",
+        day: "numeric",
+      });
+      return { x: formattedDate, y: item.b };
     });
   };
 
   const chartData = mapDataToChartFormat(processedPersonalData);
 
-  // control displayed tick labels. cut off 2/3 of them and make them evenly distributed
-  const getTickValues = () => {
-    return chartData
-      .filter((_, index) => index % 3 === 0)
-      .map((point) => point.x); // Select every third label
-  };
-  // map them to their corresponding position by index
-  const formatTick = (tick) => {
-    const dataPoint = chartData.find((point) => point.x === tick);
-    return dataPoint
-      ? dataPoint.date.toLocaleDateString("en-US", {
-          month: "short",
-          day: "numeric",
-        })
-      : "";
+  // Get unique X-axis tick values
+  const getUniqueTickValues = () => {
+    return [...new Set(chartData.map((point) => point.x))];
   };
 
-  return (
-    <React.Fragment>
-      <Box position="relative">
-        <Grid container>
-          {/* Grid for header */}
+  return shouldRenderChart ? (
+    <Box position="relative">
+      <Grid container>
+        {/* Grid for header */}
+        <div
+          style={{
+            position: "absolute",
+            left: "28%",
+            top: "20%",
+            transform: "translate(-50%, -50%)",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            border: 1,
+          }}
+        >
+          <Typography
+            style={{
+              fontFamily: "Inter, sans-serif",
+              fontSize: "14px",
+              fontWeight: "bold",
+              color: "#212529",
+            }}
+            border={1}
+            padding={1}
+            borderRadius={2}
+          >
+            Personal Task Progression
+          </Typography>
+          <AdsClickIcon sx={{ marginLeft: "15px" }} />
+        </div>
+        <Tooltip
+          title={
+            <Typography
+              style={{ fontFamily: "Inter, sans-serif", fontSize: "14px" }}
+            >
+              <strong>Personal Chart Guide:</strong>
+              <br />
+              <br />- <strong>Data Insights:</strong> This graph represents the
+              progression of cumulative tasks achieved over time by you.
+              <br />
+              <br />- <strong>Interpolations:</strong> Choose the interpolation
+              menu above to customize your view. We have 11 options to offer!
+            </Typography>
+          }
+          arrow
+          placement="top"
+          TransitionProps={{ timeout: 600 }}
+        >
           <div
             style={{
               position: "absolute",
               left: "28%",
-              top: "20%",
+              top: "15%",
               transform: "translate(-50%, -50%)",
+              width: "300px", // Diameter of the circle
+              height: "40px", // Diameter of the circle
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              zIndex: 1000,
+            }}
+          ></div>
+        </Tooltip>
+        <Grid item xs={12}>
+          <div
+            style={{
               display: "flex",
               alignItems: "center",
               justifyContent: "center",
               border: 1,
+              zIndex: 1000,
             }}
           >
-            <Typography
-              style={{
-                fontFamily: "Inter, sans-serif",
-                fontSize: "14px",
-                fontWeight: "bold",
-                color: "#212529",
-              }}
-              border={1}
-              padding={1}
-              borderRadius={2}
-            >
-              Personal Task Progression
-            </Typography>
-            <AdsClickIcon sx={{ marginLeft: "15px" }} />
-          </div>
-          <Tooltip
-            title={
-              <Typography
-                style={{ fontFamily: "Inter, sans-serif", fontSize: "14px" }}
-              >
-                <strong>Personal Chart Guide:</strong>
-                <br />
-                <br />- <strong>Data Insights:</strong> This graph represents
-                the progression of cumulative tasks achieved over time by you.
-                <br />
-                <br />- <strong>Interpolations:</strong> Choose the
-                interpolation menu above to customize your view. We have 11
-                options to offer!
-              </Typography>
-            }
-            arrow
-            placement="top"
-            TransitionProps={{ timeout: 600 }}
-          >
-            <div
-              style={{
-                position: "absolute",
-                left: "28%",
-                top: "15%",
-                transform: "translate(-50%, -50%)",
-                width: "300px", // Diameter of the circle
-                height: "40px", // Diameter of the circle
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                zIndex: 1000,
-              }}
-            ></div>
-          </Tooltip>
-          <Grid item xs={12}>
-            <div
-              style={{
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                border: 1,
-                zIndex: 1000,
-              }}
-            >
-              <InterpolationSelect
-                currentValue={interpolation}
-                values={polar ? polarInterpolations : cartesianInterpolations}
-                onChange={setInterpolation}
-              />
-              {/* The commented part below allows to change to polar view, which i have no clue what it does */}
-              {/* <input
+            <InterpolationSelect
+              currentValue={interpolation}
+              values={polar ? polarInterpolations : cartesianInterpolations}
+              onChange={setInterpolation}
+            />
+            {/* The commented part below allows to change to polar view, which i have no clue what it does */}
+            {/* <input
                 type="checkbox"
                 id="polar"
                 checked={polar}
@@ -209,43 +214,69 @@ const PersonalChart = ({ processedPersonalData }) => {
                 }}
                 style={{ marginLeft: 25, marginRight: 5 }}
               /> */}
-              {/* <label htmlFor="polar">polar</label> */}
-            </div>
-          </Grid>
-          {/* Grid for actual graph */}
-          <Grid item xs={12}>
-            <VictoryChart
-              polar={polar}
-              height={chartSize.height * 0.8}
-              width={chartSize.width * 0.9}
-            >
-              {personalTotal > 0 && (
-                <VictoryAxis
-                  tickValues={getTickValues()}
-                  tickFormat={formatTick}
-                />
-              )}
-              {personalTotal > 0 && <VictoryAxis dependentAxis />}
-              <VictoryAxis
-                tickValues={getTickValues()}
-                tickFormat={formatTick}
-              />
-              {/* <VictoryAxis dependentAxis /> */}
-              <VictoryLine
-                interpolation={interpolation}
-                data={chartData} // Use the processed chart data here
-                style={{ data: { stroke: "#c43a31" } }}
-              />
-              <VictoryScatter
-                data={chartData} // Use the processed chart data here
-                size={5}
-                style={{ data: { fill: "#c43a31" } }}
-              />
-            </VictoryChart>
-          </Grid>
+            {/* <label htmlFor="polar">polar</label> */}
+          </div>
         </Grid>
-      </Box>
-    </React.Fragment>
+        {/* Grid for actual graph */}
+        <Grid item xs={12}>
+          <VictoryChart
+            polar={polar}
+            height={chartSize.height * 0.8}
+            width={chartSize.width * 0.9}
+          >
+            {processedPersonalData.length > 1 && (
+              <VictoryAxis
+                tickValues={getUniqueTickValues()}
+                style={{
+                  axis: { stroke: "#756f6a" },
+                  axisLabel: { fontSize: 12 },
+                  ticks: { stroke: "grey", size: 5 },
+                  tickLabels: { fontSize: 9 },
+                }}
+                // optional: customize tickLabelComponent for more formatting
+              />
+            )}
+
+            <VictoryAxis
+              dependentAxis
+              style={{
+                axis: { stroke: "#756f6a" },
+                axisLabel: { fontSize: 12 },
+                ticks: { stroke: "grey", size: 5 },
+                tickLabels: { fontSize: 9 },
+              }}
+            />
+
+            <VictoryLine
+              interpolation={interpolation}
+              data={chartData}
+              style={{ data: { stroke: "#c43a31" } }}
+            />
+            <VictoryScatter
+              data={chartData}
+              size={5}
+              style={{ data: { fill: "#c43a31" } }}
+            />
+          </VictoryChart>
+        </Grid>
+      </Grid>
+    </Box>
+  ) : (
+    <Box
+      style={{
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        height: "calc((100vh - 64px) * 0.45)",
+      }}
+    >
+      <EmojiFoodBeverageIcon color="action" />
+      <Typography
+        style={{ fontFamily: "Inter, sans-serif", marginLeft: "10px" }}
+      >
+        You haven't done any tasks yet...
+      </Typography>
+    </Box>
   );
 };
 

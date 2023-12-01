@@ -12,9 +12,7 @@ import {
 import AdsClickIcon from "@mui/icons-material/AdsClick";
 
 function calculateTrendLineData(processedData) {
-  // Example: Calculate a simple linear trend from start to end
   if (!processedData || processedData.length === 0) return [];
-
   const start = processedData[0];
   const end = processedData[processedData.length - 1];
   return [
@@ -23,9 +21,43 @@ function calculateTrendLineData(processedData) {
   ];
 }
 
+function formatDateToMonthDay(dateStr) {
+  const months = [
+    "Jan",
+    "Feb",
+    "Mar",
+    "Apr",
+    "May",
+    "Jun",
+    "Jul",
+    "Aug",
+    "Sep",
+    "Oct",
+    "Nov",
+    "Dec",
+  ];
+  const date = new Date(dateStr);
+
+  const month = months[date.getUTCMonth()]; // getUTCMonth() returns a zero-based index of the month
+  const day = date.getUTCDate(); // getUTCDate() returns the day of the month
+
+  return `${month} ${day}`;
+}
+
+// processedData = [
+//   {
+//     key: "Fri Dec 01 2023 00:08:55 GMT-0500 (Eastern Standard Time)",
+//     b: 100,
+//   },
+//   {
+//     key: "Fri Nov 30 2023 00:08:55 GMT-0500 (Eastern Standard Time)",
+//     b: 100,
+//   },
+// ];
 export default function BurndownChart({ processedData }) {
   const [chartSize, setChartSize] = useState({ width: 0, height: 0 });
   const [trendLineData, setTrendLineData] = useState([]);
+  const [formattedData, setFormattedData] = useState([]);
 
   useEffect(() => {
     setTrendLineData(calculateTrendLineData(processedData));
@@ -42,16 +74,31 @@ export default function BurndownChart({ processedData }) {
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
-  // console.log(processedData[0]);
-  // console.log(processedData[processedData.length - 1].key);
-
   const [zoomDomain, setZoomDomain] = useState({}); //default brush domain
 
   const handleZoom = (domain) => {
     setZoomDomain(domain);
   };
 
-  return processedData ? (
+  useEffect(() => {
+    const aggregateData = {};
+
+    processedData.forEach((data) => {
+      const formattedKey = formatDateToMonthDay(data.key);
+
+      if (!aggregateData[formattedKey]) {
+        aggregateData[formattedKey] = { key: formattedKey, b: 0 };
+      }
+      aggregateData[formattedKey].b += data.b;
+    });
+
+    setFormattedData(Object.values(aggregateData));
+    setTrendLineData(calculateTrendLineData(Object.values(aggregateData)));
+  }, [processedData]);
+
+  const shouldRenderYAxis = formattedData.length > 1;
+
+  return formattedData ? (
     <Box style={{ position: "relative" }}>
       <div
         style={{
@@ -137,14 +184,36 @@ export default function BurndownChart({ processedData }) {
           />
         }
       >
+        <VictoryAxis
+          tickFormat={(x) => x}
+          style={{
+            axis: { stroke: "#756f6a" },
+            axisLabel: { fontSize: 12 },
+            ticks: { stroke: "grey", size: 5 },
+            tickLabels: { fontSize: 9 },
+          }}
+        />
+        {shouldRenderYAxis && (
+          <VictoryAxis
+            dependentAxis
+            tickFormat={(b) => `${b}`}
+            style={{
+              axis: { stroke: "#756f6a" },
+              axisLabel: { fontSize: 12 },
+              ticks: { stroke: "grey", size: 5 },
+              tickLabels: { fontSize: 9 },
+            }}
+          />
+        )}
         <VictoryArea
           standalone={true}
           interpolation="natural"
           style={{ data: { fill: "#778da9" } }}
-          data={processedData}
+          data={formattedData}
           x="key"
           y="b"
         />
+
         <VictoryLine
           data={trendLineData}
           x="key"
@@ -170,7 +239,7 @@ export default function BurndownChart({ processedData }) {
         <VictoryArea
           interpolation="natural"
           style={{ data: { fill: "#778da9" } }}
-          data={processedData}
+          data={formattedData}
           x="key"
           y="b"
         />

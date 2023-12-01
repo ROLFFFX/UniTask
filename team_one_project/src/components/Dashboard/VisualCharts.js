@@ -1,44 +1,56 @@
 import { Divider, Grid } from "@mui/material";
 import React, { useEffect, useState } from "react";
+import useAuth from "../../hooks/useAuth";
 import BurndownChart from "./BurndownChart";
 import PersonalChart from "./PersonalChart";
-import useAuth from "../../hooks/useAuth";
 
 // process task data list to convert it into a data set that burndownchart.js accepts. key be timestamp, value be accumulated task points achieved.
 function processTaskData(tasks, currentDateStr, creationDateStr) {
   const creationDate = new Date(creationDateStr);
   const currentDate = new Date(currentDateStr);
-  const oneDay = 24 * 60 * 60 * 1000; // milliseconds in a day
-  const totalDays = Math.ceil((currentDate - creationDate) / oneDay);
-  const intervalDays = 3;
-  const numberOfIntervals = Math.ceil(totalDays / intervalDays);
-  let intervals = [];
-  for (let i = 0; i < numberOfIntervals; i++) {
-    intervals.push({
-      key: new Date(creationDate.getTime() + i * intervalDays * oneDay),
-      b: 0,
+
+  // Add the first dummy data: 3 days before creation date
+  const threeDaysBeforeCreation = new Date(
+    creationDate.getTime() - 3 * 24 * 60 * 60 * 1000
+  );
+  const result = [{ key: threeDaysBeforeCreation.toISOString(), b: 0 }];
+
+  // Filter tasks by status 'Done' and sort them by their expected completion time
+  const filteredAndSortedTasks = tasks
+    .filter((task) => task.status === "Done")
+    .sort(
+      (a, b) =>
+        new Date(a.expectedCompleteTime) - new Date(b.expectedCompleteTime)
+    );
+
+  let totalTaskPoints = 0;
+  filteredAndSortedTasks.forEach((task) => {
+    totalTaskPoints += task.taskPoints;
+    result.push({
+      key: new Date(task.expectedCompleteTime).toISOString(),
+      b: totalTaskPoints,
+    });
+  });
+
+  // Add the second dummy data: 3 days after the last task's due date, if there are tasks
+  if (filteredAndSortedTasks.length > 0) {
+    const lastTaskDate = new Date(
+      filteredAndSortedTasks[
+        filteredAndSortedTasks.length - 1
+      ].expectedCompleteTime
+    );
+    const threeDaysAfterLastTask = new Date(
+      lastTaskDate.getTime() + 3 * 24 * 60 * 60 * 1000
+    );
+    result.push({
+      key: threeDaysAfterLastTask.toISOString(),
+      b: totalTaskPoints,
     });
   }
-  tasks.forEach((task) => {
-    if (task.status === "Done") {
-      const taskCompleteTime = new Date(task.expectedCompleteTime);
-      if (taskCompleteTime >= creationDate && taskCompleteTime <= currentDate) {
-        const intervalIndex = Math.floor(
-          (taskCompleteTime - creationDate) / (intervalDays * oneDay)
-        );
-        // Add task points to all subsequent intervals
-        for (let j = intervalIndex; j < intervals.length; j++) {
-          intervals[j].b += task.taskPoints;
-        }
-      }
-    }
-  });
-  // Adjust the last interval's key to be the current date
-  if (intervals.length > 0) {
-    intervals[intervals.length - 1].key = currentDate;
-  }
-  return intervals;
+
+  return result;
 }
+
 // this function processes personal task data. similar to processtaskdata, this function will only look at task corresponds to curent user
 function processPersonalTaskData(
   tasks,
@@ -53,6 +65,7 @@ function processPersonalTaskData(
   const intervalDays = 3;
   const numberOfIntervals = Math.ceil(totalDays / intervalDays);
   let intervals = [];
+
   for (let i = 0; i < numberOfIntervals; i++) {
     intervals.push({
       key: new Date(creationDate.getTime() + i * intervalDays * oneDay),
@@ -65,7 +78,10 @@ function processPersonalTaskData(
       task.taskMemberAssigned.email === currentUserEmail
     ) {
       const taskCompleteTime = new Date(task.expectedCompleteTime);
-      if (taskCompleteTime >= creationDate && taskCompleteTime <= currentDate) {
+      if (
+        taskCompleteTime >= creationDate &&
+        taskCompleteTime <= currentDate + 60 * 60 * 24
+      ) {
         const intervalIndex = Math.floor(
           (taskCompleteTime - creationDate) / (intervalDays * oneDay)
         );
@@ -77,10 +93,66 @@ function processPersonalTaskData(
     }
   });
   // Adjust the last interval's key to be the current date
-  if (intervals.length > 0) {
-    intervals[intervals.length - 1].key = currentDate;
-  }
+  // if (intervals.length > 0) {
+  //   intervals[intervals.length - 1].key = currentDate;
+  // }
+  intervals[0].b = 0;
   return intervals;
+}
+
+function processPersonalTaskData_2(
+  tasks,
+  currentDateStr,
+  creationDateStr,
+  currentUserEmail
+) {
+  const creationDate = new Date(creationDateStr);
+  const currentDate = new Date(currentDateStr);
+
+  // Add the first dummy data: 3 days before creation date
+  const threeDaysBeforeCreation = new Date(
+    creationDate.getTime() - 3 * 24 * 60 * 60 * 1000
+  );
+  const result = [{ key: threeDaysBeforeCreation.toISOString(), b: 0 }];
+
+  // Filter tasks by status 'Done' and user email, then sort by their expected completion time
+  const filteredAndSortedTasks = tasks
+    .filter(
+      (task) =>
+        task.status === "Done" &&
+        task.taskMemberAssigned.email === currentUserEmail
+    )
+    .sort(
+      (a, b) =>
+        new Date(a.expectedCompleteTime) - new Date(b.expectedCompleteTime)
+    );
+
+  let totalTaskPoints = 0;
+  filteredAndSortedTasks.forEach((task) => {
+    totalTaskPoints += task.taskPoints;
+    result.push({
+      key: new Date(task.expectedCompleteTime).toISOString(),
+      b: totalTaskPoints,
+    });
+  });
+
+  // Add the second dummy data: 3 days after the last task's due date, if there are tasks
+  if (filteredAndSortedTasks.length > 0) {
+    const lastTaskDate = new Date(
+      filteredAndSortedTasks[
+        filteredAndSortedTasks.length - 1
+      ].expectedCompleteTime
+    );
+    const threeDaysAfterLastTask = new Date(
+      lastTaskDate.getTime() + 3 * 24 * 60 * 60 * 1000
+    );
+    result.push({
+      key: threeDaysAfterLastTask.toISOString(),
+      b: totalTaskPoints,
+    });
+  }
+
+  return result;
 }
 
 export default function VisualCharts(props) {
@@ -115,7 +187,7 @@ export default function VisualCharts(props) {
       );
       setProcessedData(processingData);
       // process personal data
-      const personalData = processPersonalTaskData(
+      const personalData = processPersonalTaskData_2(
         formattedTasks,
         currentTime,
         creationTime,

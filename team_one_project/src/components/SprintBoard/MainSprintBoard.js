@@ -1,4 +1,4 @@
-import { Box, Button, Typography, Grid } from "@mui/material";
+import { Box, Button, Typography, Grid, Tooltip } from "@mui/material";
 import Backdrop from "@mui/material/Backdrop";
 import CircularProgress from "@mui/material/CircularProgress";
 import Popper from "@mui/material/Popper";
@@ -26,6 +26,7 @@ export function MainSprintBoard() {
   const [assigneeInput, setAssigneeInput] = useState(""); // state to store assignee input for adding new task
   const [dueDateInput, setDueDateInput] = useState(""); // state to store expected complete time for adding new task
   const [taskPointsInput, setTaskPointsInput] = useState(1); // state to store taskpoints for adding new task
+  const [openSpotlight, setOpenSpotlight] = useState(false);
   /* End of useState Declarations-------------------------------------------------------------------------------------------------------------------- */
 
   /* Requests declarations-------------------------------------------------------------------------------------------------------------------- */
@@ -78,11 +79,6 @@ export function MainSprintBoard() {
   const unpackTaskData = (backendTasks) => {
     const reformattedTasks = backendTasks.flatMap((taskList) => {
       const [mainTask, ...subTasks] = taskList;
-      // console.log("Unpacking..");
-      // // console.log(mainTask);
-      // console.log(subTasks);
-      // console.log("Unpacking..done");
-
       return {
         taskID: mainTask.taskId,
         title: mainTask.title,
@@ -139,7 +135,7 @@ export function MainSprintBoard() {
       .then((response) => {
         // refetch all tasks and rerender page
         fetchAllTasks();
-        console.log("Task created:", response.data); // response.data contains the created task info.
+        console.log("Task created."); // response.data contains the created task info.
       })
       .catch((error) => {
         console.error("Error creating task:", error);
@@ -162,7 +158,7 @@ export function MainSprintBoard() {
       const response = await axios.put(url, payload, {
         headers: { Authorization: `Bearer ${auth.user.userJWT}` },
       });
-      console.log("Task status updated:", response.data);
+      console.log("Task status updated.");
       fetchAllTasks(); // Refresh the task list after updating
     } catch (error) {
       console.error("Error updating task status:", error);
@@ -217,6 +213,7 @@ export function MainSprintBoard() {
   const formatDate = (date) => {
     if (!date) return null;
     const d = new Date(date);
+    d.setDate(d.getDate() + 1);
     let month = "" + (d.getMonth() + 1);
     let day = "" + d.getDate();
     let year = d.getFullYear();
@@ -282,6 +279,9 @@ export function MainSprintBoard() {
     //refetch team member, specifically used after success invitation
     fetchTeamMembers(); // Re-fetch team members
   };
+  useEffect(() => {
+    setOpenSpotlight(tasks.length === 0);
+  }, [tasks]);
   /* End of useEffect Declarations-------------------------------------------------------------------------------------------------------------------- */
 
   if (backdropOpen || !unformattedTasks || !tasks) {
@@ -312,13 +312,36 @@ export function MainSprintBoard() {
               style={{ fontFamily: "Inter, sans-serif" }}
             >
               Tasks
-              <img
-                id="addTaskButton"
-                aria-describedby={"createTaskMenu"}
-                onClick={openTaskPopup}
-                src={add_button_favicon}
-                alt=""
-              ></img>
+              {/* Add new task button */}
+              {/* Spotlight effect if tasks.length is 0, indicating that there is no task. */}
+              <Tooltip
+                title={
+                  <Typography
+                    style={{
+                      fontFamily: "Inter, sans-serif",
+                      fontSize: "14px",
+                    }}
+                  >
+                    Welcome, new user!
+                    <br />
+                    Please click here to create your first Task.
+                  </Typography>
+                }
+                arrow
+                placement="bottom"
+                TransitionProps={{ timeout: 600 }}
+                open={openSpotlight}
+                onClose={() => setOpenSpotlight(false)}
+              >
+                <img
+                  id="addTaskButton"
+                  aria-describedby={"createTaskMenu"}
+                  onClick={openTaskPopup}
+                  src={add_button_favicon}
+                  onMouseEnter={() => setOpenSpotlight(false)}
+                  alt=""
+                ></img>
+              </Tooltip>
             </div>
             <Popper id={"createTaskMenu"} open={open} anchorEl={anchorEl}>
               <Box
