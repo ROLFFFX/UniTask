@@ -2,15 +2,26 @@
 
   .calendar {
     width: 90%;
+    height: 100%;
     border: 1px solid #eee;
     padding: 20px;
     background-color: 	whitesmoke;
   }
 
+  .upper{
+    display: flex;
+    flex-direction: row;
+    margin-bottom: 30px;
+  }
+
+  .lower{
+    display: flex;
+    flex-direction: column;
+  }
+
   .grid {
     display: grid;
     grid-template-columns: 60px repeat(7, 1fr);
-    max-height: 400px;
     overflow-y: auto;
   }
 
