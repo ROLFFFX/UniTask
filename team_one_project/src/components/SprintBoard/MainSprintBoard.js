@@ -24,7 +24,8 @@ export function MainSprintBoard() {
   const [tasks, setTasks] = useState([]); // state to store all tasks fetched from GET
   const [taskNameInput, setTaskNameInput] = useState(""); // state to store task name input for adding new task
   const [assigneeInput, setAssigneeInput] = useState(""); // state to store assignee input for adding new task
-  const [dueDateInput, setDueDateInput] = useState(""); // state to store expected complete time for adding new task
+  const [expectedCompleteTimeInput, setexpectedCompleteTimeInput] =
+    useState(""); // state to store expected complete time for adding new task
   const [taskPointsInput, setTaskPointsInput] = useState(1); // state to store taskpoints for adding new task
   const [openSpotlight, setOpenSpotlight] = useState(false);
   /* End of useState Declarations-------------------------------------------------------------------------------------------------------------------- */
@@ -87,7 +88,7 @@ export function MainSprintBoard() {
           mainTask.taskMemberAssigned && mainTask.taskMemberAssigned.username
             ? mainTask.taskMemberAssigned.username
             : "Unassigned",
-        dueDate: mainTask.expectedCompleteTime
+        expectedCompleteTime: mainTask.expectedCompleteTime
           ? mainTask.expectedCompleteTime.split("T")[0] //Extract only the Date part, excluding time in day
           : null,
         status: mainTask.status,
@@ -99,7 +100,7 @@ export function MainSprintBoard() {
             subTask.taskMemberAssigned && subTask.taskMemberAssigned.username
               ? subTask.taskMemberAssigned.username
               : "Unassigned",
-          dueDate: subTask.expectedCompleteTime,
+          expectedCompleteTime: subTask.expectedCompleteTime,
           status: subTask.status,
           taskPoints: subTask.taskPoints,
         })),
@@ -112,7 +113,7 @@ export function MainSprintBoard() {
   const createTask = (taskData) => {
     setBackdropOpen(true); //display loading page
     // Step 1: Format the request body to be sent
-    let dateObject = new Date(taskData.dueDate);
+    let dateObject = new Date(taskData.expectedCompleteTime);
     let isoDateString = dateObject ? dateObject.toISOString() : null;
     const requestBody = {
       title: taskData.title,
@@ -146,7 +147,7 @@ export function MainSprintBoard() {
   // PUT Method for updating Task Status
   const updateTaskStatus = async (task, newStatus) => {
     const url = `${ENDPOINT_URL}tasks/updateTask?taskId=${task.taskID}&username=null`; // Adjust the URL as needed
-    const formattedDate = formatDate(task.dueDate); // Format the date
+    const formattedDate = formatDate(task.expectedCompleteTime); // Format the date
     const payload = {
       title: task.title,
       status: newStatus,
@@ -165,19 +166,6 @@ export function MainSprintBoard() {
     }
   };
 
-  // DELETE Method for Delete Given Task
-  const deleteTask = (taskId) => {
-    const updatedTasks = tasks.filter((task) => task.id !== taskId);
-    setTasks(updatedTasks);
-  };
-
-  // PUT Method for Updating Task Info
-  const editTask = (newTaskData) => {
-    const updatedTasks = tasks.map((task) =>
-      task.id === newTaskData.id ? newTaskData : task
-    );
-    setTasks(updatedTasks);
-  };
   /* End of request declarations-------------------------------------------------------------------------------------------------------------------- */
 
   /* Other Helper Functions-------------------------------------------------------------------------------------------------------------------- */
@@ -193,7 +181,7 @@ export function MainSprintBoard() {
     const taskData = {
       title: taskNameInput.valueOf(),
       assignee: assigneeInput.valueOf(),
-      dueDate: dueDateInput.valueOf(),
+      expectedCompleteTime: expectedCompleteTimeInput.valueOf(),
       status: "Not Started",
       taskPoints: taskPointsInput.valueOf(),
       //parentTaskID: null, // TODO: set parent ID if applicable
@@ -205,7 +193,7 @@ export function MainSprintBoard() {
     setTaskNameInput("");
     setTaskPointsInput(1);
     setAssigneeInput("Unassigned");
-    setDueDateInput("");
+    setexpectedCompleteTimeInput("");
     // }
   };
 
@@ -402,9 +390,9 @@ export function MainSprintBoard() {
                 <span>Due date: </span>
                 <input
                   type="date"
-                  id="dueDateInput"
-                  value={dueDateInput}
-                  onChange={(e) => setDueDateInput(e.target.value)}
+                  id="expectedCompleteTimeInput"
+                  value={expectedCompleteTimeInput}
+                  onChange={(e) => setexpectedCompleteTimeInput(e.target.value)}
                   style={{
                     fontFamily: "Inter, sans-serif",
                     marginLeft: "10px",
@@ -441,7 +429,7 @@ export function MainSprintBoard() {
                         disabled={
                           !taskNameInput ||
                           !assigneeInput ||
-                          !dueDateInput ||
+                          !expectedCompleteTimeInput ||
                           !taskPointsInput
                         }
                       >
@@ -487,11 +475,10 @@ export function MainSprintBoard() {
                 )
                 .map((task) => (
                   <Task
-                    key={task.taskId} // Make sure this is the correct unique identifier
+                    key={task.taskID} // Make sure this is the correct unique identifier
                     taskData={task}
-                    onDelete={deleteTask}
-                    onEdit={editTask}
                     refreshTasks={fetchAllTasks} // pass down prop to control rerender of tasks
+                    users={users}
                   />
                 ))}
             </div>
@@ -514,9 +501,8 @@ export function MainSprintBoard() {
                   <Task
                     key={task.taskID}
                     taskData={task}
-                    onDelete={deleteTask}
-                    onEdit={editTask}
                     refreshTasks={fetchAllTasks} // pass down prop to control rerender of tasks
+                    users={users}
                   />
                 ))}
             </div>
@@ -539,9 +525,8 @@ export function MainSprintBoard() {
                   <Task
                     key={task.taskID}
                     taskData={task}
-                    onDelete={deleteTask}
-                    onEdit={editTask}
                     refreshTasks={fetchAllTasks} // pass down prop to control rerender of tasks
+                    users={users}
                   />
                 ))}
             </div>
@@ -564,9 +549,8 @@ export function MainSprintBoard() {
                   <Task
                     key={task.taskID}
                     taskData={task}
-                    onDelete={deleteTask}
-                    onEdit={editTask}
                     refreshTasks={fetchAllTasks} // pass down prop to control rerender of tasks
+                    users={users}
                   />
                 ))}
             </div>
