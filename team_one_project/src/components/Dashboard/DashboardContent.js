@@ -18,6 +18,7 @@ import TaskView from "./TaskView";
 import "./TaskList.css";
 import LinearProgress from "@mui/joy/LinearProgress";
 import DataVisualization from "./DataVisualization";
+import { useNavigate } from "react-router-dom";
 
 export function DashboardContent() {
   /* Hooks Declarations-------------------------------------------------------------------------------------------------------------------- */
@@ -30,6 +31,8 @@ export function DashboardContent() {
   const [allTasks, setAllTasks] = React.useState();
   const [toggleView, setToggleView] = React.useState("Data Visual View");
   const [creationTime, setCreationTime] = React.useState();
+  const navigate = useNavigate();
+
   /* End of Hooks Declarations-------------------------------------------------------------------------------------------------------------------- */
 
   /* Requests Declarations-------------------------------------------------------------------------------------------------------------------- */
@@ -162,6 +165,10 @@ export function DashboardContent() {
     setToggleView(newView); // Assuming setToggleView is your state setter
   };
 
+  // check if an object is an empty list
+  function isEmptyList(obj) {
+    return Array.isArray(obj) && obj.length === 0;
+  }
   /* End of Helper Functions Declarations-------------------------------------------------------------------------------------------------------------------- */
 
   /* useEffect Declarations-------------------------------------------------------------------------------------------------------------------- */
@@ -173,15 +180,53 @@ export function DashboardContent() {
     fetchWorkspaceCreationTime();
   }, []);
 
-  // @ todo: part inside this if statement is rendered after all data are fetched.
-  // @ todo: if not, render backdrop
-  if (TaskDistributionData && ProgressBarData && formattedTeamMembers) {
-    // console.log("Data Fetched: ");
-    // console.log(TaskDistributionData, ProgressBarData);
-    // console.log(formattedTeamMembers);
-  }
-
   /* End of useEffect Declarations-------------------------------------------------------------------------------------------------------------------- */
+  if (isEmptyList(allTasks)) {
+    return (
+      <React.Fragment>
+        <Grid container>
+          <Grid item xs={12}>
+            <Box
+              display="flex"
+              justifyContent="center"
+              alignItems="end"
+              height="calc((100vh - 64px)/2)"
+            >
+              <Typography
+                style={{
+                  fontFamily: "Inter, sans-serif",
+                  fontSize: "20px",
+                }}
+                marginBottom={3}
+              >
+                Dashboard is currently unavailable, please come back after you
+                create your first task!
+              </Typography>
+            </Box>
+          </Grid>
+          <Grid item xs={12}>
+            <Box
+              display="flex"
+              justifyContent="center"
+              alignItems="start"
+              height="calc((100vh - 64px)/2)"
+              mt={4}
+            >
+              <Button
+                variant="outlined"
+                color="inherit"
+                onClick={() => {
+                  navigate("/sprintboard");
+                }}
+              >
+                Create My First Task
+              </Button>
+            </Box>
+          </Grid>
+        </Grid>
+      </React.Fragment>
+    );
+  }
   if (
     TaskDistributionData &&
     ProgressBarData &&

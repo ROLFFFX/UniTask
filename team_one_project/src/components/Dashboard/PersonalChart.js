@@ -59,7 +59,8 @@ const InterpolationSelect = ({ currentValue, values, onChange }) => {
 };
 
 const PersonalChart = ({ processedPersonalData }) => {
-  console.log(processedPersonalData);
+  const [personalTotal, setPersonalTotal] = useState(0);
+  // console.log(processedPersonalData);
   const [chartSize, setChartSize] = useState({ width: 0, height: 0 });
   const [interpolation, setInterpolation] = useState("linear");
   const [polar, setPolar] = useState(false);
@@ -74,6 +75,15 @@ const PersonalChart = ({ processedPersonalData }) => {
     setInterpolation(value);
   };
 
+  useEffect(() => {
+    {
+      let total = 0;
+      processedPersonalData.map((data) => {
+        total += data.personalPoints;
+      });
+      setPersonalTotal(total);
+    }
+  }, [processedPersonalData]);
   useEffect(() => {
     calculateSize();
     window.addEventListener("resize", calculateSize);
@@ -168,8 +178,6 @@ const PersonalChart = ({ processedPersonalData }) => {
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "center",
-                // border: 1,
-                // color: "red",
                 zIndex: 1000,
               }}
             ></div>
@@ -210,11 +218,18 @@ const PersonalChart = ({ processedPersonalData }) => {
               height={chartSize.height * 0.8}
               width={chartSize.width * 0.9}
             >
+              {personalTotal > 0 && (
+                <VictoryAxis
+                  tickValues={getTickValues()}
+                  tickFormat={formatTick}
+                />
+              )}
+              {personalTotal > 0 && <VictoryAxis dependentAxis />}
               <VictoryAxis
                 tickValues={getTickValues()}
                 tickFormat={formatTick}
               />
-              <VictoryAxis dependentAxis />
+              {/* <VictoryAxis dependentAxis /> */}
               <VictoryLine
                 interpolation={interpolation}
                 data={chartData} // Use the processed chart data here
