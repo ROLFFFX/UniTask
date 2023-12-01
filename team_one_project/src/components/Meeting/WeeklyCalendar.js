@@ -3,21 +3,21 @@ import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 import ListItemText from "@mui/material/ListItemText";
 import ListSubheader from "@mui/material/ListSubheader";
-import ListItemButton from "@mui/material/ListItemButton";
 import Popover from "@mui/material/Popover";
-import Typography from "@mui/material/Typography";
-import Paper from "@mui/material/Paper";
 import Button from "@mui/material/Button";
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import DialogContentText from '@mui/material/DialogContentText';
+import DialogTitle from '@mui/material/DialogTitle';
+
 import {
   DayPilot,
-  DayPilotCalendar,
-  DayPilotNavigator,
-  DayPilotScheduler,
+  DayPilotCalendar
 } from "@daypilot/daypilot-lite-react";
 import "./WeeklyCalendar.css";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-//import { zonedTimeToUtc, utcToZonedTime, format } from 'date-fns-tz';
 import useAuth from "../../hooks/useAuth";
 import { ENDPOINT_URL } from "../../hooks/useConfig";
 
@@ -42,7 +42,25 @@ const styles = {
 };
 
 const WeeklyCalendar = () => {
+
   const { auth } = useAuth();
+
+  //TODO
+  const [guide, setGuide] = React.useState(false);
+  const [userName, setUserName] = React.useState("");
+
+  const handleGuideOpen = () => {
+    setGuide(true);
+  };
+
+  const handleGuideClose = () => {
+    setGuide(false);
+    //set of users that has opened this page on this browser
+    let thisBrUserSet = new Set(JSON.parse(localStorage.getItem("notFirstTime")) || []); // Fallback to empty array if null
+    thisBrUserSet = new Set([...thisBrUserSet, userName]);
+    console.log("appended notFirstTime user set", thisBrUserSet)
+    localStorage.setItem("notFirstTime", JSON.stringify(Array.from(thisBrUserSet)));
+  };
 
   const projectTitle = auth.selectedWorkspace;
 
@@ -75,6 +93,22 @@ const WeeklyCalendar = () => {
     }
   };
 
+  const fetchUserName = async () => {
+    try {
+      const response = await axios.get(`${ENDPOINT_URL}users/getUsername`, {
+        headers: {
+          Authorization: `Bearer ${auth.user.userJWT}`,
+        },
+      });
+      setUserName(response.data);
+      const userSet = new Set(JSON.parse(localStorage.getItem('notFirstTime') || '[]'));
+      console.log("notFirstTime user set", userSet);
+      setGuide(!userSet.has(response.data));
+    } catch (error) {
+      console.error("Error fetching username:", error);
+    }
+  };
+
   const [membersList, setMembersList] = useState([]);
   //get list of members who has submitted their available times
   const fetchSubmittedMembers = async () => {
@@ -91,7 +125,7 @@ const WeeklyCalendar = () => {
       if (response.data.length > 0) {
         setMembersList(response.data);
       }
-      console.log(response.data);
+      console.log("members who has submitted availability", response.data);
     } catch (e) {
       console.error("Error Fetching Members Who Has Submitted Timeslots:", e);
     }
@@ -128,7 +162,6 @@ const WeeklyCalendar = () => {
 
   //(MEETING) Get current meetings
   const fetchMeetings = async () => {
-    console.log("fetchMeetings");
     try {
       const response = await axios.get(
         `${ENDPOINT_URL}api/test/meeting/${projectTitle}`,
@@ -428,33 +461,6 @@ const WeeklyCalendar = () => {
     }
   };
 
-  //TODO: convert time slots to 30 mins duration
-  const convertTo30MinSlots = (meetings) => {
-    const slots = [];
-
-    meetings.forEach((meeting) => {
-      let currentStart = new Date(meeting.startTime);
-      let end = new Date(meeting.endTime);
-
-      while (currentStart < end) {
-        let currentEnd = new Date(currentStart.getTime() + 30 * 60000); // 30 minutes later
-
-        if (currentEnd > end) {
-          currentEnd = new Date(end); // Adjust if the last slot exceeds the original end time
-        }
-
-        slots.push({
-          start: currentStart.toISOString(),
-          end: currentEnd.toISOString(),
-        });
-
-        currentStart = new Date(currentEnd); // Move to the next slot
-      }
-    });
-
-    return slots;
-  };
-
   //get time difference between the ISO string and the local time
   const getTimeZoneOffsetInHours = () => {
     console.log("get time difference");
@@ -513,61 +519,6 @@ const WeeklyCalendar = () => {
         cssClass: "calendar_black_event_inner",
         //disallow dragging the events
       };
-    });
-  };
-
-  //TODO: (COMBINE) Function to check if two time periods overlap
-  const doTimesOverlap = (start1, end1, start2, end2) => {
-    return start1 < end2 && start2 < end1;
-  };
-
-  //TODO: (COMBINE) Function to filter out available slots that conflict with meetings
-  const filterConflictingSlots = (availableSlots, meetings) => {
-    return availableSlots.filter((availableSlot) => {
-      const availableStart = new Date(availableSlot.start);
-      const availableEnd = new Date(availableSlot.end);
-
-      // Check if this slot overlaps with any meeting
-      return !meetings.some((meeting) => {
-        const meetingStart = new Date(meeting.start);
-        const meetingEnd = new Date(meeting.end);
-        return doTimesOverlap(
-          availableStart,
-          availableEnd,
-          meetingStart,
-          meetingEnd
-        );
-      });
-    });
-  };
-
-  //TODO: Buttons for clear all avaliable time slots prompt
-  const customConfirm = (message) => {
-    return new Promise((resolve) => {
-      DayPilot.Modal.showHtml(
-        `
-                <div>
-                    <p>${message}</p>
-                    <button id="yes">Yes</button>
-                    <button id="no">No, Maybe Later</button>
-                </div>
-            `
-      ).then((modal) => {
-        if (modal.canceled) {
-          resolve(false);
-          return;
-        }
-
-        document.getElementById("yes").onclick = () => {
-          modal.close();
-          resolve(true);
-        };
-
-        document.getElementById("no").onclick = () => {
-          modal.close();
-          resolve(false);
-        };
-      });
     });
   };
 
@@ -654,29 +605,27 @@ const WeeklyCalendar = () => {
   };
 
   const [anchorEl, setAnchorEl] = useState(null);
-  const open = Boolean(anchorEl);
+  const openn = Boolean(anchorEl);
 
-  // const handleShiftPage = (event) => {
-  //     if(open){navigate("/meeting/selectmeeting");
-  //     }else{setAnchorEl(event.currentTarget);}
-  // };
 
   // UseEffect for setting up calendar events
   useEffect(() => {
     const initializeCalendar = async () => {
       fetchInSession();
       fetchSubmittedMembers();
+      fetchUserName();
       const [available, meetings] = await Promise.all([
         fetchAvaliable(),
-        fetchMeetings(),
+        fetchMeetings()
       ]);
 
+      //localStorage.clear();
+
+      //reflects whether it's the first time the user visits the page
+      console.log("guide open", guide);
       //console.log("available",available);
       const processedAvailable = adjustTimeZoneAvaliable(available);
       const adjustedMeetings = adjustTimeZoneMeet(meetings);
-
-      // Filter out conflicting slots
-      //const nonConflictingAvailable = filterConflictingSlots(processedAvailable, adjustedMeetings);
 
       // Combine non-conflicting available slots and meetings
       const combinedEvents = [...processedAvailable, ...adjustedMeetings];
@@ -731,7 +680,7 @@ const WeeklyCalendar = () => {
           {inSession ? (
             <div>
               <button onClick={() => navigate("/meeting/selectmeeting")}>
-                Edit Your Available Time
+                Submit Your Available Time
               </button>
               <button
                 className="button-clear-slots"
@@ -744,16 +693,14 @@ const WeeklyCalendar = () => {
             <div>
               <button
                 onClick={(e) => setAnchorEl(e.currentTarget)}
-                aria-owns={open ? "mouse-over-popover" : undefined}
+                aria-owns={openn ? "mouse-over-popover" : undefined}
                 aria-haspopup="true"
-                //onMouseOver={(e) => setAnchorEl(e.currentTarget)}
-                //onMouseLeave={() => setAnchorEl(null)}
               >
                 Start A Group Availability Poll
               </button>
               <Popover
                 id={"reminder-popper"}
-                open={open}
+                open={openn}
                 anchorEl={anchorEl}
                 anchorOrigin={{
                   vertical: "bottom",
@@ -802,6 +749,28 @@ const WeeklyCalendar = () => {
         ) : (
           <div className="button-placeholder"></div>
         )}
+        <Dialog
+          open={guide}
+          onClose={handleGuideClose}
+          aria-labelledby="alert-dialog-title"
+          aria-describedby="alert-dialog-description"
+        >
+          <DialogTitle id="alert-dialog-title">
+            {"Use Google's location service?"}
+          </DialogTitle>
+          <DialogContent>
+            <DialogContentText id="alert-dialog-description">
+              Let Google help apps determine location. This means sending anonymous
+              location data to Google, even when no apps are running.
+            </DialogContentText>
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={handleGuideClose}>Disagree</Button>
+            <Button onClick={handleGuideClose} autoFocus>
+              Agree
+            </Button>
+          </DialogActions>
+        </Dialog>
         <DayPilotCalendar
           key={calendarConfig.cellDuration}
           style={styles.calendar}
