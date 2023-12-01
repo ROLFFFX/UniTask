@@ -84,6 +84,7 @@ const PersonalChart = ({ processedPersonalData }) => {
       setPersonalTotal(total);
     }
   }, [processedPersonalData]);
+
   useEffect(() => {
     calculateSize();
     window.addEventListener("resize", calculateSize);
@@ -156,7 +157,7 @@ const PersonalChart = ({ processedPersonalData }) => {
                 <strong>Personal Chart Guide:</strong>
                 <br />
                 <br />- <strong>Data Insights:</strong> This graph represents
-                the progression of cumulative tasks achieved over time be you.
+                the progression of cumulative tasks achieved over time by you.
                 <br />
                 <br />- <strong>Interpolations:</strong> Choose the
                 interpolation menu above to customize your view. We have 11
