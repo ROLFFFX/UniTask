@@ -10,6 +10,15 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
+import Typography from '@mui/material/Typography';
+import Accordion from '@mui/material/Accordion';
+import AccordionDetails from '@mui/material/AccordionDetails';
+import AccordionSummary from '@mui/material/AccordionSummary';
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import ImageList from '@mui/material/ImageList';
+import ImageListItem from '@mui/material/ImageListItem';
+
+import Logo from '../../images/UNITASK不透明.PNG';
 
 import {
   DayPilot,
@@ -45,12 +54,35 @@ const WeeklyCalendar = () => {
 
   const { auth } = useAuth();
 
-  //TODO
+
   const [guide, setGuide] = React.useState(false);
   const [userName, setUserName] = React.useState("");
+  //@todo: add images
+  const createEventImages = [{
+    img: Logo,
+    title: 'Mushrooms',
+  },
+  /*{
+    img: Logo,
+    title: 'Tomato basil',
+  },
+  {
+    img: Logo,
+    title: 'Sea star',
+  },
+  {
+    img: Logo,
+    title: 'Bike',
+  }*/];
 
   const handleGuideOpen = () => {
     setGuide(true);
+  };
+
+  //associated with the expand and collapse tutorial items
+  const [expanded, setExpanded] = React.useState(false);
+  const handleChange = (panel) => (event, isExpanded) => {
+    setExpanded(isExpanded ? panel : false);
   };
 
   const handleGuideClose = () => {
@@ -619,7 +651,7 @@ const WeeklyCalendar = () => {
         fetchMeetings()
       ]);
 
-      //localStorage.clear();
+      localStorage.clear();
 
       //reflects whether it's the first time the user visits the page
       console.log("guide open", guide);
@@ -756,19 +788,120 @@ const WeeklyCalendar = () => {
           aria-describedby="alert-dialog-description"
         >
           <DialogTitle id="alert-dialog-title">
-            {"Use Google's location service?"}
+            {"How to Manage a Group Schedule?"}
           </DialogTitle>
           <DialogContent>
-            <DialogContentText id="alert-dialog-description">
-              Let Google help apps determine location. This means sending anonymous
-              location data to Google, even when no apps are running.
-            </DialogContentText>
+            <Accordion expanded={expanded === 'panel1'} onChange={handleChange('panel1')}>
+              <AccordionSummary
+                expandIcon={<ExpandMoreIcon />}
+                aria-controls="panel1bh-content"
+                id="panel1bh-header"
+              >
+                <Typography sx={{ width: '50%', flexShrink: 0 }}>
+                  Create A Group Event
+                </Typography>
+                <Typography sx={{ color: 'text.secondary' }}>
+                  Click or drag on the calendar to select a time range
+                </Typography>
+              </AccordionSummary>
+              <AccordionDetails>
+                <ImageList sx={{ width: 500, height: 450 }} cols={3} rowHeight={164}>
+                  {createEventImages.map((item) => (
+                    <ImageListItem key={item.img}>
+                      <img
+                        src={item.img}
+                        alt={item.title}
+                        loading="lazy"
+                      />
+                    </ImageListItem>
+                  ))}
+                </ImageList>
+              </AccordionDetails>
+            </Accordion>
+            <Accordion expanded={expanded === 'panel2'} onChange={handleChange('panel2')}>
+              <AccordionSummary
+                expandIcon={<ExpandMoreIcon />}
+                aria-controls="panel2bh-content"
+                id="panel2bh-header"
+              >
+                <Typography sx={{ width: '50%', flexShrink: 0 }}>
+                  Reschedule An Event
+                </Typography>
+                <Typography sx={{ color: 'text.secondary' }}>
+                  Drag, expand, or shorten the event blocks to reschedule
+                </Typography>
+              </AccordionSummary>
+              <AccordionDetails>
+                <ImageList sx={{ width: 500, height: 450 }} cols={3} rowHeight={164}>
+                  {createEventImages.map((item) => (
+                    <ImageListItem key={item.img}>
+                      <img
+                        src={item.img}
+                        alt={item.title}
+                        loading="lazy"
+                      />
+                    </ImageListItem>
+                  ))}
+                </ImageList>
+              </AccordionDetails>
+            </Accordion>
+            <Accordion expanded={expanded === 'panel3'} onChange={handleChange('panel3')}>
+              <AccordionSummary
+                expandIcon={<ExpandMoreIcon />}
+                aria-controls="panel3bh-content"
+                id="panel3bh-header"
+              >
+                <Typography sx={{ width: '50%', flexShrink: 0 }}>
+                  Rename or Delete An Event
+                </Typography>
+                <Typography sx={{ color: 'text.secondary' }}>
+                  Right click on the event blocks to see these options
+                </Typography>
+              </AccordionSummary>
+              <AccordionDetails>
+                <ImageList sx={{ width: 500, height: 450 }} cols={3} rowHeight={164}>
+                  {createEventImages.map((item) => (
+                    <ImageListItem key={item.img}>
+                      <img
+                        src={item.img}
+                        alt={item.title}
+                        loading="lazy"
+                      />
+                    </ImageListItem>
+                  ))}
+                </ImageList>
+              </AccordionDetails>
+            </Accordion>
+            <Accordion expanded={expanded === 'panel4'} onChange={handleChange('panel4')}>
+              <AccordionSummary
+                expandIcon={<ExpandMoreIcon />}
+                aria-controls="panel4bh-content"
+                id="panel4bh-header"
+              >
+                <Typography sx={{ width: '50%', flexShrink: 0 }}>
+                  Group Availability Poll
+                </Typography>
+                <Typography sx={{ color: 'text.secondary' }}>
+                  Submit your availabilities, see who has submitted and their common available time
+                </Typography>
+              </AccordionSummary>
+              <AccordionDetails>
+                <ImageList sx={{ width: 500, height: 450 }} cols={3} rowHeight={164}>
+                  {createEventImages.map((item) => (
+                    <ImageListItem key={item.img}>
+                      <img
+                        src={item.img}
+                        alt={item.title}
+                        loading="lazy"
+                      />
+                    </ImageListItem>
+                  ))}
+                </ImageList>
+              </AccordionDetails>
+            </Accordion>
           </DialogContent>
           <DialogActions>
-            <Button onClick={handleGuideClose}>Disagree</Button>
-            <Button onClick={handleGuideClose} autoFocus>
-              Agree
-            </Button>
+            <Button onClick={handleGuideClose} color="secondary">Got it! Don't Show This Again</Button>
           </DialogActions>
         </Dialog>
         <DayPilotCalendar
