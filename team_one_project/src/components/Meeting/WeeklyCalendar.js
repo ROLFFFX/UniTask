@@ -5,38 +5,35 @@ import ListItemText from "@mui/material/ListItemText";
 import ListSubheader from "@mui/material/ListSubheader";
 import Popover from "@mui/material/Popover";
 import Button from "@mui/material/Button";
-import Dialog from '@mui/material/Dialog';
-import DialogActions from '@mui/material/DialogActions';
-import DialogContent from '@mui/material/DialogContent';
-import DialogContentText from '@mui/material/DialogContentText';
-import DialogTitle from '@mui/material/DialogTitle';
-import Typography from '@mui/material/Typography';
-import Accordion from '@mui/material/Accordion';
-import AccordionDetails from '@mui/material/AccordionDetails';
-import AccordionSummary from '@mui/material/AccordionSummary';
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import ImageList from '@mui/material/ImageList';
-import ImageListItem from '@mui/material/ImageListItem';
-import ImageListItemBar from '@mui/material/ImageListItemBar';
+import Dialog from "@mui/material/Dialog";
+import DialogActions from "@mui/material/DialogActions";
+import DialogContent from "@mui/material/DialogContent";
+import DialogContentText from "@mui/material/DialogContentText";
+import DialogTitle from "@mui/material/DialogTitle";
+import Typography from "@mui/material/Typography";
+import Accordion from "@mui/material/Accordion";
+import AccordionDetails from "@mui/material/AccordionDetails";
+import AccordionSummary from "@mui/material/AccordionSummary";
+import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+import ImageList from "@mui/material/ImageList";
+import ImageListItem from "@mui/material/ImageListItem";
+import ImageListItemBar from "@mui/material/ImageListItemBar";
 
-import HelpOutlineIcon from '@mui/icons-material/HelpOutline';
-import IconButton from '@mui/material/IconButton';
+import HelpOutlineIcon from "@mui/icons-material/HelpOutline";
+import IconButton from "@mui/material/IconButton";
 
-import Logo from '../../images/UNITASK不透明.PNG';
-import createevent1 from '../../images/createevent1.png';
-import createevent2 from '../../images/createevent2.png';
-import createevent3 from '../../images/createevent3.png';
-import reschedule1 from '../../images/reschedule1.png';
-import reschedule2 from '../../images/reschedule2.png';
-import renameordelete from '../../images/renameordelete.png';
-import memberslist from '../../images/memberslist.png';
-import commontimedisplayed from '../../images/commontimedisplayed.png';
-import createfromthere from '../../images/createfromthere.png';
+import Logo from "../../images/UNITASK不透明.PNG";
+import createevent1 from "../../images/createevent1.png";
+import createevent2 from "../../images/createevent2.png";
+import createevent3 from "../../images/createevent3.png";
+import reschedule1 from "../../images/reschedule1.png";
+import reschedule2 from "../../images/reschedule2.png";
+import renameordelete from "../../images/renameordelete.png";
+import memberslist from "../../images/memberslist.png";
+import commontimedisplayed from "../../images/commontimedisplayed.png";
+import createfromthere from "../../images/createfromthere.png";
 
-import {
-  DayPilot,
-  DayPilotCalendar
-} from "@daypilot/daypilot-lite-react";
+import { DayPilot, DayPilotCalendar } from "@daypilot/daypilot-lite-react";
 import "./WeeklyCalendar.css";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
@@ -64,54 +61,58 @@ const styles = {
 };
 
 const WeeklyCalendar = () => {
-
   const { auth } = useAuth();
-
 
   const [guide, setGuide] = React.useState(false);
   const [userName, setUserName] = React.useState("");
 
   const createEventImages = [
-  {
-    img: createevent1,
-    title: '1. Select a Time Range',
-  },
-  {
-    img: createevent2,
-    title: '2. Name the Event',
-  },
-  {
-    img: createevent3,
-    title: '3. Event Successfully created',
-  }];
+    {
+      img: createevent1,
+      title: "1. Select a Time Range",
+    },
+    {
+      img: createevent2,
+      title: "2. Name the Event",
+    },
+    {
+      img: createevent3,
+      title: "3. Event Successfully created",
+    },
+  ];
 
-  const rescheduleEventImages = [{
-    img: reschedule1,
-    title: 'Drag to another time',
-  },
-  {
-    img: reschedule2,
-    title: 'Extend or shorten duration',
-  }]
+  const rescheduleEventImages = [
+    {
+      img: reschedule1,
+      title: "Drag to another time",
+    },
+    {
+      img: reschedule2,
+      title: "Extend or shorten duration",
+    },
+  ];
 
-  const renameOrDeleteImages = [{
-    img: renameordelete,
-    title: 'Rename Or Delete',
-  }]
+  const renameOrDeleteImages = [
+    {
+      img: renameordelete,
+      title: "Rename Or Delete",
+    },
+  ];
 
   const availabilityPollImages = [
-  {
-    img: memberslist,
-    title: 'Memebers who has submitted their availability',
-  },
-  {
-    img: commontimedisplayed,
-    title: 'Your common availability displayed on this page',
-  },
-  {
-    img: createfromthere,
-    title: 'Create an event from there!',
-  }];
+    {
+      img: memberslist,
+      title: "Memebers who has submitted their availability",
+    },
+    {
+      img: commontimedisplayed,
+      title: "Your common availability displayed on this page",
+    },
+    {
+      img: createfromthere,
+      title: "Create an event from there!",
+    },
+  ];
 
   const handleGuideOpen = () => {
     setGuide(true);
@@ -126,10 +127,15 @@ const WeeklyCalendar = () => {
   const handleGuideClose = () => {
     setGuide(false);
     //set of users that has opened this page on this browser
-    let thisBrUserSet = new Set(JSON.parse(localStorage.getItem("notFirstTime")) || []); // Fallback to empty array if null
+    let thisBrUserSet = new Set(
+      JSON.parse(localStorage.getItem("notFirstTime")) || []
+    ); // Fallback to empty array if null
     thisBrUserSet = new Set([...thisBrUserSet, userName]);
-    console.log("appended notFirstTime user set", thisBrUserSet)
-    localStorage.setItem("notFirstTime", JSON.stringify(Array.from(thisBrUserSet)));
+    // console.log("appended notFirstTime user set", thisBrUserSet);
+    localStorage.setItem(
+      "notFirstTime",
+      JSON.stringify(Array.from(thisBrUserSet))
+    );
   };
 
   const projectTitle = auth.selectedWorkspace;
@@ -157,7 +163,7 @@ const WeeklyCalendar = () => {
         }
       );
       setInSession(response.data);
-      console.log(response.data);
+      // console.log(response.data);
     } catch (e) {
       console.error("Error Confirming Existing Project Timeslots:", e);
     }
@@ -171,8 +177,10 @@ const WeeklyCalendar = () => {
         },
       });
       setUserName(response.data);
-      const userSet = new Set(JSON.parse(localStorage.getItem('notFirstTime') || '[]'));
-      console.log("notFirstTime user set", userSet);
+      const userSet = new Set(
+        JSON.parse(localStorage.getItem("notFirstTime") || "[]")
+      );
+      // console.log("notFirstTime user set", userSet);
       setGuide(!userSet.has(response.data));
     } catch (error) {
       console.error("Error fetching username:", error);
@@ -195,7 +203,7 @@ const WeeklyCalendar = () => {
       if (response.data.length > 0) {
         setMembersList(response.data);
       }
-      console.log("members who has submitted availability", response.data);
+      // console.log("members who has submitted availability", response.data);
     } catch (e) {
       console.error("Error Fetching Members Who Has Submitted Timeslots:", e);
     }
@@ -222,7 +230,7 @@ const WeeklyCalendar = () => {
           endTime: avaliable.endTime,
         });
       }
-      console.log("fetched availableTS", avaliableTimeSlots);
+      // console.log("fetched availableTS", avaliableTimeSlots);
       return avaliableTimeSlots;
     } catch (error) {
       console.error("Error fetching avaliableTimeSlots:", error);
@@ -335,10 +343,7 @@ const WeeklyCalendar = () => {
     endTime = endTime.toISOString();
 
     // Open a modal to get meeting details
-    const titleResponse = await DayPilot.Modal.prompt(
-      "Name the Event:",
-      ""
-    );
+    const titleResponse = await DayPilot.Modal.prompt("Name the Event:", "");
     if (!titleResponse || titleResponse.canceled) {
       clearSelection();
       return;
@@ -373,8 +378,8 @@ const WeeklyCalendar = () => {
         }
       );
 
-      console.log("Meeting created:", response.data);
-      console.log("response", response.status);
+      // console.log("Meeting created:", response.data);
+      // console.log("response", response.status);
     } catch (error) {
       console.error(
         "Error creating meeting:",
@@ -508,7 +513,7 @@ const WeeklyCalendar = () => {
       };
 
       // Log the meeting info to be deleted
-      console.log("Meeting to delete:", meetingToDelete);
+      // console.log("Meeting to delete:", meetingToDelete);
 
       // Send the meeting data to your backend
       const response = await axios.delete(
@@ -520,7 +525,7 @@ const WeeklyCalendar = () => {
         }
       );
 
-      console.log("Meeting deleted:", meetingToDelete);
+      // console.log("Meeting deleted:", meetingToDelete);
 
       const dp = calendarRef.current.control;
       dp.events.remove(e);
@@ -533,7 +538,7 @@ const WeeklyCalendar = () => {
 
   //get time difference between the ISO string and the local time
   const getTimeZoneOffsetInHours = () => {
-    console.log("get time difference");
+    // console.log("get time difference");
     const currentDateTime = new Date();
     const offsetInMinutes = currentDateTime.getTimezoneOffset();
     const offsetInHours = offsetInMinutes / 60;
@@ -566,7 +571,7 @@ const WeeklyCalendar = () => {
         contextMenuDisabled: true,
       });
     });
-    console.log("processedTS", processedTS);
+    // console.log("processedTS", processedTS);
     return processedTS;
   };
 
@@ -617,7 +622,7 @@ const WeeklyCalendar = () => {
 
         if (response.status === 201) {
           //not sure 200 or 201
-          console.log("All available time slots cleared");
+          // console.log("All available time slots cleared");
           // You may want to update your UI or state here as needed
         }
       } catch (error) {
@@ -677,7 +682,6 @@ const WeeklyCalendar = () => {
   const [anchorEl, setAnchorEl] = useState(null);
   const openn = Boolean(anchorEl);
 
-
   // UseEffect for setting up calendar events
   useEffect(() => {
     const initializeCalendar = async () => {
@@ -686,13 +690,13 @@ const WeeklyCalendar = () => {
       fetchUserName();
       const [available, meetings] = await Promise.all([
         fetchAvaliable(),
-        fetchMeetings()
+        fetchMeetings(),
       ]);
 
       //localStorage.clear();
 
       //reflects whether it's the first time the user visits the page
-      console.log("guide open", guide);
+      // console.log("guide open", guide);
       //console.log("available",available);
       const processedAvailable = adjustTimeZoneAvaliable(available);
       const adjustedMeetings = adjustTimeZoneMeet(meetings);
@@ -807,7 +811,7 @@ const WeeklyCalendar = () => {
             </div>
           )}
           <Button aria-label="help" onClick={handleGuideOpen}>
-              <HelpOutlineIcon />
+            <HelpOutlineIcon />
           </Button>
         </div>
         {selectedRange ? (
@@ -817,7 +821,7 @@ const WeeklyCalendar = () => {
           </div>
         ) : (
           <div>
-            <div className={"button-placeholder"}/>
+            <div className={"button-placeholder"} />
           </div>
         )}
         <Dialog
@@ -830,112 +834,125 @@ const WeeklyCalendar = () => {
             {"How to Manage My Group Schedule"}
           </DialogTitle>
           <DialogContent>
-            <Accordion expanded={expanded === 'panel1'} onChange={handleChange('panel1')}>
+            <Accordion
+              expanded={expanded === "panel1"}
+              onChange={handleChange("panel1")}
+            >
               <AccordionSummary
                 expandIcon={<ExpandMoreIcon />}
                 aria-controls="panel1bh-content"
                 id="panel1bh-header"
               >
-                <Typography sx={{ width: '50%', flexShrink: 0 }}>
+                <Typography sx={{ width: "50%", flexShrink: 0 }}>
                   Create A Group Event
                 </Typography>
-                <Typography sx={{ color: 'text.secondary' }}>
+                <Typography sx={{ color: "text.secondary" }}>
                   Click or drag on the calendar to select a time range
                 </Typography>
               </AccordionSummary>
               <AccordionDetails>
-                <ImageList sx={{ width: 500, height: '100%' }} cols={1} rowHeight={500}>
+                <ImageList
+                  sx={{ width: 500, height: "100%" }}
+                  cols={1}
+                  rowHeight={500}
+                >
                   {createEventImages.map((item) => (
-                      <ImageListItem key={item.img}>
-                        <img
-                          src={item.img}
-                          alt={item.title}
-                          loading="lazy"
-                        />
-                        <ImageListItemBar title={item.title} />
-                      </ImageListItem>
-                  ))}
-                </ImageList>
-              </AccordionDetails>
-            </Accordion>
-            <Accordion expanded={expanded === 'panel2'} onChange={handleChange('panel2')}>
-              <AccordionSummary
-                expandIcon={<ExpandMoreIcon />}
-                aria-controls="panel2bh-content"
-                id="panel2bh-header"
-              >
-                <Typography sx={{ width: '50%', flexShrink: 0 }}>
-                  Reschedule An Event
-                </Typography>
-                <Typography sx={{ color: 'text.secondary' }}>
-                  Drag, extend, or shorten the event blocks to reschedule
-                </Typography>
-              </AccordionSummary>
-              <AccordionDetails>
-                <ImageList sx={{ width: 500, height: '100%' }} cols={2} rowHeight={200}>
-                  {rescheduleEventImages.map((item) => (
                     <ImageListItem key={item.img}>
-                      <img
-                        src={item.img}
-                        alt={item.title}
-                        loading="lazy"
-                      />
+                      <img src={item.img} alt={item.title} loading="lazy" />
                       <ImageListItemBar title={item.title} />
                     </ImageListItem>
                   ))}
                 </ImageList>
               </AccordionDetails>
             </Accordion>
-            <Accordion expanded={expanded === 'panel3'} onChange={handleChange('panel3')}>
+            <Accordion
+              expanded={expanded === "panel2"}
+              onChange={handleChange("panel2")}
+            >
               <AccordionSummary
                 expandIcon={<ExpandMoreIcon />}
-                aria-controls="panel3bh-content"
-                id="panel3bh-header"
+                aria-controls="panel2bh-content"
+                id="panel2bh-header"
               >
-                <Typography sx={{ width: '50%', flexShrink: 0 }}>
-                  Rename or Delete An Event
+                <Typography sx={{ width: "50%", flexShrink: 0 }}>
+                  Reschedule An Event
                 </Typography>
-                <Typography sx={{ color: 'text.secondary' }}>
-                  Right click on the event blocks to see these options
+                <Typography sx={{ color: "text.secondary" }}>
+                  Drag, extend, or shorten the event blocks to reschedule
                 </Typography>
               </AccordionSummary>
               <AccordionDetails>
-                <ImageList sx={{ width: 500, height: '100%' }} cols={1} rowHeight={500}>
-                  {renameOrDeleteImages.map((item) => (
+                <ImageList
+                  sx={{ width: 500, height: "100%" }}
+                  cols={2}
+                  rowHeight={200}
+                >
+                  {rescheduleEventImages.map((item) => (
                     <ImageListItem key={item.img}>
-                      <img
-                        src={item.img}
-                        alt={item.title}
-                        loading="lazy"
-                      />
+                      <img src={item.img} alt={item.title} loading="lazy" />
+                      <ImageListItemBar title={item.title} />
                     </ImageListItem>
                   ))}
                 </ImageList>
               </AccordionDetails>
             </Accordion>
-            <Accordion expanded={expanded === 'panel4'} onChange={handleChange('panel4')}>
+            <Accordion
+              expanded={expanded === "panel3"}
+              onChange={handleChange("panel3")}
+            >
+              <AccordionSummary
+                expandIcon={<ExpandMoreIcon />}
+                aria-controls="panel3bh-content"
+                id="panel3bh-header"
+              >
+                <Typography sx={{ width: "50%", flexShrink: 0 }}>
+                  Rename or Delete An Event
+                </Typography>
+                <Typography sx={{ color: "text.secondary" }}>
+                  Right click on the event blocks to see these options
+                </Typography>
+              </AccordionSummary>
+              <AccordionDetails>
+                <ImageList
+                  sx={{ width: 500, height: "100%" }}
+                  cols={1}
+                  rowHeight={500}
+                >
+                  {renameOrDeleteImages.map((item) => (
+                    <ImageListItem key={item.img}>
+                      <img src={item.img} alt={item.title} loading="lazy" />
+                    </ImageListItem>
+                  ))}
+                </ImageList>
+              </AccordionDetails>
+            </Accordion>
+            <Accordion
+              expanded={expanded === "panel4"}
+              onChange={handleChange("panel4")}
+            >
               <AccordionSummary
                 expandIcon={<ExpandMoreIcon />}
                 aria-controls="panel4bh-content"
                 id="panel4bh-header"
               >
-                <Typography sx={{ width: '50%', flexShrink: 0 }}>
+                <Typography sx={{ width: "50%", flexShrink: 0 }}>
                   Group Availability Poll
                 </Typography>
-                <Typography sx={{ color: 'text.secondary' }}>
-                  Submit your availabilities, see who has submitted and their common available time
+                <Typography sx={{ color: "text.secondary" }}>
+                  Submit your availabilities, see who has submitted and their
+                  common available time
                 </Typography>
               </AccordionSummary>
               <AccordionDetails>
-                <ImageList sx={{ width: 500, height: '100%' }} cols={1} rowHeight={500}>
+                <ImageList
+                  sx={{ width: 500, height: "100%" }}
+                  cols={1}
+                  rowHeight={500}
+                >
                   {availabilityPollImages.map((item) => (
                     <ImageListItem key={item.img}>
-                      <img
-                        src={item.img}
-                        alt={item.title}
-                        loading="lazy"
-                      />
-                      <ImageListItemBar title={item.title}/>
+                      <img src={item.img} alt={item.title} loading="lazy" />
+                      <ImageListItemBar title={item.title} />
                     </ImageListItem>
                   ))}
                 </ImageList>
@@ -943,7 +960,9 @@ const WeeklyCalendar = () => {
             </Accordion>
           </DialogContent>
           <DialogActions>
-            <Button onClick={handleGuideClose} color="secondary">Got it! Don't Show This Again</Button>
+            <Button onClick={handleGuideClose} color="secondary">
+              Got it! Don't Show This Again
+            </Button>
           </DialogActions>
         </Dialog>
         <DayPilotCalendar
