@@ -169,6 +169,17 @@ function Task({ taskData, refreshTasks, users }) {
     }));
   };
 
+  // randomize the hour / minutes / seconds of ISOString Object to avoid collision
+  function randomizeISOString(dateString) {
+    if (!dateString) return null;
+
+    const dateObject = new Date(dateString);
+    const now = new Date();
+
+    dateObject.setHours(now.getHours(), now.getMinutes(), now.getSeconds());
+
+    return dateObject;
+  }
   /* End of Helper Methods-------------------------------------------------------------------------------------------------------------------- */
 
   /* Request Declaration-------------------------------------------------------------------------------------------------------------------- */
@@ -243,9 +254,8 @@ function Task({ taskData, refreshTasks, users }) {
       title: modifiedTask.title,
       status: modifiedTask.status,
       taskPoints: modifiedTask.taskPoints,
-      expectedCompleteTime: isoDateString,
+      expectedCompleteTime: randomizeISOString(isoDateString),
     };
-    console.log(payload);
     try {
       const response = await axios.put(url, payload, {
         headers: {
