@@ -300,25 +300,11 @@ function Task({ taskData, refreshTasks, users }) {
                 sx={textfieldStyle}
                 value={modifiedTask.title}
                 onChange={handleInputChange}
+                InputLabelProps={{ style: { fontSize: 14 } }}
+                size="small"
               />
             </Grid>
-            {/* taskData.taskPoints */}
-            <Grid item xs={12} marginTop="15px">
-              <span>Task Points: </span>
-              <input
-                type="number"
-                id="task-points"
-                name="taskPoints"
-                value={modifiedTask.taskPoints}
-                onChange={handleInputChange}
-                style={{
-                  marginLeft: "10px",
-                  padding: "10px",
-                  border: "1px solid #ADB5BD",
-                  borderRadius: "4px",
-                }}
-              />
-            </Grid>
+
             {/* taskData.assignee */}
             <Grid item xs={12} marginTop="15px">
               <select
@@ -342,22 +328,81 @@ function Task({ taskData, refreshTasks, users }) {
               </select>
             </Grid>
             {/* taskData.expectedCompleteTime */}
-            <Grid item xs={12} marginTop="15px">
-              <span>Due date: </span>
-              <input
-                type="date"
-                id="expected)completeTime"
-                name="expectedCompleteTime"
-                value={modifiedTask.expectedCompleteTime}
-                onChange={handleInputChange}
-                style={{
-                  marginLeft: "10px",
-                  padding: "10px",
-                  border: "1px solid #ADB5BD",
-                  borderRadius: "4px",
-                  fontFamily: "Inter, sans-serif",
-                }}
-              />
+            <Grid item container xs={12} marginTop="15px">
+              <Grid item xs={6}>
+                <Box
+                  display="flex"
+                  height="100%"
+                  justifyContent="center"
+                  alignItems="center"
+                >
+                  <Typography
+                    style={{
+                      fontSize: 14,
+                      fontFamily: "Inter, sans-serif",
+                      marginTop: 12,
+                    }}
+                  >
+                    Due date:
+                  </Typography>
+                </Box>
+              </Grid>
+              <Grid item xs={6}>
+                <input
+                  type="date"
+                  id="expected)completeTime"
+                  name="expectedCompleteTime"
+                  value={modifiedTask.expectedCompleteTime}
+                  onChange={handleInputChange}
+                  style={{
+                    marginLeft: "10px",
+                    padding: "10px",
+                    border: "1px solid #ADB5BD",
+                    borderRadius: "4px",
+                    fontFamily: "Inter, sans-serif",
+                    width: "70%",
+                    height: "15px",
+                  }}
+                />
+              </Grid>
+            </Grid>
+            {/* taskData.taskPoints */}
+            <Grid item container xs={12} marginTop="15px">
+              <Grid item xs={6}>
+                <Box
+                  display="flex"
+                  height="100%"
+                  justifyContent="center"
+                  alignItems="center"
+                >
+                  <Typography
+                    style={{
+                      fontSize: 14,
+                      fontFamily: "Inter, sans-serif",
+                    }}
+                  >
+                    Task Points:{" "}
+                  </Typography>
+                </Box>
+              </Grid>
+              <Grid item xs={6}>
+                <input
+                  type="number"
+                  id="task-points"
+                  name="taskPoints"
+                  value={modifiedTask.taskPoints}
+                  onChange={handleInputChange}
+                  style={{
+                    marginLeft: "10px",
+                    padding: "10px",
+                    border: "1px solid #ADB5BD",
+                    borderRadius: "4px",
+                    fontFamily: "Inter, sans-serif",
+                    width: "70%", // Set the width
+                    height: "15px", // Set the height
+                  }}
+                />
+              </Grid>
             </Grid>
           </Grid>
           <Grid container marginTop={5}>
@@ -376,7 +421,7 @@ function Task({ taskData, refreshTasks, users }) {
             <Grid item xs={6}>
               <Button
                 variant="outlined"
-                color="error"
+                color="inherit"
                 onClick={() => {
                   modifyTask();
                 }}
