@@ -47,7 +47,7 @@ const slideData = [
 ];
 
 const PrevArrow = (props) => {
-  const { className, style, onClick } = props;
+  const { onClick } = props;
   return (
     <button
       onClick={onClick}
@@ -69,7 +69,7 @@ const PrevArrow = (props) => {
 };
 
 const NextArrow = (props) => {
-  const { className, style, onClick } = props;
+  const { onClick } = props;
   return (
     <button
       onClick={onClick}
