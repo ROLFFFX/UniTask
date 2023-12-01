@@ -25,6 +25,7 @@ import { ENDPOINT_URL } from "../../hooks/useConfig";
 import UniTaskLogo_new from "../../images/UniTaskLOGO.PNG";
 import barTheme from "./barTheme";
 import ChangeCircleIcon from "@mui/icons-material/ChangeCircle";
+import Diversity3Icon from "@mui/icons-material/Diversity3";
 
 import axios from "axios";
 import useAuth from "../../hooks/useAuth";
@@ -54,7 +55,7 @@ const LogOutButton = () => {
       placement="bottom"
       TransitionProps={{ timeout: 600 }}
     >
-      <IconButton onClick={handleLogout} sx={{ p: 1 }}>
+      <IconButton onClick={handleLogout} sx={{ p: 2 }}>
         <LogoutIcon sx={{ color: "white" }} />
       </IconButton>
     </Tooltip>
@@ -84,8 +85,8 @@ const ChangeWorkspaceButton = () => {
       placement="bottom"
       TransitionProps={{ timeout: 600 }}
     >
-      <IconButton onClick={handleLogoutGroup} sx={{ p: 1 }}>
-        <ChangeCircleIcon sx={{ color: "white" }} />
+      <IconButton onClick={handleLogoutGroup} sx={{ p: 2 }}>
+        <Diversity3Icon sx={{ color: "white" }} />
       </IconButton>
     </Tooltip>
   );
@@ -421,7 +422,7 @@ export function TopAppBar() {
                     state === false ? toggleDrawer(true) : toggleDrawer(false);
                     cancelAction();
                   }}
-                  sx={{ p: 1 }}
+                  sx={{ p: 2 }}
                 >
                   <LinkIcon />
                   {/* For Top Right Button / User */}
