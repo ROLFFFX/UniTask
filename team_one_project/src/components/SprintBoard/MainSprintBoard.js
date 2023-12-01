@@ -156,7 +156,6 @@ export function MainSprintBoard() {
       taskPoints: task.taskPoints,
       expectedCompleteTime: formattedDate,
     };
-    console.log(randomizeISOString(formattedDate));
 
     try {
       const response = await axios.put(url, payload, {
