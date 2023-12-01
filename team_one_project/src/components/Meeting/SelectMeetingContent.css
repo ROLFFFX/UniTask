@@ -37,6 +37,7 @@
 
   .timeLabel {
     font-weight: bold;
+    font-size: small;
     background-color: black;
   }
 
@@ -74,7 +75,7 @@
     background-color: grey;
   }
 
-  .button-clear {
+  .button-page {
     background-color:black;
     color: white;
     border: none;
@@ -84,8 +85,8 @@
     margin-right: 10px;
   }
 
-  .button-clear:hover {
-    background-color: red;
+  .button-page:hover {
+    background-color: #1B9AAA;
   }
    .button-delete{
     background-color: black;
@@ -98,7 +99,7 @@
    }
 
    .button-delete:hover{
-    background-color: red;
+    background-color: #EF476F;
    }
 
   .button-confirm {
@@ -112,7 +113,7 @@
   }
 
   .button-confirm:hover {
-    background-color: #45a049;
+    background-color: #06D6A0;
   }
 
   .timeSlot:hover {

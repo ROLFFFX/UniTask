@@ -12,12 +12,10 @@
 }
 
 .available_slots{
-    background: #000000;
-    color: #fff;
-    border-radius: 0px;
+    background-color: #00FF84;
     font-size: 10pt;
     padding: 2px;
-    opacity: 0.4;
+    opacity: 0.5;
     pointer-events: none;
 }
 
@@ -27,6 +25,8 @@
 
 .temp-selection {
     padding: 2px;
+    background-color: #FF003C;
+    opacity: 0.5;
 }
 
 .membersList {
@@ -39,14 +39,12 @@
 }
 
 .calendar_black_event_inner {
-    background: rgb(100,0,200);
-    color: #fff;
+    background: #00E1FF;
     border-color: white;
     border-width: 2px;
     font-size: 10pt;
     margin-right: 10px;
     /*padding: 2px;*/
-    opacity: 0.8;
 }
 /* adjusting the built-in theme */
 

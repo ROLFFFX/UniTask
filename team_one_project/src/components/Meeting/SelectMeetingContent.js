@@ -59,7 +59,7 @@ export function SelectMeetingContent() {
     "09:00", "09:30",
     "10:00", "10:30",
     "11:00", "11:30",
-    "12:00", "12:30", 
+    "12:00", "12:30",
     "13:00", "13:30",
     "14:00", "14:30",
     "15:00", "15:30",
@@ -240,21 +240,9 @@ const toggleSlotSelection = (day, time) => {
           <h1>Select Your Available Times</h1>
         </div>
         <div className="actions">
-          {/*<button className="button-clear" onClick={() => {
-            setNewlySelectedSlots([]); // Clear newly selected slots
-            setFetchedSlots([]); // Optionally, clear fetched slots as well
-          }}>
-            Clear Selection
-          </button>*/}
-          {selected?(
-              <button className="button-confirm" onClick={handleGoToMainCalendar}>
-                Check Common Availability / Back To Group Events Schedule
-              </button>
-          ):(
-              <button className="button-confirm" onClick={handleGoToMainCalendar}>
+          <button className="button-page" onClick={handleGoToMainCalendar}>
                 Back To Group Events Schedule
-              </button>
-          )}
+          </button>
           <button className="button-delete" onClick={deleteAllUserTimeSlots}>
             Clear All My Selections
           </button>

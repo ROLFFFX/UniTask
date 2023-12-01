@@ -816,8 +816,8 @@ const WeeklyCalendar = () => {
         </div>
         {selectedRange ? (
           <div className="below-header">
-            <Button onClick={createMeeting}>Create Event</Button>
-            <Button onClick={clearSelection}>Cancel</Button>
+            <Button className={"button-create"} onClick={createMeeting}>Create Event</Button>
+            <Button className={"button-cancel"} onClick={clearSelection}>Cancel</Button>
           </div>
         ) : (
           <div>
