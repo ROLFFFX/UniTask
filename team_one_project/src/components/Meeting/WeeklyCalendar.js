@@ -17,8 +17,21 @@ import AccordionSummary from '@mui/material/AccordionSummary';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import ImageList from '@mui/material/ImageList';
 import ImageListItem from '@mui/material/ImageListItem';
+import ImageListItemBar from '@mui/material/ImageListItemBar';
+
+import HelpOutlineIcon from '@mui/icons-material/HelpOutline';
+import IconButton from '@mui/material/IconButton';
 
 import Logo from '../../images/UNITASK不透明.PNG';
+import createevent1 from '../../images/createevent1.png';
+import createevent2 from '../../images/createevent2.png';
+import createevent3 from '../../images/createevent3.png';
+import reschedule1 from '../../images/reschedule1.png';
+import reschedule2 from '../../images/reschedule2.png';
+import renameordelete from '../../images/renameordelete.png';
+import memberslist from '../../images/memberslist.png';
+import commontimedisplayed from '../../images/commontimedisplayed.png';
+import createfromthere from '../../images/createfromthere.png';
 
 import {
   DayPilot,
@@ -57,23 +70,48 @@ const WeeklyCalendar = () => {
 
   const [guide, setGuide] = React.useState(false);
   const [userName, setUserName] = React.useState("");
-  //@todo: add images
-  const createEventImages = [{
-    img: Logo,
-    title: 'Mushrooms',
-  },
-  /*{
-    img: Logo,
-    title: 'Tomato basil',
+
+  const createEventImages = [
+  {
+    img: createevent1,
+    title: '1. Select a Time Range',
   },
   {
-    img: Logo,
-    title: 'Sea star',
+    img: createevent2,
+    title: '2. Name the Event',
   },
   {
-    img: Logo,
-    title: 'Bike',
-  }*/];
+    img: createevent3,
+    title: '3. Event Successfully created',
+  }];
+
+  const rescheduleEventImages = [{
+    img: reschedule1,
+    title: 'Drag to another time',
+  },
+  {
+    img: reschedule2,
+    title: 'Extend or shorten duration',
+  }]
+
+  const renameOrDeleteImages = [{
+    img: renameordelete,
+    title: 'Rename Or Delete',
+  }]
+
+  const availabilityPollImages = [
+  {
+    img: memberslist,
+    title: 'Memebers who has submitted their availability',
+  },
+  {
+    img: commontimedisplayed,
+    title: 'Your common availability displayed on this page',
+  },
+  {
+    img: createfromthere,
+    title: 'Create an event from there!',
+  }];
 
   const handleGuideOpen = () => {
     setGuide(true);
@@ -298,7 +336,7 @@ const WeeklyCalendar = () => {
 
     // Open a modal to get meeting details
     const titleResponse = await DayPilot.Modal.prompt(
-      "Title for the meeting:",
+      "Name the Event:",
       ""
     );
     if (!titleResponse || titleResponse.canceled) {
@@ -651,7 +689,7 @@ const WeeklyCalendar = () => {
         fetchMeetings()
       ]);
 
-      localStorage.clear();
+      //localStorage.clear();
 
       //reflects whether it's the first time the user visits the page
       console.log("guide open", guide);
@@ -698,11 +736,7 @@ const WeeklyCalendar = () => {
       ) : null}
       <div className="week-navigation" style={styles.wrap}>
         <div className="button-row" style={styles.header}>
-          {inSession ? (
-            <h1>Common Availability Overview</h1>
-          ) : (
-            <h1>Group Events</h1>
-          )}
+          <h1>Group Events Schedule</h1>
           <button className="button-prev" onClick={goToPreviousWeek}>
             &lt; Previous Week
           </button>
@@ -772,14 +806,19 @@ const WeeklyCalendar = () => {
               </Popover>
             </div>
           )}
+          <Button aria-label="help" onClick={handleGuideOpen}>
+              <HelpOutlineIcon />
+          </Button>
         </div>
         {selectedRange ? (
-          <div>
-            <button onClick={createMeeting}>Create Meeting</button>
-            <button onClick={clearSelection}>Cancel</button>
+          <div className="below-header">
+            <Button onClick={createMeeting}>Create Event</Button>
+            <Button onClick={clearSelection}>Cancel</Button>
           </div>
         ) : (
-          <div className="button-placeholder"></div>
+          <div>
+            <div className={"button-placeholder"}/>
+          </div>
         )}
         <Dialog
           open={guide}
@@ -788,7 +827,7 @@ const WeeklyCalendar = () => {
           aria-describedby="alert-dialog-description"
         >
           <DialogTitle id="alert-dialog-title">
-            {"How to Manage a Group Schedule?"}
+            {"How to Manage My Group Schedule"}
           </DialogTitle>
           <DialogContent>
             <Accordion expanded={expanded === 'panel1'} onChange={handleChange('panel1')}>
@@ -805,15 +844,16 @@ const WeeklyCalendar = () => {
                 </Typography>
               </AccordionSummary>
               <AccordionDetails>
-                <ImageList sx={{ width: 500, height: 450 }} cols={3} rowHeight={164}>
+                <ImageList sx={{ width: 500, height: '100%' }} cols={1} rowHeight={500}>
                   {createEventImages.map((item) => (
-                    <ImageListItem key={item.img}>
-                      <img
-                        src={item.img}
-                        alt={item.title}
-                        loading="lazy"
-                      />
-                    </ImageListItem>
+                      <ImageListItem key={item.img}>
+                        <img
+                          src={item.img}
+                          alt={item.title}
+                          loading="lazy"
+                        />
+                        <ImageListItemBar title={item.title} />
+                      </ImageListItem>
                   ))}
                 </ImageList>
               </AccordionDetails>
@@ -828,18 +868,19 @@ const WeeklyCalendar = () => {
                   Reschedule An Event
                 </Typography>
                 <Typography sx={{ color: 'text.secondary' }}>
-                  Drag, expand, or shorten the event blocks to reschedule
+                  Drag, extend, or shorten the event blocks to reschedule
                 </Typography>
               </AccordionSummary>
               <AccordionDetails>
-                <ImageList sx={{ width: 500, height: 450 }} cols={3} rowHeight={164}>
-                  {createEventImages.map((item) => (
+                <ImageList sx={{ width: 500, height: '100%' }} cols={2} rowHeight={200}>
+                  {rescheduleEventImages.map((item) => (
                     <ImageListItem key={item.img}>
                       <img
                         src={item.img}
                         alt={item.title}
                         loading="lazy"
                       />
+                      <ImageListItemBar title={item.title} />
                     </ImageListItem>
                   ))}
                 </ImageList>
@@ -859,8 +900,8 @@ const WeeklyCalendar = () => {
                 </Typography>
               </AccordionSummary>
               <AccordionDetails>
-                <ImageList sx={{ width: 500, height: 450 }} cols={3} rowHeight={164}>
-                  {createEventImages.map((item) => (
+                <ImageList sx={{ width: 500, height: '100%' }} cols={1} rowHeight={500}>
+                  {renameOrDeleteImages.map((item) => (
                     <ImageListItem key={item.img}>
                       <img
                         src={item.img}
@@ -886,14 +927,15 @@ const WeeklyCalendar = () => {
                 </Typography>
               </AccordionSummary>
               <AccordionDetails>
-                <ImageList sx={{ width: 500, height: 450 }} cols={3} rowHeight={164}>
-                  {createEventImages.map((item) => (
+                <ImageList sx={{ width: 500, height: '100%' }} cols={1} rowHeight={500}>
+                  {availabilityPollImages.map((item) => (
                     <ImageListItem key={item.img}>
                       <img
                         src={item.img}
                         alt={item.title}
                         loading="lazy"
                       />
+                      <ImageListItemBar title={item.title}/>
                     </ImageListItem>
                   ))}
                 </ImageList>
