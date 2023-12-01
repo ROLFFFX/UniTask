@@ -15,7 +15,7 @@ import Modal from "@mui/material/Modal";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Grid from "@mui/material/Grid";
-import { Tooltip } from "@mui/material";
+import { Tooltip, TextField } from "@mui/material";
 
 const modalStyle = {
   position: "absolute",
@@ -30,7 +30,42 @@ const modalStyle = {
   textAlign: "center",
 };
 
-function Task({ taskData, onDelete, onEdit, refreshTasks }) {
+const textfieldStyle = {
+  width: "100%",
+  "& label": {
+    color: "#212529", // Style for label
+    fontSize: 15, // Font size for label
+    fontFamily: "Inter, sans-serif", // Font family for label
+  },
+  "& .MuiOutlinedInput-root": {
+    "& fieldset": {
+      borderColor: "#ADB5BD", // Style for outline
+    },
+    "&:hover fieldset": {
+      borderColor: "#212529", // Style on hover
+    },
+    "&.Mui-focused fieldset": {
+      borderColor: "#212529", // Style when the input is focused
+    },
+    "& input": {
+      color: "#212529", // Style for user input
+      fontSize: 15, // Font size for input
+      fontFamily: "Inter, sans-serif", // Font family for input
+    },
+    "& textarea": {
+      color: "#212529", // Style for textarea (for multiline)
+      fontSize: 15, // Font size for textarea
+      fontFamily: "Inter, sans-serif", // Font family for textarea
+    },
+  },
+  "& .MuiInputLabel-root.Mui-focused": {
+    color: "#212529",
+    fontSize: 15, // Font size for label when input is focused
+    fontFamily: "Inter, sans-serif", // Font family for label when input is focused
+  },
+};
+
+function Task({ taskData, refreshTasks, users }) {
   /* Hooks Declarations-------------------------------------------------------------------------------------------------------------------- */
   const { auth } = useAuth();
   const [subtasks, setSubtasks] = useState([]);
@@ -42,12 +77,17 @@ function Task({ taskData, onDelete, onEdit, refreshTasks }) {
   const [anchorEl, setAnchorEl] = React.useState(null); //controller: modify task drop down list
   const open = Boolean(anchorEl); //controller: modify task drop down list
   const [openDeleteConfirm, setOpenDeleteConfirm] = useState(false);
+  const [openModifyTask, setOpenModifyTask] = useState(false);
+  const handleCloseModifyTask = () => {
+    setOpenModifyTask(false);
+  };
   const handleOpenDeleteConfirm = () => {
     setOpenDeleteConfirm(true);
   };
   const handleCloseDeleteConfirm = () => {
     setOpenDeleteConfirm(false);
   };
+  const [modifiedTask, setModifiedTask] = useState(taskData);
 
   // Used to reference the current task being dragged
   const elementRef = useRef(null);
@@ -116,6 +156,19 @@ function Task({ taskData, onDelete, onEdit, refreshTasks }) {
   const handleDeleteTask = () => {
     setOpenDeleteConfirm(true);
   };
+
+  const handleModifyTask = () => {
+    setOpenModifyTask(true);
+  };
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setModifiedTask((prevState) => ({
+      ...prevState,
+      [name]: value,
+    }));
+  };
+
   /* End of Helper Methods-------------------------------------------------------------------------------------------------------------------- */
 
   /* Request Declaration-------------------------------------------------------------------------------------------------------------------- */
@@ -151,7 +204,7 @@ function Task({ taskData, onDelete, onEdit, refreshTasks }) {
       const response = await axios.put(url, subtask, {
         headers: { Authorization: `Bearer ${auth.user.userJWT}` },
       });
-      console.log("Subtask status updated:", response.data);
+      console.log("Subtask status updated:");
       refreshTasks(); // Refresh the task list to reflect changes
     } catch (error) {
       console.error("Error updating subtask status:", error);
@@ -171,7 +224,7 @@ function Task({ taskData, onDelete, onEdit, refreshTasks }) {
           Authorization: `Bearer ${auth.user.userJWT}`,
         },
       });
-      console.log("Task deleted successfully:", response.data);
+      // console.log("Task deleted successfully. ");
       refreshTasks(); // Refresh the tasks to reflect the deletion
     } catch (error) {
       console.error("Error deleting the task:", error);
@@ -180,6 +233,35 @@ function Task({ taskData, onDelete, onEdit, refreshTasks }) {
       handleCloseTaskMenu(); // Close the task menu
     }
   };
+
+  // PUT Method to update a task
+  const modifyTask = async () => {
+    const url = `${ENDPOINT_URL}tasks/updateTask?taskId=${taskData.taskID}&username=${modifiedTask.assignee}`;
+    let dateObject = new Date(modifiedTask.expectedCompleteTime);
+    let isoDateString = dateObject ? dateObject.toISOString() : null;
+    const payload = {
+      title: modifiedTask.title,
+      status: modifiedTask.status,
+      taskPoints: modifiedTask.taskPoints,
+      expectedCompleteTime: isoDateString,
+    };
+    console.log(payload);
+    try {
+      const response = await axios.put(url, payload, {
+        headers: {
+          Authorization: `Bearer ${auth.user.userJWT}`,
+        },
+      });
+      console.log("Task updated successfully.");
+      refreshTasks(); // Refresh the task list to reflect changes
+    } catch (error) {
+      console.error("Error updating task:", error);
+    } finally {
+      setBackdropOpen(false);
+      handleCloseModifyTask(); // Close the modify task modal
+    }
+  };
+
   /* End of Request Declaration-------------------------------------------------------------------------------------------------------------------- */
 
   return (
@@ -190,6 +272,121 @@ function Task({ taskData, onDelete, onEdit, refreshTasks }) {
       >
         <CircularProgress color="inherit" />
       </Backdrop>
+      {/* Modify Task Pop Up Window */}
+      <Modal
+        open={openModifyTask}
+        onClose={handleCloseModifyTask}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+      >
+        <Box sx={modalStyle}>
+          <Typography
+            id="modal-modal-title"
+            variant="h6"
+            component="h2"
+            style={{ fontFamily: "Inter, sans-serif" }}
+          >
+            Modifying Task
+          </Typography>
+          <Grid container>
+            {/* taskData.title */}
+            <Grid item xs={12}>
+              <TextField
+                id="task-title"
+                name="title"
+                label="Task Title"
+                multiline
+                rows={1}
+                sx={textfieldStyle}
+                value={modifiedTask.title}
+                onChange={handleInputChange}
+              />
+            </Grid>
+            {/* taskData.taskPoints */}
+            <Grid item xs={12} marginTop="15px">
+              <span>Task Points: </span>
+              <input
+                type="number"
+                id="task-points"
+                name="taskPoints"
+                value={modifiedTask.taskPoints}
+                onChange={handleInputChange}
+                style={{
+                  marginLeft: "10px",
+                  padding: "10px",
+                  border: "1px solid #ADB5BD",
+                  borderRadius: "4px",
+                }}
+              />
+            </Grid>
+            {/* taskData.assignee */}
+            <Grid item xs={12} marginTop="15px">
+              <select
+                name="assignee"
+                value={modifiedTask.assignee}
+                onChange={handleInputChange}
+                style={{
+                  width: "100%",
+                  padding: "10px",
+                  fontFamily: "Inter, sans-serif",
+                  border: "1px solid #ADB5BD",
+                  borderRadius: "4px",
+                }}
+              >
+                <option value="Unassigned">Unassigned</option>
+                {users.map((user, index) => (
+                  <option key={index} value={user}>
+                    {user}
+                  </option>
+                ))}
+              </select>
+            </Grid>
+            {/* taskData.expectedCompleteTime */}
+            <Grid item xs={12} marginTop="15px">
+              <span>Due date: </span>
+              <input
+                type="date"
+                id="expected)completeTime"
+                name="expectedCompleteTime"
+                value={modifiedTask.expectedCompleteTime}
+                onChange={handleInputChange}
+                style={{
+                  marginLeft: "10px",
+                  padding: "10px",
+                  border: "1px solid #ADB5BD",
+                  borderRadius: "4px",
+                  fontFamily: "Inter, sans-serif",
+                }}
+              />
+            </Grid>
+          </Grid>
+          <Grid container marginTop={5}>
+            <Grid item xs={6}>
+              <Button
+                variant="outlined"
+                color="inherit"
+                onClick={() => {
+                  handleCloseModifyTask();
+                  handleCloseTaskMenu();
+                }}
+              >
+                Cancel
+              </Button>
+            </Grid>
+            <Grid item xs={6}>
+              <Button
+                variant="outlined"
+                color="error"
+                onClick={() => {
+                  modifyTask();
+                }}
+              >
+                Submit Change
+              </Button>
+            </Grid>
+          </Grid>
+        </Box>
+      </Modal>
       {/* Delete Task Confirmation Pop Up Window */}
       <Modal
         open={openDeleteConfirm}
@@ -305,7 +502,7 @@ function Task({ taskData, onDelete, onEdit, refreshTasks }) {
               }}
             >
               <MenuItem
-                onClick={handleCloseTaskMenu}
+                onClick={handleModifyTask}
                 style={{ fontFamily: "Inter, sans-serif", fontSize: "14px" }}
               >
                 <EditIcon sx={{ marginRight: 1 }} />
@@ -332,6 +529,7 @@ function Task({ taskData, onDelete, onEdit, refreshTasks }) {
           <ul className={"subtaskList"}>
             {taskData.subtaskList.map((subtask, index) => (
               <Tooltip
+                key={subtask.taskID}
                 title={
                   <Typography
                     style={{
@@ -346,7 +544,7 @@ function Task({ taskData, onDelete, onEdit, refreshTasks }) {
                 placement="top"
                 TransitionProps={{ timeout: 600 }}
               >
-                <li className={"subtask"} key={subtask.taskID}>
+                <li className={"subtask"}>
                   <input
                     type="checkbox"
                     style={{ display: "none" }}
@@ -355,6 +553,7 @@ function Task({ taskData, onDelete, onEdit, refreshTasks }) {
                     onChange={() => handleCheckboxChange(subtask)}
                   />
                   <label
+                    key={subtask.taskID}
                     htmlFor={`custom-checkbox-${subtask.taskID}`}
                     style={{
                       display: "inline-block",
@@ -394,9 +593,9 @@ function Task({ taskData, onDelete, onEdit, refreshTasks }) {
             <img className="icon" src={points_icon}></img>
             {taskData.taskPoints}
           </span>
-          <span className="dueDateLabel">
+          <span className="expectedCompleteTimeLabel">
             <img className="icon" src={calendar_icon}></img>
-            {taskData.dueDate}
+            {taskData.expectedCompleteTime}
           </span>
         </div>
       </div>
