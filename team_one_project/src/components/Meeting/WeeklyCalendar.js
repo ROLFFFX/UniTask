@@ -44,7 +44,7 @@ const styles = {
   wrap: {
     justifyContent: "center",
     alignItems: "center",
-    //height: "100vh",
+    width: "90%",
     padding: "0 50px",
   },
   calendar: {
@@ -55,7 +55,6 @@ const styles = {
     display: "flex",
     alignItems: "center",
     width: "100%",
-    maxWidth: "800px",
     marginTop: "10px",
   },
 };
@@ -679,8 +678,8 @@ const WeeklyCalendar = () => {
     setStartDate(startDate.addDays(7));
   };
 
-  const [anchorEl, setAnchorEl] = useState(null);
-  const openn = Boolean(anchorEl);
+  const [tipsOpen, setTipsOpen] = useState(null);
+  const openn = Boolean(tipsOpen);
 
   // UseEffect for setting up calendar events
   useEffect(() => {
@@ -762,29 +761,20 @@ const WeeklyCalendar = () => {
           ) : (
             <div>
               <button
-                onClick={(e) => setAnchorEl(e.currentTarget)}
+                onClick={(e) => setTipsOpen(e.currentTarget)}
                 aria-owns={openn ? "mouse-over-popover" : undefined}
                 aria-haspopup="true"
               >
                 Start A Group Availability Poll
               </button>
-              <Popover
-                id={"reminder-popper"}
+              <Dialog
+                id={"reminder-dialog"}
                 open={openn}
-                anchorEl={anchorEl}
-                anchorOrigin={{
-                  vertical: "bottom",
-                  horizontal: "left",
-                }}
-                transformOrigin={{
-                  vertical: "top",
-                  horizontal: "left",
-                }}
-                onClose={() => setAnchorEl(null)}
+                onClose={() => setTipsOpen(null)}
               >
                 <List>
                   <ListItem>
-                    <ListItemText primary="Tip:" />
+                    <ListItemText primary="Tips" />
                     <Button
                       id={"proceed-to-poll"}
                       onClick={() => navigate("/meeting/selectmeeting")}
@@ -801,13 +791,16 @@ const WeeklyCalendar = () => {
                     <ListItemText primary="and don't forget to *confirm your selection* ✅ before leaving the page!" />
                   </ListItem>
                   <ListItem>
-                    <ListItemText primary="Once done, common available times will be displayed on this page," />
+                    <ListItemText primary="Common available time will be displayed on this group event calendar," />
+                  </ListItem>
+                  <ListItem>
+                    <ListItemText primary="as well as members who has submitted to the availability poll," />
                   </ListItem>
                   <ListItem>
                     <ListItemText primary="so that you can come back and schedule your group events accordingly." />
                   </ListItem>
                 </List>
-              </Popover>
+              </Dialog>
             </div>
           )}
           <Button aria-label="help" onClick={handleGuideOpen}>
@@ -960,7 +953,7 @@ const WeeklyCalendar = () => {
             </Accordion>
           </DialogContent>
           <DialogActions>
-            <Button onClick={handleGuideClose} color="secondary">
+            <Button onClick={handleGuideClose} color="secondary" variant="contained">
               Got it! Don't Show This Again
             </Button>
           </DialogActions>
