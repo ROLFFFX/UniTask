@@ -3,15 +3,13 @@
   .calendar {
     width: 90%;
     height: 100%;
-    border: 1px solid #eee;
     padding: 20px;
-    background-color: 	whitesmoke;
   }
 
   .upper{
     display: flex;
     flex-direction: row;
-    margin-bottom: 30px;
+    margin-bottom: 20px;
   }
 
   .lower{
@@ -23,6 +21,8 @@
     display: grid;
     grid-template-columns: 60px repeat(7, 1fr);
     overflow-y: auto;
+    grid-gap: 0;
+    border: 2px solid lightgray;
   }
 
   .cell {
@@ -60,10 +60,15 @@
     display: contents;
   }
 
+  .actions button{
+    margin-bottom: 5px;
+  }
+
   .button-prev {
     background-color: black;
     color: white;
     border: none;
+    height: 40px;
     padding: 10px 15px;
     cursor: pointer;
     transition: background-color 0.3s;
@@ -77,6 +82,7 @@
     background-color: black;
     color: white;
     border: none;
+    height: 40px;
     padding: 10px 15px;
     cursor: pointer;
     transition: background-color 0.3s;
@@ -91,6 +97,7 @@
     color: white;
     border: none;
     padding: 10px 15px;
+    height: 40px;
     cursor: pointer;
     transition: background-color 0.3s;
     margin-right: 10px;
@@ -104,6 +111,7 @@
     color: white;
     border: none;
     padding: 10px 15px;
+    height: 40px;
     cursor: pointer;
     transition: background-color 0.3s;
     margin-right: 10px;
@@ -117,6 +125,7 @@
     background-color: black;
     color: white;
     border: none;
+    height: 40px;
     padding: 10px 15px;
     cursor: pointer;
     transition: background-color 0.3s;
@@ -134,6 +143,7 @@
     background-color: black;
     color: white;
     border: none;
+    height: 40px;
     padding: 10px 15px;
     cursor: pointer;
   }
@@ -144,6 +154,7 @@
   .week-navigation-timeslots {
     display:flex;
     flex-direction: row;
+    align-items: center;
   }
 
   .week-navigation-timeslots button {

@@ -257,11 +257,6 @@ const toggleSlotSelection = (day, time) => {
     setIsModalOpen(false);  // Close the modal
   };
 
-  const handleGoBackToWeeklyCalendar = () => {
-    // Navigate to the route where your weekly calendar is located
-    navigate("/meeting");
-  };
-
 
   return (
     <div className="mainMeetingContainer">
@@ -349,9 +344,6 @@ const toggleSlotSelection = (day, time) => {
         <DialogContent>
           <p>Your time slots have been successfully selected.</p>
         </DialogContent>
-        {/*<DialogActions>
-          <Button onClick={handleGoBackToWeeklyCalendar}>Go Back to Weekly Calendar</Button>
-        </DialogActions>*/}
       </Dialog> 
       
       <Dialog open={isFailureModalOpen} onClose={() => setIsFailureModalOpen(false)}>
