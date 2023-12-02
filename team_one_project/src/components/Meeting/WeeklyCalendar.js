@@ -44,7 +44,7 @@ const styles = {
   wrap: {
     justifyContent: "center",
     alignItems: "center",
-    //height: "100vh",
+    width: "90%",
     padding: "0 50px",
   },
   calendar: {
@@ -55,8 +55,7 @@ const styles = {
     display: "flex",
     alignItems: "center",
     width: "100%",
-    maxWidth: "800px",
-    marginTop: "10px",
+    marginTop: "20px",
   },
 };
 
@@ -628,6 +627,7 @@ const WeeklyCalendar = () => {
       } catch (error) {
         console.error("Error clearing available time slots:", error);
       }
+      clearSelection();
     });
   };
 
@@ -673,14 +673,16 @@ const WeeklyCalendar = () => {
 
   const goToPreviousWeek = () => {
     setStartDate(startDate.addDays(-7));
+    clearSelection();
   };
 
   const goToNextWeek = () => {
     setStartDate(startDate.addDays(7));
+    clearSelection();
   };
 
-  const [anchorEl, setAnchorEl] = useState(null);
-  const openn = Boolean(anchorEl);
+  const [tipsOpen, setTipsOpen] = useState(null);
+  const openn = Boolean(tipsOpen);
 
   // UseEffect for setting up calendar events
   useEffect(() => {
@@ -720,17 +722,18 @@ const WeeklyCalendar = () => {
         <List
           className={"membersListWrap"}
           disablePadding
-          subheader={
-            <ListSubheader component="div" id="nested-list-subheader">
-              There's a Group Availability Poll in Progress... Members Who Have
-              Submitted Their Available Time:
-            </ListSubheader>
-          }
         >
+          <ListItem>
+            <ListItemText primary={
+              <Typography color="secondary">
+                There's a Group Availability Poll in Progress... Members Who Have Submitted Their Available Time:
+              </Typography>
+            }/>
+          </ListItem>
           <ListItem>
             <List className={"membersList"}>
               {membersList.map((name, index) => (
-                <ListItem key={index}>
+                <ListItem key={index} className={"membersList-item"}>
                   <ListItemText primary={name} />
                 </ListItem>
               ))}
@@ -741,89 +744,69 @@ const WeeklyCalendar = () => {
       <div className="week-navigation" style={styles.wrap}>
         <div className="button-row" style={styles.header}>
           <h1>Group Events Schedule</h1>
-          <button className="button-prev" onClick={goToPreviousWeek}>
-            &lt; Previous Week
-          </button>
-          <button className="button-next" onClick={goToNextWeek}>
-            Next Week &gt;
-          </button>
-          {inSession ? (
-            <div>
-              <button onClick={() => navigate("/meeting/selectmeeting")}>
-                Submit Your Available Time
-              </button>
-              <button
-                className="button-clear-slots"
-                onClick={clearAvailableSlots}
-              >
-                End Poll
-              </button>
-            </div>
-          ) : (
-            <div>
-              <button
-                onClick={(e) => setAnchorEl(e.currentTarget)}
-                aria-owns={openn ? "mouse-over-popover" : undefined}
-                aria-haspopup="true"
-              >
-                Start A Group Availability Poll
-              </button>
-              <Popover
-                id={"reminder-popper"}
-                open={openn}
-                anchorEl={anchorEl}
-                anchorOrigin={{
-                  vertical: "bottom",
-                  horizontal: "left",
-                }}
-                transformOrigin={{
-                  vertical: "top",
-                  horizontal: "left",
-                }}
-                onClose={() => setAnchorEl(null)}
-              >
-                <List>
-                  <ListItem>
-                    <ListItemText primary="Tip:" />
-                    <Button
-                      id={"proceed-to-poll"}
-                      onClick={() => navigate("/meeting/selectmeeting")}
-                      color="secondary"
-                      variant="contained"
-                    >
-                      Got it! Proceed to Poll
-                    </Button>
-                  </ListItem>
-                  <ListItem>
-                    <ListItemText primary="Please *remind your team* ⏰ 👥 to submit their available time," />
-                  </ListItem>
-                  <ListItem>
-                    <ListItemText primary="and don't forget to *confirm your selection* ✅ before leaving the page!" />
-                  </ListItem>
-                  <ListItem>
-                    <ListItemText primary="Once done, common available times will be displayed on this page," />
-                  </ListItem>
-                  <ListItem>
-                    <ListItemText primary="so that you can come back and schedule your group events accordingly." />
-                  </ListItem>
-                </List>
-              </Popover>
-            </div>
-          )}
-          <Button aria-label="help" onClick={handleGuideOpen}>
-            <HelpOutlineIcon />
-          </Button>
+          <div className={"header-right"}>
+            {inSession ? (
+              <div>
+                <button onClick={() => navigate("/meeting/selectmeeting")}>
+                  Submit Your Available Time
+                </button>
+                <button
+                  className="button-clear-slots"
+                  onClick={clearAvailableSlots}
+                >
+                  End Poll
+                </button>
+              </div>
+            ) : (
+              <div>
+                <button
+                  onClick={(e) => setTipsOpen(e.currentTarget)}
+                  aria-owns={openn ? "mouse-over-popover" : undefined}
+                  aria-haspopup="true"
+                >
+                  Start A Group Availability Poll
+                </button>
+                <Dialog
+                  id={"reminder-dialog"}
+                  open={openn}
+                  onClose={() => setTipsOpen(null)}
+                >
+                  <List>
+                    <ListItem>
+                      <ListItemText primary="Tips" />
+                      <Button
+                        id={"proceed-to-poll"}
+                        onClick={() => navigate("/meeting/selectmeeting")}
+                        color="secondary"
+                        variant="contained"
+                      >
+                        Got it! Proceed to Poll
+                      </Button>
+                    </ListItem>
+                    <ListItem>
+                      <ListItemText primary="Please *remind your team* ⏰ 👥 to submit their available time," />
+                    </ListItem>
+                    <ListItem>
+                      <ListItemText primary="and don't forget to *confirm your selection* ✅ before leaving the page!" />
+                    </ListItem>
+                    <ListItem>
+                      <ListItemText primary="Common available time will be displayed on this group event calendar," />
+                    </ListItem>
+                    <ListItem>
+                      <ListItemText primary="as well as members who has submitted to the availability poll," />
+                    </ListItem>
+                    <ListItem>
+                      <ListItemText primary="so that you can come back and schedule your group events accordingly." />
+                    </ListItem>
+                  </List>
+                </Dialog>
+              </div>
+            )}
+            <Button aria-label="help" onClick={handleGuideOpen}>
+              <HelpOutlineIcon />
+            </Button>
+          </div>
         </div>
-        {selectedRange ? (
-          <div className="below-header">
-            <Button onClick={createMeeting}>Create Event</Button>
-            <Button onClick={clearSelection}>Cancel</Button>
-          </div>
-        ) : (
-          <div>
-            <div className={"button-placeholder"} />
-          </div>
-        )}
         <Dialog
           open={guide}
           onClose={handleGuideClose}
@@ -960,11 +943,39 @@ const WeeklyCalendar = () => {
             </Accordion>
           </DialogContent>
           <DialogActions>
-            <Button onClick={handleGuideClose} color="secondary">
+            <Button onClick={handleGuideClose} color="secondary" variant="contained">
               Got it! Don't Show This Again
             </Button>
           </DialogActions>
         </Dialog>
+        {selectedRange ? (
+          <div className="below-header">
+            <Button className={"button-create"}
+                    onClick={createMeeting}
+                    color="secondary"
+                    variant="contained">
+              Create Event
+            </Button>
+            <Button className={"button-cancel"}
+                    onClick={clearSelection}
+                    color="secondary"
+                    variant="contained">
+              Cancel
+            </Button>
+          </div>
+        ) : (
+          <div>
+            <div className={"button-placeholder"} />
+          </div>
+        )}
+        <div className="prev-next">
+          <button className="button-prev" onClick={goToPreviousWeek}>
+              &lt; Previous Week
+          </button>
+          <button className="button-next" onClick={goToNextWeek}>
+              Next Week &gt;
+          </button>
+        </div>
         <DayPilotCalendar
           key={calendarConfig.cellDuration}
           style={styles.calendar}

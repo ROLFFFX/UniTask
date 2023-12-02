@@ -2,16 +2,27 @@
 
   .calendar {
     width: 90%;
-    border: 1px solid #eee;
+    height: 100%;
     padding: 20px;
-    background-color: 	whitesmoke;
+  }
+
+  .upper{
+    display: flex;
+    flex-direction: row;
+    margin-bottom: 20px;
+  }
+
+  .lower{
+    display: flex;
+    flex-direction: column;
   }
 
   .grid {
     display: grid;
     grid-template-columns: 60px repeat(7, 1fr);
-    max-height: 400px;
     overflow-y: auto;
+    grid-gap: 0;
+    border: 2px solid lightgray;
   }
 
   .cell {
@@ -37,6 +48,7 @@
 
   .timeLabel {
     font-weight: bold;
+    font-size: small;
     background-color: black;
   }
 
@@ -48,10 +60,15 @@
     display: contents;
   }
 
+  .actions button{
+    margin-bottom: 5px;
+  }
+
   .button-prev {
     background-color: black;
     color: white;
     border: none;
+    height: 40px;
     padding: 10px 15px;
     cursor: pointer;
     transition: background-color 0.3s;
@@ -65,6 +82,7 @@
     background-color: black;
     color: white;
     border: none;
+    height: 40px;
     padding: 10px 15px;
     cursor: pointer;
     transition: background-color 0.3s;
@@ -74,37 +92,40 @@
     background-color: grey;
   }
 
-  .button-clear {
+  .button-page {
     background-color:black;
     color: white;
     border: none;
     padding: 10px 15px;
+    height: 40px;
     cursor: pointer;
     transition: background-color 0.3s;
     margin-right: 10px;
   }
 
-  .button-clear:hover {
-    background-color: red;
+  .button-page:hover {
+    background-color: #1B9AAA;
   }
    .button-delete{
     background-color: black;
     color: white;
     border: none;
     padding: 10px 15px;
+    height: 40px;
     cursor: pointer;
     transition: background-color 0.3s;
     margin-right: 10px;
    }
 
    .button-delete:hover{
-    background-color: red;
+    background-color: #EF476F;
    }
 
   .button-confirm {
     background-color: black;
     color: white;
     border: none;
+    height: 40px;
     padding: 10px 15px;
     cursor: pointer;
     transition: background-color 0.3s;
@@ -112,7 +133,7 @@
   }
 
   .button-confirm:hover {
-    background-color: #45a049;
+    background-color: #06D6A0;
   }
 
   .timeSlot:hover {
@@ -122,6 +143,7 @@
     background-color: black;
     color: white;
     border: none;
+    height: 40px;
     padding: 10px 15px;
     cursor: pointer;
   }
@@ -132,6 +154,7 @@
   .week-navigation-timeslots {
     display:flex;
     flex-direction: row;
+    align-items: center;
   }
 
   .week-navigation-timeslots button {
