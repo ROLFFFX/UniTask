@@ -49,7 +49,6 @@ const styles = {
   },
   calendar: {
     width: "100%",
-    maxWidth: "800px",
   },
   header: {
     display: "flex",
@@ -976,15 +975,17 @@ const WeeklyCalendar = () => {
               Next Week &gt;
           </button>
         </div>
-        <DayPilotCalendar
-          key={calendarConfig.cellDuration}
-          style={styles.calendar}
-          {...calendarConfig}
-          ref={calendarRef}
-          onTimeRangeSelected={onTimeRangeSelected}
-          onEventResized={editEventTime}
-          onEventMoved={editEventTime}
-        />
+        <div className="calendar-wrapper">
+          <DayPilotCalendar
+            key={calendarConfig.cellDuration}
+            style={styles.calendar}
+            {...calendarConfig}
+            ref={calendarRef}
+            onTimeRangeSelected={onTimeRangeSelected}
+            onEventResized={editEventTime}
+            onEventMoved={editEventTime}
+          />
+        </div>
       </div>
     </div>
   );

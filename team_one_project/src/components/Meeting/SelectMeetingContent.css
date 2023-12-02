@@ -17,10 +17,15 @@
     flex-direction: column;
   }
 
+  .upperright-list{
+    margin-left: 20px;
+  }
+
   .grid {
     display: grid;
     grid-template-columns: 60px repeat(7, 1fr);
     overflow-y: auto;
+    max-height: calc(100vh - 375px);
     grid-gap: 0;
     border: 2px solid lightgray;
   }
@@ -54,6 +59,9 @@
 
   .headerRow {
     display: contents;
+    position: sticky;
+    top: 0;
+    z-index: 1;
   }
 
   .row {
