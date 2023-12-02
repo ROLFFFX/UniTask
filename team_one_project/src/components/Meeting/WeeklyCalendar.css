@@ -1,6 +1,7 @@
 /* adjusting the built-in theme */
 
 /* calendar event */
+
 .calendar_default_event_inner {
     background: #000000;
     color: #fff;
@@ -9,6 +10,12 @@
     padding: 2px;
     opacity: 0.4;
     pointer-events: none;
+}
+
+.calendar-wrapper{
+    width: 100%;
+    max-height: calc(100vh - 325px);
+    overflow-y: auto;
 }
 
 .prev-next {

@@ -268,7 +268,7 @@ const toggleSlotSelection = (day, time) => {
             </div>
             <div className="actions">
               <button className="button-page" onClick={handleGoToMainCalendar}>
-                    Back To Group Events Schedule
+                    Back To Group Schedule
               </button>
               <button className="button-delete" onClick={deleteAllUserTimeSlots}>
                 Clear All My Selections
