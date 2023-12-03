@@ -1,4 +1,32 @@
-/**
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: TeamProgress.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: TeamProgress.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/**
  * @fileoverview This file includes the TeamProgress component, which is used for
  * displaying a pie chart representation of task distribution among team members.
  * The center of pie chart renders the task member when user hover on the part of
@@ -20,9 +48,9 @@ function CustomLabel(props) {
   const { datum } = props;
   const tooltipText = `${datum.x}`;
   return (
-    <g>
-      <VictoryLabel {...props} />
-      <VictoryTooltip
+    &lt;g>
+      &lt;VictoryLabel {...props} />
+      &lt;VictoryTooltip
         {...props}
         text={tooltipText}
         x={200}
@@ -34,7 +62,7 @@ function CustomLabel(props) {
         flyoutHeight={100}
         flyoutStyle={{ fill: "black" }}
       />
-    </g>
+    &lt;/g>
   );
 }
 
@@ -57,10 +85,10 @@ CustomLabel.defaultEvents = VictoryTooltip.defaultEvents;
 export function TeamProgress(TaskDistributionData) {
   if (TaskDistributionData) {
     return (
-      <React.Fragment>
-        <Grid container maxHeight="calc((100vh - 64px)/2)" overflow="hidden">
+      &lt;React.Fragment>
+        &lt;Grid container maxHeight="calc((100vh - 64px)/2)" overflow="hidden">
           {/* Grid for entire Header */}
-          <Grid
+          &lt;Grid
             container
             item
             xs={12}
@@ -70,8 +98,8 @@ export function TeamProgress(TaskDistributionData) {
             }}
           >
             {/* Grid for Big Header */}
-            <Grid item xs={12}>
-              <Typography
+            &lt;Grid item xs={12}>
+              &lt;Typography
                 style={{
                   fontFamily: "Inter, sans-serif",
                   fontSize: "18px",
@@ -80,49 +108,72 @@ export function TeamProgress(TaskDistributionData) {
                 }}
               >
                 Task Distribution
-              </Typography>
-            </Grid>
+              &lt;/Typography>
+            &lt;/Grid>
             {/* Grid for intro under Big Header */}
-            <Grid item xs={12}>
-              <Typography
+            &lt;Grid item xs={12}>
+              &lt;Typography
                 style={{ fontFamily: "Inter, sans-serif", fontSize: "14px" }}
               >
                 Taskpoints Achieved by Team Members.
-              </Typography>
-            </Grid>
-          </Grid>
+              &lt;/Typography>
+            &lt;/Grid>
+          &lt;/Grid>
           {/*End of Grid for entire Header */}
           {/* Grid for Pie Chart */}
-          <Grid
+          &lt;Grid
             item
             xs={12}
             style={{
               height: "calc((100vh - 64px)/2 * 0.8)",
             }}
           >
-            <VictoryPie
+            &lt;VictoryPie
               style={{ labels: { fill: "white" } }}
               innerRadius={80}
               labelRadius={100}
               labels={({ datum }) => `${datum.y} pts`}
-              labelComponent={<CustomLabel />}
+              labelComponent={&lt;CustomLabel />}
               data={TaskDistributionData.TaskDistributionData}
             />
-          </Grid>
+          &lt;/Grid>
           {/* End of Grid for Pie Chart */}
-        </Grid>
-      </React.Fragment>
+        &lt;/Grid>
+      &lt;/React.Fragment>
     );
   } else {
     return (
-      <React.Fragment>
-        <Backdrop
+      &lt;React.Fragment>
+        &lt;Backdrop
           sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }}
           open={true}
         >
-          <CircularProgress color="inherit" />
-        </Backdrop>
-      </React.Fragment>
+          &lt;CircularProgress color="inherit" />
+        &lt;/Backdrop>
+      &lt;/React.Fragment>
     );
   }
 }
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#CustomLabel">CustomLabel</a></li><li><a href="global.html#DashboardContent">DashboardContent</a></li><li><a href="global.html#InterpolationSelect">InterpolationSelect</a></li><li><a href="global.html#PersonalChart">PersonalChart</a></li><li><a href="global.html#TeamProgress">TeamProgress</a></li><li><a href="global.html#calculateTrendLineData">calculateTrendLineData</a></li><li><a href="global.html#formatDateToMonthDay">formatDateToMonthDay</a></li><li><a href="global.html#processPersonalTaskData">processPersonalTaskData</a></li><li><a href="global.html#processTaskData">processTaskData</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.2</a> on Sun Dec 03 2023 00:15:57 GMT-0500 (Eastern Standard Time)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

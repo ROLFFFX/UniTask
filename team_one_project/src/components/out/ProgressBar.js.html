@@ -1,4 +1,32 @@
-/**
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: ProgressBar.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: ProgressBar.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/**
  * @fileoverview This file includes the ProgressBar component, used for displaying
  * a progress checker which occupies the bottom right section of dashboard. It offers
  * a toggle between circular and linear progress views. It's solely an intermediate
@@ -12,16 +40,16 @@ import AnimatedProgressBar from "./AnimatedProgressBar";
 import HorizontalBarChart from "./HorizontalBarChart";
 
 const GreySwitch = styled(Switch)(({ theme }) => ({
-  "& .MuiSwitch-switchBase.Mui-checked": {
+  "&amp; .MuiSwitch-switchBase.Mui-checked": {
     color: "#ADB5BD",
-    "&:hover": {
+    "&amp;:hover": {
       backgroundColor: "#ADB5BD",
     },
   },
-  "& .MuiSwitch-switchBase.Mui-checked + .MuiSwitch-track": {
+  "&amp; .MuiSwitch-switchBase.Mui-checked + .MuiSwitch-track": {
     backgroundColor: "#ADB5BD",
   },
-  "& .MuiSwitch-thumb": { backgroundColor: "#343A40" },
+  "&amp; .MuiSwitch-thumb": { backgroundColor: "#343A40" },
 }));
 
 /**
@@ -55,9 +83,9 @@ export default function ProgressBar(ProgressBarData) {
   };
 
   return (
-    <React.Fragment>
-      <Grid container maxHeight="calc((100vh - 64px)/2)" overflow="hidden">
-        <Grid
+    &lt;React.Fragment>
+      &lt;Grid container maxHeight="calc((100vh - 64px)/2)" overflow="hidden">
+        &lt;Grid
           container
           item
           xs={12}
@@ -67,8 +95,8 @@ export default function ProgressBar(ProgressBarData) {
           }}
         >
           {/* Grid for Big Header */}
-          <Grid item xs={12}>
-            <Typography
+          &lt;Grid item xs={12}>
+            &lt;Typography
               style={{
                 fontFamily: "Inter, sans-serif",
                 fontSize: "18px",
@@ -76,27 +104,27 @@ export default function ProgressBar(ProgressBarData) {
               }}
             >
               Progress Checker
-            </Typography>
-          </Grid>
+            &lt;/Typography>
+          &lt;/Grid>
           {/* Grid for intro under Big Header */}
-          <Grid item xs={9}>
-            <Typography
+          &lt;Grid item xs={9}>
+            &lt;Typography
               style={{ fontFamily: "Inter, sans-serif", fontSize: "14px" }}
               align="right"
               marginTop={1}
             >
               See You Progress in Circular/Linear View:
-            </Typography>
-          </Grid>
-          <Grid item xs={3}>
-            <Box align="left">
-              <GreySwitch onChange={handleSwitchChange} />
-            </Box>
-          </Grid>
-        </Grid>
+            &lt;/Typography>
+          &lt;/Grid>
+          &lt;Grid item xs={3}>
+            &lt;Box align="left">
+              &lt;GreySwitch onChange={handleSwitchChange} />
+            &lt;/Box>
+          &lt;/Grid>
+        &lt;/Grid>
         {/*End of Grid for entire Header */}
         {/* Grid for Progress Circle and Linear Progresses */}
-        <Grid
+        &lt;Grid
           container
           item
           xs={12}
@@ -109,18 +137,41 @@ export default function ProgressBar(ProgressBarData) {
           }}
         >
           {isSwitched ? (
-            <Grid item xs={12}>
+            &lt;Grid item xs={12}>
               {/* Display when hovered */}
-              <HorizontalBarChart progressData={ProgressBarData} />
-            </Grid>
+              &lt;HorizontalBarChart progressData={ProgressBarData} />
+            &lt;/Grid>
           ) : (
-            <Grid item xs={12}>
+            &lt;Grid item xs={12}>
               {/* Default display when not hovered */}
-              <AnimatedProgressBar progressData={ProgressBarData} />
-            </Grid>
+              &lt;AnimatedProgressBar progressData={ProgressBarData} />
+            &lt;/Grid>
           )}
-        </Grid>
-      </Grid>
-    </React.Fragment>
+        &lt;/Grid>
+      &lt;/Grid>
+    &lt;/React.Fragment>
   );
 }
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#CustomLabel">CustomLabel</a></li><li><a href="global.html#DashboardContent">DashboardContent</a></li><li><a href="global.html#InterpolationSelect">InterpolationSelect</a></li><li><a href="global.html#PersonalChart">PersonalChart</a></li><li><a href="global.html#TeamProgress">TeamProgress</a></li><li><a href="global.html#calculateTrendLineData">calculateTrendLineData</a></li><li><a href="global.html#formatDateToMonthDay">formatDateToMonthDay</a></li><li><a href="global.html#processPersonalTaskData">processPersonalTaskData</a></li><li><a href="global.html#processTaskData">processTaskData</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.2</a> on Sun Dec 03 2023 00:15:57 GMT-0500 (Eastern Standard Time)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

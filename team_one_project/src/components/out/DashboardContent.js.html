@@ -1,4 +1,32 @@
-/**
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: DashboardContent.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: DashboardContent.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/**
  * @fileoverview This file includes the DashboardContent component, which defines the
  * entire content you will see in dashboard page. It performs multipurposely as an
  * intermediate stage. It controls to toggle of view between "Data Visual View" and
@@ -208,7 +236,7 @@ export function DashboardContent() {
 
   // check if an object is an empty list
   function isEmptyList(obj) {
-    return Array.isArray(obj) && obj.length === 0;
+    return Array.isArray(obj) &amp;&amp; obj.length === 0;
   }
   /* End of Helper Functions Declarations-------------------------------------------------------------------------------------------------------------------- */
 
@@ -225,16 +253,16 @@ export function DashboardContent() {
   // Conditioanlly render page. If tasks is empty (according to server), indicate user to create first task.
   if (isEmptyList(allTasks)) {
     return (
-      <React.Fragment>
-        <Grid container>
-          <Grid item xs={12}>
-            <Box
+      &lt;React.Fragment>
+        &lt;Grid container>
+          &lt;Grid item xs={12}>
+            &lt;Box
               display="flex"
               justifyContent="center"
               alignItems="end"
               height="calc((100vh - 64px)/2)"
             >
-              <Typography
+              &lt;Typography
                 style={{
                   fontFamily: "Inter, sans-serif",
                   fontSize: "20px",
@@ -243,18 +271,18 @@ export function DashboardContent() {
               >
                 Dashboard is currently unavailable, please come back after you
                 create your first task!
-              </Typography>
-            </Box>
-          </Grid>
-          <Grid item xs={12}>
-            <Box
+              &lt;/Typography>
+            &lt;/Box>
+          &lt;/Grid>
+          &lt;Grid item xs={12}>
+            &lt;Box
               display="flex"
               justifyContent="center"
               alignItems="start"
               height="calc((100vh - 64px)/2)"
               mt={4}
             >
-              <Button
+              &lt;Button
                 variant="outlined"
                 color="inherit"
                 onClick={() => {
@@ -262,42 +290,42 @@ export function DashboardContent() {
                 }}
               >
                 Create My First Task
-              </Button>
-            </Box>
-          </Grid>
-        </Grid>
-      </React.Fragment>
+              &lt;/Button>
+            &lt;/Box>
+          &lt;/Grid>
+        &lt;/Grid>
+      &lt;/React.Fragment>
     );
   }
   // Conditionally render page. If data is ready, render page.
   if (
-    TaskDistributionData &&
-    ProgressBarData &&
-    formattedTeamMembers &&
+    TaskDistributionData &amp;&amp;
+    ProgressBarData &amp;&amp;
+    formattedTeamMembers &amp;&amp;
     allTasks
   ) {
     return (
-      <React.Fragment>
+      &lt;React.Fragment>
         {/* loading state */}
-        <Backdrop
+        &lt;Backdrop
           sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }}
           open={backdropOpen}
         >
-          <CircularProgress color="inherit" />
-        </Backdrop>
+          &lt;CircularProgress color="inherit" />
+        &lt;/Backdrop>
         {/* Box for entire page excluding nav bars on top and left */}
-        <Box
+        &lt;Box
           style={{
             height: "calc(100vh - 64px)", // overall height of entire Box on left. top nav bar is 64px
             overflowY: "hide",
             maxHeight: "calc(100vh - 64px)",
           }}
         >
-          <Grid container>
+          &lt;Grid container>
             {/* Grid For Left Side Bar */}
-            <Grid container item xs={8} style={{ position: "relative" }}>
+            &lt;Grid container item xs={8} style={{ position: "relative" }}>
               {/* Grid for task list */}
-              <Grid
+              &lt;Grid
                 item
                 xs={12}
                 height="calc(100vh - 64px)"
@@ -307,14 +335,14 @@ export function DashboardContent() {
               >
                 {/* Conditionally renders two views according to toggleView state.  */}
                 {toggleView === "Table Task View" ? (
-                  <TaskView
+                  &lt;TaskView
                     taskData={allTasks}
                     formattedTeamMembers={formattedTeamMembers}
                     toggleView={toggleView}
                     onToggleViewChange={handleToggleViewChange}
                   />
                 ) : (
-                  <DataVisualization
+                  &lt;DataVisualization
                     taskData={allTasks}
                     formattedTeamMembers={formattedTeamMembers}
                     toggleView={toggleView}
@@ -322,8 +350,8 @@ export function DashboardContent() {
                     workspaceCreationTime={creationTime}
                   />
                 )}
-              </Grid>
-              <Divider
+              &lt;/Grid>
+              &lt;Divider
                 orientation="vertical"
                 flexItem
                 style={{
@@ -334,40 +362,63 @@ export function DashboardContent() {
                   zIndex: 1, // adjust z-index as needed
                 }}
               />
-            </Grid>
+            &lt;/Grid>
 
-            <Grid item container xs={4}>
-              <Grid
+            &lt;Grid item container xs={4}>
+              &lt;Grid
                 item
                 xs={12}
                 height="calc((100vh - 64px)/2)"
                 maxHeight="calc((100vh - 64px)/2)"
                 overflow="hidden"
               >
-                <TeamProgress TaskDistributionData={TaskDistributionData} />
-              </Grid>
-              <Grid
+                &lt;TeamProgress TaskDistributionData={TaskDistributionData} />
+              &lt;/Grid>
+              &lt;Grid
                 item
                 xs={12}
                 height="calc((100vh - 64px)/2)"
                 maxHeight="calc((100vh - 64px)/2)"
                 overflow="hidden"
               >
-                <ProgressBar progressBarData={ProgressBarData} />
-              </Grid>
-            </Grid>
-          </Grid>
-        </Box>
-      </React.Fragment>
+                &lt;ProgressBar progressBarData={ProgressBarData} />
+              &lt;/Grid>
+            &lt;/Grid>
+          &lt;/Grid>
+        &lt;/Box>
+      &lt;/React.Fragment>
     );
   } else {
     // Loading backdrop
     return (
-      <React.Fragment>
-        <Box display="flex" justifyContent="cneter" alignItems="center">
-          <LinearProgress color="neutral" variant={"soft"} />
-        </Box>
-      </React.Fragment>
+      &lt;React.Fragment>
+        &lt;Box display="flex" justifyContent="cneter" alignItems="center">
+          &lt;LinearProgress color="neutral" variant={"soft"} />
+        &lt;/Box>
+      &lt;/React.Fragment>
     );
   }
 }
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#CustomLabel">CustomLabel</a></li><li><a href="global.html#DashboardContent">DashboardContent</a></li><li><a href="global.html#InterpolationSelect">InterpolationSelect</a></li><li><a href="global.html#PersonalChart">PersonalChart</a></li><li><a href="global.html#TeamProgress">TeamProgress</a></li><li><a href="global.html#calculateTrendLineData">calculateTrendLineData</a></li><li><a href="global.html#formatDateToMonthDay">formatDateToMonthDay</a></li><li><a href="global.html#processPersonalTaskData">processPersonalTaskData</a></li><li><a href="global.html#processTaskData">processTaskData</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.2</a> on Sun Dec 03 2023 00:15:57 GMT-0500 (Eastern Standard Time)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

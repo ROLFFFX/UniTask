@@ -1,4 +1,32 @@
-/**
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: DataVisualization.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: DataVisualization.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/**
  * @fileoverview This file includes the DataVisualization component on the left,
  * which is used for rendering visual representations of data in a project management application.
  * It has Group Progression on top and Personal Progression at bottom. This function is solely
@@ -44,11 +72,11 @@ export default function DataVisualization(props) {
     setOpen(isOpen);
   }, []);
   return (
-    <React.Fragment>
+    &lt;React.Fragment>
       {/* Grid for entire Data Visualization Section */}
-      <Grid container alignItems="center" justifyContent="center">
+      &lt;Grid container alignItems="center" justifyContent="center">
         {/* Grid for header section. Including Text Header and toggled buttons */}
-        <Grid
+        &lt;Grid
           container
           item
           height="calc((100vh - 64px) * 0.1)" // 10% of page height excluding top nav bar
@@ -56,7 +84,7 @@ export default function DataVisualization(props) {
           overflow="hidden"
         >
           {/* Grid for text header */}
-          <Grid
+          &lt;Grid
             item
             xs={3}
             style={{
@@ -66,9 +94,9 @@ export default function DataVisualization(props) {
             }}
             position="relative"
           >
-            <Dropdown open={open} onOpenChange={handleOpenChange}>
+            &lt;Dropdown open={open} onOpenChange={handleOpenChange}>
               {/* Button for drop down menu. Content of button is current toggled mode. */}
-              <MenuButton
+              &lt;MenuButton
                 style={{
                   fontFamily: "Inter, sans-serif",
                   fontSize: "18px",
@@ -77,10 +105,10 @@ export default function DataVisualization(props) {
                 }}
               >
                 {props.toggleView}
-              </MenuButton>
+              &lt;/MenuButton>
               {/* Drop Down menu opened for button */}
-              <Menu>
-                <MenuItem
+              &lt;Menu>
+                &lt;MenuItem
                   style={{
                     fontFamily: "Inter, sans-serif",
                     fontSize: "14px",
@@ -88,8 +116,8 @@ export default function DataVisualization(props) {
                   onClick={() => props.onToggleViewChange("Data Visual View")}
                 >
                   Data Visualization
-                </MenuItem>
-                <MenuItem
+                &lt;/MenuItem>
+                &lt;MenuItem
                   style={{
                     fontFamily: "Inter, sans-serif",
                     fontSize: "14px",
@@ -97,11 +125,11 @@ export default function DataVisualization(props) {
                   onClick={() => props.onToggleViewChange("Table Task View")}
                 >
                   Table Task View
-                </MenuItem>
-              </Menu>
-            </Dropdown>
-          </Grid>
-          <Grid
+                &lt;/MenuItem>
+              &lt;/Menu>
+            &lt;/Dropdown>
+          &lt;/Grid>
+          &lt;Grid
             item
             xs={9}
             style={{
@@ -110,7 +138,7 @@ export default function DataVisualization(props) {
               alignItems: "center",
             }}
           >
-            <Typography
+            &lt;Typography
               style={{
                 fontFamily: "Inter, sans-serif",
                 fontSize: "14px",
@@ -118,23 +146,46 @@ export default function DataVisualization(props) {
               }}
             >
               Click "Data Visual View" to Change View Mode.
-            </Typography>
-          </Grid>
-        </Grid>
+            &lt;/Typography>
+          &lt;/Grid>
+        &lt;/Grid>
         {/* Grid for actual content */}
-        <Grid
+        &lt;Grid
           item
           height="calc((100vh - 64px) * 0.9)"
           maxHeight="calc((100vh - 64px) * 0.9)"
           overflow="hidden"
         >
-          <Divider />
-          <VisualCharts
+          &lt;Divider />
+          &lt;VisualCharts
             workspaceCreationTime={props.workspaceCreationTime}
             taskData={props.taskData}
           />
-        </Grid>
-      </Grid>
-    </React.Fragment>
+        &lt;/Grid>
+      &lt;/Grid>
+    &lt;/React.Fragment>
   );
 }
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#CustomLabel">CustomLabel</a></li><li><a href="global.html#DashboardContent">DashboardContent</a></li><li><a href="global.html#InterpolationSelect">InterpolationSelect</a></li><li><a href="global.html#PersonalChart">PersonalChart</a></li><li><a href="global.html#TeamProgress">TeamProgress</a></li><li><a href="global.html#calculateTrendLineData">calculateTrendLineData</a></li><li><a href="global.html#formatDateToMonthDay">formatDateToMonthDay</a></li><li><a href="global.html#processPersonalTaskData">processPersonalTaskData</a></li><li><a href="global.html#processTaskData">processTaskData</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.2</a> on Sun Dec 03 2023 00:15:57 GMT-0500 (Eastern Standard Time)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

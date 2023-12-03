@@ -1,4 +1,32 @@
-/**
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: TaskList.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: TaskList.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/**
  * @fileoverview This file includes the TaskList component, which is used
  * for displaying a list of tasks in a table format. It occupies the entire
  * right part of dashbaord when user is in dashbaord - table task view.
@@ -19,14 +47,14 @@ import "./TaskList.css";
 
 // Styling for entire background of Table Cell. Modifies font and color of head and body of table.
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
-  [`&.${tableCellClasses.head}`]: {
+  [`&amp;.${tableCellClasses.head}`]: {
     backgroundColor: "white",
     // color: theme.palette.common.white,
     fontSize: 12,
     fontFamily: "Inter, sans-serif",
     fontWeight: "bold",
   },
-  [`&.${tableCellClasses.body}`]: {
+  [`&amp;.${tableCellClasses.body}`]: {
     fontSize: 12,
     fontFamily: "Inter, sans-serif",
     backgroundColor: "white",
@@ -35,10 +63,10 @@ const StyledTableCell = styled(TableCell)(({ theme }) => ({
 
 // Styling for each row that the table renders. Modifies uniform bgcolor.
 const StyledTableRow = styled(TableRow)(({ theme }) => ({
-  "&:nth-of-type(odd)": {
+  "&amp;:nth-of-type(odd)": {
     backgroundColor: theme.palette.action.hover,
   },
-  "&:last-child td, &:last-child th": {
+  "&amp;:last-child td, &amp;:last-child th": {
     border: 0,
   },
 }));
@@ -127,123 +155,146 @@ export default function TaskList(props) {
   }
 
   return (
-    <Box
+    &lt;Box
       height="calc((100vh - 64px) * 0.9)"
       maxHeight="calc((100vh - 64px) * 0.9)"
       style={{ overflow: "auto", justifyContent: "center", display: "flex" }}
       className="custom-scrollbar"
     >
-      {/* <Paper
+      {/* &lt;Paper
         style={{
           height: "calc((100vh - 64px) * 0.9)",
           width: "100%",
         }}
       > */}
-      <TableContainer component={Paper} className="custom-scrollbar">
-        <Table sx={{ minWidth: 700 }} aria-label="customized table">
-          <TableHead>
-            <TableRow>
-              <StyledTableCell>Title</StyledTableCell>
-              <StyledTableCell align="left">Status</StyledTableCell>
-              <StyledTableCell align="left">Assignee</StyledTableCell>
-              <StyledTableCell align="left">Points</StyledTableCell>
-              <StyledTableCell align="left">Create Date</StyledTableCell>
-              <StyledTableCell align="left">Due Date</StyledTableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
+      &lt;TableContainer component={Paper} className="custom-scrollbar">
+        &lt;Table sx={{ minWidth: 700 }} aria-label="customized table">
+          &lt;TableHead>
+            &lt;TableRow>
+              &lt;StyledTableCell>Title&lt;/StyledTableCell>
+              &lt;StyledTableCell align="left">Status&lt;/StyledTableCell>
+              &lt;StyledTableCell align="left">Assignee&lt;/StyledTableCell>
+              &lt;StyledTableCell align="left">Points&lt;/StyledTableCell>
+              &lt;StyledTableCell align="left">Create Date&lt;/StyledTableCell>
+              &lt;StyledTableCell align="left">Due Date&lt;/StyledTableCell>
+            &lt;/TableRow>
+          &lt;/TableHead>
+          &lt;TableBody>
             {formattedTaskData.map((task) => (
-              <StyledTableRow key={task.taskId}>
-                <Tooltip
+              &lt;StyledTableRow key={task.taskId}>
+                &lt;Tooltip
                   title={
-                    <Typography
+                    &lt;Typography
                       style={{
                         fontFamily: "Inter, sans-serif",
                         fontSize: "12px",
                       }}
                     >
                       {task.title}
-                    </Typography>
+                    &lt;/Typography>
                   }
                   arrow
                   placement="top"
                   TransitionProps={{ timeout: 600 }}
                 >
-                  <StyledTableCell
+                  &lt;StyledTableCell
                     component="th"
                     scope="row"
                     sx={{ minWidth: "170px" }}
                   >
                     {formatTaskTitle(task.title)}
-                  </StyledTableCell>
-                </Tooltip>
-                <StyledTableCell align="left">{task.status}</StyledTableCell>
-                <Tooltip
+                  &lt;/StyledTableCell>
+                &lt;/Tooltip>
+                &lt;StyledTableCell align="left">{task.status}&lt;/StyledTableCell>
+                &lt;Tooltip
                   title={
-                    <Typography
+                    &lt;Typography
                       style={{
                         fontFamily: "Inter, sans-serif",
                         fontSize: "12px",
                       }}
                     >
                       {task.taskMemberAssigned.username}
-                    </Typography>
+                    &lt;/Typography>
                   }
                   arrow
                   placement="top"
                   TransitionProps={{ timeout: 600 }}
                 >
-                  <StyledTableCell align="left" sx={{ minWidth: "70px" }}>
+                  &lt;StyledTableCell align="left" sx={{ minWidth: "70px" }}>
                     {formatAssigneeName(task.taskMemberAssigned.username)}
-                  </StyledTableCell>
-                </Tooltip>
-                <StyledTableCell align="left">
+                  &lt;/StyledTableCell>
+                &lt;/Tooltip>
+                &lt;StyledTableCell align="left">
                   {task.taskPoints}
-                </StyledTableCell>
-                <Tooltip
+                &lt;/StyledTableCell>
+                &lt;Tooltip
                   title={
-                    <Typography
+                    &lt;Typography
                       style={{
                         fontFamily: "Inter, sans-serif",
                         fontSize: "12px",
                       }}
                     >
                       {formatISOString(task.taskCreationTime)}
-                    </Typography>
+                    &lt;/Typography>
                   }
                   arrow
                   placement="top"
                   TransitionProps={{ timeout: 600 }}
                 >
-                  <StyledTableCell align="left">
+                  &lt;StyledTableCell align="left">
                     {formatDate(task.taskCreationTime)}
-                  </StyledTableCell>
-                </Tooltip>
-                <Tooltip
+                  &lt;/StyledTableCell>
+                &lt;/Tooltip>
+                &lt;Tooltip
                   title={
-                    <Typography
+                    &lt;Typography
                       style={{
                         fontFamily: "Inter, sans-serif",
                         fontSize: "12px",
                       }}
                     >
                       {formatISOString(task.taskCreationTime)}
-                    </Typography>
+                    &lt;/Typography>
                   }
                   arrow
                   placement="top"
                   TransitionProps={{ timeout: 600 }}
                 >
-                  <StyledTableCell align="left">
+                  &lt;StyledTableCell align="left">
                     {formatDate(task.expectedCompleteTime)}
-                  </StyledTableCell>
-                </Tooltip>
-              </StyledTableRow>
+                  &lt;/StyledTableCell>
+                &lt;/Tooltip>
+              &lt;/StyledTableRow>
             ))}
-          </TableBody>
-        </Table>
-      </TableContainer>
-      {/* </Paper> */}
-    </Box>
+          &lt;/TableBody>
+        &lt;/Table>
+      &lt;/TableContainer>
+      {/* &lt;/Paper> */}
+    &lt;/Box>
   );
 }
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#CustomLabel">CustomLabel</a></li><li><a href="global.html#DashboardContent">DashboardContent</a></li><li><a href="global.html#InterpolationSelect">InterpolationSelect</a></li><li><a href="global.html#PersonalChart">PersonalChart</a></li><li><a href="global.html#TeamProgress">TeamProgress</a></li><li><a href="global.html#calculateTrendLineData">calculateTrendLineData</a></li><li><a href="global.html#formatDateToMonthDay">formatDateToMonthDay</a></li><li><a href="global.html#processPersonalTaskData">processPersonalTaskData</a></li><li><a href="global.html#processTaskData">processTaskData</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.2</a> on Sun Dec 03 2023 00:15:57 GMT-0500 (Eastern Standard Time)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

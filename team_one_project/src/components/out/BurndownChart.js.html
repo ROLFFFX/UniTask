@@ -1,4 +1,32 @@
-/**
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: BurndownChart.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: BurndownChart.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/**
  * @fileoverview This file defines the BurndownChart component, which is used to render
  * a burndown chart using the Victory charting library. It visualizes group task progression
  * over time and allows interactive exploration of the data. It renders at the bottom left
@@ -20,8 +48,8 @@ import {
 /**
  * A Helper Function that calculates a trend line based on provided data.
  *
- * @param {Array<Object>} processedData - Array of objects representing the task points.
- * @returns {Array<Object>} Array containing start and end points for the trend line.
+ * @param {Array&lt;Object>} processedData - Array of objects representing the task points.
+ * @returns {Array&lt;Object>} Array containing start and end points for the trend line.
  */
 function calculateTrendLineData(processedData) {
   if (!processedData || processedData.length === 0) return [];
@@ -68,13 +96,13 @@ function formatDateToMonthDay(dateStr) {
  * and brush over the data. It also dynamically adjusts to the window size.
  *
  * Props:
- * @param {Array<Object>} processedData - The data used to render the chart. Each object
+ * @param {Array&lt;Object>} processedData - The data used to render the chart. Each object
  *                                        should contain a date (key) and a value (b).
  *
  * State:
  * @state @type {Object} chartSize - The size of the chart, with width and height properties.
- * @state @type {Array<Object>} trendLineData - Data used to render the trend line on the chart.
- * @state @type {Array<Object>} formattedData - Processed data formatted for chart rendering.
+ * @state @type {Array&lt;Object>} trendLineData - Data used to render the trend line on the chart.
+ * @state @type {Array&lt;Object>} formattedData - Processed data formatted for chart rendering.
  * @state @type {Object} zoomDomain - Domain for the VictoryZoomContainer component.
  *
  * useEffect:
@@ -140,9 +168,9 @@ export default function BurndownChart({ processedData }) {
 
   return formattedData ? (
     // Box for entire section
-    <Box style={{ position: "relative" }}>
+    &lt;Box style={{ position: "relative" }}>
       {/* Box for chart title. This Box is of lower zindex so that it will be hidden if chart content overlaps it. */}
-      <Box
+      &lt;Box
         style={{
           position: "absolute",
           left: "28%",
@@ -156,7 +184,7 @@ export default function BurndownChart({ processedData }) {
           border: 1,
         }}
       >
-        <Typography
+        &lt;Typography
           style={{
             fontFamily: "Inter, sans-serif",
             fontSize: "14px",
@@ -168,31 +196,31 @@ export default function BurndownChart({ processedData }) {
           borderRadius={2}
         >
           Group's Total Task Progression
-        </Typography>
-        <AdsClickIcon sx={{ marginLeft: "15px" }} />
-      </Box>
+        &lt;/Typography>
+        &lt;AdsClickIcon sx={{ marginLeft: "15px" }} />
+      &lt;/Box>
       {/* Tooltip for Chart title. It includes user guide. */}
-      <Tooltip
+      &lt;Tooltip
         title={
-          <Typography
+          &lt;Typography
             style={{ fontFamily: "Inter, sans-serif", fontSize: "14px" }}
           >
-            <strong>Interactive Graph Guide:</strong>
-            <br />
-            <br />- <strong>Data Insights:</strong> This graph represents the
+            &lt;strong>Interactive Graph Guide:&lt;/strong>
+            &lt;br />
+            &lt;br />- &lt;strong>Data Insights:&lt;/strong> This graph represents the
             progression of cumulative tasks achieved over time. Adjust the view
             to focus on specific intervals and analyze your team's performance
             against planned milestones.
-            <br />
-            <br />- <strong>Zoom:</strong> Click and drag horizontally on the
+            &lt;br />
+            &lt;br />- &lt;strong>Zoom:&lt;/strong> Click and drag horizontally on the
             main chart area to zoom in on a specific time period.
-            <br />
-            <br />- <strong>Brush:</strong> Use the smaller chart below to
+            &lt;br />
+            &lt;br />- &lt;strong>Brush:&lt;/strong> Use the smaller chart below to
             adjust the visible window of the main chart.
-            <br />
-            <br />- <strong>Trend Line:</strong> The dashed line indicates the
+            &lt;br />
+            &lt;br />- &lt;strong>Trend Line:&lt;/strong> The dashed line indicates the
             expected trend based on initial projections.
-          </Typography>
+          &lt;/Typography>
         }
         arrow
         placement="top"
@@ -200,7 +228,7 @@ export default function BurndownChart({ processedData }) {
       >
         {/* A shadow div that defines the place of tool tip with higher zindex. Its position completely overlaps the title Box, 
         but it has no content and higher zindex so that when VictoryArea overlaps it, the tooltip still responds to user. */}
-        <div
+        &lt;div
           style={{
             position: "absolute",
             left: "28%",
@@ -215,21 +243,21 @@ export default function BurndownChart({ processedData }) {
             border: 1,
             zIndex: 1000,
           }}
-        ></div>
-      </Tooltip>
+        >&lt;/div>
+      &lt;/Tooltip>
       {/* The upper victory chart. Represents actual data. */}
-      <VictoryChart
+      &lt;VictoryChart
         width={chartSize.width}
         height={chartSize.height * (4 / 5)}
         containerComponent={
-          <VictoryZoomContainer
+          &lt;VictoryZoomContainer
             zoomDimension="x"
             zoomDomain={zoomDomain}
             onZoomDomainChange={handleZoom}
           />
         }
       >
-        <VictoryAxis
+        &lt;VictoryAxis
           tickFormat={(x) => x}
           style={{
             axis: { stroke: "#756f6a" },
@@ -238,8 +266,8 @@ export default function BurndownChart({ processedData }) {
             tickLabels: { fontSize: 9 },
           }}
         />
-        {shouldRenderYAxis && (
-          <VictoryAxis
+        {shouldRenderYAxis &amp;&amp; (
+          &lt;VictoryAxis
             dependentAxis
             tickFormat={(b) => `${b}`}
             style={{
@@ -250,7 +278,7 @@ export default function BurndownChart({ processedData }) {
             }}
           />
         )}
-        <VictoryArea
+        &lt;VictoryArea
           standalone={true}
           interpolation="natural"
           style={{ data: { fill: "#778da9" } }}
@@ -258,7 +286,7 @@ export default function BurndownChart({ processedData }) {
           x="key"
           y="b"
         />
-        <VictoryLine
+        &lt;VictoryLine
           data={trendLineData}
           x="key"
           y="b"
@@ -266,32 +294,55 @@ export default function BurndownChart({ processedData }) {
             data: { stroke: "#1b263b", strokeWidth: 1, strokeDasharray: "3,3" },
           }}
         />
-      </VictoryChart>
+      &lt;/VictoryChart>
       {/* The lower VictoryChart, which represents the brush of user and shows user selected intervals. */}
-      <VictoryChart
+      &lt;VictoryChart
         padding={{ top: 0, left: 50, right: 50, bottom: 30 }}
         width={chartSize.width}
         height={chartSize.height * (1 / 5)}
         containerComponent={
-          <VictoryBrushContainer
+          &lt;VictoryBrushContainer
             brushDimension="x"
             brushDomain={zoomDomain}
             onBrushDomainChange={handleZoom}
           />
         }
       >
-        <VictoryAxis tickFormat={(x) => " "} />
-        <VictoryArea
+        &lt;VictoryAxis tickFormat={(x) => " "} />
+        &lt;VictoryArea
           interpolation="natural"
           style={{ data: { fill: "#778da9" } }}
           data={formattedData}
           x="key"
           y="b"
         />
-      </VictoryChart>
-    </Box>
+      &lt;/VictoryChart>
+    &lt;/Box>
   ) : (
     // Conditional rendering. Loading state when processedData is not yet received.
-    <div>Loading...</div>
+    &lt;div>Loading...&lt;/div>
   );
 }
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#CustomLabel">CustomLabel</a></li><li><a href="global.html#DashboardContent">DashboardContent</a></li><li><a href="global.html#InterpolationSelect">InterpolationSelect</a></li><li><a href="global.html#PersonalChart">PersonalChart</a></li><li><a href="global.html#TeamProgress">TeamProgress</a></li><li><a href="global.html#calculateTrendLineData">calculateTrendLineData</a></li><li><a href="global.html#formatDateToMonthDay">formatDateToMonthDay</a></li><li><a href="global.html#processPersonalTaskData">processPersonalTaskData</a></li><li><a href="global.html#processTaskData">processTaskData</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.2</a> on Sun Dec 03 2023 00:15:57 GMT-0500 (Eastern Standard Time)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

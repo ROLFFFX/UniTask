@@ -1,4 +1,32 @@
-/**
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: TaskView.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: TaskView.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/**
  * @fileoverview This file includes the TaskView component, used for displaying
  * a view of tasks (TaskList.js) with options to toggle views and filter tasks by
  * team members. While the TaskList.js is responsible for applying the actual filter,
@@ -18,38 +46,38 @@ import TaskList from "./TaskList";
 import "./TaskList.css";
 
 const textFieldStyle = {
-  "& .MuiInputBase-input": {
+  "&amp; .MuiInputBase-input": {
     fontFamily: "Inter, sans-serif",
     fontSize: "12px",
   },
-  "& .MuiInputLabel-root": {
+  "&amp; .MuiInputLabel-root": {
     fontFamily: "Inter, sans-serif",
     fontSize: "12px",
   },
-  "& label.Mui-focused": {
+  "&amp; label.Mui-focused": {
     color: "black",
   },
-  "& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline": {
+  "&amp; .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline": {
     color: "black",
   },
-  "& .MuiOutlinedInput-root": {
-    "& fieldset": {
+  "&amp; .MuiOutlinedInput-root": {
+    "&amp; fieldset": {
       borderColor: "black",
     },
-    "&:hover fieldset": {
+    "&amp;:hover fieldset": {
       borderColor: "black",
     },
-    "&.Mui-focused fieldset": {
+    "&amp;.Mui-focused fieldset": {
       borderColor: "black",
     },
   },
-  "& .MuiInput-underline:after": {
+  "&amp; .MuiInput-underline:after": {
     borderBottomColor: "black",
   },
-  "& .MuiInput-underline:before": {
+  "&amp; .MuiInput-underline:before": {
     borderBottomColor: "black",
   },
-  "& .MuiInput-underline:hover:not(.Mui-disabled):before": {
+  "&amp; .MuiInput-underline:hover:not(.Mui-disabled):before": {
     borderBottomColor: "black",
   },
 };
@@ -99,11 +127,11 @@ export default function TaskView(props) {
   }, [value, props.formattedTeamMembers]);
 
   return (
-    <React.Fragment>
+    &lt;React.Fragment>
       {/* Grid for entire TaskBacklog Section */}
-      <Grid container alignItems="center" justifyContent="center">
+      &lt;Grid container alignItems="center" justifyContent="center">
         {/* Grid for header section. Including Text Header and toggled buttons */}
-        <Grid
+        &lt;Grid
           container
           item
           height="calc((100vh - 64px) * 0.1)" // 10% of page height excluding top nav bar
@@ -111,7 +139,7 @@ export default function TaskView(props) {
           overflow="hidden"
         >
           {/* Grid for text header */}
-          <Grid
+          &lt;Grid
             item
             xs={3}
             style={{
@@ -121,8 +149,8 @@ export default function TaskView(props) {
             }}
             position="relative"
           >
-            <Dropdown open={open} onOpenChange={handleOpenChange}>
-              <MenuButton
+            &lt;Dropdown open={open} onOpenChange={handleOpenChange}>
+              &lt;MenuButton
                 style={{
                   fontFamily: "Inter, sans-serif",
                   fontSize: "18px",
@@ -131,9 +159,9 @@ export default function TaskView(props) {
                 }}
               >
                 {props.toggleView}
-              </MenuButton>
-              <Menu>
-                <MenuItem
+              &lt;/MenuButton>
+              &lt;Menu>
+                &lt;MenuItem
                   style={{
                     fontFamily: "Inter, sans-serif",
                     fontSize: "14px",
@@ -141,8 +169,8 @@ export default function TaskView(props) {
                   onClick={() => props.onToggleViewChange("Data Visual View")}
                 >
                   Data Visualization
-                </MenuItem>
-                <MenuItem
+                &lt;/MenuItem>
+                &lt;MenuItem
                   style={{
                     fontFamily: "Inter, sans-serif",
                     fontSize: "14px",
@@ -150,10 +178,10 @@ export default function TaskView(props) {
                   onClick={() => props.onToggleViewChange("Table Task View")}
                 >
                   Table Task View
-                </MenuItem>
-              </Menu>
-            </Dropdown>
-            <Divider
+                &lt;/MenuItem>
+              &lt;/Menu>
+            &lt;/Dropdown>
+            &lt;Divider
               orientation="vertical"
               flexItem
               style={{
@@ -164,9 +192,9 @@ export default function TaskView(props) {
                 zIndex: 1, // adjust z-index as needed
               }}
             />
-          </Grid>
+          &lt;/Grid>
           {/* Grid for all other filter fields */}
-          <Grid
+          &lt;Grid
             item
             xs={7}
             style={{
@@ -175,8 +203,8 @@ export default function TaskView(props) {
               alignItems: "center",
             }}
           >
-            <Box>
-              <Autocomplete
+            &lt;Box>
+              &lt;Autocomplete
                 value={value}
                 onChange={(event, newValue) => {
                   setValue(newValue);
@@ -194,14 +222,14 @@ export default function TaskView(props) {
                 color="black"
                 ListboxProps={{
                   sx: {
-                    "& .MuiAutocomplete-option": {
+                    "&amp; .MuiAutocomplete-option": {
                       fontFamily: "Inter, sans-serif", // Replace with your desired font family
                       fontSize: "13px", // Replace with your desired font size
                     },
                   },
                 }}
                 renderInput={(params) => (
-                  <TextField
+                  &lt;TextField
                     {...params}
                     label="Search By Teammate"
                     variant="standard"
@@ -209,23 +237,46 @@ export default function TaskView(props) {
                   />
                 )}
               />
-            </Box>
-          </Grid>
+            &lt;/Box>
+          &lt;/Grid>
 
           {/* End of all other filter fields */}
-        </Grid>
+        &lt;/Grid>
         {/* Grid for actual content */}
-        <Grid
+        &lt;Grid
           item
           height="calc((100vh - 64px) * 0.9)" // 90% of page height excluding top nav bar
           maxHeight="calc((100vh - 64px) * 0.9)"
           overflow="hidden"
           className="custom-scrollbar"
         >
-          <Divider />
-          <TaskList props={{ ...props, formattedTeamMembers: value }} />
-        </Grid>
-      </Grid>
-    </React.Fragment>
+          &lt;Divider />
+          &lt;TaskList props={{ ...props, formattedTeamMembers: value }} />
+        &lt;/Grid>
+      &lt;/Grid>
+    &lt;/React.Fragment>
   );
 }
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#CustomLabel">CustomLabel</a></li><li><a href="global.html#DashboardContent">DashboardContent</a></li><li><a href="global.html#InterpolationSelect">InterpolationSelect</a></li><li><a href="global.html#PersonalChart">PersonalChart</a></li><li><a href="global.html#TeamProgress">TeamProgress</a></li><li><a href="global.html#calculateTrendLineData">calculateTrendLineData</a></li><li><a href="global.html#formatDateToMonthDay">formatDateToMonthDay</a></li><li><a href="global.html#processPersonalTaskData">processPersonalTaskData</a></li><li><a href="global.html#processTaskData">processTaskData</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.2</a> on Sun Dec 03 2023 00:15:57 GMT-0500 (Eastern Standard Time)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>
