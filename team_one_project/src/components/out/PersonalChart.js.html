@@ -1,4 +1,32 @@
-/**
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: PersonalChart.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: PersonalChart.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/**
  * @fileoverview This file includes the PersonalChart component, which is used for
  * rendering a personalized chart of task progression. It is rendered at the left
  * bottom in dashboard - data visual view.
@@ -37,13 +65,13 @@ const polarInterpolations = ["basis", "cardinal", "catmullRom", "linear"];
  *
  * @param {Object} props - The props passed to the InterpolationSelect component.
  * @param {string} props.currentValue - The current selected interpolation value.
- * @param {Array<string>} props.values - Array of available interpolation options.
+ * @param {Array&lt;string>} props.values - Array of available interpolation options.
  * @param {Function} props.onChange - Callback function to handle interpolation change.
  * @returns {React.ReactElement} The component for selecting an interpolation option.
  */
 const InterpolationSelect = ({ currentValue, values, onChange }) => {
   return (
-    <div
+    &lt;div
       style={{
         display: "flex",
         flexWrap: "wrap",
@@ -51,7 +79,7 @@ const InterpolationSelect = ({ currentValue, values, onChange }) => {
       }}
     >
       {values.map((value) => (
-        <Link
+        &lt;Link
           key={value}
           component="button"
           color={currentValue === value ? "#495057" : "#212529"}
@@ -66,9 +94,9 @@ const InterpolationSelect = ({ currentValue, values, onChange }) => {
           href="#separators"
         >
           {value}
-        </Link>
+        &lt;/Link>
       ))}
-    </div>
+    &lt;/div>
   );
 };
 
@@ -83,7 +111,7 @@ const InterpolationSelect = ({ currentValue, values, onChange }) => {
  * which I don't even understand this mathmatical terms. The entire chart is provided by Victory.js
  *
  * Props:
- * @param {Array<Object>} processedPersonalData - The processed data used for the chart, containing
+ * @param {Array&lt;Object>} processedPersonalData - The processed data used for the chart, containing
  *                                                 date (key) and value (b) pairs.
  *
  * State:
@@ -165,10 +193,10 @@ const PersonalChart = ({ processedPersonalData }) => {
   };
 
   return shouldRenderChart ? (
-    <Box position="relative">
-      <Grid container>
+    &lt;Box position="relative">
+      &lt;Grid container>
         {/* Grid for header */}
-        <div
+        &lt;div
           style={{
             position: "absolute",
             left: "28%",
@@ -180,7 +208,7 @@ const PersonalChart = ({ processedPersonalData }) => {
             border: 1,
           }}
         >
-          <Typography
+          &lt;Typography
             style={{
               fontFamily: "Inter, sans-serif",
               fontSize: "14px",
@@ -192,28 +220,28 @@ const PersonalChart = ({ processedPersonalData }) => {
             borderRadius={2}
           >
             Personal Task Progression
-          </Typography>
-          <AdsClickIcon sx={{ marginLeft: "15px" }} />
-        </div>
-        <Tooltip
+          &lt;/Typography>
+          &lt;AdsClickIcon sx={{ marginLeft: "15px" }} />
+        &lt;/div>
+        &lt;Tooltip
           title={
-            <Typography
+            &lt;Typography
               style={{ fontFamily: "Inter, sans-serif", fontSize: "14px" }}
             >
-              <strong>Personal Chart Guide:</strong>
-              <br />
-              <br />- <strong>Data Insights:</strong> This graph represents the
+              &lt;strong>Personal Chart Guide:&lt;/strong>
+              &lt;br />
+              &lt;br />- &lt;strong>Data Insights:&lt;/strong> This graph represents the
               progression of cumulative tasks achieved over time by you.
-              <br />
-              <br />- <strong>Interpolations:</strong> Choose the interpolation
+              &lt;br />
+              &lt;br />- &lt;strong>Interpolations:&lt;/strong> Choose the interpolation
               menu above to customize your view. We have 11 options to offer!
-            </Typography>
+            &lt;/Typography>
           }
           arrow
           placement="top"
           TransitionProps={{ timeout: 600 }}
         >
-          <div
+          &lt;div
             style={{
               position: "absolute",
               left: "28%",
@@ -226,11 +254,11 @@ const PersonalChart = ({ processedPersonalData }) => {
               justifyContent: "center",
               zIndex: 1000,
             }}
-          ></div>
-        </Tooltip>
+          >&lt;/div>
+        &lt;/Tooltip>
         {/* Section for interpolation select */}
-        <Grid item xs={12}>
-          <div
+        &lt;Grid item xs={12}>
+          &lt;div
             style={{
               display: "flex",
               alignItems: "center",
@@ -239,13 +267,13 @@ const PersonalChart = ({ processedPersonalData }) => {
               zIndex: 1000,
             }}
           >
-            <InterpolationSelect
+            &lt;InterpolationSelect
               currentValue={interpolation}
               values={polar ? polarInterpolations : cartesianInterpolations}
               onChange={setInterpolation}
             />
             {/* The commented part below allows to change to polar view, which i have no clue what it does */}
-            {/* <input
+            {/* &lt;input
                 type="checkbox"
                 id="polar"
                 checked={polar}
@@ -255,18 +283,18 @@ const PersonalChart = ({ processedPersonalData }) => {
                 }}
                 style={{ marginLeft: 25, marginRight: 5 }}
               /> */}
-            {/* <label htmlFor="polar">polar</label> */}
-          </div>
-        </Grid>
+            {/* &lt;label htmlFor="polar">polar&lt;/label> */}
+          &lt;/div>
+        &lt;/Grid>
         {/* Grid for actual graph */}
-        <Grid item xs={12}>
-          <VictoryChart
+        &lt;Grid item xs={12}>
+          &lt;VictoryChart
             polar={polar}
             height={chartSize.height * 0.8}
             width={chartSize.width * 0.9}
           >
-            {processedPersonalData.length > 1 && (
-              <VictoryAxis
+            {processedPersonalData.length > 1 &amp;&amp; (
+              &lt;VictoryAxis
                 tickValues={getUniqueTickValues()}
                 style={{
                   axis: { stroke: "#756f6a" },
@@ -276,7 +304,7 @@ const PersonalChart = ({ processedPersonalData }) => {
                 }}
               />
             )}
-            <VictoryAxis
+            &lt;VictoryAxis
               dependentAxis
               style={{
                 axis: { stroke: "#756f6a" },
@@ -286,22 +314,22 @@ const PersonalChart = ({ processedPersonalData }) => {
               }}
             />
 
-            <VictoryLine
+            &lt;VictoryLine
               interpolation={interpolation}
               data={chartData}
               style={{ data: { stroke: "#c43a31" } }}
             />
-            <VictoryScatter
+            &lt;VictoryScatter
               data={chartData}
               size={5}
               style={{ data: { fill: "#c43a31" } }}
             />
-          </VictoryChart>
-        </Grid>
-      </Grid>
-    </Box>
+          &lt;/VictoryChart>
+        &lt;/Grid>
+      &lt;/Grid>
+    &lt;/Box>
   ) : (
-    <Box
+    &lt;Box
       style={{
         display: "flex",
         justifyContent: "center",
@@ -309,14 +337,37 @@ const PersonalChart = ({ processedPersonalData }) => {
         height: "calc((100vh - 64px) * 0.45)",
       }}
     >
-      <EmojiFoodBeverageIcon color="action" />
-      <Typography
+      &lt;EmojiFoodBeverageIcon color="action" />
+      &lt;Typography
         style={{ fontFamily: "Inter, sans-serif", marginLeft: "10px" }}
       >
         You haven't done any tasks yet...
-      </Typography>
-    </Box>
+      &lt;/Typography>
+    &lt;/Box>
   );
 };
 
 export default PersonalChart;
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#CustomLabel">CustomLabel</a></li><li><a href="global.html#DashboardContent">DashboardContent</a></li><li><a href="global.html#InterpolationSelect">InterpolationSelect</a></li><li><a href="global.html#PersonalChart">PersonalChart</a></li><li><a href="global.html#TeamProgress">TeamProgress</a></li><li><a href="global.html#calculateTrendLineData">calculateTrendLineData</a></li><li><a href="global.html#formatDateToMonthDay">formatDateToMonthDay</a></li><li><a href="global.html#processPersonalTaskData">processPersonalTaskData</a></li><li><a href="global.html#processTaskData">processTaskData</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.2</a> on Sun Dec 03 2023 00:15:57 GMT-0500 (Eastern Standard Time)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

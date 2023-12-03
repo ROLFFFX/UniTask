@@ -54,7 +54,7 @@
 
 <header>
     
-        <h2>MainAccount.js</h2>
+        <h2>AnimatedProgressBar.js</h2>
         
     
 </header>
@@ -63,9 +63,10 @@
     <div class="container-overview">
     
         
-            <div class="description">This file is the entry point for MainAccount component which serves as the account/profile page.
-This file mainly defines the outline of utilizing Material-UI's Grid system and renders the UserProfile
-page inside.</div>
+            <div class="description">This file defines the AnimatedProgressBar component, which renders a
+circular progress bar using the Victory charting library. It is used to visually represent
+the progress of a task or set of tasks as a percentage, and will be rendered at the bottom
+right corner of dashboard page - data visualization.</div>
         
 
         
@@ -100,7 +101,7 @@ page inside.</div>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="MainAccount.js.html">MainAccount.js</a>, <a href="MainAccount.js.html#line1">line 1</a>
+        <a href="AnimatedProgressBar.js.html">AnimatedProgressBar.js</a>, <a href="AnimatedProgressBar.js.html#line1">line 1</a>
     </li></ul></dd>
     
 
@@ -149,7 +150,7 @@ page inside.</div>
 
 <header>
     
-        <h2>UserProfile.js</h2>
+        <h2>BurndownChart.js</h2>
         
     
 </header>
@@ -158,9 +159,10 @@ page inside.</div>
     <div class="container-overview">
     
         
-            <div class="description">This file defines the UserProfile component, which displays user profile info
-in MainAccount Page. It uses MUI components and icons for layout and styling. The component is
-part of the User Interfeace module for managing user profiles.</div>
+            <div class="description">This file defines the BurndownChart component, which is used to render
+a burndown chart using the Victory charting library. It visualizes group task progression
+over time and allows interactive exploration of the data. It renders at the bottom left
+of dashboard - data visualization.</div>
         
 
         
@@ -195,7 +197,965 @@ part of the User Interfeace module for managing user profiles.</div>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="UserProfile.js.html">UserProfile.js</a>, <a href="UserProfile.js.html#line1">line 1</a>
+        <a href="BurndownChart.js.html">BurndownChart.js</a>, <a href="BurndownChart.js.html#line1">line 1</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+        
+    
+    </div>
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</article>
+
+</section>
+
+
+
+
+
+
+
+<section>
+
+<header>
+    
+        <h2>DashboardContent.js</h2>
+        
+    
+</header>
+
+<article>
+    <div class="container-overview">
+    
+        
+            <div class="description">This file includes the DashboardContent component, which defines the
+entire content you will see in dashboard page. It performs multipurposely as an
+intermediate stage. It controls to toggle of view between "Data Visual View" and
+"Table Task View", and does some elementary data processing before it sends them
+down to each individual components. It also fetches data from server and controls
+the general layout of entire letf section of dashbaord page.</div>
+        
+
+        
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="DashboardContent.js.html">DashboardContent.js</a>, <a href="DashboardContent.js.html#line1">line 1</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+        
+    
+    </div>
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</article>
+
+</section>
+
+
+
+
+
+
+
+<section>
+
+<header>
+    
+        <h2>DataVisualization.js</h2>
+        
+    
+</header>
+
+<article>
+    <div class="container-overview">
+    
+        
+            <div class="description">This file includes the DataVisualization component on the left,
+which is used for rendering visual representations of data in a project management application.
+It has Group Progression on top and Personal Progression at bottom. This function is solely
+used to handle layout and conditional rendering. It does not process data further.</div>
+        
+
+        
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="DataVisualization.js.html">DataVisualization.js</a>, <a href="DataVisualization.js.html#line1">line 1</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+        
+    
+    </div>
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</article>
+
+</section>
+
+
+
+
+
+
+
+<section>
+
+<header>
+    
+        <h2>HorizontalBarChart.js</h2>
+        
+    
+</header>
+
+<article>
+    <div class="container-overview">
+    
+        
+            <div class="description">This file includes the HorizontalBarChart component, used for
+rendering a horizontal bar chart representation of progress data. Is rendered
+at left bottom corner when Linear Progress View is on.</div>
+        
+
+        
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="HorizontalBarChart.js.html">HorizontalBarChart.js</a>, <a href="HorizontalBarChart.js.html#line1">line 1</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+        
+    
+    </div>
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</article>
+
+</section>
+
+
+
+
+
+
+
+<section>
+
+<header>
+    
+        <h2>MainDashboard.js</h2>
+        
+    
+</header>
+
+<article>
+    <div class="container-overview">
+    
+        
+            <div class="description">This file includes the MainDashboard component, which serves as
+the entry point for the dashboard./</div>
+        
+
+        
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="MainDashboard.js.html">MainDashboard.js</a>, <a href="MainDashboard.js.html#line1">line 1</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+        
+    
+    </div>
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</article>
+
+</section>
+
+
+
+
+
+
+
+<section>
+
+<header>
+    
+        <h2>PersonalChart.js</h2>
+        
+    
+</header>
+
+<article>
+    <div class="container-overview">
+    
+        
+            <div class="description">This file includes the PersonalChart component, which is used for
+rendering a personalized chart of task progression. It is rendered at the left
+bottom in dashboard - data visual view.</div>
+        
+
+        
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="PersonalChart.js.html">PersonalChart.js</a>, <a href="PersonalChart.js.html#line1">line 1</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+        
+    
+    </div>
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</article>
+
+</section>
+
+
+
+
+
+
+
+<section>
+
+<header>
+    
+        <h2>ProgressBar.js</h2>
+        
+    
+</header>
+
+<article>
+    <div class="container-overview">
+    
+        
+            <div class="description">This file includes the ProgressBar component, used for displaying
+a progress checker which occupies the bottom right section of dashboard. It offers
+a toggle between circular and linear progress views. It's solely an intermediate
+file for formatting layout and toggle views, it does not process data further.</div>
+        
+
+        
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="ProgressBar.js.html">ProgressBar.js</a>, <a href="ProgressBar.js.html#line1">line 1</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+        
+    
+    </div>
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</article>
+
+</section>
+
+
+
+
+
+
+
+<section>
+
+<header>
+    
+        <h2>TaskList.js</h2>
+        
+    
+</header>
+
+<article>
+    <div class="container-overview">
+    
+        
+            <div class="description">This file includes the TaskList component, which is used
+for displaying a list of tasks in a table format. It occupies the entire
+right part of dashbaord when user is in dashbaord - table task view.</div>
+        
+
+        
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="TaskList.js.html">TaskList.js</a>, <a href="TaskList.js.html#line1">line 1</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+        
+    
+    </div>
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</article>
+
+</section>
+
+
+
+
+
+
+
+<section>
+
+<header>
+    
+        <h2>TaskView.js</h2>
+        
+    
+</header>
+
+<article>
+    <div class="container-overview">
+    
+        
+            <div class="description">This file includes the TaskView component, used for displaying
+a view of tasks (TaskList.js) with options to toggle views and filter tasks by
+team members. While the TaskList.js is responsible for applying the actual filter,
+this file handles the 1. toggleView button to toggle 'table task view' and 'data
+visual view'; 2. filter by username with autocomplete.</div>
+        
+
+        
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="TaskView.js.html">TaskView.js</a>, <a href="TaskView.js.html#line1">line 1</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+        
+    
+    </div>
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</article>
+
+</section>
+
+
+
+
+
+
+
+<section>
+
+<header>
+    
+        <h2>TeamProgress.js</h2>
+        
+    
+</header>
+
+<article>
+    <div class="container-overview">
+    
+        
+            <div class="description">This file includes the TeamProgress component, which is used for
+displaying a pie chart representation of task distribution among team members.
+The center of pie chart renders the task member when user hover on the part of
+pie chart.</div>
+        
+
+        
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="TeamProgress.js.html">TeamProgress.js</a>, <a href="TeamProgress.js.html#line1">line 1</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+        
+    
+    </div>
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</article>
+
+</section>
+
+
+
+
+
+
+
+<section>
+
+<header>
+    
+        <h2>VisualCharts.js</h2>
+        
+    
+</header>
+
+<article>
+    <div class="container-overview">
+    
+        
+            <div class="description">This file includes the VisualCharts component, used for rendering
+burndown charts representing the overall and personal progress of tasks in a
+project management application. Note that the first processing of data is done
+in this file, which later passed down to corresponding components respectively.</div>
+        
+
+        
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="VisualCharts.js.html">VisualCharts.js</a>, <a href="VisualCharts.js.html#line1">line 1</a>
     </li></ul></dd>
     
 
@@ -240,13 +1200,13 @@ part of the User Interfeace module for managing user profiles.</div>
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#MainAccount">MainAccount</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#CustomLabel">CustomLabel</a></li><li><a href="global.html#DashboardContent">DashboardContent</a></li><li><a href="global.html#InterpolationSelect">InterpolationSelect</a></li><li><a href="global.html#PersonalChart">PersonalChart</a></li><li><a href="global.html#TeamProgress">TeamProgress</a></li><li><a href="global.html#calculateTrendLineData">calculateTrendLineData</a></li><li><a href="global.html#formatDateToMonthDay">formatDateToMonthDay</a></li><li><a href="global.html#processPersonalTaskData">processPersonalTaskData</a></li><li><a href="global.html#processTaskData">processTaskData</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.2</a> on Sat Dec 02 2023 22:11:48 GMT-0500 (Eastern Standard Time)
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.2</a> on Sun Dec 03 2023 00:15:57 GMT-0500 (Eastern Standard Time)
 </footer>
 
 <script> prettyPrint(); </script>
