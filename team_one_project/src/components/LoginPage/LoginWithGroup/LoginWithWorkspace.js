@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Box } from "@mui/material";
+import { Box, Container } from "@mui/material";
 import { Typography } from "@mui/material";
 import { Divider } from "@mui/material";
 import { Button } from "@mui/material";
@@ -25,7 +25,11 @@ function renderWorkspaceRow(props, workspaces, handleClick) {
       <ListItemButton onClick={() => handleClick(index)}>
         <Diversity3Icon sx={{ marginLeft: 10 }} />
         <ListItemText
-          primary={" " + workspaceTitle}
+          primary={
+            workspaceTitle.length > 30
+              ? `${workspaceTitle.substring(0, 30)}...`
+              : workspaceTitle
+          }
           sx={{
             "& .MuiListItemText-primary": {
               fontFamily: "Inter, sans-serif",
@@ -126,18 +130,6 @@ export default function LoginWithGroup() {
           We detect that you are currently in these workspaces below. Please
           click the one you want to log in with. (*You might scroll this list.)
         </Typography>
-        {/* {workspaces.map((workspaceTitle, index) => (
-          <ListItem key={index} sx={{ marginLeft: 20 }}>
-            {<Diversity3Icon />}
-            <ListItemButton
-              onClick={() => handleClick(index)}
-              sx={{ marginRight: 20 }}
-            >
-              <ListItemText primary={workspaceTitle} />
-            </ListItemButton>
-          </ListItem>
-        ))} */}
-
         <FixedSizeList
           height={190}
           width={500}
@@ -147,18 +139,6 @@ export default function LoginWithGroup() {
         >
           {(props) => renderWorkspaceRow(props, workspaces, handleClick)}
         </FixedSizeList>
-
-        {/* <Button
-          variant="contained"
-          style={{
-            backgroundColor: "#343A40",
-            color: "#E9ECEF",
-            fontSize: "11px",
-          }}
-          onClick={handleNavigate}
-        >
-          Tester Login
-        </Button> */}
       </Box>
     </React.Fragment>
   );

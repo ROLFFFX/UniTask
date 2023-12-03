@@ -1,3 +1,13 @@
+/**
+ * @fileoverview This file includes the DashboardContent component, which defines the
+ * entire content you will see in dashboard page. It performs multipurposely as an
+ * intermediate stage. It controls to toggle of view between "Data Visual View" and
+ * "Table Task View", and does some elementary data processing before it sends them
+ * down to each individual components. It also fetches data from server and controls
+ * the general layout of entire letf section of dashbaord page.
+ */
+
+import LinearProgress from "@mui/joy/LinearProgress";
 import {
   Backdrop,
   Box,
@@ -9,16 +19,50 @@ import {
 } from "@mui/material";
 import axios from "axios";
 import * as React from "react";
+import { useNavigate } from "react-router-dom";
 import useAuth from "../../hooks/useAuth";
 import { ENDPOINT_URL } from "../../hooks/useConfig";
-import { TeamProgress } from "./TeamProgress";
-import { BurndownChart } from "./BurndownChart";
-import ProgressBar from "./ProgressBar";
-import TaskView from "./TaskView";
-import "./TaskList.css";
-import LinearProgress from "@mui/joy/LinearProgress";
 import DataVisualization from "./DataVisualization";
+import ProgressBar from "./ProgressBar";
+import "./TaskList.css";
+import TaskView from "./TaskView";
+import { TeamProgress } from "./TeamProgress";
 
+/**
+ * DashboardContent - A functional component that renders the left side dashboard view of the dashboard.
+ *
+ * This component fetches and displays data regarding task distribution among team members,
+ * overall progress of tasks, team member information, and all tasks in the current workspace.
+ * It conditionally renders two different views based on the available data, which are table
+ * task view and dashboard view
+ *
+ * State:
+ * @state @type {boolean} backdropOpen - Controls the display of the loading backdrop.
+ * @state @type {string} projectTitle - Title of the current project.
+ * @state @type {Object} TaskDistributionData - Data about the task distribution among team members.
+ * @state @type {Object} ProgressBarData - Data for rendering the progress bar.
+ * @state @type {Array} formattedTeamMembers - List of team members in the workspace.
+ * @state @type {Array} allTasks - List of all tasks in the project.
+ * @state @type {string} toggleView - Toggles between different views of the dashboard.
+ * @state @type {string} creationTime - Creation time of the workspace.
+ *
+ * Requests:
+ * - fetchTaskDistributionAmongTeamMembers
+ * - fetchProgressBarData
+ * - fetchTeamMembers
+ * - fetchAllTasks
+ * - fetchWorkspaceCreationTime
+ *
+ * Helper Functions:
+ * - reformatTaskDistribution - Formats task distribution data for visualization.
+ * - handleToggleViewChange - Toggles between different task views.
+ * - isEmptyList - Checks if an array is empty.
+ *
+ * useEffect:
+ * - Fetches various data required for the dashboard on component mount.
+ *
+ * @returns {React.ReactElement} A React element representing the main dashboard content.
+ */
 export function DashboardContent() {
   /* Hooks Declarations-------------------------------------------------------------------------------------------------------------------- */
   const { auth } = useAuth();
@@ -30,12 +74,12 @@ export function DashboardContent() {
   const [allTasks, setAllTasks] = React.useState();
   const [toggleView, setToggleView] = React.useState("Data Visual View");
   const [creationTime, setCreationTime] = React.useState();
+  const navigate = useNavigate();
   /* End of Hooks Declarations-------------------------------------------------------------------------------------------------------------------- */
 
   /* Requests Declarations-------------------------------------------------------------------------------------------------------------------- */
   // GET Method to retrieve task distribution among team members.
-
-  // response.data:
+  // sample response.data:
   // {
   //   "User 1": number of TaskPoints done,
   //   "User 2": number of TaskPoints done,
@@ -60,7 +104,7 @@ export function DashboardContent() {
   };
 
   //GET Method to retrieve Progress Bar information.
-  // response.data:
+  // sample: response.data:
   // {
   //   "To Do": 0,
   //   "Done": 13,
@@ -87,7 +131,7 @@ export function DashboardContent() {
   };
 
   // GET Method for fetching Team Members in current workpsace
-  // [userName, userName, userName]
+  // sample response.data: [userName, userName, userName]
   const fetchTeamMembers = async () => {
     setBackdropOpen(true); //display loading page
     try {
@@ -129,7 +173,7 @@ export function DashboardContent() {
     }
   };
 
-  // GET Method for fetching Workspace Creation Time    ///projects/creationTime/{projectTitle}
+  // GET Method for fetching Workspace Creation Time    //projects/creationTime/{projectTitle}
   const fetchWorkspaceCreationTime = async () => {
     setBackdropOpen(true); //display loading page
     try {
@@ -162,6 +206,10 @@ export function DashboardContent() {
     setToggleView(newView); // Assuming setToggleView is your state setter
   };
 
+  // check if an object is an empty list
+  function isEmptyList(obj) {
+    return Array.isArray(obj) && obj.length === 0;
+  }
   /* End of Helper Functions Declarations-------------------------------------------------------------------------------------------------------------------- */
 
   /* useEffect Declarations-------------------------------------------------------------------------------------------------------------------- */
@@ -173,15 +221,55 @@ export function DashboardContent() {
     fetchWorkspaceCreationTime();
   }, []);
 
-  // @ todo: part inside this if statement is rendered after all data are fetched.
-  // @ todo: if not, render backdrop
-  if (TaskDistributionData && ProgressBarData && formattedTeamMembers) {
-    // console.log("Data Fetched: ");
-    // console.log(TaskDistributionData, ProgressBarData);
-    // console.log(formattedTeamMembers);
-  }
-
   /* End of useEffect Declarations-------------------------------------------------------------------------------------------------------------------- */
+  // Conditioanlly render page. If tasks is empty (according to server), indicate user to create first task.
+  if (isEmptyList(allTasks)) {
+    return (
+      <React.Fragment>
+        <Grid container>
+          <Grid item xs={12}>
+            <Box
+              display="flex"
+              justifyContent="center"
+              alignItems="end"
+              height="calc((100vh - 64px)/2)"
+            >
+              <Typography
+                style={{
+                  fontFamily: "Inter, sans-serif",
+                  fontSize: "20px",
+                }}
+                marginBottom={3}
+              >
+                Dashboard is currently unavailable, please come back after you
+                create your first task!
+              </Typography>
+            </Box>
+          </Grid>
+          <Grid item xs={12}>
+            <Box
+              display="flex"
+              justifyContent="center"
+              alignItems="start"
+              height="calc((100vh - 64px)/2)"
+              mt={4}
+            >
+              <Button
+                variant="outlined"
+                color="inherit"
+                onClick={() => {
+                  navigate("/sprintboard");
+                }}
+              >
+                Create My First Task
+              </Button>
+            </Box>
+          </Grid>
+        </Grid>
+      </React.Fragment>
+    );
+  }
+  // Conditionally render page. If data is ready, render page.
   if (
     TaskDistributionData &&
     ProgressBarData &&
@@ -217,6 +305,7 @@ export function DashboardContent() {
                 overflow="hidden"
                 className="custom-scrollbar"
               >
+                {/* Conditionally renders two views according to toggleView state.  */}
                 {toggleView === "Table Task View" ? (
                   <TaskView
                     taskData={allTasks}
@@ -272,6 +361,7 @@ export function DashboardContent() {
       </React.Fragment>
     );
   } else {
+    // Loading backdrop
     return (
       <React.Fragment>
         <Box display="flex" justifyContent="cneter" alignItems="center">

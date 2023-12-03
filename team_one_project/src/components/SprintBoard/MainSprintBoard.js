@@ -1,4 +1,4 @@
-import { Box, Button, Typography, Grid } from "@mui/material";
+import { Box, Button, Typography, Grid, Tooltip } from "@mui/material";
 import Backdrop from "@mui/material/Backdrop";
 import CircularProgress from "@mui/material/CircularProgress";
 import Popper from "@mui/material/Popper";
@@ -24,8 +24,10 @@ export function MainSprintBoard() {
   const [tasks, setTasks] = useState([]); // state to store all tasks fetched from GET
   const [taskNameInput, setTaskNameInput] = useState(""); // state to store task name input for adding new task
   const [assigneeInput, setAssigneeInput] = useState(""); // state to store assignee input for adding new task
-  const [dueDateInput, setDueDateInput] = useState(""); // state to store expected complete time for adding new task
+  const [expectedCompleteTimeInput, setexpectedCompleteTimeInput] =
+    useState(""); // state to store expected complete time for adding new task
   const [taskPointsInput, setTaskPointsInput] = useState(1); // state to store taskpoints for adding new task
+  const [openSpotlight, setOpenSpotlight] = useState(false);
   /* End of useState Declarations-------------------------------------------------------------------------------------------------------------------- */
 
   /* Requests declarations-------------------------------------------------------------------------------------------------------------------- */
@@ -78,11 +80,6 @@ export function MainSprintBoard() {
   const unpackTaskData = (backendTasks) => {
     const reformattedTasks = backendTasks.flatMap((taskList) => {
       const [mainTask, ...subTasks] = taskList;
-      // console.log("Unpacking..");
-      // // console.log(mainTask);
-      // console.log(subTasks);
-      // console.log("Unpacking..done");
-
       return {
         taskID: mainTask.taskId,
         title: mainTask.title,
@@ -91,7 +88,7 @@ export function MainSprintBoard() {
           mainTask.taskMemberAssigned && mainTask.taskMemberAssigned.username
             ? mainTask.taskMemberAssigned.username
             : "Unassigned",
-        dueDate: mainTask.expectedCompleteTime
+        expectedCompleteTime: mainTask.expectedCompleteTime
           ? mainTask.expectedCompleteTime.split("T")[0] //Extract only the Date part, excluding time in day
           : null,
         status: mainTask.status,
@@ -103,7 +100,7 @@ export function MainSprintBoard() {
             subTask.taskMemberAssigned && subTask.taskMemberAssigned.username
               ? subTask.taskMemberAssigned.username
               : "Unassigned",
-          dueDate: subTask.expectedCompleteTime,
+          expectedCompleteTime: subTask.expectedCompleteTime,
           status: subTask.status,
           taskPoints: subTask.taskPoints,
         })),
@@ -116,8 +113,10 @@ export function MainSprintBoard() {
   const createTask = (taskData) => {
     setBackdropOpen(true); //display loading page
     // Step 1: Format the request body to be sent
-    let dateObject = new Date(taskData.dueDate);
-    let isoDateString = dateObject ? dateObject.toISOString() : null;
+    let dateObject = new Date(taskData.expectedCompleteTime);
+    let isoDateString = dateObject
+      ? randomizeDateObject(dateObject).toISOString()
+      : null;
     const requestBody = {
       title: taskData.title,
       status: taskData.status,
@@ -139,7 +138,7 @@ export function MainSprintBoard() {
       .then((response) => {
         // refetch all tasks and rerender page
         fetchAllTasks();
-        console.log("Task created:", response.data); // response.data contains the created task info.
+        console.log("Task created."); // response.data contains the created task info.
       })
       .catch((error) => {
         console.error("Error creating task:", error);
@@ -150,41 +149,50 @@ export function MainSprintBoard() {
   // PUT Method for updating Task Status
   const updateTaskStatus = async (task, newStatus) => {
     const url = `${ENDPOINT_URL}tasks/updateTask?taskId=${task.taskID}&username=null`; // Adjust the URL as needed
-    const formattedDate = formatDate(task.dueDate); // Format the date
+    const formattedDate = formatDate(task.expectedCompleteTime); // Format the date
     const payload = {
       title: task.title,
       status: newStatus,
       taskPoints: task.taskPoints,
-      expectedCompleteTime: formattedDate, // Make sure this is in the correct format
+      expectedCompleteTime: formattedDate,
     };
 
     try {
       const response = await axios.put(url, payload, {
         headers: { Authorization: `Bearer ${auth.user.userJWT}` },
       });
-      console.log("Task status updated:", response.data);
+      console.log("Task status updated.");
       fetchAllTasks(); // Refresh the task list after updating
     } catch (error) {
       console.error("Error updating task status:", error);
     }
   };
 
-  // DELETE Method for Delete Given Task
-  const deleteTask = (taskId) => {
-    const updatedTasks = tasks.filter((task) => task.id !== taskId);
-    setTasks(updatedTasks);
-  };
-
-  // PUT Method for Updating Task Info
-  const editTask = (newTaskData) => {
-    const updatedTasks = tasks.map((task) =>
-      task.id === newTaskData.id ? newTaskData : task
-    );
-    setTasks(updatedTasks);
-  };
   /* End of request declarations-------------------------------------------------------------------------------------------------------------------- */
 
   /* Other Helper Functions-------------------------------------------------------------------------------------------------------------------- */
+  // randomize the hour / minutes / seconds of dateObject to avoid collision
+  function randomizeDateObject(dateObject) {
+    if (!dateObject) return null;
+
+    const now = new Date();
+    dateObject.setHours(now.getHours(), now.getMinutes(), now.getSeconds());
+
+    return dateObject;
+  }
+
+  // randomize the hour / minutes / seconds of ISOString Object to avoid collision
+  function randomizeISOString(dateString) {
+    if (!dateString) return null;
+
+    const dateObject = new Date(dateString);
+    const now = new Date();
+
+    dateObject.setHours(now.getHours(), now.getMinutes(), now.getSeconds());
+
+    return dateObject;
+  }
+
   // Controller: open adding new task popper
   const openTaskPopup = (event) => {
     setAnchorEl(anchorEl ? null : event.currentTarget);
@@ -197,7 +205,7 @@ export function MainSprintBoard() {
     const taskData = {
       title: taskNameInput.valueOf(),
       assignee: assigneeInput.valueOf(),
-      dueDate: dueDateInput.valueOf(),
+      expectedCompleteTime: expectedCompleteTimeInput.valueOf(),
       status: "Not Started",
       taskPoints: taskPointsInput.valueOf(),
       //parentTaskID: null, // TODO: set parent ID if applicable
@@ -209,7 +217,7 @@ export function MainSprintBoard() {
     setTaskNameInput("");
     setTaskPointsInput(1);
     setAssigneeInput("Unassigned");
-    setDueDateInput("");
+    setexpectedCompleteTimeInput("");
     // }
   };
 
@@ -217,6 +225,7 @@ export function MainSprintBoard() {
   const formatDate = (date) => {
     if (!date) return null;
     const d = new Date(date);
+    d.setDate(d.getDate() + 1);
     let month = "" + (d.getMonth() + 1);
     let day = "" + d.getDate();
     let year = d.getFullYear();
@@ -282,6 +291,9 @@ export function MainSprintBoard() {
     //refetch team member, specifically used after success invitation
     fetchTeamMembers(); // Re-fetch team members
   };
+  useEffect(() => {
+    setOpenSpotlight(tasks.length === 0);
+  }, [tasks]);
   /* End of useEffect Declarations-------------------------------------------------------------------------------------------------------------------- */
 
   if (backdropOpen || !unformattedTasks || !tasks) {
@@ -312,13 +324,36 @@ export function MainSprintBoard() {
               style={{ fontFamily: "Inter, sans-serif" }}
             >
               Tasks
-              <img
-                id="addTaskButton"
-                aria-describedby={"createTaskMenu"}
-                onClick={openTaskPopup}
-                src={add_button_favicon}
-                alt=""
-              ></img>
+              {/* Add new task button */}
+              {/* Spotlight effect if tasks.length is 0, indicating that there is no task. */}
+              <Tooltip
+                title={
+                  <Typography
+                    style={{
+                      fontFamily: "Inter, sans-serif",
+                      fontSize: "14px",
+                    }}
+                  >
+                    Welcome, new user!
+                    <br />
+                    Please click here to create your first Task.
+                  </Typography>
+                }
+                arrow
+                placement="bottom"
+                TransitionProps={{ timeout: 600 }}
+                open={openSpotlight}
+                onClose={() => setOpenSpotlight(false)}
+              >
+                <img
+                  id="addTaskButton"
+                  aria-describedby={"createTaskMenu"}
+                  onClick={openTaskPopup}
+                  src={add_button_favicon}
+                  onMouseEnter={() => setOpenSpotlight(false)}
+                  alt=""
+                ></img>
+              </Tooltip>
             </div>
             <Popper id={"createTaskMenu"} open={open} anchorEl={anchorEl}>
               <Box
@@ -379,9 +414,9 @@ export function MainSprintBoard() {
                 <span>Due date: </span>
                 <input
                   type="date"
-                  id="dueDateInput"
-                  value={dueDateInput}
-                  onChange={(e) => setDueDateInput(e.target.value)}
+                  id="expectedCompleteTimeInput"
+                  value={expectedCompleteTimeInput}
+                  onChange={(e) => setexpectedCompleteTimeInput(e.target.value)}
                   style={{
                     fontFamily: "Inter, sans-serif",
                     marginLeft: "10px",
@@ -418,7 +453,7 @@ export function MainSprintBoard() {
                         disabled={
                           !taskNameInput ||
                           !assigneeInput ||
-                          !dueDateInput ||
+                          !expectedCompleteTimeInput ||
                           !taskPointsInput
                         }
                       >
@@ -464,11 +499,10 @@ export function MainSprintBoard() {
                 )
                 .map((task) => (
                   <Task
-                    key={task.taskId} // Make sure this is the correct unique identifier
+                    key={task.taskID} // Make sure this is the correct unique identifier
                     taskData={task}
-                    onDelete={deleteTask}
-                    onEdit={editTask}
                     refreshTasks={fetchAllTasks} // pass down prop to control rerender of tasks
+                    users={users}
                   />
                 ))}
             </div>
@@ -491,9 +525,8 @@ export function MainSprintBoard() {
                   <Task
                     key={task.taskID}
                     taskData={task}
-                    onDelete={deleteTask}
-                    onEdit={editTask}
                     refreshTasks={fetchAllTasks} // pass down prop to control rerender of tasks
+                    users={users}
                   />
                 ))}
             </div>
@@ -516,9 +549,8 @@ export function MainSprintBoard() {
                   <Task
                     key={task.taskID}
                     taskData={task}
-                    onDelete={deleteTask}
-                    onEdit={editTask}
                     refreshTasks={fetchAllTasks} // pass down prop to control rerender of tasks
+                    users={users}
                   />
                 ))}
             </div>
@@ -541,9 +573,8 @@ export function MainSprintBoard() {
                   <Task
                     key={task.taskID}
                     taskData={task}
-                    onDelete={deleteTask}
-                    onEdit={editTask}
                     refreshTasks={fetchAllTasks} // pass down prop to control rerender of tasks
+                    users={users}
                   />
                 ))}
             </div>

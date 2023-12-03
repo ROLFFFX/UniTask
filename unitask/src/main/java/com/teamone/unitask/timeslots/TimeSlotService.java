@@ -1,33 +1,24 @@
 package com.teamone.unitask.timeslots;
 
-import com.teamone.unitask.exception.ResourceNotFoundException;
-import com.teamone.unitask.meetings.Meeting;
 import com.teamone.unitask.onboard.UserService;
-import com.teamone.unitask.onboard.confirmationtoken.ConfirmationTokenRepository;
-import com.teamone.unitask.onboard.confirmationtoken.ConfirmationToken;
 import com.teamone.unitask.onboard.usermodels.User;
-import com.teamone.unitask.onboard.userrepos.UserRepository;
 import com.teamone.unitask.projects.Project;
 import com.teamone.unitask.projects.ProjectRepository;
-import org.springframework.beans.NotWritablePropertyException;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-import javax.validation.constraints.Null;
-import java.sql.Time;
-import java.time.LocalDateTime;
 import java.time.ZonedDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.*;
 import java.util.stream.Collectors;
 
-import java.util.Set.*;
-
 import static java.util.Collections.sort;
 
+/**
+ * Service class for managing time slots within a project context.
+ * It handles operations like creating, retrieving, deleting, and finding common time slots.
+ */
 @Service
 public class TimeSlotService {
 
@@ -36,6 +27,13 @@ public class TimeSlotService {
 
     private final UserService userService;
 
+    /**
+     * Constructs a TimeSlotService with necessary dependencies.
+     *
+     * @param timeSlotRepository Repository for time slot data access.
+     * @param projectRepository Repository for project data access.
+     * @param userService Service for user related operations.
+     */
     @Autowired
     public TimeSlotService(TimeSlotRepository timeSlotRepository,
                            ProjectRepository projectRepository,
@@ -45,6 +43,15 @@ public class TimeSlotService {
         this.projectRepository=projectRepository;
         this.userService=userService;
     }
+
+    /**
+     * Saves a list of time slots associated with a specific project.
+     *
+     * @param projectTitle Title of the project.
+     * @param token Authorization token for user identification.
+     * @param timeSlots List of time slots to be saved.
+     * @return List of saved time slots.
+     */
     public List<TimeSlot> save(String projectTitle, String token, List<TimeSlot> timeSlots){
         Project thisProj = projectRepository.findByProjectTitle(projectTitle);
         User thisUser = userService.getUserEmailFromToken(token);
@@ -55,6 +62,14 @@ public class TimeSlotService {
         return timeSlotRepository.saveAll(timeSlots);
     }
 
+
+    /**
+     * Retrieves a list of time slots for a given project and user.
+     *
+     * @param projectTitle Title of the project.
+     * @param token Authorization token for user identification.
+     * @return List of time slots.
+     */
     public List<TimeSlot> get(String projectTitle, String token){
         User thisUser = userService.getUserEmailFromToken(token);
         Set<TimeSlot> timeSlots = new HashSet<>(projectRepository.findByProjectTitle(projectTitle).getTimeSlots());
@@ -63,6 +78,13 @@ public class TimeSlotService {
         return new ArrayList<>(timeSlots);
     }
 
+
+    /**
+     * Deletes all time slots submitted by a user for a specific project.
+     *
+     * @param projectTitle Title of the project.
+     * @param token Authorization token for user identification.
+     */
     public void deleteAllTS(String projectTitle, String token) {
         User thisUser = userService.getUserEmailFromToken(token);
         Set<TimeSlot> timeSlots = new HashSet<>(projectRepository.findByProjectTitle(projectTitle).getTimeSlots());
@@ -72,77 +94,119 @@ public class TimeSlotService {
     }
 
 
+    /**
+     * Deletes a specific time slot by its ID.
+     *
+     * @param timeSlotId ID of the time slot to be deleted.
+     */
     public void deleteOneTS(Long timeSlotId) {
         timeSlotRepository.deleteById(timeSlotId);
     }
 
-    public List<TimeSlot> calcCommon(String projectTitle) throws IllegalArgumentException{
+    /**
+     * Calculates common time slots across all users of a project.
+     *
+     * @param projectTitle Title of the project.
+     * @return List of common time slots.
+     */
+    public List<TimeSlot> calcCommon(String projectTitle) {
 
         List<TimeSlot> projectTS;
         Set<User> tsUser;
         Map<ZonedDateTime, Set<User>> stTime2Users;
 
+        // Retrieve all time slots for the given project.
         projectTS = new ArrayList<>(projectRepository.findByProjectTitle(projectTitle).getTimeSlots());
 
-        //set of users that has submitted some timeslots to the project
+        // Set of users who have submitted time slots for this project.
         tsUser = new HashSet<>();
         projectTS.forEach(ts -> tsUser.add(ts.getUserAssigned()));
 
-        // map timeslots(marked by start time) to the set of users that share the timeslot
+        // Map each time slot's start time to the set of users who share that time slot.
         stTime2Users = new HashMap<>();
-        for (TimeSlot ts : projectTS) {stTime2Users.computeIfAbsent(ts.getStartTime(), k -> new HashSet<>()).add(ts.getUserAssigned());}
+        for (TimeSlot ts : projectTS) {
+            stTime2Users.computeIfAbsent(ts.getStartTime(), k -> new HashSet<>()).add(ts.getUserAssigned());
+        }
 
-        //Filter map timeslots -> only common timeslots shared by all users
-        //create a set of startTimes that correspond to the common timeslots
+        // Filter the map to retain only those time slots shared by all users in the project.
+        // This results in a set of start times representing common time slots.
         Set<ZonedDateTime> tempSet = stTime2Users.entrySet().stream()
                 .filter(entry -> entry.getValue().containsAll(tsUser))
                 .map(Map.Entry::getKey)
                 .collect(Collectors.toSet());
-        //convert set to a list
+
+        // Convert the set of common start times to a list for further processing.
         List<ZonedDateTime> commonStTime = new ArrayList<>(tempSet);
 
-        //if(tsUser.size()==2){ throw new IllegalArgumentException();}
-        if(commonStTime.isEmpty()){ return null;}
+        // If no common time slots are found, return null.
+        if (commonStTime.isEmpty()) {
+            return null;
+        }
 
-        //merge consecutive timeslots into larger timeslots
-        //projectTS.sort(Comparator.comparing(TimeSlot::getStartTime)); //sort by start time in ascending order
-        sort(commonStTime); //sort in temporal order
+        // Sort the list of common start times in chronological order.
+        sort(commonStTime);
 
-        //merge consecutive timeslots
-        List<TimeSlot> commonTS = new ArrayList<>(); //result list
-        ZonedDateTime disjoint = commonStTime.get(0); //first disjoint is start
+        // Initialize a list to store merged common time slots.
+        List<TimeSlot> commonTS = new ArrayList<>();
+        ZonedDateTime disjoint = commonStTime.get(0); // Starting time of the first block should still be the same.
         int itr = 0;
 
-        while(itr<commonStTime.size()) {
+        // Iterate over the list of common start times to merge consecutive time slots.
+        while (itr < commonStTime.size()) {
             TimeSlot curCommon = new TimeSlot();
-            curCommon.setStartTime(disjoint);
+            curCommon.setStartTime(disjoint); // Set the start time for the current common time slot.
 
-            //find the next disjoint or reach the end (the end is the last disjoint)
+            // Find the next disjoint (non-consecutive) time slot or reach the end of the list.
             while (itr < commonStTime.size() - 1 && commonStTime.get(itr).until(commonStTime.get(itr + 1), ChronoUnit.MINUTES) == 30L) {
                 itr++;
             }
-            disjoint = commonStTime.get(itr).plusMinutes(30L);//left of the disjoint; end time of the current elem; end time of commonTS
+
+            // Set the end time of the current common time slot and add it to the results list.
+            disjoint = commonStTime.get(itr).plusMinutes(30L); // End time of the current time slot.
             curCommon.setEndTime(disjoint);
             commonTS.add(curCommon);
 
-            if(itr == commonStTime.size() - 1){break;}//if itr is the last in the list
-            disjoint = commonStTime.get(itr+1);//right of the disjoint; start time of the next elem; start time of commonTS
+            // Break the loop if the current iteration is the last element in the list.
+            if (itr == commonStTime.size() - 1) {
+                break;
+            }
+
+            // Set up the start time for the next common time slot.
+            disjoint = commonStTime.get(itr + 1);
             itr++;
         }
 
         return commonTS;
     }
 
+
+    /**
+     * Clears all time slots for a given project.
+     *
+     * @param projectTitle Title of the project.
+     */
     public void clearProjTS(String projectTitle) {
         Set<TimeSlot> timeSlots = new HashSet<>(projectRepository.findByProjectTitle(projectTitle).getTimeSlots());
         timeSlotRepository.deleteAllInBatch(new ArrayList<>(timeSlots));
     }
 
+    /**
+     * Checks whether a project has any available time slots submitted.
+     *
+     * @param projectTitle Title of the project.
+     * @return Boolean indicating whether the project has time slots.
+     */
     public Boolean projNonEmpty(String projectTitle) {
         Project thisProj = projectRepository.findByProjectTitle(projectTitle);
         return !thisProj.getTimeSlots().isEmpty();
     }
 
+    /**
+     * Retrieves a list of usernames of members who have submitted time slots for a specific project.
+     *
+     * @param projectTitle Title of the project.
+     * @return List of usernames.
+     */
     public List<String> membersSubmitted(String projectTitle) {
         List<TimeSlot> projectTS = new ArrayList<>(projectRepository.findByProjectTitle(projectTitle).getTimeSlots());
         Set<User> tsUser = new HashSet<>();

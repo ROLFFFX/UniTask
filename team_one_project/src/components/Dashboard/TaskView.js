@@ -1,13 +1,21 @@
-import { Typography, Grid, Divider, Box } from "@mui/material";
-import React, { useState, useEffect } from "react";
-import TaskList from "./TaskList";
-import "./TaskList.css";
-import TextField from "@mui/material/TextField";
-import Autocomplete from "@mui/material/Autocomplete";
+/**
+ * @fileoverview This file includes the TaskView component, used for displaying
+ * a view of tasks (TaskList.js) with options to toggle views and filter tasks by
+ * team members. While the TaskList.js is responsible for applying the actual filter,
+ * this file handles the 1. toggleView button to toggle 'table task view' and 'data
+ * visual view'; 2. filter by username with autocomplete.
+ */
+
 import Dropdown from "@mui/joy/Dropdown";
 import Menu from "@mui/joy/Menu";
 import MenuButton from "@mui/joy/MenuButton";
 import MenuItem from "@mui/joy/MenuItem";
+import { Box, Divider, Grid } from "@mui/material";
+import Autocomplete from "@mui/material/Autocomplete";
+import TextField from "@mui/material/TextField";
+import React, { useEffect, useState } from "react";
+import TaskList from "./TaskList";
+import "./TaskList.css";
 
 const textFieldStyle = {
   "& .MuiInputBase-input": {
@@ -46,6 +54,28 @@ const textFieldStyle = {
   },
 };
 
+/**
+ * TaskView - A functional component for rendering a view of tasks with filter by username functionality.
+ *
+ * This component provides an interface for viewing tasks. It includes a dropdown menu for toggling
+ * between different views (Data Visualization, Table Task View) and an autocomplete field
+ * for filtering tasks by team members. The actual table is rendered through TaskList, which can be found
+ * in ./Tasklist.js
+ *
+ * Props:
+ * @param {Object} props - The props passed to the TaskView component.
+ * @param {Array} props.formattedTeamMembers - The formatted list of team members for the task filter.
+ * @param {string} props.toggleView - The current view mode.
+ * @param {Function} props.onToggleViewChange - Callback function to handle view mode changes.
+ *
+ * State:
+ * @state @type {Object|null} value - The currently selected value for the team member filter.
+ * @state @type {string} inputValue - The input value for the autocomplete field.
+ * @state @type {Array} filteredMembers - The filtered list of team members based on the selected value.
+ * @state @type {boolean} open - State to control the dropdown menu's open status.
+ *
+ * @returns {React.ReactElement} A React element representing the task view component.
+ */
 export default function TaskView(props) {
   const MembersList = props.formattedTeamMembers;
   const [value, setValue] = useState(null);
@@ -53,9 +83,7 @@ export default function TaskView(props) {
   const [filteredMembers, setFilteredMembers] = useState(
     props.formattedTeamMembers
   );
-
   const [open, setOpen] = React.useState(false);
-
   const handleOpenChange = React.useCallback((event, isOpen) => {
     setOpen(isOpen);
   }, []);

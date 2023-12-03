@@ -1,7 +1,37 @@
+/**
+ * @fileoverview This file includes the HorizontalBarChart component, used for
+ * rendering a horizontal bar chart representation of progress data. Is rendered
+ * at left bottom corner when Linear Progress View is on.
+ */
+
 import { Grid, Typography, Tooltip } from "@mui/material";
 import LinearProgress from "@mui/joy/LinearProgress";
 import React, { useState } from "react";
 
+/**
+ * HorizontalBarChart - A functional component for rendering a horizontal bar chart.
+ *
+ * This component takes progress data and visualizes it as horizontal bars. It displays
+ * the proportion of tasks in different states (To Do, Doing, Done) as a percentage of
+ * the total number of tasks. The component utilizes tooltips to provide additional
+ * information on hover.
+ *
+ * Props:
+ * @param {Object} progressData - The progress data to be visualized. It should have
+ *                                properties for each task state (To Do, Not Started,
+ *                                Doing, Done) with corresponding task pts.
+ *
+ * State:
+ * @state @type {boolean} hoverTODO - Controls the state of the hover effect for the 'To Do' bar.
+ * @state @type {boolean} hoverDOING - Controls the state of the hover effect for the 'Doing' bar.
+ * @state @type {boolean} hoverDONE - Controls the state of the hover effect for the 'Done' bar.
+ *
+ * The component is divided into three sections, each representing one of the task states
+ * with its corresponding proportion of the total tasks. Hovering over each section reveals
+ * additional details about the tasks in that state.
+ *
+ * @returns {React.ReactElement} A React element representing the horizontal bar chart.
+ */
 export default function HorizontalBarChart({ progressData }) {
   const total =
     progressData.progressBarData["To Do"] +

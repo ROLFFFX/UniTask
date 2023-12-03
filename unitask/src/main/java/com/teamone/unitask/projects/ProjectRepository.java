@@ -1,6 +1,5 @@
 package com.teamone.unitask.projects;
 
-import com.teamone.unitask.projects.Project;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -39,4 +38,5 @@ public interface ProjectRepository extends JpaRepository<Project, Long> {
      * @return Project with the given ID if it exists.
      */
     Project findByProjectId(Long projectId);
+
 }

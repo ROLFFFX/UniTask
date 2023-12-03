@@ -1,38 +1,96 @@
-import MenuIcon from "@mui/icons-material/Menu";
+import AddLinkIcon from "@mui/icons-material/AddLink";
+import LinkIcon from "@mui/icons-material/Link";
+import LogoutIcon from "@mui/icons-material/Logout";
+import { ButtonGroup, ThemeProvider } from "@mui/material";
 import AppBar from "@mui/material/AppBar";
 import Avatar from "@mui/material/Avatar";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Container from "@mui/material/Container";
-import IconButton from "@mui/material/IconButton";
-import Menu from "@mui/material/Menu";
-import MenuItem from "@mui/material/MenuItem";
-import Toolbar from "@mui/material/Toolbar";
-import Tooltip from "@mui/material/Tooltip";
-import Typography from "@mui/material/Typography";
-import * as React from "react";
-import barTheme from "./barTheme";
-
 import Drawer from "@mui/material/Drawer";
-import List from "@mui/material/List";
+import IconButton from "@mui/material/IconButton";
 import ListItem from "@mui/material/ListItem";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
+import Menu from "@mui/material/Menu";
+import MenuItem from "@mui/material/MenuItem";
 import TextField from "@mui/material/TextField";
-import AddLinkIcon from "@mui/icons-material/AddLink";
-import LinkIcon from "@mui/icons-material/Link";
-import { ENDPOINT_URL } from "../../hooks/useConfig";
-
+import Toolbar from "@mui/material/Toolbar";
+import Tooltip from "@mui/material/Tooltip";
+import Typography from "@mui/material/Typography";
+import * as React from "react";
 import { useEffect, useState } from "react";
-import { v4 as uuidv4 } from "uuid";
-
+import { ENDPOINT_URL } from "../../hooks/useConfig";
 import UniTaskLogo_new from "../../images/UniTaskLOGO.PNG";
-import { ButtonGroup, ThemeProvider } from "@mui/material";
+import barTheme from "./barTheme";
+import ChangeCircleIcon from "@mui/icons-material/ChangeCircle";
+import Diversity3Icon from "@mui/icons-material/Diversity3";
 
 import axios from "axios";
-import { useCookies } from "react-cookie";
 import useAuth from "../../hooks/useAuth";
+import { useNavigate } from "react-router-dom";
+
+const LogOutButton = () => {
+  const { logout } = useAuth();
+
+  const handleLogout = () => {
+    logout();
+  };
+
+  return (
+    <Tooltip
+      title={
+        <Typography
+          style={{
+            fontFamily: "Inter, sans-serif",
+            fontSize: "12px",
+            color: "white",
+          }}
+        >
+          Log Out...
+        </Typography>
+      }
+      arrow
+      placement="bottom"
+      TransitionProps={{ timeout: 600 }}
+    >
+      <IconButton onClick={handleLogout} sx={{ p: 2 }}>
+        <LogoutIcon sx={{ color: "white" }} />
+      </IconButton>
+    </Tooltip>
+  );
+};
+
+const ChangeWorkspaceButton = () => {
+  const navigate = useNavigate();
+  const handleLogoutGroup = () => {
+    navigate("/login/login_with_group");
+  };
+
+  return (
+    <Tooltip
+      title={
+        <Typography
+          style={{
+            fontFamily: "Inter, sans-serif",
+            fontSize: "12px",
+            color: "white",
+          }}
+        >
+          Change Workspace
+        </Typography>
+      }
+      arrow
+      placement="bottom"
+      TransitionProps={{ timeout: 600 }}
+    >
+      <IconButton onClick={handleLogoutGroup} sx={{ p: 2 }}>
+        <Diversity3Icon sx={{ color: "white" }} />
+      </IconButton>
+    </Tooltip>
+  );
+};
 
 export function TopAppBar() {
   const { auth } = useAuth();
@@ -60,13 +118,13 @@ export function TopAppBar() {
 
   useEffect(() => {
     getLinksList();
-  }, []);
+  });
 
   async function updateLinksList(editedlink, thisid) {
     //e.preventDefault();
     // console.log("edited link", editedlink);
     try {
-      const response = await axios.put(
+      await axios.put(
         `${ENDPOINT_URL}hyperlinks/editHyperlink/${thisid}`,
         //const response = await axios.put(`http://localhost:8080/editHyperlink/${editedlink.id}`,
         editedlink,
@@ -84,9 +142,8 @@ export function TopAppBar() {
 
   async function deleteLinksList(thisid) {
     try {
-      const response = await axios.delete(
+      await axios.delete(
         `${ENDPOINT_URL}hyperlinks/deleteHyperlink/${thisid}`,
-        //const response = await axios.delete(`http://localhost:8080/editHyperlink/${deletedlink.id}`,
         {
           headers: {
             "Content-Type": "application/json",
@@ -104,7 +161,6 @@ export function TopAppBar() {
     try {
       const response = await axios.post(
         `${ENDPOINT_URL}hyperlinks/createHyperlink/${projectTitle}`,
-        //const response = await axios.post(`http://localhost:8080/createHyperlink/${projectTitle}`,
         newlink,
         {
           headers: {
@@ -114,15 +170,12 @@ export function TopAppBar() {
         }
       );
       newlink.hyperlinkId = response.data.hyperlinkId;
-      // console.log("submitted link", newlink);
     } catch (error) {
       console.error("Error submitting list", error);
     }
   }
 
-  const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
-  const pages = [];
   const settings = ["Option to be determined"];
 
   const [state, setState] = useState(false); //drawer state
@@ -131,17 +184,6 @@ export function TopAppBar() {
   const [itAction, setitAction] = useState("Static"); //actions on change/remove list items
   const [linkName, setLinkName] = useState("");
   const [link, setLink] = useState("");
-
-  const handleOpenNavMenu = (event) => {
-    setAnchorElNav(event.currentTarget);
-  };
-  const handleOpenUserMenu = (event) => {
-    setAnchorElUser(event.currentTarget);
-  };
-
-  const handleCloseNavMenu = () => {
-    setAnchorElNav(null);
-  };
 
   const handleCloseUserMenu = () => {
     setAnchorElUser(null);
@@ -155,8 +197,6 @@ export function TopAppBar() {
   }
 
   function addLinks() {
-    //console.log("!linkName", !linkName, !link);
-
     if (!linkName || !link) {
       return;
     }
@@ -168,7 +208,6 @@ export function TopAppBar() {
       title: linkName,
     };
     setLinksList([...linksList, newlink]);
-    // console.log("current usestate list:", linksList);
     submitLinksList(newlink);
   }
 
@@ -186,17 +225,14 @@ export function TopAppBar() {
     const index = linksList.findIndex((item) => item.hyperlinkId === thisid);
     const newlist = linksList.with(index, editedItem);
     setLinksList(newlist);
-    // console.log("current usestate list:", linksList);
     updateLinksList(editedItem, thisid);
   }
 
-  //TODO: newlink
   function removeLinks(thisid) {
     const newlist = linksList.filter(
       (userlink) => userlink.hyperlinkId !== thisid
     );
     setLinksList(newlist);
-    // console.log("current usestate list:", linksList);
     deleteLinksList(thisid);
   }
 
@@ -348,111 +384,53 @@ export function TopAppBar() {
     <ThemeProvider theme={barTheme}>
       <AppBar
         position="relative"
-        sx={{ backgroundColor: "#343A40", zIndex: 1201, height: "64px" }}
+        sx={{
+          backgroundColor: "#343A40",
+          zIndex: 1201,
+          height: "64px",
+          width: "100%",
+        }}
       >
-        <Container maxWidth="xl">
-          <Toolbar disableGutters>
-            <Avatar
-              src={UniTaskLogo_new}
-              sx={{ display: { xs: "none", md: "flex" }, mr: 2 }}
-            />
-            {/* <Typography
-              variant="h6"
-              noWrap
-              component="a"
-              // sx={{
-              //   mr: 2,
-              //   display: { xs: "none", md: "flex" },
-              //   fontFamily: "monospace",
-              //   fontWeight: 700,
-              //   letterSpacing: ".3rem",
-              //   color: "inherit",
-              //   textDecoration: "none",
-              // }}
-            >
-              UniTask
-            </Typography> */}
-
-            <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
-              <IconButton
-                size="large"
-                aria-label="account of current user"
-                aria-controls="menu-appbar"
-                aria-haspopup="true"
-                onClick={handleOpenNavMenu}
-                color="inherit"
+        <Toolbar disableGutters>
+          <Container maxWidth={false}>
+            <Box display="flex" alignItems="center" width="100%" height="64px">
+              {/* <Box border={1} borderColor="red"> */}
+              <Avatar src={UniTaskLogo_new} sx={{ height: 80, width: 80 }} />
+              {/* </Box> */}
+              {/* Flex Box spacer */}
+              <Box flexGrow={1}></Box>
+              {/* For Hyperlink section */}
+              <Tooltip
+                title={
+                  <Typography
+                    style={{
+                      fontFamily: "Inter, sans-serif",
+                      fontSize: "12px",
+                      color: "white",
+                    }}
+                  >
+                    See Your Hyperlinks
+                  </Typography>
+                }
+                arrow
+                placement="top"
+                TransitionProps={{ timeout: 600 }}
               >
-                <MenuIcon />
-              </IconButton>
-              <Menu
-                id="menu-appbar"
-                anchorEl={anchorElNav}
-                anchorOrigin={{
-                  vertical: "bottom",
-                  horizontal: "left",
-                }}
-                keepMounted
-                transformOrigin={{
-                  vertical: "top",
-                  horizontal: "left",
-                }}
-                open={Boolean(anchorElNav)}
-                onClose={handleCloseNavMenu}
-                sx={{
-                  display: { xs: "block", md: "none" },
-                }}
-              >
-                {pages.map((page) => (
-                  <MenuItem key={page} onClick={handleCloseNavMenu}>
-                    <Typography textAlign="center">{page}</Typography>
-                  </MenuItem>
-                ))}
-              </Menu>
-            </Box>
-            <Typography
-              variant="h5"
-              noWrap
-              component="a"
-              sx={{
-                mr: 2,
-                display: { xs: "flex", md: "none" },
-                flexGrow: 1,
-                fontFamily: "monospace",
-                fontWeight: 700,
-                letterSpacing: ".3rem",
-                color: "inherit",
-                textDecoration: "none",
-              }}
-            >
-              UniTask
-            </Typography>
-            <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
-              {pages.map((page) => (
-                <Button
-                  key={page}
-                  onClick={handleCloseNavMenu}
-                  sx={{ my: 2, color: "white", display: "block" }}
-                >
-                  {page}
-                </Button>
-              ))}
-            </Box>
-
-            <Box sx={{ flexGrow: 0 }}>
-              <Tooltip title="See Your Hyperlinks">
                 <IconButton
                   style={{ color: "white" }}
                   onClick={() => {
                     state === false ? toggleDrawer(true) : toggleDrawer(false);
                     cancelAction();
                   }}
-                  sx={{ p: 0 }}
+                  sx={{ p: 2 }}
                 >
                   <LinkIcon />
                   {/* For Top Right Button / User */}
-                  {/*<Avatar src={UniTaskLogo_new} alt="Remy Sharp" />*/}
                 </IconButton>
               </Tooltip>
+              {/* Dropdown Menu on LogOut and Change Workspace */}
+              <ChangeWorkspaceButton />
+              <LogOutButton />
               <Menu
                 sx={{ mt: "45px" }}
                 id="menu-appbar"
@@ -476,8 +454,8 @@ export function TopAppBar() {
                 ))}
               </Menu>
             </Box>
-          </Toolbar>
-        </Container>
+          </Container>
+        </Toolbar>
       </AppBar>
       <Drawer
         anchor="top"

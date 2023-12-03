@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: AnimatedProgressBar.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: AnimatedProgressBar.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/**
+ * @fileoverview This file defines the AnimatedProgressBar component, which renders a
+ * circular progress bar using the Victory charting library. It is used to visually represent
+ * the progress of a task or set of tasks as a percentage, and will be rendered at the bottom
+ * right corner of dashboard page - data visualization.
+ */
+
+import React, { useState, useEffect } from "react";
+import { VictoryPie, VictoryAnimation, VictoryLabel } from "victory";
+import { Box, Grid, Typography, Tooltip } from "@mui/material";
+
+/**
+ * AnimatedProgressBar - A functional component that renders a circular progress bar of
+ * task points done / (task poitns for todo + task points for doing + taskpoints for done).
+ *
+ * This component takes progress data as a prop and uses it to calculate and display the
+ * completion percentage of a task or set of tasks. It uses VictoryPie and VictoryAnimation
+ * from the Victory charting library to render the progress bar, and MUI components
+ * for layout and tooltips.
+ *
+ * Props:
+ * @param {Object} progressData - The data used to calculate the progress percentage. It should
+ *                                contain a 'progressBarData' object with numeric values.
+ *
+ * State:
+ * @state @type {number} percent - The calculated completion percentage.
+ * @state @type {number} done - The total value of completed tasks.
+ * @state @type {number} total - The total value of all tasks.
+ *
+ * Functions:
+ * calculateDoneRatio - Calculates the ratio of completed tasks to total tasks.
+ * getData - Returns an array of data for the VictoryPie component based on the completion percentage.
+ *
+ * @returns {React.ReactElement} A React element representing the animated progress bar.
+ */
+export default function AnimatedProgressBar({ progressData }) {
+  const [percent, setPercent] = useState(0);
+  const [done, setDone] = useState(0);
+  const [total, setTotal] = useState(0);
+
+  useEffect(() => {
+    if (progressData &amp;&amp; progressData.progressBarData) {
+      const doneRatio = calculateDoneRatio(progressData);
+      setPercent(doneRatio * 100);
+    }
+  }, [progressData]);
+
+  const calculateDoneRatio = (progressData) => {
+    const progressBarData = progressData.progressBarData;
+    const total = Object.values(progressBarData).reduce(
+      (sum, value) => sum + value,
+      0
+    );
+    const doneValue = progressBarData.Done || 0;
+    setDone(doneValue);
+    setTotal(total);
+
+    return total === 0 ? 0 : doneValue / total;
+  };
+
+  const data = getData(percent);
+
+  function getData(percent) {
+    return [
+      { x: 1, y: percent },
+      { x: 2, y: 100 - percent },
+    ];
+  }
+
+  return (
+    &lt;Grid container>
+      &lt;Grid item xs={12}>
+        {/* Box for entire progress bar section. Note that it excludes headers. */}
+        &lt;Box
+          display="flex"
+          justifyContent="center"
+          alignItems="center"
+          marginTop="-10px"
+        >
+          {/* Tooltip to show more detailed information */}
+          &lt;Tooltip
+            title={
+              &lt;Typography
+                style={{ fontFamily: "Inter, sans-serif", fontSize: "12px" }}
+              >
+                {`Tasks worth of ${done} task points are done out of ${total} taskpoints.`}
+              &lt;/Typography>
+            }
+            arrow
+            placement="top"
+            TransitionProps={{ timeout: 600 }}
+          >
+            {/* Actual circular progress bar */}
+            &lt;svg viewBox="0 0 400 400" width="60%">
+              &lt;VictoryPie
+                standalone={false}
+                animate={{ duration: 1000 }}
+                width={400}
+                height={400}
+                data={data}
+                innerRadius={120}
+                cornerRadius={25}
+                labels={() => null}
+                style={{
+                  data: {
+                    fill: ({ datum }) => {
+                      let color;
+                      if (percent &lt;= 20) {
+                        color = "#99e2b4";
+                      } else if (percent &lt;= 40) {
+                        color = "#78c6a3";
+                      } else if (percent &lt;= 60) {
+                        color = "#56ab91";
+                      } else if (percent &lt;= 80) {
+                        color = "#469d89";
+                      } else {
+                        color = "#248277";
+                      }
+                      return datum.x === 1 ? color : "transparent";
+                    },
+                  },
+                }}
+              />
+              {/* Animation added so that it animates the progress at initial render. */}
+              &lt;VictoryAnimation duration={1000} data={{ percent }}>
+                {(newProps) => (
+                  // Label is rendered inside of the Progress bar.
+                  &lt;VictoryLabel
+                    textAnchor="middle"
+                    verticalAnchor="middle"
+                    x={200}
+                    y={200}
+                    text={`${Math.round(newProps.percent)}%`}
+                    style={{ fontSize: 45 }}
+                  />
+                )}
+              &lt;/VictoryAnimation>
+            &lt;/svg>
+          &lt;/Tooltip>
+        &lt;/Box>
+      &lt;/Grid>
+    &lt;/Grid>
+  );
+}
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#CustomLabel">CustomLabel</a></li><li><a href="global.html#DashboardContent">DashboardContent</a></li><li><a href="global.html#InterpolationSelect">InterpolationSelect</a></li><li><a href="global.html#PersonalChart">PersonalChart</a></li><li><a href="global.html#TeamProgress">TeamProgress</a></li><li><a href="global.html#calculateTrendLineData">calculateTrendLineData</a></li><li><a href="global.html#formatDateToMonthDay">formatDateToMonthDay</a></li><li><a href="global.html#processPersonalTaskData">processPersonalTaskData</a></li><li><a href="global.html#processTaskData">processTaskData</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.2</a> on Sun Dec 03 2023 00:15:57 GMT-0500 (Eastern Standard Time)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

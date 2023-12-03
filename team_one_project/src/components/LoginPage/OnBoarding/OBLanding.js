@@ -18,7 +18,7 @@ import axios from "axios";
 import useAuth from "../../../hooks/useAuth";
 import { ENDPOINT_URL } from "../../../hooks/useConfig";
 
-export function OB_landing() {
+export function OBLanding() {
   const [activeStep, setActiveStep] = React.useState(0);
   const [workspaceName, setWorkspaceName] = React.useState(""); // new state for storing the workspace name
   const [role, setRole] = React.useState("");
@@ -48,28 +48,37 @@ export function OB_landing() {
     if (activeStep === 0) {
       // axios.post workspace name
       try {
-        const response = await axios.post(
-          `${ENDPOINT_URL}projects/createNewWorkspace`,
-          {
-            projectTitle: workspaceName,
-          },
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
+        // validate workspace name
+        if (
+          workspaceName &&
+          workspaceName.trim().length > 0 &&
+          workspaceName[workspaceName.length - 1] !== " "
+        ) {
+          const response = await axios.post(
+            `${ENDPOINT_URL}projects/createNewWorkspace`,
+            {
+              projectTitle: workspaceName,
             },
-          }
-        );
-        console.log(response.data);
+            {
+              headers: {
+                Authorization: `Bearer ${token}`,
+              },
+            }
+          );
+          setActiveStep((prevActiveStep) => prevActiveStep + 1);
+        } else {
+          alert(
+            "Invalid Workspace Name. Name should be valid character or numbers and should not end in whitesapce."
+          );
+        }
+        // console.log(response.data);
       } catch (error) {
         alert("Error: This Workspace Name is Already Taken!");
         console.error("There was an error!", error);
       }
+    } else {
+      setActiveStep((prevActiveStep) => prevActiveStep + 1);
     }
-    if (activeStep === 1) {
-      // @todo: axios.post
-      // alert(role);
-    }
-    setActiveStep((prevActiveStep) => prevActiveStep + 1);
   };
 
   const handleBack = () => {
@@ -83,7 +92,7 @@ export function OB_landing() {
   return (
     <React.Fragment>
       <ThemeProvider theme={theme}>
-        <TopSVG />
+        <TopSVG style={{ position: "absolute", zindex: "-1" }} />
         <CssBaseline />
         <AppBar
           position="absolute"
@@ -94,7 +103,12 @@ export function OB_landing() {
             borderBottom: (t) => `1px solid ${t.palette.divider}`,
           }}
         ></AppBar>
-        <Container component="main" maxWidth="sm" sx={{ mt: 2, mb: 4 }}>
+        <Container
+          component="main"
+          maxWidth="sm"
+          sx={{ mt: 2, mb: 4 }}
+          style={{ position: "relative", zIndex: 1 }}
+        >
           <Box
             sx={{
               marginTop: 15,
@@ -213,7 +227,12 @@ export function OB_landing() {
             </React.Fragment>
           </Box>
         </Container>
-        <BottomSVG />
+        <Box>
+          <BottomSVG
+            sx={{ margin: 0, padding: 0 }}
+            style={{ position: "absolute", zindex: "-1" }}
+          />
+        </Box>
       </ThemeProvider>
     </React.Fragment>
   );
