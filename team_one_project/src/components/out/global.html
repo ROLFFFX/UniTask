@@ -104,7 +104,7 @@
     
 
     
-    <h4 class="name" id="CustomLabel"><span class="type-signature"></span>CustomLabel<span class="signature">(props)</span><span class="type-signature"> &rarr; {React.ReactElement}</span></h4>
+    <h4 class="name" id="LoginSignup"><span class="type-signature"></span>LoginSignup<span class="signature">()</span><span class="type-signature"> &rarr; {React.ReactElement}</span></h4>
     
 
     
@@ -112,171 +112,12 @@
 
 
 <div class="description">
-    CustomLabel - A functional component for rendering custom labels on a VictoryPie chart.
-</div>
-
-
-
-
-
-
-
-
-
-    <h5>Parameters:</h5>
-    
-
-<table class="params">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>props</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">Object</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">Including datum for the pie slice data.</td>
-        </tr>
-
-    
-    </tbody>
-</table>
-
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="TeamProgress.js.html">TeamProgress.js</a>, <a href="TeamProgress.js.html#line19">line 19</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<h5>Returns:</h5>
-
-        
-<div class="param-desc">
-    A React element representing the custom label with tooltip.
-</div>
-
-
-
-<dl>
-    <dt>
-        Type
-    </dt>
-    <dd>
-        
-<span class="param-type">React.ReactElement</span>
-
-
-    </dd>
-</dl>
-
-    
-
-
-
-
-
-        
-            
-
-    
-
-    
-    <h4 class="name" id="DashboardContent"><span class="type-signature"></span>DashboardContent<span class="signature">()</span><span class="type-signature"> &rarr; {React.ReactElement}</span></h4>
-    
-
-    
-
-
-
-<div class="description">
-    DashboardContent - A functional component that renders the left side dashboard view of the dashboard.
-
-This component fetches and displays data regarding task distribution among team members,
-overall progress of tasks, team member information, and all tasks in the current workspace.
-It conditionally renders two different views based on the available data, which are table
-task view and dashboard view
+    LoginSignup - A functional component for user login and auth.
+
+This component presents an interface for users to log in to the project. It includes input fields for email
+and password, and a submit button to initiate the login process. It also interacts with the server through
+API call to validate user credentials. On success, it navigates the user to root of protected routes; on failure,
+it display custom messages.
 
 State:
 </div>
@@ -322,7 +163,7 @@ State:
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="DashboardContent.js.html">DashboardContent.js</a>, <a href="DashboardContent.js.html#line66">line 66</a>
+        <a href="LoginSignup.js.html">LoginSignup.js</a>, <a href="LoginSignup.js.html#line57">line 57</a>
     </li></ul></dd>
     
 
@@ -351,7 +192,7 @@ State:
 
         
 <div class="param-desc">
-    A React element representing the main dashboard content.
+    A React element representing the user login interface.
 </div>
 
 
@@ -380,7 +221,7 @@ State:
     
 
     
-    <h4 class="name" id="InterpolationSelect"><span class="type-signature"></span>InterpolationSelect<span class="signature">(props)</span><span class="type-signature"> &rarr; {React.ReactElement}</span></h4>
+    <h4 class="name" id="PasswordInput"><span class="type-signature"></span>PasswordInput<span class="signature">()</span><span class="type-signature"> &rarr; {React.ReactElement}</span></h4>
     
 
     
@@ -388,7 +229,14 @@ State:
 
 
 <div class="description">
-    InterpolationSelect - Renders a selection of interpolation options.
+    PasswordInput - A functional component for rendering a password input field with validation.
+
+This component provides an input textfield for password entry along with real-time validation feedback.
+It includes a progress bar to indicate the strength of the password based on its length and displays
+helper text to guide the user to meet the password criteria. The criteria include having a minimum length of 8,
+containing at least one numeral, and at least one uppercase letter.
+
+Props:
 </div>
 
 
@@ -399,10 +247,15 @@ State:
 
 
 
-    <h5>Parameters:</h5>
+
+
+
+
+    <h5 class="subsection-title">Properties:</h5>
+
     
 
-<table class="params">
+<table class="props">
     <thead>
     <tr>
         
@@ -424,95 +277,7 @@ State:
 
         <tr>
             
-                <td class="name"><code>props</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">Object</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">The props passed to the InterpolationSelect component.
-                <h6>Properties</h6>
-                
-
-<table class="params">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>currentValue</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">string</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">The current selected interpolation value.</td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>values</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">Array.&lt;string></span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">Array of available interpolation options.</td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>onChange</code></td>
+                <td class="name"><code>onInputChange</code></td>
             
 
             <td class="type">
@@ -528,172 +293,20 @@ State:
 
             
 
-            <td class="description last">Callback function to handle interpolation change.</td>
+            <td class="description last">Function to handle the change in the password input field.</td>
         </tr>
 
-    
-    </tbody>
-</table>
-
-            </td>
-        </tr>
-
-    
-    </tbody>
-</table>
-
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="PersonalChart.js.html">PersonalChart.js</a>, <a href="PersonalChart.js.html#line44">line 44</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<h5>Returns:</h5>
-
-        
-<div class="param-desc">
-    The component for selecting an interpolation option.
-</div>
-
-
-
-<dl>
-    <dt>
-        Type
-    </dt>
-    <dd>
-        
-<span class="param-type">React.ReactElement</span>
-
-
-    </dd>
-</dl>
-
-    
-
-
-
-
-
-        
-            
-
-    
-
-    
-    <h4 class="name" id="PersonalChart"><span class="type-signature"></span>PersonalChart<span class="signature">(processedPersonalData)</span><span class="type-signature"> &rarr; {React.ReactElement}</span></h4>
-    
-
-    
-
-
-
-<div class="description">
-    PersonalChart - A functional component for rendering a personal task progression chart.
-
-This component visualizes a user's task progression over time using a line chart. It allows
-users to interactively select different interpolation methods for the chart. The component
-also calculates and sets up the chart's size based on the window size and updates it on window resize.
-Ideally, user will choose their interpolation according to preference. However, we all know nobody
-is really going to use it. I personally only use linear and natural. It also provides 'polar' options,
-which I don't even understand this mathmatical terms. The entire chart is provided by Victory.js
-
-Props:
-</div>
-
-
-
-
-
-
-
-
-
-    <h5>Parameters:</h5>
-    
-
-<table class="params">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
     
 
         <tr>
             
-                <td class="name"><code>processedPersonalData</code></td>
+                <td class="name"><code>onCriteriaMetChange</code></td>
             
 
             <td class="type">
             
                 
-<span class="param-type">Array.&lt;Object></span>
+<span class="param-type">function</span>
 
 
             
@@ -703,8 +316,7 @@ Props:
 
             
 
-            <td class="description last">The processed data used for the chart, containing
-                                                date (key) and value (b) pairs.
+            <td class="description last">Function to notify when the password meets the specified criteria.
 
 State:</td>
         </tr>
@@ -716,8 +328,6 @@ State:</td>
 
 
 
-
-
 <dl class="details">
 
     
@@ -747,7 +357,7 @@ State:</td>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="PersonalChart.js.html">PersonalChart.js</a>, <a href="PersonalChart.js.html#line113">line 113</a>
+        <a href="PasswordInput.js.html">PasswordInput.js</a>, <a href="PasswordInput.js.html#line40">line 40</a>
     </li></ul></dd>
     
 
@@ -776,7 +386,7 @@ State:</td>
 
         
 <div class="param-desc">
-    A React element representing the personal task progression chart.
+    A React element representing a custom password input field with validation feedback.
 </div>
 
 
@@ -805,7 +415,7 @@ State:</td>
     
 
     
-    <h4 class="name" id="TeamProgress"><span class="type-signature"></span>TeamProgress<span class="signature">(TaskDistributionData)</span><span class="type-signature"> &rarr; {React.ReactElement}</span></h4>
+    <h4 class="name" id="SignUp"><span class="type-signature"></span>SignUp<span class="signature">()</span><span class="type-signature"> &rarr; {React.ReactElement}</span></h4>
     
 
     
@@ -813,12 +423,15 @@ State:</td>
 
 
 <div class="description">
-    TeamProgress - A functional component for rendering the task distribution among team members.
+    SignUp - A functional component for registering new users.
 
-This component displays a pie chart (using VictoryPie) of task points achieved by each team member.
-It uses the CustomLabel component to display tooltips for each slice of the pie chart.
+This component presents an interface for users to sign up their own account. It includes input fields for first name,
+last name, email, custom password field, and a submit button to initiate the registration process. The password input is
+customized and can be found in ./PasswordInput.js. It also interacts with server through API calls to register and uses
+custom modal to display success or error messages. Since we handle user authorization through a GET Request with JWT, it
+display a modal to prompt the user to click the link in email.
 
-Props:
+State:
 </div>
 
 
@@ -827,58 +440,6 @@ Props:
 
 
 
-
-
-    <h5>Parameters:</h5>
-    
-
-<table class="params">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>TaskDistributionData</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">Object</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">The data used to render the pie chart.
-
-The component renders a header section with a title and description, followed by the content
-area that displays the VictoryPie chart.</td>
-        </tr>
-
-    
-    </tbody>
-</table>
 
 
 
@@ -914,7 +475,7 @@ area that displays the VictoryPie chart.</td>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="TeamProgress.js.html">TeamProgress.js</a>, <a href="TeamProgress.js.html#line57">line 57</a>
+        <a href="SignUp.js.html">SignUp.js</a>, <a href="SignUp.js.html#line63">line 63</a>
     </li></ul></dd>
     
 
@@ -943,7 +504,7 @@ area that displays the VictoryPie chart.</td>
 
         
 <div class="param-desc">
-    A React element representing the team progress chart.
+    A React element representing the user registration interface.
 </div>
 
 
@@ -955,760 +516,6 @@ area that displays the VictoryPie chart.</td>
     <dd>
         
 <span class="param-type">React.ReactElement</span>
-
-
-    </dd>
-</dl>
-
-    
-
-
-
-
-
-        
-            
-
-    
-
-    
-    <h4 class="name" id="calculateTrendLineData"><span class="type-signature"></span>calculateTrendLineData<span class="signature">(processedData)</span><span class="type-signature"> &rarr; {Array.&lt;Object>}</span></h4>
-    
-
-    
-
-
-
-<div class="description">
-    A Helper Function that calculates a trend line based on provided data.
-</div>
-
-
-
-
-
-
-
-
-
-    <h5>Parameters:</h5>
-    
-
-<table class="params">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>processedData</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">Array.&lt;Object></span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">Array of objects representing the task points.</td>
-        </tr>
-
-    
-    </tbody>
-</table>
-
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="BurndownChart.js.html">BurndownChart.js</a>, <a href="BurndownChart.js.html#line26">line 26</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<h5>Returns:</h5>
-
-        
-<div class="param-desc">
-    Array containing start and end points for the trend line.
-</div>
-
-
-
-<dl>
-    <dt>
-        Type
-    </dt>
-    <dd>
-        
-<span class="param-type">Array.&lt;Object></span>
-
-
-    </dd>
-</dl>
-
-    
-
-
-
-
-
-        
-            
-
-    
-
-    
-    <h4 class="name" id="formatDateToMonthDay"><span class="type-signature"></span>formatDateToMonthDay<span class="signature">(dateStr)</span><span class="type-signature"> &rarr; {string}</span></h4>
-    
-
-    
-
-
-
-<div class="description">
-    A Helper Function that formats a date string into a 'Month Day' format.
-</div>
-
-
-
-
-
-
-
-
-
-    <h5>Parameters:</h5>
-    
-
-<table class="params">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>dateStr</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">string</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">The date string to format.</td>
-        </tr>
-
-    
-    </tbody>
-</table>
-
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="BurndownChart.js.html">BurndownChart.js</a>, <a href="BurndownChart.js.html#line42">line 42</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<h5>Returns:</h5>
-
-        
-<div class="param-desc">
-    The formatted date string.
-</div>
-
-
-
-<dl>
-    <dt>
-        Type
-    </dt>
-    <dd>
-        
-<span class="param-type">string</span>
-
-
-    </dd>
-</dl>
-
-    
-
-
-
-
-
-        
-            
-
-    
-
-    
-    <h4 class="name" id="processPersonalTaskData"><span class="type-signature"></span>processPersonalTaskData<span class="signature">(tasks, currentDateStr, creationDateStr, currentUserEmail)</span><span class="type-signature"> &rarr; {Array}</span></h4>
-    
-
-    
-
-
-
-<div class="description">
-    processPersonalTaskData - Processes a list of personal tasks into a data format suitable for the PersonalChart component. PersonalTaskData
-will later be passed down to the personal task component. Note that two dummy data are added as well.
-</div>
-
-
-
-
-
-
-
-
-
-    <h5>Parameters:</h5>
-    
-
-<table class="params">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>tasks</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">Array</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">The list of tasks to process.</td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>currentDateStr</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">string</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">The current date as a string.</td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>creationDateStr</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">string</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">The creation date of the workspace as a string.</td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>currentUserEmail</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">string</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">The email of the current user.</td>
-        </tr>
-
-    
-    </tbody>
-</table>
-
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="VisualCharts.js.html">VisualCharts.js</a>, <a href="VisualCharts.js.html#line82">line 82</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<h5>Returns:</h5>
-
-        
-<div class="param-desc">
-    An array of objects representing the processed personal task data.
-</div>
-
-
-
-<dl>
-    <dt>
-        Type
-    </dt>
-    <dd>
-        
-<span class="param-type">Array</span>
-
-
-    </dd>
-</dl>
-
-    
-
-
-
-
-
-        
-            
-
-    
-
-    
-    <h4 class="name" id="processTaskData"><span class="type-signature"></span>processTaskData<span class="signature">(tasks, currentDateStr, creationDateStr)</span><span class="type-signature"> &rarr; {Array}</span></h4>
-    
-
-    
-
-
-
-<div class="description">
-    processTaskData - Processes a list of tasks into a data format suitable for the BurndownChart component. The processed data is for group task
-progression overtime. Note that two dummy data is added, one is three days before creation with 0 points, the other one is three days after the
-last task data with the points of last data. This is to prevent glitches at early stages of workspace.
-</div>
-
-
-
-
-
-
-
-
-
-    <h5>Parameters:</h5>
-    
-
-<table class="params">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>tasks</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">Array</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">The list of tasks to process.</td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>currentDateStr</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">string</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">The current date as a string.</td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>creationDateStr</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">string</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">The creation date of the workspace as a string.</td>
-        </tr>
-
-    
-    </tbody>
-</table>
-
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="VisualCharts.js.html">VisualCharts.js</a>, <a href="VisualCharts.js.html#line25">line 25</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<h5>Returns:</h5>
-
-        
-<div class="param-desc">
-    An array of objects representing the processed task data.
-</div>
-
-
-
-<dl>
-    <dt>
-        Type
-    </dt>
-    <dd>
-        
-<span class="param-type">Array</span>
 
 
     </dd>
@@ -1736,13 +543,13 @@ last task data with the points of last data. This is to prevent glitches at earl
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#CustomLabel">CustomLabel</a></li><li><a href="global.html#DashboardContent">DashboardContent</a></li><li><a href="global.html#InterpolationSelect">InterpolationSelect</a></li><li><a href="global.html#PersonalChart">PersonalChart</a></li><li><a href="global.html#TeamProgress">TeamProgress</a></li><li><a href="global.html#calculateTrendLineData">calculateTrendLineData</a></li><li><a href="global.html#formatDateToMonthDay">formatDateToMonthDay</a></li><li><a href="global.html#processPersonalTaskData">processPersonalTaskData</a></li><li><a href="global.html#processTaskData">processTaskData</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#LoginSignup">LoginSignup</a></li><li><a href="global.html#PasswordInput">PasswordInput</a></li><li><a href="global.html#SignUp">SignUp</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.2</a> on Sun Dec 03 2023 00:15:57 GMT-0500 (Eastern Standard Time)
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.2</a> on Sun Dec 03 2023 08:38:18 GMT-0500 (Eastern Standard Time)
 </footer>
 
 <script> prettyPrint(); </script>

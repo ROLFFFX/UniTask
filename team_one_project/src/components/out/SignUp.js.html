@@ -1,4 +1,32 @@
-/**
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: SignUp.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: SignUp.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/**
  * @fileoverview This file includes the SignUp component, which is used for
  * registering new users.
  */
@@ -80,8 +108,8 @@ export function SignUp() {
   });
   const [isPasswordValid, setIsPasswordValid] = useState(false);
   const allFieldsComplete =
-    user.firstName && user.lastName && user.email && user.password;
-  const isSignUpEnabled = allFieldsComplete && isPasswordValid;
+    user.firstName &amp;&amp; user.lastName &amp;&amp; user.email &amp;&amp; user.password;
+  const isSignUpEnabled = allFieldsComplete &amp;&amp; isPasswordValid;
 
   const handlePasswordCriteriaMetChange = (criteriaMet) => {
     setIsPasswordValid(criteriaMet);
@@ -129,15 +157,15 @@ export function SignUp() {
   };
 
   return (
-    <ThemeProvider theme={theme}>
-      <TopSVG style={{ position: "absolute", zindex: "-1" }} />
-      <Container
+    &lt;ThemeProvider theme={theme}>
+      &lt;TopSVG style={{ position: "absolute", zindex: "-1" }} />
+      &lt;Container
         component="main"
         maxWidth="xs"
         style={{ position: "relative", zIndex: 1 }}
       >
-        <CssBaseline />
-        <Box
+        &lt;CssBaseline />
+        &lt;Box
           sx={{
             marginTop: 20,
             display: "flex",
@@ -152,40 +180,40 @@ export function SignUp() {
           }}
           // border={4}
         >
-          <Typography component="h1" variant="h5" sx={{ color: "#343A40" }}>
+          &lt;Typography component="h1" variant="h5" sx={{ color: "#343A40" }}>
             Sign Up
-          </Typography>
-          <Box component="form" noValidate onSubmit={onSubmit} sx={{ mt: 3 }}>
+          &lt;/Typography>
+          &lt;Box component="form" noValidate onSubmit={onSubmit} sx={{ mt: 3 }}>
             {/* loading state */}
-            <Backdrop
+            &lt;Backdrop
               sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }}
               open={backdropOpen}
             >
-              <CircularProgress color="inherit" />
-            </Backdrop>
+              &lt;CircularProgress color="inherit" />
+            &lt;/Backdrop>
             {/* sign up success pop up modal */}
-            <Modal
+            &lt;Modal
               open={showSuccessAlert}
               onClose={handleCloseSuccessModal}
               aria-labelledby="modal-modal-title"
               aria-describedby="modal-modal-description"
             >
-              <Box sx={modalStyle}>
-                <Typography id="modal-modal-title" variant="h6" component="h2">
+              &lt;Box sx={modalStyle}>
+                &lt;Typography id="modal-modal-title" variant="h6" component="h2">
                   Registration Success!
-                </Typography>
-                <Typography id="modal-modal-description" sx={{ mt: 2 }}>
+                &lt;/Typography>
+                &lt;Typography id="modal-modal-description" sx={{ mt: 2 }}>
                   Thank you for registering with us! We've sent a{" "}
-                  <span style={{ fontWeight: "bold" }}>verification email</span>{" "}
+                  &lt;span style={{ fontWeight: "bold" }}>verification email&lt;/span>{" "}
                   to your provided address. Please check your email and click on
                   the verification link within{" "}
-                  <span style={{ fontWeight: "bold" }}>15 minutes</span> to
-                  complete your registration. <br />
-                  <span style={{ fontWeight: "bold" }}>
+                  &lt;span style={{ fontWeight: "bold" }}>15 minutes&lt;/span> to
+                  complete your registration. &lt;br />
+                  &lt;span style={{ fontWeight: "bold" }}>
                     * Remember to check the spam folder!
-                  </span>
-                </Typography>
-                <Button
+                  &lt;/span>
+                &lt;/Typography>
+                &lt;Button
                   onClick={() => {
                     navigate("/login");
                   }}
@@ -194,47 +222,47 @@ export function SignUp() {
                   sx={{ mt: 2, color: "white", fontSize: "12px" }}
                 >
                   I've clicked it. Sign in!
-                </Button>
-              </Box>
-            </Modal>
+                &lt;/Button>
+              &lt;/Box>
+            &lt;/Modal>
             {/* sign up failure pop up modal */}
-            <Modal
+            &lt;Modal
               open={showFailureAlert}
               onClose={handleClose}
               aria-labelledby="error-modal-title"
               aria-describedby="error-modal-description"
             >
-              <Box sx={modalStyle}>
-                <Typography id="error-modal-title" variant="h6" component="h2">
+              &lt;Box sx={modalStyle}>
+                &lt;Typography id="error-modal-title" variant="h6" component="h2">
                   Sign Up Error
-                </Typography>
-                <Typography id="error-modal-description" sx={{ mt: 2 }}>
+                &lt;/Typography>
+                &lt;Typography id="error-modal-description" sx={{ mt: 2 }}>
                   We encountered an error while processing your sign-up request.
-                  <pre></pre>
+                  &lt;pre>&lt;/pre>
                   Possible Causes:
-                  <br></br>
+                  &lt;br>&lt;/br>
                   1. There is a typo in your email.
-                  <br></br>
+                  &lt;br>&lt;/br>
                   2. This email is taken.
-                  <br></br>
+                  &lt;br>&lt;/br>
                   3. This Firstname and Lastname is taken.
-                  <br></br>
+                  &lt;br>&lt;/br>
                   4. This email is registered, but currently disabled. Please
                   sign up again and check your email inbox and spam inbox.
-                </Typography>
-                <Button
+                &lt;/Typography>
+                &lt;Button
                   onClick={handleClose}
                   color="inherit"
                   autoFocus
                   sx={{ mt: 2, color: "white" }}
                 >
                   Close
-                </Button>
-              </Box>
-            </Modal>
-            <Grid container spacing={2}>
-              <Grid item xs={12} sm={6}>
-                <TextField
+                &lt;/Button>
+              &lt;/Box>
+            &lt;/Modal>
+            &lt;Grid container spacing={2}>
+              &lt;Grid item xs={12} sm={6}>
+                &lt;TextField
                   autoComplete="given-name"
                   name="firstName"
                   required
@@ -245,9 +273,9 @@ export function SignUp() {
                   onChange={onInputChange}
                   InputLabelProps={{ style: { fontSize: 14 } }}
                 />
-              </Grid>
-              <Grid item xs={12} sm={6}>
-                <TextField
+              &lt;/Grid>
+              &lt;Grid item xs={12} sm={6}>
+                &lt;TextField
                   required
                   fullWidth
                   id="lastName"
@@ -257,9 +285,9 @@ export function SignUp() {
                   onChange={onInputChange}
                   InputLabelProps={{ style: { fontSize: 14 } }}
                 />
-              </Grid>
-              <Grid item xs={12}>
-                <TextField
+              &lt;/Grid>
+              &lt;Grid item xs={12}>
+                &lt;TextField
                   required
                   fullWidth
                   id="email"
@@ -269,16 +297,16 @@ export function SignUp() {
                   onChange={onInputChange}
                   InputLabelProps={{ style: { fontSize: 14 } }}
                 />
-              </Grid>
-              <Grid item xs={12}>
-                <PasswordInput
+              &lt;/Grid>
+              &lt;Grid item xs={12}>
+                &lt;PasswordInput
                   onInputChange={onInputChange}
                   onCriteriaMetChange={handlePasswordCriteriaMetChange}
                 />
-              </Grid>
-            </Grid>
+              &lt;/Grid>
+            &lt;/Grid>
 
-            <Button
+            &lt;Button
               type="submit"
               fullWidth
               variant="contained"
@@ -286,21 +314,44 @@ export function SignUp() {
               disabled={!isSignUpEnabled}
             >
               Sign Up
-            </Button>
-            <Grid container justifyContent="flex-end">
-              <Grid item>
-                <Link href="/login" variant="body2" color="inherit">
+            &lt;/Button>
+            &lt;Grid container justifyContent="flex-end">
+              &lt;Grid item>
+                &lt;Link href="/login" variant="body2" color="inherit">
                   Already have an account? Sign in
-                </Link>
-              </Grid>
-            </Grid>
-          </Box>
-        </Box>
-      </Container>
-      <BottomSVG
+                &lt;/Link>
+              &lt;/Grid>
+            &lt;/Grid>
+          &lt;/Box>
+        &lt;/Box>
+      &lt;/Container>
+      &lt;BottomSVG
         sx={{ margin: 0, padding: 0 }}
         style={{ position: "absolute", zindex: "-1" }}
       />
-    </ThemeProvider>
+    &lt;/ThemeProvider>
   );
 }
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#LoginSignup">LoginSignup</a></li><li><a href="global.html#PasswordInput">PasswordInput</a></li><li><a href="global.html#SignUp">SignUp</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.2</a> on Sun Dec 03 2023 08:38:18 GMT-0500 (Eastern Standard Time)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

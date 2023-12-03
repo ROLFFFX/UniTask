@@ -1,5 +1,14 @@
+/**
+ * @fileoverview This file includes the TopSVG component, used for rendering
+ * a custom SVG shape as a decorative element.
+ */
 import React from "react";
 
+/**
+ * TopSVG - A functional component for rendering a custom SVG shape. The source data comes from shapedivier.app
+ *
+ * @returns {React.ReactElement} A React element representing the custom SVG shape.
+ */
 export function TopSVG() {
   return (
     <>

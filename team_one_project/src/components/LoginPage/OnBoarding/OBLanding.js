@@ -1,3 +1,9 @@
+/**
+ * @fileoverview This file includes the OBLanding component, which is used
+ * for onboarding new users without workspace by guiding them through the
+ * process of creating a workspace and selecting a role.
+ */
+
 import { Box, Divider, ThemeProvider } from "@mui/material";
 import AppBar from "@mui/material/AppBar";
 import Button from "@mui/material/Button";
@@ -7,17 +13,31 @@ import Step from "@mui/material/Step";
 import StepLabel from "@mui/material/StepLabel";
 import Stepper from "@mui/material/Stepper";
 import Typography from "@mui/material/Typography";
+import axios from "axios";
 import * as React from "react";
+import { useNavigate } from "react-router-dom";
+import useAuth from "../../../hooks/useAuth";
+import { ENDPOINT_URL } from "../../../hooks/useConfig";
 import { BottomSVG } from "../LoginStyling/BottomSVG";
 import { TopSVG } from "../LoginStyling/TopSVG";
 import theme from "../LoginStyling/theme";
 import ChooseName from "./Steps/ChooseName";
 import ChooseRole from "./Steps/ChooseRole";
-import { useNavigate } from "react-router-dom";
-import axios from "axios";
-import useAuth from "../../../hooks/useAuth";
-import { ENDPOINT_URL } from "../../../hooks/useConfig";
 
+/**
+ * OBLanding - A functional component for the onboarding process of new users.
+ *
+ * This component presents an interface for new users to create their first workspace and choose their role within it.
+ * It uses a step-by-step approach, utilizing MUI Stepper component to guide users through the process.
+ * The steps include choosing a workspace name and selecting a user role. Input values are managed through passdown props.
+ *
+ * State:
+ * @state @type {number} activeStep - The current active step in the onboarding process.
+ * @state @type {string} workspaceName - The name of the workspace being created.
+ * @state @type {string} role - The role of the user within the workspace.
+ *
+ * @returns {React.ReactElement} A React element representing the onboarding interface for new users.
+ */
 export function OBLanding() {
   const [activeStep, setActiveStep] = React.useState(0);
   const [workspaceName, setWorkspaceName] = React.useState(""); // new state for storing the workspace name
