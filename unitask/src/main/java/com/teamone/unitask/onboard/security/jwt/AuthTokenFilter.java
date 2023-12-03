@@ -19,7 +19,7 @@ import java.io.IOException;
 
 
 /**
- * class implemented for spring security
+ * The filter class implemented for Spring Security to handle authentication using JWT.
  */
 public class AuthTokenFilter extends OncePerRequestFilter {
 
@@ -31,6 +31,15 @@ public class AuthTokenFilter extends OncePerRequestFilter {
 
     private static final Logger logger = LoggerFactory.getLogger(AuthTokenFilter.class);
 
+    /**
+     * This method is invoked for each HTTP request to apply JWT-based authentication.
+     *
+     * @param request     The HTTP request.
+     * @param response    The HTTP response.
+     * @param filterChain The filter chain for executing further filters.
+     * @throws ServletException If a servlet-related exception occurs.
+     * @throws IOException      If an input or output exception occurs.
+     */
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
             throws ServletException, IOException {
@@ -56,6 +65,12 @@ public class AuthTokenFilter extends OncePerRequestFilter {
         filterChain.doFilter(request, response);
     }
 
+    /**
+     * Parses the JWT token from the Authorization header of the HTTP request.
+     *
+     * @param request The HTTP request.
+     * @return The parsed JWT token or null if not present or not in the correct format.
+     */
     private String parseJwt(HttpServletRequest request) {
         String headerAuth = request.getHeader("Authorization");
 
