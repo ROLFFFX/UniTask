@@ -1,10 +1,23 @@
-import React from "react";
-import { Box, Button, Divider } from "@mui/material";
-import { Typography } from "@mui/material";
-import { useNavigate } from "react-router-dom";
-import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
-import { Grid } from "@mui/material";
+/**
+ * @fileoverview This file includes the CreateYourWorkspace component, used for
+ * guiding users to create or join a workspace during Login phase.
+ */
 
+import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
+import { Box, Button, Divider, Typography } from "@mui/material";
+import React from "react";
+import { useNavigate } from "react-router-dom";
+
+/**
+ * CreateYourWorkspace - A functional component for rendering a Card that prompts users to create or join a workspace.
+ *
+ * This component displays instructions and a button for users to create their own workspace. It is designed to guide new
+ * users who do not have an existing workspace or are awaiting an invitation to join one.
+ *
+ * Also, it uses React Router's useNavigate hook for handling navigation to the workspace creation page.
+ *
+ * @returns {React.ReactElement} A React element representing the Box for creating or joining a workspace.
+ */
 export default function CreateYourWorkspace() {
   const navigate = useNavigate();
   const handleNavigate = () => {

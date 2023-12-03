@@ -1,4 +1,32 @@
-/**
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: LoginSignup.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: LoginSignup.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/**
  * @fileoverview This file includes the LoginSignup component, which is used for the Login
  * authentication.
  */
@@ -118,70 +146,70 @@ export function LoginSignup() {
   };
 
   return (
-    <ThemeProvider theme={theme}>
-      <TopSVG style={{ position: "absolute", zindex: "-1" }}></TopSVG>
-      <Container
+    &lt;ThemeProvider theme={theme}>
+      &lt;TopSVG style={{ position: "absolute", zindex: "-1" }}>&lt;/TopSVG>
+      &lt;Container
         component="main"
         maxWidth="xs"
         style={{ position: "relative", zIndex: 1 }}
       >
-        <CssBaseline />
-        <Backdrop
+        &lt;CssBaseline />
+        &lt;Backdrop
           sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }}
           open={backdropOpen}
         >
-          <CircularProgress color="inherit" />
-        </Backdrop>
-        <Modal
+          &lt;CircularProgress color="inherit" />
+        &lt;/Backdrop>
+        &lt;Modal
           open={showFailureAlert}
           onClose={handleClose}
           aria-labelledby="error-modal-title"
           aria-describedby="error-modal-description"
         >
-          <Box sx={modalStyle}>
-            <Typography id="error-modal-title" variant="h6" component="h2">
+          &lt;Box sx={modalStyle}>
+            &lt;Typography id="error-modal-title" variant="h6" component="h2">
               Sign In Error
-            </Typography>
-            <Typography id="error-modal-description" sx={{ mt: 2 }}>
+            &lt;/Typography>
+            &lt;Typography id="error-modal-description" sx={{ mt: 2 }}>
               Your credentials are correct, but your accout is currently
               disabled. Please check your email inbox and click the link in your
               email.
-            </Typography>
-            <Button
+            &lt;/Typography>
+            &lt;Button
               onClick={handleClose}
               color="inherit"
               autoFocus
               sx={{ mt: 2, color: "white" }}
             >
               Close
-            </Button>
-          </Box>
-        </Modal>
-        <Modal
+            &lt;/Button>
+          &lt;/Box>
+        &lt;/Modal>
+        &lt;Modal
           open={showBadCredential}
           onClose={handleBadCredentialClose}
           aria-labelledby="error-modal-title"
           aria-describedby="error-modal-description"
         >
-          <Box sx={modalStyle}>
-            <Typography id="error-modal-title" variant="h6" component="h2">
+          &lt;Box sx={modalStyle}>
+            &lt;Typography id="error-modal-title" variant="h6" component="h2">
               Sign In Error
-            </Typography>
-            <Typography id="error-modal-description" sx={{ mt: 2 }}>
+            &lt;/Typography>
+            &lt;Typography id="error-modal-description" sx={{ mt: 2 }}>
               There is something wrong with your email and password. Please try
               again.
-            </Typography>
-            <Button
+            &lt;/Typography>
+            &lt;Button
               onClick={handleBadCredentialClose}
               color="inherit"
               autoFocus
               sx={{ mt: 2, color: "white" }}
             >
               Close
-            </Button>
-          </Box>
-        </Modal>
-        <Box
+            &lt;/Button>
+          &lt;/Box>
+        &lt;/Modal>
+        &lt;Box
           sx={{
             marginTop: 25,
             display: "flex",
@@ -196,16 +224,16 @@ export function LoginSignup() {
           }}
           // border={4}
         >
-          <Typography component="h1" variant="h5" color="#343A40">
+          &lt;Typography component="h1" variant="h5" color="#343A40">
             Sign In
-          </Typography>
-          <Box
+          &lt;/Typography>
+          &lt;Box
             component="form"
             onSubmit={handleSubmit}
             noValidate
             sx={{ mt: 1 }}
           >
-            <TextField
+            &lt;TextField
               margin="normal"
               required
               fullWidth
@@ -216,7 +244,7 @@ export function LoginSignup() {
               autoFocus
               InputLabelProps={{ style: { fontSize: "14px" } }}
             />
-            <TextField
+            &lt;TextField
               margin="normal"
               required
               fullWidth
@@ -227,25 +255,48 @@ export function LoginSignup() {
               autoComplete="current-password"
               InputLabelProps={{ style: { fontSize: "14px" } }}
             />
-            <Button
+            &lt;Button
               type="submit"
               fullWidth
               variant="contained"
               sx={{ mt: 3, mb: 2 }}
             >
               Sign In
-            </Button>
-            <Grid container>
-              <Grid item>
-                <Link href="login/signup" variant="body2" color="inherit">
+            &lt;/Button>
+            &lt;Grid container>
+              &lt;Grid item>
+                &lt;Link href="login/signup" variant="body2" color="inherit">
                   {"Don't have an account? Sign Up!"}
-                </Link>
-              </Grid>
-            </Grid>
-          </Box>
-        </Box>
-      </Container>
-      <BottomSVG style={{ position: "absolute", zindex: "-1" }}></BottomSVG>
-    </ThemeProvider>
+                &lt;/Link>
+              &lt;/Grid>
+            &lt;/Grid>
+          &lt;/Box>
+        &lt;/Box>
+      &lt;/Container>
+      &lt;BottomSVG style={{ position: "absolute", zindex: "-1" }}>&lt;/BottomSVG>
+    &lt;/ThemeProvider>
   );
 }
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#LoginSignup">LoginSignup</a></li><li><a href="global.html#PasswordInput">PasswordInput</a></li><li><a href="global.html#SignUp">SignUp</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.2</a> on Sun Dec 03 2023 08:38:18 GMT-0500 (Eastern Standard Time)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

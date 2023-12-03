@@ -1,12 +1,29 @@
-import * as React from "react";
-import Typography from "@mui/material/Typography";
-import Grid from "@mui/material/Grid";
+/**
+ * @fileoverview This file defines the ChooseRole component, used for allowing
+ * users to select a role within a workspace. Second step of On Boarding workspace
+ * phase management phase.
+ */
 
+import Grid from "@mui/material/Grid";
+import Typography from "@mui/material/Typography";
+import * as React from "react";
+import FormControl from "@mui/material/FormControl";
 import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
-import FormControl from "@mui/material/FormControl";
-import Select, { SelectChangeEvent } from "@mui/material/Select";
+import Select from "@mui/material/Select";
 
+/**
+ * ChooseRole - A functional component for selecting a user role. Second step in OBLanding stepper.
+ *
+ * This component provides a user interface for choosing a role within a team. It offers two options: 'Team Member' and 'Team Admin'.
+ * The 'Team Admin' role is described as having access to modify the status of team members, which has all control over the workspace.
+ *
+ * Props:
+ * @param {string} role - The current value of the selected role.
+ * @param {Function} setRole - Function to update the role state in the parent component.
+ *
+ * @returns {React.ReactElement} A React element representing the role selection interface.
+ */
 export default function ChooseRole({ role, setRole }) {
   // passed down prop from parent
   const handleInputChange = (event) => {

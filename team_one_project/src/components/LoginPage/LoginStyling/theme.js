@@ -1,5 +1,26 @@
+/**
+ * @fileoverview This file defines a custom theme for MUI components, customizing
+ * the color palette, typography, and specific component styles to create custom
+ * user interface. It is frequently used for all login / signup cycles.
+ */
+
 import { createTheme } from "@mui/material/styles";
 
+/**
+ * theme - A custom theme configuration for MUI components.
+ *
+ *
+ * Configuration includes:
+ * - A default background color (#E9ECEF).
+ * - A global font family ('Inter', sans-serif). Its corresponding config can be found in the
+ *   header section of index.js
+ * - Specific color and style customizations for TextField, FormHelperText, OutlinedInput,
+ *   Typography, Button, Link, and InputLabel components. This is the unitary styling we use
+ *   for all Textfields in login/signup cycle.
+ *
+ *
+ * @returns {Object} A Material-UI theme object with customized settings.
+ */
 const theme = createTheme({
   palette: {
     background: {
