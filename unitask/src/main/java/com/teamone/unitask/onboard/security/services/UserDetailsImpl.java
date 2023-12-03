@@ -13,25 +13,36 @@ import java.util.stream.Collectors;
 
 
 /**
- * User information class implemented for the spring security
+ * Implementation of the UserDetails interface for user information in the Spring Security context.
  */
 public class UserDetailsImpl implements UserDetails {
 
     private static final long serialVersionUID = 1L;
 
+    // User ID
     private Long id;
 
+    // User's username
     private String username;
 
+    // User's email address
     private String email;
 
+    // User's password (ignored during serialization)
     @JsonIgnore
     private String password;
 
+    // Collection of authorities assigned to the user
     private Collection<? extends GrantedAuthority> authorities;
 
-    /*
-     * constructor
+    /**
+     * Constructor to create a UserDetailsImpl object.
+     *
+     * @param id           The user ID.
+     * @param username     The username.
+     * @param email        The user's email address.
+     * @param password     The user's password (ignored during serialization).
+     * @param authorities  The collection of authorities assigned to the user.
      */
     public UserDetailsImpl(Long id, String username, String email, String password,
                            Collection<? extends GrantedAuthority> authorities) {
@@ -42,8 +53,11 @@ public class UserDetailsImpl implements UserDetails {
         this.authorities = authorities;
     }
 
-    /*
-     * build a UserDetailsImpl object by converting the input user object into the UserDetailsImpl format;
+    /**
+     * Build a UserDetailsImpl object by converting the input User object into the UserDetailsImpl format.
+     *
+     * @param user The User object to be converted.
+     * @return A UserDetailsImpl object.
      */
     public static UserDetailsImpl build(User user) {
         List<GrantedAuthority> authorities = user.getRoles().stream()
@@ -63,10 +77,20 @@ public class UserDetailsImpl implements UserDetails {
         return authorities;
     }
 
+    /**
+     * Get the user ID.
+     *
+     * @return The user ID.
+     */
     public Long getId() {
         return id;
     }
 
+    /**
+     * Get the user's email address.
+     *
+     * @return The user's email address.
+     */
     public String getEmail() {
         return email;
     }

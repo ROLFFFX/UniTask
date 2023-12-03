@@ -9,12 +9,16 @@ import java.util.Properties;
 
 
 /**
- * The mail configuration class that configuring interaction with email service, email address and password are
- * specified in here
+ * Configuration class for mail setup.
  */
 @Configuration
 public class MailConfiguration {
 
+    /**
+     * Bean definition for JavaMailSender.
+     *
+     * @return Configured JavaMailSender bean.
+     */
     @Bean
     public JavaMailSender getJavaMailSender() {
         JavaMailSenderImpl mailSender = new JavaMailSenderImpl();
@@ -28,7 +32,6 @@ public class MailConfiguration {
         props.put("mail.transport.protocol", "smtp");
         props.put("mail.smtp.auth", "true");
         props.put("mail.smtp.starttls.enable", "true");
-        // new line;
         props.put("mail.smtp.ssl.trust", "smtp.gmail.com");
 
         return mailSender;

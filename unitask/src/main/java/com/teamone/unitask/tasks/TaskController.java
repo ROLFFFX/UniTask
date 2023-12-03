@@ -18,8 +18,9 @@ import java.util.List;
 
 
 /**
- * The controller class for the task board page
+ * The controller class for the task board page.
  */
+@CrossOrigin(origins = "https://uni-task.vercel.app/", maxAge = 3600, allowCredentials = "true")
 @RestController
 @RequestMapping(path = "tasks")
 public class TaskController {
@@ -37,11 +38,15 @@ public class TaskController {
     TaskService taskService;
 
 
-    /*
-     * create a new task
+    /**
+     * Create a new task.
+     *
+     * @param requestTask The task details to create.
+     * @param taskId The ID of the parent task, if any.
+     * @param projectTitle The title of the project to which the task belongs.
+     * @param username The username of the user assigned to the task.
+     * @return ResponseEntity with the created task or null if the request is invalid.
      */
-//    @CrossOrigin(origins = "https://uni-task-beta-front.vercel.app/", allowCredentials = "true")
-    @CrossOrigin(origins = "http://localhost:3000", allowCredentials = "true")
     @PostMapping(path = "/createTask", consumes={MediaType.APPLICATION_JSON_UTF8_VALUE} )
     public ResponseEntity<Task> creatNewTask(@RequestBody Task requestTask,
                                                       @RequestParam(name = "taskId") Long taskId,
@@ -78,11 +83,12 @@ public class TaskController {
         return new ResponseEntity<>(newTask, HttpStatus.CREATED);
     }
 
-    /*
-     * get all the task in the given project;
+    /**
+     * Get all the tasks in the given project.
+     *
+     * @param projectTitle The title of the project.
+     * @return ResponseEntity with a list of tasks or null if the project is not found.
      */
-//    @CrossOrigin(origins = "https://uni-task-beta-front.vercel.app/", allowCredentials = "true")
-    @CrossOrigin(origins = "http://localhost:3000", allowCredentials = "true")
     @GetMapping(path = "/getAllTask")
     public ResponseEntity<List<List<Task>>> getAllTaskByProjectTitle(@RequestParam("projectTitle") String projectTitle) {
 
@@ -113,12 +119,15 @@ public class TaskController {
         return new ResponseEntity<>(allTasksIncluded, HttpStatus.OK);
     }
 
-    /*
-     * edit an existing task;
+    /**
+     * Edit an existing task.
+     *
+     * @param task The updated task details.
+     * @param taskId The ID of the task to update.
+     * @param username The username of the user assigned to the task.
+     * @return ResponseEntity with the updated task or null if the request is invalid.
      */
-//    @CrossOrigin(origins = "https://uni-task-beta-front.vercel.app/", allowCredentials = "true")
     @PutMapping(path = "/updateTask")
-    @CrossOrigin(origins = "http://localhost:3000", allowCredentials = "true")
     public ResponseEntity<Task> updateTask(@RequestBody Task task,
                                            @RequestParam("taskId") Long taskId,
                                            @RequestParam("username") String username) {
@@ -132,11 +141,12 @@ public class TaskController {
         }
     }
 
-    /*
-     * delete the given existing class;
+    /**
+     * Delete the given existing task.
+     *
+     * @param taskId The ID of the task to delete.
+     * @return ResponseEntity with the deleted task or null if the task is not found.
      */
-//    @CrossOrigin(origins = "https://uni-task-beta-front.vercel.app/", allowCredentials = "true")
-    @CrossOrigin(origins = "http://localhost:3000", allowCredentials = "true")
     @DeleteMapping(path = "/deleteTask")
     public ResponseEntity<Task> deleteTaskById(@RequestParam("taskId") Long taskId) {
 

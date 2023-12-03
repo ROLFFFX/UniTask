@@ -11,6 +11,7 @@ import java.util.HashMap;
 /**
  * The Controller class for the Dashboard page;
  */
+@CrossOrigin(origins = "https://uni-task.vercel.app/", maxAge = 3600, allowCredentials = "true")
 @RestController
 @RequestMapping(path = "/dashboard")
 public class DashboardController {
@@ -19,13 +20,13 @@ public class DashboardController {
     DashboardService dashboardService;
 
 
-    /*
-     * receive project title as input, return a HashMap object that maps String objects to Integer Objects,
-     * where the String is each of the username of users in the project, the Integer is each of the number
-     * of task points completed by each user;
+    /**
+     * Retrieves task distribution by project title.
+     *
+     * @param projectTitle The title of the project.
+     * @return ResponseEntity containing a HashMap with usernames as keys and completed task points as values.
+     * HttpStatus.OK if successful, HttpStatus.NOT_ACCEPTABLE if errors occur.
      */
-    //    @CrossOrigin(origins = "https://uni-task-beta-front.vercel.app/", allowCredentials = "true")
-    @CrossOrigin(origins = "http://localhost:3000", allowCredentials = "true")
     @GetMapping(path = "/taskDistribution/{projectTitle}")
     public ResponseEntity<HashMap<String, Integer>> getTaskDistributionByProjectTitle(@PathVariable String projectTitle) {
 
@@ -41,13 +42,13 @@ public class DashboardController {
     }
 
 
-    /*
-     * receive project title as input, return a HashMap object the maps String objects to Integer Objects,
-     * where the String is each of the status of the tasks ("Not Started", "To Do", "Doing", "Done"), and
-     * the Integer is each of the summation of the task points of each status;
+    /**
+     * Retrieves current project team progress by project title.
+     *
+     * @param projectTitle The title of the project.
+     * @return ResponseEntity containing a HashMap with task status as keys and the summation of task points as values.
+     * HttpStatus.OK if successful, HttpStatus.NOT_ACCEPTABLE if errors occur.
      */
-    //    @CrossOrigin(origins = "https://uni-task-beta-front.vercel.app/", allowCredentials = "true")
-    @CrossOrigin(origins = "http://localhost:3000", allowCredentials = "true")
     @GetMapping(path = "/progressBar/{projectTitle}")
     public ResponseEntity<HashMap<String, Integer>> getCurProjectTeamProgress(@PathVariable String projectTitle) {
 

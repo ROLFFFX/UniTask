@@ -13,7 +13,7 @@ import javax.mail.internet.MimeMessage;
 
 
 /**
- * Class that implements EmailSender interface
+ * Service class that implements the EmailSender interface.
  */
 @Service
 @AllArgsConstructor
@@ -24,8 +24,11 @@ public class EmailService implements  EmailSender {
 
     private final JavaMailSender mailSender;
 
-    /*
-     * method to send email from unitask370@gmail.com;
+    /**
+     * Sends an email asynchronously.
+     *
+     * @param to    The recipient's email address.
+     * @param email The email content.
      */
     @Override
     @Async
@@ -44,8 +47,12 @@ public class EmailService implements  EmailSender {
         }
     }
 
-    /*
-     * the email template;
+    /**
+     * Builds an email template with the provided name and link.
+     *
+     * @param name The name to include in the email.
+     * @param link The activation link for the account.
+     * @return The constructed email template.
      */
     public String buildEmail(String name, String link) {
         return "<div style=\"font-family:Helvetica,Arial,sans-serif;font-size:16px;margin:0;color:#0b0c0c\">\n" +
@@ -103,7 +110,7 @@ public class EmailService implements  EmailSender {
                 "      <td width=\"10\" valign=\"middle\"><br></td>\n" +
                 "      <td style=\"font-family:Helvetica,Arial,sans-serif;font-size:19px;line-height:1.315789474;max-width:560px\">\n" +
                 "        \n" +
-                "            <p style=\"Margin:0 0 20px 0;font-size:19px;line-height:25px;color:#0b0c0c\">Hi " + name + ",</p><p style=\"Margin:0 0 20px 0;font-size:19px;line-height:25px;color:#0b0c0c\"> Thank you for registering. Please copy the link below and open in a new tab to activate your account: </p><blockquote style=\"Margin:0 0 20px 0;border-left:10px solid #b1b4b6;padding:15px 0 0.1px 15px;font-size:19px;line-height:25px\"><p style=\"Margin:0 0 20px 0;font-size:19px;line-height:25px;color:#0b0c0c\"> <a href=\"" + link + "\">" + link + "</a> </p></blockquote>\n Link will expire in 15 minutes. <p>See you soon</p>" +
+                "            <p style=\"Margin:0 0 20px 0;font-size:19px;line-height:25px;color:#0b0c0c\">Hi " + name + ",</p><p style=\"Margin:0 0 20px 0;font-size:19px;line-height:25px;color:#0b0c0c\"> Thank you for registering. Please copy the link below and open in a new tab to activate your account: </p><blockquote style=\"Margin:0 0 20px 0;border-left:10px solid #b1b4b6;padding:15px 0 0.1px 15px;font-size:19px;line-height:25px\"><p style=\"Margin:0 0 20px 0;font-size:19px;line-height:25px;color:#0b0c0c\"> " + link + " </p></blockquote>\n Link will expire in 15 minutes. <p>See you soon</p>" +
                 "        \n" +
                 "      </td>\n" +
                 "      <td width=\"10\" valign=\"middle\"><br></td>\n" +

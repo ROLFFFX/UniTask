@@ -20,13 +20,24 @@ import javax.servlet.http.HttpServletResponse;
 
 
 /**
- * The component class for the spring security
+ * The component class for the spring security.
+ * Acts as an entry point for handling authentication errors and sending unauthorized responses.
  */
 @Component
 public class AuthEntryPointJwt implements AuthenticationEntryPoint {
 
     private static final Logger logger = LoggerFactory.getLogger(AuthEntryPointJwt.class);
 
+    /**
+     * Invoked when an unauthorized user attempts to access a secured resource.
+     * It sends an unauthorized response with details about the error.
+     *
+     * @param request       The HTTP request.
+     * @param response      The HTTP response.
+     * @param authException The authentication exception that occurred.
+     * @throws IOException      If an input or output exception occurs.
+     * @throws ServletException If a servlet-related exception occurs.
+     */
     @Override
     public void commence(HttpServletRequest request, HttpServletResponse response, AuthenticationException authException)
             throws IOException, ServletException {

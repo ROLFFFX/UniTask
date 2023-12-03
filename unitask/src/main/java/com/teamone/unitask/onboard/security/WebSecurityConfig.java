@@ -19,7 +19,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 
 
 /**
- * Class implemented for the spring security
+ * Configuration class for Spring Security.
  */
 @Configuration
 @EnableWebSecurity
@@ -35,27 +35,56 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     private AuthEntryPointJwt unauthorizedHandler;
 
+
+    /**
+     * Bean definition for the AuthTokenFilter.
+     *
+     * @return An instance of AuthTokenFilter.
+     */
     @Bean
     public AuthTokenFilter authenticationJwtTokenFilter() {
         return new AuthTokenFilter();
     }
 
+    /**
+     * Configures the AuthenticationManagerBuilder to use the UserDetailsServiceImpl and PasswordEncoder.
+     *
+     * @param authenticationManagerBuilder AuthenticationManagerBuilder instance.
+     * @throws Exception If an error occurs during configuration.
+     */
     @Override
     public void configure(AuthenticationManagerBuilder authenticationManagerBuilder) throws Exception {
         authenticationManagerBuilder.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder());
     }
 
+    /**
+     * Bean definition for AuthenticationManager.
+     *
+     * @return An instance of AuthenticationManager.
+     * @throws Exception If an error occurs.
+     */
     @Bean
     @Override
     public AuthenticationManager authenticationManagerBean() throws Exception {
         return super.authenticationManagerBean();
     }
 
+    /**
+     * Bean definition for PasswordEncoder (BCryptPasswordEncoder).
+     *
+     * @return An instance of BCryptPasswordEncoder.
+     */
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
 
+    /**
+     * Configures HTTP security settings, including authorization and filters.
+     *
+     * @param http HttpSecurity instance.
+     * @throws Exception If an error occurs during configuration.
+     */
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.cors().and().csrf().disable()
