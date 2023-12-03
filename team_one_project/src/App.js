@@ -1,5 +1,5 @@
 /**
- * @fileoverview Routers Set Up
+ * @fileoverview Routers Set Up. Entry point of entire frontend.
  */
 
 import * as React from "react";

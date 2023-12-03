@@ -1,4 +1,32 @@
-/**
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: UserProfile.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: UserProfile.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/**
  * @fileoverview This file defines the UserProfile component, which displays user profile info
  * in MainAccount Page. It uses MUI components and icons for layout and styling. The component is
  * part of the User Interfeace module for managing user profiles.
@@ -61,7 +89,7 @@ export default function UserProfile() {
 
   /**
    * State hook for managing the username.
-   * @type {Array<string>}
+   * @type {Array&lt;string>}
    */
   const [userName, setUserName] = useState("");
 
@@ -73,7 +101,7 @@ export default function UserProfile() {
 
   /**
    * State hook for managing the visibility of the loading backdrop.
-   * @type {Array<boolean>}
+   * @type {Array&lt;boolean>}
    */
   const [backdropOpen, setBackdropOpen] = useState(false); //loading page
 
@@ -135,36 +163,34 @@ export default function UserProfile() {
   /* Other-------------------------------------------------------------------------------------------------------------------- */
 
   return (
-    <Box>
-      {/* Back Drop for loading state */}
-      <Backdrop
+    &lt;div>
+      &lt;Backdrop
         sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }}
         open={backdropOpen}
       >
-        <CircularProgress color="inherit" />
-      </Backdrop>
-      {/* Box for Your Profile Card in center */}
-      <Box
+        &lt;CircularProgress color="inherit" />
+      &lt;/Backdrop>
+      &lt;Box
         sx={{
           marginTop: 15,
           display: "flex",
           flexDirection: "column",
+          // maxWidth: "lg",
           padding: "40px",
           backgroundColor: "white",
           borderRadius: "16px",
           boxShadow: "0 3px 5px rgba(0, 0, 0, 0.3)",
         }}
       >
-        {/* Box for header section */}
-        <Box
+        &lt;Box
           style={{
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
           }}
         >
-          <PortraitIcon style={{ marginRight: 8 }} />
-          <Typography
+          &lt;PortraitIcon style={{ marginRight: 8 }} />
+          &lt;Typography
             sx={{
               color: "#343A40",
               fontSize: 20,
@@ -172,13 +198,15 @@ export default function UserProfile() {
             }}
           >
             Your Profile
-          </Typography>
-        </Box>
-        <Divider sx={{ width: "100%", padding: 1 }}></Divider>
-        {/* Box for Username */}
-        <Box style={{ display: "flex", alignItems: "center" }}>
-          <BadgeIcon />
-          <Typography
+          &lt;/Typography>
+        &lt;/Box>
+        &lt;Divider sx={{ width: "100%", padding: 1 }}>&lt;/Divider>
+        {/* usernmae */}
+
+        &lt;Box style={{ display: "flex", alignItems: "center" }}>
+          &lt;BadgeIcon />
+
+          &lt;Typography
             sx={{
               color: "#343A40",
               padding: 1,
@@ -188,14 +216,14 @@ export default function UserProfile() {
               fontFamily: "Inter, sans-serif",
             }}
           >
-            <span style={{ fontWeight: "bold" }}>Username:</span>{" "}
+            &lt;span style={{ fontWeight: "bold" }}>Username:&lt;/span>{" "}
             {UserInfo.username}
-          </Typography>
-        </Box>
-        {/* Box for user email */}
-        <Box style={{ display: "flex", alignItems: "center" }}>
-          <EmailIcon />
-          <Typography
+          &lt;/Typography>
+        &lt;/Box>
+        {/* user email */}
+        &lt;Box style={{ display: "flex", alignItems: "center" }}>
+          &lt;EmailIcon />
+          &lt;Typography
             sx={{
               color: "#343A40",
               padding: 1,
@@ -205,19 +233,19 @@ export default function UserProfile() {
               fontFamily: "Inter, sans-serif",
             }}
           >
-            <span style={{ fontWeight: "bold" }}>Email: </span>
+            &lt;span style={{ fontWeight: "bold" }}>Email: &lt;/span>
             {UserInfo.email}
-          </Typography>
-        </Box>
-        {/* Box for current workspace */}
-        <Box
+          &lt;/Typography>
+        &lt;/Box>
+        {/* group name */}
+        &lt;Box
           style={{
             display: "flex",
             alignItems: "center",
           }}
         >
-          <GroupsIcon />
-          <Typography
+          &lt;GroupsIcon />
+          &lt;Typography
             sx={{
               color: "#343A40",
               padding: 1,
@@ -228,12 +256,12 @@ export default function UserProfile() {
               fontFamily: "Inter, sans-serif",
             }}
           >
-            <span style={{ fontWeight: "bold" }}>Current Workspace:</span>{" "}
+            &lt;span style={{ fontWeight: "bold" }}>Current Workspace:&lt;/span>{" "}
             {UserInfo.group_title}
-          </Typography>
-          <Button
+          &lt;/Typography>
+          &lt;Button
             variant="contained"
-            startIcon={<ChangeCircleIcon />}
+            startIcon={&lt;ChangeCircleIcon />}
             onClick={handleLogoutGroup}
             style={{
               backgroundColor: "#343A40",
@@ -242,11 +270,34 @@ export default function UserProfile() {
             }}
           >
             Change Workspace
-          </Button>
-        </Box>
-        <Toolbar></Toolbar>
-        <LogOutButton />
-      </Box>
-    </Box>
+          &lt;/Button>
+        &lt;/Box>
+        &lt;Toolbar>&lt;/Toolbar>
+        &lt;LogOutButton />
+      &lt;/Box>
+    &lt;/div>
   );
 }
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#MainAccount">MainAccount</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.2</a> on Sat Dec 02 2023 22:11:48 GMT-0500 (Eastern Standard Time)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>
