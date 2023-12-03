@@ -124,12 +124,11 @@ If not, find exact pkg that's giving you squiggly and run following command acco
   - Then select the override box.
 
   - For Maven
-  - Go to: `Compiler` -> `Java Compiler`
-  - Check your java version. It should be 1.8
+  - we are using maven with version 3.6.3
 
   - For SDK
   - `File` -> `Project structure`
-  - Check your SDK version, should be 1.8, and language level is `8 - lambdas`
+  - Check your SDK version, should be 17
 
 ------------------------------------------------------------------------------------------------------------------------------------------------------
 
