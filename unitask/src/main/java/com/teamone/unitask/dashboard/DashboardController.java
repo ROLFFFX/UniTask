@@ -11,7 +11,7 @@ import java.util.HashMap;
 /**
  * The Controller class for the Dashboard page;
  */
-@CrossOrigin(origins = "https://uni-task.vercel.app/", maxAge = 3600, allowCredentials = "true")
+@CrossOrigin(origins = "http://localhost:3000/", maxAge = 3600, allowCredentials = "true")
 @RestController
 @RequestMapping(path = "/dashboard")
 public class DashboardController {

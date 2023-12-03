@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 /**
  * Controller class to test the authentications.
  */
-@CrossOrigin(origins = "https://uni-task.vercel.app/", maxAge = 3600, allowCredentials = "true")
+@CrossOrigin(origins = "http://localhost:3000/", maxAge = 3600, allowCredentials = "true")
 @RestController
 @RequestMapping("/api/test")
 public class TestController {

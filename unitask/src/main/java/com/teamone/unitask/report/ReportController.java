@@ -12,7 +12,7 @@ import java.util.List;
 /**
  * The controller class for the Report entity, providing APIs for the report web page.
  */
-@CrossOrigin(origins = "https://uni-task.vercel.app/", maxAge = 3600, allowCredentials = "true")
+@CrossOrigin(origins = "http://localhost:3000/", maxAge = 3600, allowCredentials = "true")
 @RestController
 @RequestMapping(path = "/reports")
 public class ReportController {

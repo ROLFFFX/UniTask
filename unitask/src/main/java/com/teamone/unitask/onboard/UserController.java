@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 /**
  * Controller class for managing User entities.
  */
-@CrossOrigin(origins = "https://uni-task.vercel.app/", maxAge = 3600, allowCredentials = "true")
+@CrossOrigin(origins = "http://localhost:3000/", maxAge = 3600, allowCredentials = "true")
 @RestController
 @RequestMapping(path = "users")
 public class UserController {

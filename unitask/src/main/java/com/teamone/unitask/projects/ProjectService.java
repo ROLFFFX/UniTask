@@ -19,6 +19,9 @@ import java.util.List;
 @Service
 public class ProjectService {
 
+    // currently does not have any methods implemented;
+    // could implement any business logic related to project entity here in future if needed;
+
     @Autowired
     ProjectRepository projectRepository;
 

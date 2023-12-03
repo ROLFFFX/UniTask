@@ -43,8 +43,7 @@ import javax.validation.Valid;
 /**
  * Controller class for the signup/login page.
  */
-//@CrossOrigin(origins = "", maxAge = 3600)
-@CrossOrigin(origins = "https://uni-task.vercel.app/", maxAge = 3600, allowCredentials = "true")
+@CrossOrigin(origins = "http://localhost:3000/", maxAge = 3600, allowCredentials = "true")
 @RestController
 @RequestMapping("/api/auth")
 public class AuthController {
@@ -189,7 +188,7 @@ public class AuthController {
             confirmationTokenService.saveConfirmationToken(confirmationToken);
             // create email link and send email;
             //TODO: need to modify when deploy;
-            String link = "https://unitask-backend-impl-72c59f313288.herokuapp.com/api/auth/confirmSignUp?token=" + signupToken;
+            String link = "http://localhost:8080/api/auth/confirmSignUp?token=" + signupToken;
             emailService.send(signUpRequest.getEmail(),
                     emailService.buildEmail(signUpRequest.getUsername(), link));
 
@@ -216,7 +215,7 @@ public class AuthController {
             confirmationTokenService.saveConfirmationToken(confirmationToken);
             // create email link and send email;
             //TODO: need to modify when deploy;
-            String link = "https://unitask-backend-impl-72c59f313288.herokuapp.com/api/auth/confirmSignUp?token=" + signupToken;
+            String link = "http://localhost:8080/api/auth/confirmSignUp?token=" + signupToken;
             emailService.send(signUpRequest.getEmail(),
                     emailService.buildEmail(signUpRequest.getUsername(), link));
 
