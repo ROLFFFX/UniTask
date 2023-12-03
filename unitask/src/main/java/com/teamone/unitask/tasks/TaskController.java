@@ -20,7 +20,7 @@ import java.util.List;
 /**
  * The controller class for the task board page.
  */
-@CrossOrigin(origins = "https://uni-task.vercel.app/", maxAge = 3600, allowCredentials = "true")
+@CrossOrigin(origins = "http://localhost:3000/", maxAge = 3600, allowCredentials = "true")
 @RestController
 @RequestMapping(path = "tasks")
 public class TaskController {

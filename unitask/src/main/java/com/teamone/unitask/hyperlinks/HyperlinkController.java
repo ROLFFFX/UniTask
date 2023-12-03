@@ -11,7 +11,7 @@ import java.util.List;
 /**
  * Controller class for the Hyperlink page.
  */
-@CrossOrigin(origins = "https://uni-task.vercel.app/", maxAge = 3600, allowCredentials = "true")
+@CrossOrigin(origins = "http://localhost:3000/", maxAge = 3600, allowCredentials = "true")
 @RestController
 @RequestMapping("/hyperlinks")
 public class HyperlinkController {

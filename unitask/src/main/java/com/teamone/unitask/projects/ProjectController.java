@@ -20,7 +20,7 @@ import java.util.Set;
 /**
  * Controller class for the Project entity, providing APIs for the workspace web page.
  */
-@CrossOrigin(origins = "https://uni-task.vercel.app/", maxAge = 3600, allowCredentials = "true")
+@CrossOrigin(origins = "http://localhost:3000/", maxAge = 3600, allowCredentials = "true")
 @RestController
 @RequestMapping("/projects")
 public class ProjectController {
