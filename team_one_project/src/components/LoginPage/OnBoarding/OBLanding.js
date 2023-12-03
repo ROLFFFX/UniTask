@@ -18,7 +18,7 @@ import axios from "axios";
 import useAuth from "../../../hooks/useAuth";
 import { ENDPOINT_URL } from "../../../hooks/useConfig";
 
-export function OB_landing() {
+export function OBLanding() {
   const [activeStep, setActiveStep] = React.useState(0);
   const [workspaceName, setWorkspaceName] = React.useState(""); // new state for storing the workspace name
   const [role, setRole] = React.useState("");

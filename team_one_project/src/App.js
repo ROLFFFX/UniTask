@@ -1,11 +1,14 @@
+/**
+ * @fileoverview Routers Set Up
+ */
+
 import * as React from "react";
 import { Outlet, Route, Routes } from "react-router-dom";
-
 import { MainAccount } from "./components/Account/MainAccount";
 import { MainDashboard } from "./components/Dashboard/MainDashboard";
 import { LoginSignup } from "./components/LoginPage/LoginSignup";
 import LoginWithGroup from "./components/LoginPage/LoginWithGroup/LoginWithGroup";
-import { OB_landing } from "./components/LoginPage/OnBoarding/OB_landing";
+import { OBLanding } from "./components/LoginPage/OnBoarding/OBLanding";
 import { SignUp } from "./components/LoginPage/SignUp";
 import { ManageTeam } from "./components/ManageTeam/ManageTeam";
 import { MainMeeting } from "./components/Meeting/MainMeeting";
@@ -19,6 +22,15 @@ import PermanentDrawer from "./components/Utilities/PermanentDrawer";
 import { TopAppBar } from "./components/Utilities/TopNavBar";
 import WelcomePage from "./components/Utilities/WelcomePage";
 
+/**
+ * Layout component used to work with React Router.
+ * This is a basic layout component that renders the React component passed as a prop.
+ * It's used primarily to work with React Router, and handles the public part of the application.
+ *
+ * @param {object} props - The props object should be a React Component.
+ * @param {React.ComponentType} props.element - The React component to be rendered within the layout.
+ * @returns {React.ReactElement} The layout children component.
+ */
 function Layout({ children }) {
   return (
     <>
@@ -27,6 +39,16 @@ function Layout({ children }) {
   );
 }
 
+/**
+ * CustomLayout component used to work with private React Router.
+ * This layout includes the TopAppBar and PermanentDrawer components, and is used for protected routes.
+ * It renders the React component passed as a prop in the context of this layout, which avoids repetitive
+ * rerenders of shared Nav Bar and Side Bar
+ *
+ * @param {object} props - The props object should be a React Component.
+ * @param {React.ComponentType} props.element - The React component to be rendered within this custom layout.
+ * @returns {React.ReactElement} The custom layout component.
+ */
 function CustomLayout({ children }) {
   return (
     <>
@@ -37,6 +59,12 @@ function CustomLayout({ children }) {
   );
 }
 
+/**
+ * The React Router System.
+ * It handles both public and protected routes for different pages.
+ *
+ * @returns {React.ReactElement} The main application component.
+ */
 function App() {
   return (
     <React.Fragment>
@@ -61,7 +89,7 @@ function App() {
               <Route path="/setting" element={<MainSetting />} />
             </Route>
             {/* Protected Pages without Custom Layout */}
-            <Route path="/login/ob_landing" element={<OB_landing />} />
+            <Route path="/login/ob_landing" element={<OBLanding />} />
             <Route
               path="/login/login_with_group"
               element={<LoginWithGroup />}

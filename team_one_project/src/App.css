@@ -27,17 +27,8 @@
 .App-link {
   color: black;
 }
-/* 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-} */
 
-.sidebar {
+/* .sidebar {
   width: 200px;
   height: 100vh;
   background-color: #f2f2f2;
@@ -45,7 +36,7 @@
   flex-direction: column;
   align-items: flex-start;
   padding: 10px;
-}
+} */
 
 .sidebar-button {
   width: 100%;
