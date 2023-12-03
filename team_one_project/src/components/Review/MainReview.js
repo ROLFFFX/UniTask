@@ -121,7 +121,6 @@ export function MainReview() {
   };
   const [modifyMode, setModifyMode] = useState(false); // controls the mode of view page.
   const [modifiedRecord, setModifiedRecord] = useState({}); // keep track of changes in modify mode
-
   /* End of Hooks Declrations-------------------------------------------------------------------------------------------------------------------- */
 
   /* Helper Functions Declrations-------------------------------------------------------------------------------------------------------------------- */
@@ -378,7 +377,8 @@ export function MainReview() {
                   borderRadius: "16px",
                   boxShadow: "0 3px 5px rgba(0, 0, 0, 0.3)",
                   height: "calc(100vh - 200px)",
-                  width: "90%",
+                  width: "calc((100vw - 200px) / 3 - 40px)",
+                  maxWidth: "calc((100vw - 200px) / 3 - 40px)",
                 }}
               >
                 <Box
@@ -451,7 +451,8 @@ export function MainReview() {
                   borderRadius: "16px",
                   boxShadow: "0 3px 5px rgba(0, 0, 0, 0.3)",
                   height: "calc(100vh - 200px)",
-                  width: "90%",
+                  width: "calc((100vw - 200px) / 3 - 40px)",
+                  maxWidth: "calc((100vw - 200px) / 3 - 40px)",
                 }}
               >
                 <Box
@@ -643,7 +644,8 @@ export function MainReview() {
                   borderRadius: "16px",
                   boxShadow: "0 3px 5px rgba(0, 0, 0, 0.3)",
                   height: "calc(100vh - 200px)",
-                  width: "90%",
+                  width: "calc((100vw - 200px) / 3 - 40px)",
+                  maxWidth: "calc((100vw - 200px) / 3 - 40px)",
                 }}
               >
                 <Box

@@ -1,9 +1,39 @@
+/**
+ * @fileoverview This file defines the AnimatedProgressBar component, which renders a
+ * circular progress bar using the Victory charting library. It is used to visually represent
+ * the progress of a task or set of tasks as a percentage, and will be rendered at the bottom
+ * right corner of dashboard page - data visualization.
+ */
+
 import React, { useState, useEffect } from "react";
 import { VictoryPie, VictoryAnimation, VictoryLabel } from "victory";
 import { Box, Grid, Typography, Tooltip } from "@mui/material";
 
+/**
+ * AnimatedProgressBar - A functional component that renders a circular progress bar of
+ * task points done / (task poitns for todo + task points for doing + taskpoints for done).
+ *
+ * This component takes progress data as a prop and uses it to calculate and display the
+ * completion percentage of a task or set of tasks. It uses VictoryPie and VictoryAnimation
+ * from the Victory charting library to render the progress bar, and MUI components
+ * for layout and tooltips.
+ *
+ * Props:
+ * @param {Object} progressData - The data used to calculate the progress percentage. It should
+ *                                contain a 'progressBarData' object with numeric values.
+ *
+ * State:
+ * @state @type {number} percent - The calculated completion percentage.
+ * @state @type {number} done - The total value of completed tasks.
+ * @state @type {number} total - The total value of all tasks.
+ *
+ * Functions:
+ * calculateDoneRatio - Calculates the ratio of completed tasks to total tasks.
+ * getData - Returns an array of data for the VictoryPie component based on the completion percentage.
+ *
+ * @returns {React.ReactElement} A React element representing the animated progress bar.
+ */
 export default function AnimatedProgressBar({ progressData }) {
-  // Destructuring props
   const [percent, setPercent] = useState(0);
   const [done, setDone] = useState(0);
   const [total, setTotal] = useState(0);
@@ -11,9 +41,9 @@ export default function AnimatedProgressBar({ progressData }) {
   useEffect(() => {
     if (progressData && progressData.progressBarData) {
       const doneRatio = calculateDoneRatio(progressData);
-      setPercent(doneRatio * 100); // Assuming you want to display it as a percentage
+      setPercent(doneRatio * 100);
     }
-  }, [progressData]); // Depend on progressData
+  }, [progressData]);
 
   const calculateDoneRatio = (progressData) => {
     const progressBarData = progressData.progressBarData;
@@ -40,12 +70,14 @@ export default function AnimatedProgressBar({ progressData }) {
   return (
     <Grid container>
       <Grid item xs={12}>
+        {/* Box for entire progress bar section. Note that it excludes headers. */}
         <Box
           display="flex"
           justifyContent="center"
           alignItems="center"
           marginTop="-10px"
         >
+          {/* Tooltip to show more detailed information */}
           <Tooltip
             title={
               <Typography
@@ -58,6 +90,7 @@ export default function AnimatedProgressBar({ progressData }) {
             placement="top"
             TransitionProps={{ timeout: 600 }}
           >
+            {/* Actual circular progress bar */}
             <svg viewBox="0 0 400 400" width="60%">
               <VictoryPie
                 standalone={false}
@@ -88,8 +121,10 @@ export default function AnimatedProgressBar({ progressData }) {
                   },
                 }}
               />
+              {/* Animation added so that it animates the progress at initial render. */}
               <VictoryAnimation duration={1000} data={{ percent }}>
                 {(newProps) => (
+                  // Label is rendered inside of the Progress bar.
                   <VictoryLabel
                     textAnchor="middle"
                     verticalAnchor="middle"

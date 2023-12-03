@@ -13,7 +13,7 @@ export const AuthProvider = ({ children }) => {
       setCookie("auth", auth, { path: "/", maxAge: 1800 }); // expires in 30 minutes
     }
   }, [auth, setCookie]);
-
+  // handle logout, which empties global auth states as well as cookies.
   const logout = () => {
     setAuth({});
     removeCookie("auth", { path: "/" });

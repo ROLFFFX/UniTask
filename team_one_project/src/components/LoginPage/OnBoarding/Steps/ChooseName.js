@@ -6,6 +6,7 @@ import TextField from "@mui/material/TextField";
 function ChooseName({ workspaceName, setWorkspaceName }) {
   // passed down prop from parent
   const handleInputChange = (event) => {
+    // check if workspace name is valid
     setWorkspaceName(event.target.value);
   };
 

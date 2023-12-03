@@ -1,19 +1,21 @@
-import {
-  Box,
-  Backdrop,
-  CircularProgress,
-  Typography,
-  Grid,
-} from "@mui/material";
+/**
+ * @fileoverview This file includes the TeamProgress component, which is used for
+ * displaying a pie chart representation of task distribution among team members.
+ * The center of pie chart renders the task member when user hover on the part of
+ * pie chart.
+ */
+
+import { Backdrop, CircularProgress, Grid, Typography } from "@mui/material";
 import React from "react";
 import { VictoryLabel, VictoryPie, VictoryTooltip } from "victory";
 
-const sampleData_2 = [
-  { x: "Sichen Liu", y: 3 },
-  { x: "User Ghost", y: 2 },
-  { x: "Yuxuan Shi", y: 8 },
-];
-
+/**
+ * CustomLabel - A functional component for rendering custom labels on a VictoryPie chart.
+ *
+ * @param {Object} props - Including datum for the pie slice data.
+ *
+ * @returns {React.ReactElement} A React element representing the custom label with tooltip.
+ */
 function CustomLabel(props) {
   const { datum } = props;
   const tooltipText = `${datum.x}`;
@@ -38,6 +40,20 @@ function CustomLabel(props) {
 
 CustomLabel.defaultEvents = VictoryTooltip.defaultEvents;
 
+/**
+ * TeamProgress - A functional component for rendering the task distribution among team members.
+ *
+ * This component displays a pie chart (using VictoryPie) of task points achieved by each team member.
+ * It uses the CustomLabel component to display tooltips for each slice of the pie chart.
+ *
+ * Props:
+ * @param {Object} TaskDistributionData - The data used to render the pie chart.
+ *
+ * The component renders a header section with a title and description, followed by the content
+ * area that displays the VictoryPie chart.
+ *
+ * @returns {React.ReactElement} A React element representing the team progress chart.
+ */
 export function TeamProgress(TaskDistributionData) {
   if (TaskDistributionData) {
     return (

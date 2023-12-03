@@ -1,4 +1,4 @@
-import { Box, Button, Toolbar, Grid, Typography, Avatar } from "@mui/material";
+import { Avatar, Box, Button, Grid, Typography } from "@mui/material";
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import unitaskIcon from "../../images/UTLogo.png";
