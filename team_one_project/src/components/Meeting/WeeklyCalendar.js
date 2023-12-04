@@ -1,3 +1,10 @@
+/**
+ * @fileoverview
+ * Implements the WeeklyCalendar component using React. This component utilizes Material-UI and DayPilot Lite
+ * for rendering an interactive weekly calendar. It includes features for creating, rescheduling, renaming,
+ * deleting events, and conducting a group availability poll. Axios is used for HTTP requests, and react-router-dom
+ * for navigation. The component also uses custom hooks for authentication and configuration management.
+ */
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import Accordion from "@mui/material/Accordion";
 import AccordionDetails from "@mui/material/AccordionDetails";
@@ -109,6 +116,10 @@ const WeeklyCalendar = () => {
     },
   ];
 
+  /**
+   * Opens the guide dialog.
+   * @returns {void}
+   */
   const handleGuideOpen = () => {
     setGuide(true);
   };
@@ -119,6 +130,10 @@ const WeeklyCalendar = () => {
     setExpanded(isExpanded ? panel : false);
   };
 
+  /**
+   * Closes the guide dialog and updates the 'notFirstTime' list in local storage.
+   * @returns {void}
+   */
   const handleGuideClose = () => {
     setGuide(false);
     //set of users that has opened this page on this browser
@@ -146,7 +161,11 @@ const WeeklyCalendar = () => {
 
   const [inSession, setInSession] = useState(false);
 
-  //Your group is in session if there are any timeslots submitted
+  /**
+   * Fetches the in-session status of the group.
+   * @async
+   * @returns {Promise<void>} Resolves after setting the in-session status.
+   */
   const fetchInSession = async () => {
     try {
       const response = await axios.get(
@@ -164,6 +183,11 @@ const WeeklyCalendar = () => {
     }
   };
 
+  /**
+   * Fetches the username and determines if the guide should be displayed.
+   * @async
+   * @returns {Promise<void>} Resolves after fetching and setting the username.
+   */
   const fetchUserName = async () => {
     try {
       const response = await axios.get(`${ENDPOINT_URL}users/getUsername`, {
@@ -183,7 +207,12 @@ const WeeklyCalendar = () => {
   };
 
   const [membersList, setMembersList] = useState([]);
-  //get list of members who has submitted their available times
+
+  /**
+   * Fetches the list of members who have submitted their available times.
+   * @async
+   * @returns {Promise<void>} Resolves after fetching and setting the members list.
+   */
   const fetchSubmittedMembers = async () => {
     let returnlist = [];
     try {
@@ -204,7 +233,11 @@ const WeeklyCalendar = () => {
     }
   };
 
-  //(AVALIABLE TIME SLOTS) Get common time slots
+  /**
+   * Fetches common available time slots.
+   * @async
+   * @returns {Promise<Array>} Returns an array of available time slots.
+   */
   const fetchAvaliable = async () => {
     try {
       const response = await axios.get(
@@ -233,7 +266,11 @@ const WeeklyCalendar = () => {
     }
   };
 
-  //(MEETING) Get current meetings
+  /**
+   * Fetches current meetings.
+   * @async
+   * @returns {Promise<Array>} Returns an array of current meetings.
+   */
   const fetchMeetings = async () => {
     try {
       const response = await axios.get(
@@ -267,6 +304,12 @@ const WeeklyCalendar = () => {
   const [selectedRange, setSelectedRange] = useState(null);
 
   const TEMP_EVENT_ID = "temp-selected-range";
+
+  /**
+   * Handles the selection of a time range on the calendar.
+   * @param {Object} args - The event arguments containing start and end times.
+   * @returns {void}
+   */
   const onTimeRangeSelected = (args) => {
     const newStart = new Date(args.start);
     const newEnd = new Date(args.end);
@@ -317,6 +360,11 @@ const WeeklyCalendar = () => {
     dp.update();
   };
 
+  /**
+   * Creates a meeting for the selected time range.
+   * @async
+   * @returns {Promise<void>} Resolves after attempting to create a meeting.
+   */
   const createMeeting = async () => {
     if (!selectedRange) return;
 
@@ -386,6 +434,10 @@ const WeeklyCalendar = () => {
     setHandleRefresh([...handleRefresh, newMeeting]); // Update state to trigger a refresh
   };
 
+  /**
+   * Clears the selected time range from the calendar.
+   * @returns {void}
+   */
   const clearSelection = () => {
     // Remove the temporary event and clear selection
     const dp = calendarRef.current.control;
@@ -394,6 +446,11 @@ const WeeklyCalendar = () => {
     setSelectedRange(null);
   };
 
+  /**
+   * Formats a date object for display.
+   * @param {Date} date - The date to format.
+   * @returns {string} Formatted date string.
+   */
   const formatTimeForDisplay = (date) => {
     const options = {
       year: "numeric",
@@ -407,7 +464,12 @@ const WeeklyCalendar = () => {
     return date.toLocaleString("en-US", options);
   };
 
-  //edit meeting time (when dragged/extended/shortened)
+  /**
+   * Edits the time of an existing event.
+   * @async
+   * @param {Object} args - Event arguments containing new start and end times.
+   * @returns {Promise<void>} Resolves after attempting to edit the event time.
+   */
   const editEventTime = async (args) => {
     const timeZoneOffset = getTimeZoneOffsetInHours();
 
@@ -450,7 +512,12 @@ const WeeklyCalendar = () => {
     }
   };
 
-  //edit meeting Title
+  /**
+   * Edits the title of an existing event.
+   * @async
+   * @param {Object} e - The event object.
+   * @returns {Promise<void>} Resolves after attempting to edit the event title.
+   */
   const editEventTitle = async (e) => {
     // Prompt for new title
     const titleResponse = await DayPilot.Modal.prompt(
@@ -494,7 +561,12 @@ const WeeklyCalendar = () => {
     }
   };
 
-  //delete the meeting
+  /**
+   * Deletes a meeting.
+   * @async
+   * @param {Object} e - The event object.
+   * @returns {Promise<void>} Resolves after attempting to delete the meeting.
+   */
   const deleteMeeting = async (e) => {
     if (!e || !e.data || !e.data.id) return;
 
@@ -531,7 +603,10 @@ const WeeklyCalendar = () => {
     }
   };
 
-  //get time difference between the ISO string and the local time
+  /**
+   * Calculates the time zone offset in hours.
+   * @returns {number} Time zone offset in hours.
+   */
   const getTimeZoneOffsetInHours = () => {
     // console.log("get time difference");
     const currentDateTime = new Date();
@@ -540,7 +615,11 @@ const WeeklyCalendar = () => {
     return offsetInHours;
   };
 
-  //(AVALIABLE TIME SLOTS) Fix time difference between the ISO string and the local time
+  /**
+   * Adjusts time zones for available time slots.
+   * @param {Array} meetings - The list of meetings with their time slots.
+   * @returns {Array} Processed list of meetings with adjusted time zones.
+   */
   const adjustTimeZoneAvaliable = (meetings) => {
     // const thirtyMinMeetings = convertTo30MinSlots(meetings);
     // console.log("30mins", thirtyMinMeetings)
@@ -570,7 +649,11 @@ const WeeklyCalendar = () => {
     return processedTS;
   };
 
-  //(MEETING) Fix time difference between the ISO string and the local time
+  /**
+   * Adjusts time zones for meetings.
+   * @param {Array} meetings - The list of meetings with their time slots.
+   * @returns {Array} Processed list of meetings with adjusted time zones.
+   */
   const adjustTimeZoneMeet = (meetings) => {
     const timeZoneOffset = getTimeZoneOffsetInHours();
 
@@ -592,7 +675,11 @@ const WeeklyCalendar = () => {
     });
   };
 
-  //Clear All Avaliable time slots
+  /**
+   * Clears all available time slots.
+   * @async
+   * @returns {Promise<void>} Resolves after attempting to clear all available time slots.
+   */
   const clearAvailableSlots = async () => {
     DayPilot.Modal.confirm(
       "Are you sure you want to end this availability poll? Members' available time submissions will be cleared. "
@@ -627,6 +714,11 @@ const WeeklyCalendar = () => {
     });
   };
 
+   /**
+   * Provides a context menu for calendar events.
+   * @param {Object} event - The event object.
+   * @returns {DayPilot.Menu|null} A context menu for the event or null if not applicable.
+   */
   const getContextMenuForEvent = (event) => {
     if (event.data.cssClass === "calendar_black_event_inner") {
       return new DayPilot.Menu({
@@ -667,11 +759,19 @@ const WeeklyCalendar = () => {
     },
   });
 
+  /**
+   * Navigates to the previous week in the calendar.
+   * @returns {void}
+   */
   const goToPreviousWeek = () => {
     setStartDate(startDate.addDays(-7));
     clearSelection();
   };
 
+  /**
+   * Navigates to the next week in the calendar.
+   * @returns {void}
+   */
   const goToNextWeek = () => {
     setStartDate(startDate.addDays(7));
     clearSelection();
