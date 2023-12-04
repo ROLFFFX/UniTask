@@ -11,6 +11,7 @@ More detailed onboarding instruction can be found in OnBoarding Process.
 
 > [!IMPORTANT]
 > The detailed technical JSDoc for this project is here: [unitask frontend documentation](https://unitask-frontend-docs.netlify.app/)
+> which contains more detailed implementation of each function.
 
 ## 2. Architecture Overview
 
