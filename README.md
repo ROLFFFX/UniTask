@@ -9,7 +9,7 @@ Team Member: Alec Berger, Jingyu(Eula) Wang, Sichen Liu, Yuxuan(ROLF) Shi, Yinsh
 1. [Introduction](#1-introduction)
 2. [User Guide](#2-user-guide)
 3. [Technical Documentation / Developer Guide](#front-end-documentation)
-   1. [Front End Documentation](doc/frontend/README.md)
+   1. [Front End Documentation](#front-end-documentation)
    2. [Back End Documentation](doc/backend/README.md)
 
 
