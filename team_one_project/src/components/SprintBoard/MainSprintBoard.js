@@ -147,7 +147,7 @@ export function MainSprintBoard() {
     // Step 1: Format the request body to be sent
     // Modify the date here for task creation
     let dateObject = new Date(taskData.expectedCompleteTime);
-    dateObject = addOneDay(dateObject); // Add one day
+    dateObject = addOneDay(dateObject); // add one day to avoid timezone conflict
     let isoDateString = dateObject
       ? randomizeDateObject(dateObject).toISOString()
       : null;
