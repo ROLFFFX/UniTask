@@ -14,6 +14,8 @@ import {
   ListItem,
   ListItemText,
   Typography,
+  Modal,
+  Grid,
 } from "@mui/material";
 import Backdrop from "@mui/material/Backdrop";
 import Button from "@mui/material/Button";
@@ -24,6 +26,18 @@ import { FixedSizeList } from "react-window";
 import useAuth from "../../hooks/useAuth";
 import { ENDPOINT_URL } from "../../hooks/useConfig";
 import InviteNewMemberModal from "./InviteNewMemberModal";
+
+const modalStyle = {
+  position: "absolute",
+  top: "50%",
+  left: "50%",
+  transform: "translate(-50%, -50%)",
+  width: 400,
+  bgcolor: "background.paper",
+  border: "2px solid #000",
+  boxShadow: 24,
+  p: 4,
+};
 
 /**
  * Renders an individual team member item in a list using react-window to virtualize table.
@@ -93,7 +107,15 @@ export default function ManageTeamContent() {
   const [backdropOpen, setBackdropOpen] = useState(false); //loading page
   const handleOpenModal = () => setOpenModal(true);
   const handleCloseModal = () => setOpenModal(false);
+  const [openDeleteSelfModal, setOpenDeleteSelfModal] = useState(false);
+  const [openDeleteOthersModal, setOpenDeleteOthersModal] = useState(false);
+  const [userToBeDeleted, setUserToBeDeleted] = useState();
+  const handleOpenDeleteSelfModal = () => setOpenDeleteSelfModal(true);
+  const handleClosenDeleteSelfModal = () => setOpenDeleteSelfModal(false);
+  const handleOpenDeleteOthersModal = () => setOpenDeleteOthersModal(true);
+  const handleClosenDeleteOthersModal = () => setOpenDeleteOthersModal(false);
   const { auth } = useAuth();
+  const { logout } = useAuth();
   const projectTitle = auth.selectedWorkspace;
   const [teamMembers, setTeamMembers] = useState([]);
   const refreshTeamMembers = () => {
@@ -101,7 +123,22 @@ export default function ManageTeamContent() {
     fetchTeamMembers(); // Re-fetch team members
   };
 
+  // validation step before actually deleting the user
   const handleRemoveUser = async (userEmail) => {
+    setUserToBeDeleted(userEmail);
+    // add check to see how many users are left in the workspace. if only one, do not delete.
+    if (teamMembers.length == 1) {
+      alert("Every workspace must have at least one active user.");
+      return;
+    }
+    if (userEmail === auth.user.userEmail) {
+      handleOpenDeleteSelfModal();
+    }
+    handleOpenDeleteOthersModal();
+  };
+
+  // DELETE Request for deleting the user from workspace
+  const deleteUserByEmail = async (userEmail) => {
     setBackdropOpen(true); //display loading page
     try {
       const response = await axios.delete(
@@ -153,6 +190,152 @@ export default function ManageTeamContent() {
 
   return (
     <React.Fragment>
+      {/* Delete self Modal */}
+      <Modal
+        open={openDeleteSelfModal}
+        onClose={handleClosenDeleteSelfModal}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+      >
+        <Box sx={modalStyle}>
+          <Typography
+            id="modal-modal-title"
+            variant="h6"
+            component="h2"
+            style={{ fontFamily: "Inter, sans-serif" }}
+            textAlign={"center"}
+          >
+            Warning!!
+          </Typography>
+          <Typography
+            id="modal-modal-description"
+            sx={{ mt: 2 }}
+            style={{ fontFamily: "Inter, sans-serif" }}
+          >
+            Are you sure you want to exit the workspace? <br />
+            Your Progress in the workspace so far will be saved, and you can
+            rejoin this workspace with the same account.
+          </Typography>
+          <Grid
+            container
+            marginTop={5}
+            style={{
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+          >
+            <Grid item xs={6}>
+              <Box width={"100%"} display={"flex"} alignItems="end">
+                <Button
+                  variant="outlined"
+                  color="inherit"
+                  onClick={() => {
+                    handleClosenDeleteSelfModal();
+                  }}
+                >
+                  Cancel
+                </Button>
+              </Box>
+            </Grid>
+            <Grid item xs={6}>
+              <Box
+                width={"100%"}
+                display={"flex"}
+                justifyContent="end"
+                alignItems="end"
+              >
+                <Button
+                  variant="outlined"
+                  color="error"
+                  onClick={() => {
+                    deleteUserByEmail(userToBeDeleted);
+                    handleClosenDeleteSelfModal();
+                    logout();
+                  }}
+                >
+                  Yes, exit group
+                </Button>
+              </Box>
+            </Grid>
+          </Grid>
+        </Box>
+      </Modal>
+      {/* End of Delete self Modal */}
+      {/* Delete Others Modal */}
+      <Modal
+        open={openDeleteOthersModal}
+        onClose={handleClosenDeleteOthersModal}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+      >
+        <Box sx={modalStyle}>
+          <Typography
+            id="modal-modal-title"
+            variant="h6"
+            component="h2"
+            style={{ fontFamily: "Inter, sans-serif" }}
+            textAlign={"center"}
+          >
+            Warning!!
+          </Typography>
+          <Typography
+            id="modal-modal-description"
+            sx={{ mt: 2 }}
+            style={{ fontFamily: "Inter, sans-serif" }}
+          >
+            {`Are you sure you want to delete user with email ${userToBeDeleted} from the workspace?`}
+            <br />
+            <br />
+            {`His/Her progress in the workspace so far will be saved, and you can
+            reinvite user into this workspace anytime. `}
+          </Typography>
+          <Grid
+            container
+            marginTop={5}
+            style={{
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+          >
+            <Grid item xs={6}>
+              <Box width={"100%"} display={"flex"} alignItems="end">
+                <Button
+                  variant="outlined"
+                  color="inherit"
+                  onClick={() => {
+                    handleClosenDeleteOthersModal();
+                  }}
+                >
+                  Cancel
+                </Button>
+              </Box>
+            </Grid>
+            <Grid item xs={6}>
+              <Box
+                width={"100%"}
+                display={"flex"}
+                justifyContent="end"
+                alignItems="end"
+              >
+                <Button
+                  variant="outlined"
+                  color="error"
+                  onClick={() => {
+                    deleteUserByEmail(userToBeDeleted);
+                    handleClosenDeleteOthersModal();
+                  }}
+                >
+                  Yes, delete
+                </Button>
+              </Box>
+            </Grid>
+          </Grid>
+        </Box>
+      </Modal>
+      {/* End of Delete Others Modal */}
+
       <Backdrop
         sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }}
         open={backdropOpen}
@@ -163,12 +346,11 @@ export default function ManageTeamContent() {
         sx={{
           display: "flex",
           flexDirection: "column",
-          //   alignItems: "center",
-          maxWidth: "lg", // Or another desired value, or remove maxWidth
+          maxWidth: "lg",
           padding: "40px",
           backgroundColor: "white",
-          borderRadius: "16px", // Adjust this value for more or less rounded corners
-          boxShadow: "0 3px 5px rgba(0, 0, 0, 0.3)", // Adjust values and color for desired shadow effect
+          borderRadius: "16px",
+          boxShadow: "0 3px 5px rgba(0, 0, 0, 0.3)",
         }}
       >
         <Box
@@ -184,10 +366,25 @@ export default function ManageTeamContent() {
               color: "#343A40",
               fontSize: 20,
               fontFamily: "Inter, sans-serif",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
             }}
           >
-            Manage Team Members:{" "}
-            <span style={{ fontWeight: "bold" }}>{auth.selectedWorkspace}</span>
+            Manage Team Members:{"  "}
+            <span
+              style={{
+                overflow: "hidden",
+                fontWeight: "bold",
+                maxWidth: "10ch",
+                textOverflow: "ellipsis",
+                whiteSpace: "nowrap",
+                display: "inline-block",
+              }}
+            >
+              {`  `}
+              {auth.selectedWorkspace}
+            </span>
           </Typography>
         </Box>
         <Divider sx={{ width: "100%", padding: 1 }} />
