@@ -732,3 +732,7 @@ UniTask project is deployed on both [vercel](vercel.app)(front end) and [heroku]
 The deployed version of code can be found in these two repositories: <br/>
 [Deployed Front End Repo](https://github.com/ROLFFFX/UniTask_Beta_Front)<br/>
 [Deployed Back End Repo](https://github.com/SichenLiu111/unitask_impl)
+
+MySQL Database and SMTP server is already hosted on [Azure MySQL Database](https://azure.microsoft.com/en-us/products/mysql/) and [Gmail SMTP Server](https://support.google.com/a/answer/2956491?hl=en).
+
+For configuration settings such as password to access these accounts, please contact: yshi373@emory.edu
