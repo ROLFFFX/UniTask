@@ -2,7 +2,7 @@
 ## 1. Introduction
 The entire frontend source code can be found in ./team_one_project from the root directory of this github repository. The general purpose of this frontend is to provide a user interface for users to interact with our web-app.
 > [!IMPORTANT]
-> The detailed technical JSDoc for this project is here: [unitask documentation](https://unitask-frontend-docs.netlify.app/)
+> The detailed technical JSDoc for this project is here: [unitask frontend documentation](https://unitask-frontend-docs.netlify.app/)
 
 ## 2. Architecture Overview
 UniTask’s front end has a traditional architecture of a React project. Let’s first have a quick runthrough on the folder structure:
