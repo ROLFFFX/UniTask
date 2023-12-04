@@ -8,6 +8,9 @@ The backend implementation is done in the MacOs system. The code has
 been run on a Windows system for the test purpose. The implementation
 hasn't been run and tested on any other system.
 
+> [!IMPORTANT]
+> The detailed technical JavaDoc for this project is here: [unitask backend documentation](https://unitask-backend-docs.netlify.app/)
+
 **Versions:**
 
 Spring boot: 2.7.16
