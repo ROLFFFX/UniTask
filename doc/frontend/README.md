@@ -313,9 +313,10 @@ UniTask Front End uses official JSDoc syntax for documentation and comments. The
 
 ## 9. Dependency Management
 
-```bash
+
 UniTask Front End utilizes multiple dependencies, and they are fully defined in package.json. To install all of them, you only have to run `npm i` in the root directory of team_one_project.
 Here is a list of all dependencies used:
+```bash
 "@daypilot/daypilot-lite-javascript": "^3.18.0",
 "@daypilot/daypilot-lite-react": "^3.18.0",
 "@emotion/react": "^11.11.1",
