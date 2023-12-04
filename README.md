@@ -13,15 +13,17 @@ Team Member: Alec Berger, Jingyu(Eula) Wang, Sichen Liu, Yuxuan(ROLF) Shi, Yinsh
    2. [Back End Documentation](#back-end-documentation)
 
 
-
+---
 ---
 # 1. Introduction
 Introduction here
 
 ---
+---
 # 2. User Guide
 User Guide here
 
+---
 ---
 # 3. Technical Documentation / Developer Guide
 Technical Documentation here
