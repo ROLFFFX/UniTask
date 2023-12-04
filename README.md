@@ -20,6 +20,23 @@ UniTask is a innovative web app tailored for university students to experience t
 
 ## Key Features
 
+### Interactive Dashbaord
+The dashboard is a central feature of UniTask, offering real-time visualization of various progress metrics. It displays group task progression, individual task status, task completion percentages, and the distribution of tasks among group members, and more.
+This interactive and informative dashboard is crucial for tracking overall project health and individual contributions.
+
+### Task Assignment System
+UniTask's offers robust task assignment system, which incorporates a drag-and-drop functionality. This feature enhances the visualization and formalization of task assignments, making it effortless for users to manage and organize their work in group project. In addition, it allows users to deconstruct tasks into smaller, more manageable subtasks, facilitating a detailed and organized approach to task management.
+The system also fosters cooperative work among team members, promoting a collaborative environment for project progression.
+
+### Meeting Schedule Tool
+This tool simplifies the process of scheduling meetings. Customized for university students, it enables users to start a poll and input their available time slots. The built-in algorithm then proposes optimal meeting times based on the collective availability of team members, easing the coordination of group meetings.
+
+### Reflection and Review Page
+UniTask includes a reflective review page where users can document and submit their progress reflections. This component encourages self-assessment and aids in personal and team development, ensuring continuous improvement in project management.
+
+### Additional Features
+UniTask is equipped with various other components designed to enhance user experience and project management efficiency.
+
 ---
 # 2. User Guide
 User Guide here
