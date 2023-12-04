@@ -126,29 +126,29 @@ UserProfile - A functional component for displaying user profile information. Th
 └── VisualCharts.js
 ```
 
-AnimatedProgressBar - A functional component that renders a circular progress bar of task points done / (task poitns for todo + task points for doing + taskpoints for done). This component takes progress data as a prop and uses it to calculate and display the completion percentage of a task or set of tasks. It uses VictoryPie and VictoryAnimation from the Victory charting library to render the progress bar, and MUI components for layout and tooltips.
+**AnimatedProgressBar** - A functional component that renders a circular progress bar of task points done / (task poitns for todo + task points for doing + taskpoints for done). This component takes progress data as a prop and uses it to calculate and display the completion percentage of a task or set of tasks. It uses VictoryPie and VictoryAnimation from the Victory charting library to render the progress bar, and MUI components for layout and tooltips.
 
-BurndownChart - A functional component for rendering a burndown chart. This component takes processed data as a prop and renders a burndown chart that shows the progression of tasks over time. The chart is interactive, allowing users to zoom and brush over the data. It also dynamically adjusts to the window size.
+**BurndownChart** - A functional component for rendering a burndown chart. This component takes processed data as a prop and renders a burndown chart that shows the progression of tasks over time. The chart is interactive, allowing users to zoom and brush over the data. It also dynamically adjusts to the window size.
 
-DashboardContent - A functional component that renders the left side dashboard view of the dashboard. This component fetches and displays data regarding task distribution among team members, overall progress of tasks, team member information, and all tasks in the current workspace. It conditionally renders two different views based on the available data, which are table task view and dashboard view
+**DashboardContent** - A functional component that renders the left side dashboard view of the dashboard. This component fetches and displays data regarding task distribution among team members, overall progress of tasks, team member information, and all tasks in the current workspace. It conditionally renders two different views based on the available data, which are table task view and dashboard view
 
-DataVisualization - A functional component for rendering data visualizations. This component displays visual charts and provides an interactive dropdown menu to toggle between different views of task data. It is designed to offer an insightful and interactive representation of tasks in a project management setting. Group Progression on top, Personal Progression at bottom.
+**DataVisualization** - A functional component for rendering data visualizations. This component displays visual charts and provides an interactive dropdown menu to toggle between different views of task data. It is designed to offer an insightful and interactive representation of tasks in a project management setting. Group Progression on top, Personal Progression at bottom.
 
-HorizontalBarChart - A functional component for rendering a horizontal bar chart. This component takes progress data and visualizes it as horizontal bars. It displays the proportion of tasks in different states (To Do, Doing, Done) as a percentage of the total number of tasks. The component utilizes tooltips to provide additional information on hover.
+**HorizontalBarChart** - A functional component for rendering a horizontal bar chart. This component takes progress data and visualizes it as horizontal bars. It displays the proportion of tasks in different states (To Do, Doing, Done) as a percentage of the total number of tasks. The component utilizes tooltips to provide additional information on hover.
 
-MainDashboard - entrypoint for entire dashboard page.
+**MainDashboard** - entrypoint for entire dashboard page.
 
-PersonalChart - A functional component for rendering a personal task progression chart. This component visualizes a user's task progression over time using a line chart. It allows users to interactively select different interpolation methods for the chart. The component also calculates and sets up the chart's size based on the window size and updates it on window resize. Ideally, user will choose their interpolation according to preference. However, we all know nobody is really going to use it. I personally only use linear and natural. It also provides 'polar' options, which I don't even understand this mathmatical terms. The entire chart is provided by Victory.js
+**PersonalChart** - A functional component for rendering a personal task progression chart. This component visualizes a user's task progression over time using a line chart. It allows users to interactively select different interpolation methods for the chart. The component also calculates and sets up the chart's size based on the window size and updates it on window resize. Ideally, user will choose their interpolation according to preference. However, we all know nobody is really going to use it. I personally only use linear and natural. It also provides 'polar' options, which I don't even understand this mathmatical terms. The entire chart is provided by Victory.js
 
-ProgressBar - A functional component for rendering a progress checker with toggleable views. This component displays a progress indicator, which can be toggled between a circular (animated) and a horizontal bar chart representation. It utilizes a custom styled switch (GreySwitch) for toggling between these views. The component takes ProgressBarData as its prop to render the appropriate progress visualization.
+**ProgressBar** - A functional component for rendering a progress checker with toggleable views. This component displays a progress indicator, which can be toggled between a circular (animated) and a horizontal bar chart representation. It utilizes a custom styled switch (GreySwitch) for toggling between these views. The component takes ProgressBarData as its prop to render the appropriate progress visualization.
 
-TaskList - A functional component for rendering a list of tasks and could filter by user. This component displays tasks in a table format, including details like title, status, assignee, task points, and dates. It handles data formatting and provides tooltips for displaying full task titles and assignee names(especially when item is truncated when too long). The component receives task data and formatted team member information through props. It also provides option to reformat the table, filter through selected username.
+**TaskList** - A functional component for rendering a list of tasks and could filter by user. This component displays tasks in a table format, including details like title, status, assignee, task points, and dates. It handles data formatting and provides tooltips for displaying full task titles and assignee names(especially when item is truncated when too long). The component receives task data and formatted team member information through props. It also provides option to reformat the table, filter through selected username.
 
-TaskView - A functional component for rendering a view of tasks with filter by username functionality. This component provides an interface for viewing tasks. It includes a dropdown menu for toggling between different views (Data Visualization, Table Task View) and an autocomplete field for filtering tasks by team members. The actual table is rendered through TaskList, which can be found in ./Tasklist.js
+**TaskView** - A functional component for rendering a view of tasks with filter by username functionality. This component provides an interface for viewing tasks. It includes a dropdown menu for toggling between different views (Data Visualization, Table Task View) and an autocomplete field for filtering tasks by team members. The actual table is rendered through TaskList, which can be found in ./Tasklist.js
 
-TeamProgress - A functional component for rendering the task distribution among team members. This component displays a pie chart (using VictoryPie) of task points achieved by each team member. It uses the CustomLabel component to display tooltips for each slice of the pie chart.
+**TeamProgress** - A functional component for rendering the task distribution among team members. This component displays a pie chart (using VictoryPie) of task points achieved by each team member. It uses the CustomLabel component to display tooltips for each slice of the pie chart.
 
-VisualCharts - A functional component for rendering burndown charts of task progress based on group / personal task contribution. This component displays two charts: one for overall task progress and another for personal task progress. It uses the BurndownChart(./BurndownChart.js) and PersonalChart(./PersonalChart.js) components to render these charts. The component processes task data and personal task data to format them appropriately for the charts.
+**VisualCharts** - A functional component for rendering burndown charts of task progress based on group / personal task contribution. This component displays two charts: one for overall task progress and another for personal task progress. It uses the BurndownChart(./BurndownChart.js) and PersonalChart(./PersonalChart.js) components to render these charts. The component processes task data and personal task data to format them appropriately for the charts.
 
 ##### LoginPage
 
@@ -173,29 +173,29 @@ VisualCharts - A functional component for rendering burndown charts of task prog
 └── SignUp.js
 ```
 
-BottomSVG - A functional component for rendering a custom SVG shape. The source data comes from shapedivier.app
+**BottomSVG** - A functional component for rendering a custom SVG shape. The source data comes from shapedivier.app
 
-theme - A custom theme configuration for MUI components.
+**theme** - A custom theme configuration for MUI components.
 
-TopSVG - A functional component for rendering a custom SVG shape. The source data comes from shapedivier.app
+**TopSVG** - A functional component for rendering a custom SVG shape. The source data comes from shapedivier.app
 
-CreateYourWorkspace - A functional component for rendering a Card that prompts users to create or join a workspace. This component displays instructions and a button for users to create their own workspace. It is designed to guide new users who do not have an existing workspace or are awaiting an invitation to join one. Also, it uses React Router's useNavigate hook for handling navigation to the workspace creation page.
+**CreateYourWorkspace** - A functional component for rendering a Card that prompts users to create or join a workspace. This component displays instructions and a button for users to create their own workspace. It is designed to guide new users who do not have an existing workspace or are awaiting an invitation to join one. Also, it uses React Router's useNavigate hook for handling navigation to the workspace creation page.
 
-LoginWithGroup - A functional component for rendering the login interface with workspace options. The component uses a Grid layout from MUI to organize the content. Each option (create or join workspace) is presented in its grid item. The SVG components are positioned absolutely to appear as background decorations.
+**LoginWithGroup** - A functional component for rendering the login interface with workspace options. The component uses a Grid layout from MUI to organize the content. Each option (create or join workspace) is presented in its grid item. The SVG components are positioned absolutely to appear as background decorations.
 
-LoginWithGroup - A functional component for displaying a list of workspaces for user login, and redirects the user to dashboard page with chosen workspace. This component renders a list of workspaces that a user is part of, allowing them to select and log in to a specific workspace. It uses the react-window (FixedSizeList) component to render a large virtualized list of workspaces (with renderWorkspaceRow helper function rendering each workspace).
+**LoginWithGroup** - A functional component for displaying a list of workspaces for user login, and redirects the user to dashboard page with chosen workspace. This component renders a list of workspaces that a user is part of, allowing them to select and log in to a specific workspace. It uses the react-window (FixedSizeList) component to render a large virtualized list of workspaces (with renderWorkspaceRow helper function rendering each workspace).
 
-ChooseName - A functional component for inputting a workspace name. This component presents a user interface for entering the name of a new workspace. It consists of a text field where users can type the workspace name. Workspace name is then passed up to the parent component for better state management and final POST request..
+**ChooseName** - A functional component for inputting a workspace name. This component presents a user interface for entering the name of a new workspace. It consists of a text field where users can type the workspace name. Workspace name is then passed up to the parent component for better state management and final POST request..
 
-ChooseRole - A functional component for selecting a user role. Second step in OBLanding stepper. This component provides a user interface for choosing a role within a team. It offers two options: 'Team Member' and 'Team Admin'. The 'Team Admin' role is described as having access to modify the status of team members, which has all control over the workspace.
+**ChooseRole** - A functional component for selecting a user role. Second step in OBLanding stepper. This component provides a user interface for choosing a role within a team. It offers two options: 'Team Member' and 'Team Admin'. The 'Team Admin' role is described as having access to modify the status of team members, which has all control over the workspace.
 
-OBLanding - A functional component for the onboarding process of new users. This component presents an interface for new users to create their first workspace and choose their role within it. It uses a step-by-step approach, utilizing MUI Stepper component to guide users through the process. The steps include choosing a workspace name and selecting a user role. Input values are managed through passdown props.
+**OBLanding** - A functional component for the onboarding process of new users. This component presents an interface for new users to create their first workspace and choose their role within it. It uses a step-by-step approach, utilizing MUI Stepper component to guide users through the process. The steps include choosing a workspace name and selecting a user role. Input values are managed through passdown props.
 
-LoginSignup - A functional component for user login and auth. This component presents an interface for users to log in to the project. It includes input fields for email and password, and a submit button to initiate the login process. It also interacts with the server through API call to validate user credentials. On success, it navigates the user to root of protected routes; on failure, it display custom messages.
+**LoginSignup** - A functional component for user login and auth. This component presents an interface for users to log in to the project. It includes input fields for email and password, and a submit button to initiate the login process. It also interacts with the server through API call to validate user credentials. On success, it navigates the user to root of protected routes; on failure, it display custom messages.
 
-PasswordInput - A functional component for rendering a password input field with validation. This component provides an input textfield for password entry along with real-time validation feedback. It includes a progress bar to indicate the strength of the password based on its length and displays helper text to guide the user to meet the password criteria. The criteria include having a minimum length of 8, containing at least one numeral, and at least one uppercase letter.
+**PasswordInput** - A functional component for rendering a password input field with validation. This component provides an input textfield for password entry along with real-time validation feedback. It includes a progress bar to indicate the strength of the password based on its length and displays helper text to guide the user to meet the password criteria. The criteria include having a minimum length of 8, containing at least one numeral, and at least one uppercase letter.
 
-SignUp - A functional component for registering new users. This component presents an interface for users to sign up their own account. It includes input fields for first name, last name, email, custom password field, and a submit button to initiate the registration process. The password input is customized and can be found in ./PasswordInput.js. It also interacts with server through API calls to register and uses custom modal to display success or error messages. Since we handle user authorization through a GET Request with JWT, it display a modal to prompt the user to click the link in email.
+**SignUp** - A functional component for registering new users. This component presents an interface for users to sign up their own account. It includes input fields for first name, last name, email, custom password field, and a submit button to initiate the registration process. The password input is customized and can be found in ./PasswordInput.js. It also interacts with server through API calls to register and uses custom modal to display success or error messages. Since we handle user authorization through a GET Request with JWT, it display a modal to prompt the user to click the link in email.
 
 ##### ManageTeam
 
@@ -206,11 +206,11 @@ SignUp - A functional component for registering new users. This component presen
 └── ManageTeamContent.js
 ```
 
-InviteNewMemberModal - A functional component for inviting new members to a workspace. This component presents an interface for users to invite new members to their workspace. It includes a text field for entering the email of the new member and a submit button to initiate the invitation process. It also displays custom success/failure messages to respond the status code return by server
+**InviteNewMemberModal** - A functional component for inviting new members to a workspace. This component presents an interface for users to invite new members to their workspace. It includes a text field for entering the email of the new member and a submit button to initiate the invitation process. It also displays custom success/failure messages to respond the status code return by server
 
-ManageTeam - A functional component for fine tuning layout of ManageTeamContent. ManageTeamContent can be found in ./ManageTeamContent.js
+**ManageTeam** - A functional component for fine tuning layout of ManageTeamContent. ManageTeamContent can be found in ./ManageTeamContent.js
 
-ManageTeamContent - A functional component for displaying and managing team members. This component provides an interface for viewing the list of team members and managing them. It allows users to invite new members and remove existing ones. It fetches team member data from server API and displays it using react-window (FixedSizeList).
+**ManageTeamContent** - A functional component for displaying and managing team members. This component provides an interface for viewing the list of team members and managing them. It allows users to invite new members and remove existing ones. It fetches team member data from server API and displays it using react-window (FixedSizeList).
 
 ##### Meeting
 
@@ -224,9 +224,9 @@ ManageTeamContent - A functional component for displaying and managing team memb
 └── WeeklyCalendar.js
 ```
 
-SelectMeetingContent - React component that renders the main meeting container including the calendar for selecting available times, navigation buttons for week selection, and the list of selected times. It also includes modals for confirmation and failure messages.
+**SelectMeetingContent** - React component that renders the main meeting container including the calendar for selecting available times, navigation buttons for week selection, and the list of selected times. It also includes modals for confirmation and failure messages.
 
-WeeklyCalendar - rendering an interactive weekly calendar. It includes features for creating, rescheduling, renaming,deleting events, and conducting a group availability poll. Axios is used for HTTP requests, and react-router-dom for navigation. The component also uses custom hooks for authentication and configuration management.
+**WeeklyCalendar** - rendering an interactive weekly calendar. It includes features for creating, rescheduling, renaming,deleting events, and conducting a group availability poll. Axios is used for HTTP requests, and react-router-dom for navigation. The component also uses custom hooks for authentication and configuration management.
 
 ##### PageNotFound
 
@@ -235,7 +235,7 @@ WeeklyCalendar - rendering an interactive weekly calendar. It includes features 
 └── PageNotFound.js
 ```
 
-PageNotFound - A functional component for handling 404 page not found errors. However, in the deployed version, Page Not Found is internally handled by vercel.
+**PageNotFound** - A functional component for handling 404 page not found errors. However, in the deployed version, Page Not Found is internally handled by vercel.
 
 ##### Review
 
@@ -244,7 +244,7 @@ PageNotFound - A functional component for handling 404 page not found errors. Ho
 └── MainReview.js
 ```
 
-MainReview - A functional component for managing reviews in a project management context. This component provides interfaces for adding new records, viewing existing records, modifying them, and deleting them. It handles all the necessary state and logic for CRUD operations on records. It also manages user interactions through modals and forms. It displays three cards, left one for a controller that renders and allows user to select records, the middle one is for displaying content, modifying content, and deleting content. The right one is for adding new content.
+**MainReview** - A functional component for managing reviews in a project management context. This component provides interfaces for adding new records, viewing existing records, modifying them, and deleting them. It handles all the necessary state and logic for CRUD operations on records. It also manages user interactions through modals and forms. It displays three cards, left one for a controller that renders and allows user to select records, the middle one is for displaying content, modifying content, and deleting content. The right one is for adding new content.
 
 ##### SpringBoard
 
@@ -256,9 +256,9 @@ MainReview - A functional component for managing reviews in a project management
 └── Task.js
 ```
 
-MainSprintBoard - A functional component for managing and visualizing tasks in a sprint. This component is responsible for displaying tasks categorized by their status (Not Started, To Do, Doing, Done) in a Kanban-style board. It allows users to create new tasks, update task status through drag-and-drop, and view task details. The component fetches task and team member data from an API and updates the UI accordingly. Each column should be populated by Task Objects, which is defined in Task.js
+**MainSprintBoard** - A functional component for managing and visualizing tasks in a sprint. This component is responsible for displaying tasks categorized by their status (Not Started, To Do, Doing, Done) in a Kanban-style board. It allows users to create new tasks, update task status through drag-and-drop, and view task details. The component fetches task and team member data from an API and updates the UI accordingly. Each column should be populated by Task Objects, which is defined in Task.js
 
-Task - A functional component for displaying and interacting with a task, and the manipulation of subtasks of this task. This component represents a single task, displaying its title, assignee, due date, points, and subtasks. It provides functionality to edit, delete, and add subtasks to the task. The component also includes modals and menus for these interactions and uses axios for API requests to will update the task data through the API endpoint.
+**Task** - A functional component for displaying and interacting with a task, and the manipulation of subtasks of this task. This component represents a single task, displaying its title, assignee, due date, points, and subtasks. It provides functionality to edit, delete, and add subtasks to the task. The component also includes modals and menus for these interactions and uses axios for API requests to will update the task data through the API endpoint.
 
 ##### Utilities
 
@@ -272,15 +272,15 @@ Task - A functional component for displaying and interacting with a task, and th
 └── barTheme.js
 ```
 
-LogOutButton - A functional component providing a logout button. This component renders a button styled using MUI, with an icon indicating the logout action. Clicking the button triggers the logout function from the useAuth hook, which simply redirects the user to loginpage after clearing the global auth info. This button is currently placed in userprofile page. Another suitable place for it is under the left side bar.
+**LogOutButton** - A functional component providing a logout button. This component renders a button styled using MUI, with an icon indicating the logout action. Clicking the button triggers the logout function from the useAuth hook, which simply redirects the user to loginpage after clearing the global auth info. This button is currently placed in userprofile page. Another suitable place for it is under the left side bar.
 
-PermanentDrawer - A functional component providing a sidebar navigation drawer. This component displays a permanent drawer on the left side of all pages in protected routes, offering navigation options to different parts of the application like Dashboard, Task Board, Meeting Schedule, etc. It maps navigation items to specific routes using react-router-dom's useNavigate hook.
+**PermanentDrawer** - A functional component providing a sidebar navigation drawer. This component displays a permanent drawer on the left side of all pages in protected routes, offering navigation options to different parts of the application like Dashboard, Task Board, Meeting Schedule, etc. It maps navigation items to specific routes using react-router-dom's useNavigate hook.
 
-SwipeableCarouselWindow - A functional component providing a swipeable carousel slider. This component is used for showcasing different features of the application like the interactive dashboard, task assignment system, meeting scheduling, report & review, and more. It uses react-slick for carousel functionality. Each slide contains an image, title, and descriptive content, and the actual content is predefined and mapped.
+**SwipeableCarouselWindow** - A functional component providing a swipeable carousel slider. This component is used for showcasing different features of the application like the interactive dashboard, task assignment system, meeting scheduling, report & review, and more. It uses react-slick for carousel functionality. Each slide contains an image, title, and descriptive content, and the actual content is predefined and mapped.
 
-TopAppBar - A functional component providing the main navigation and utility bar. This component renders the top app bar of the application with logo, hyperlink drawer toggle, and change workspace and logout. It also contains logic to handle dynamic hyperlinks, allowing users to add, edit, and remove links with custom names.
+**TopAppBar** - A functional component providing the main navigation and utility bar. This component renders the top app bar of the application with logo, hyperlink drawer toggle, and change workspace and logout. It also contains logic to handle dynamic hyperlinks, allowing users to add, edit, and remove links with custom names.
 
-WelcomePage - A functional component that renders the landing page of the UniTask application. This component displays a welcoming message, a brief introduction to UniTask, and a 'Get Started' button leading to the signup page. It also includes a swipeable carousel window that showcases various features of the application (./SwipeableCarouselWindow.js). The page incorporates custom animations for each components.
+**WelcomePage** - A functional component that renders the landing page of the UniTask application. This component displays a welcoming message, a brief introduction to UniTask, and a 'Get Started' button leading to the signup page. It also includes a swipeable carousel window that showcases various features of the application (./SwipeableCarouselWindow.js). The page incorporates custom animations for each components.
 
 ## 4. Routing
 
