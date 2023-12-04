@@ -17,7 +17,13 @@ Team Member: Alec Berger, Jingyu(Eula) Wang, Sichen Liu, Yuxuan(ROLF) Shi, Yinsh
 
 ---
 # 1. Introduction
+
+## Purpose
 UniTask is a innovative web app tailored for university students to experience the agile methodology in action. UniTask transforms the way teams collaborate, plan, and execute projects with its intuitive, scrum-inspired design.
+
+## Target Audience
+
+UniTask is specifically tailored for university students and individuals who are new to or interested in agile methodologies. Its user-friendly interface and comprehensive feature set make it an ideal choice for academic projects in school and personal task management.
 
 ## Key Features
 
@@ -37,10 +43,6 @@ UniTask includes a reflective review page where users can document and submit th
 
 ### Additional Features
 UniTask is equipped with various other components designed to enhance user experience and project management efficiency.
-
-## Target Audience
-
-UniTask is specifically tailored for university students and individuals who are new to or interested in agile methodologies. Its user-friendly interface and comprehensive feature set make it an ideal choice for academic projects in school and personal task management.
 
 ---
 # 2. User Guide
