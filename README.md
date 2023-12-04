@@ -16,7 +16,7 @@ Team Member: Alec Berger, Jingyu(Eula) Wang, Sichen Liu, Yuxuan(ROLF) Shi, Yinsh
 
 ---
 # 1. Introduction
-Introduction here
+UniTask is a innovative web app tailored for university students to experience the agile methodology in action. UniTask transforms the way teams collaborate, plan, and execute projects with its intuitive, scrum-inspired design.
 
 ---
 # 2. User Guide
