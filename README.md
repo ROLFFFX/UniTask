@@ -71,8 +71,6 @@ User Guide here
 
 ---
 # 3. Technical Documentation / Developer Guide
-Technical Documentation here
-
 ---
 # Onboarding Process
 
