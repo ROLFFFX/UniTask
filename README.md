@@ -48,7 +48,7 @@ UniTask is equipped with various other components designed to enhance user exper
 
 ## Production Log
 The UniTask project is developed by Team One in 8 scrum iterations. The production log can be found here:
-| Sprint | Date | Topics |
+| Sprint | Date | Link to Sprint Review |
 | -------|------|--------|
 | 0 | 18th Sept | [Sprint 0](https://docs.google.com/presentation/d/1Egji9Zl4aP3YdsBXmURsihLaTb1vfJGryWwd2nxwH3o/edit?usp=sharing) |
 | 1 | 25th Sept | [Sprint 1](https://docs.google.com/presentation/d/1cti873_JLC_ciak0w0uyxoPFXLwqMO9_HisdmpFQEW0/edit?usp=sharing) |
