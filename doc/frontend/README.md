@@ -6,18 +6,13 @@ The entire frontend source code can be found in ./team_one_project from the root
 
 ## 2. Architecture Overview
 UniTask’s front end has a traditional architecture of a React project. Let’s first have a quick runthrough on the folder structure:
-
+```bash
 ./team_one_project <br/>
 ├── package-lock.json<br/>
 ├── package.json<br/>
 ├── public<br/>
 └── src<br/>
-
-./team_one_project
-├── package-lock.json
-├── package.json
-├── public
-└── src
+```
 #### public:
 public folder contains static files and assets.
 	-- index.html : home page of entire front end. Root of front end. Can be ignored.
