@@ -73,7 +73,9 @@ Technical Documentation here
 ---
 # Onboarding Process
 
-## React.js
+## 1. Installations
+
+### Front End
 
 *1. Github Desktop*
 
@@ -107,7 +109,8 @@ Technical Documentation here
 Normally, ```npm install``` will do!
 
 ------------------------------------------------------------------------------------------------------------------------------------------------------
-## IntelliJ IDEA
+### Back End
+
 *1. Install IntelliJ IDEA Ultimate version*
   - There’s a helpful [link](https://www.youtube.com/watch?v=U8qqNnBkjAs) that shows how you can use your student emails to get free license.
 
@@ -129,7 +132,7 @@ Normally, ```npm install``` will do!
 
 ------------------------------------------------------------------------------------------------------------------------------------------------------
 
-## MySQL
+### MySQL
 Install MySQL
 Download it from official website.
 For Mac: https://www.youtube.com/watch?v=43-AjOT3Hfk
@@ -138,12 +141,12 @@ Set up your username and password following the guide.
 
 ------------------------------------------------------------------------------------------------------------------------------------------------------
 
-## JDK & Maven
-### JDK
+### JDK & Maven
+#### JDK
 I think everyone have this, but you may want to check this link.
 https://www.youtube.com/watch?v=43-AjOT3Hfk
 
-### Maven
+#### Maven
 I compared my settings with those on the youtube videos, I am not using the newest version of maven so I think this link should be helpful for macOS users.
 https://www.youtube.com/watch?v=cbhCNjjvGOw&t=100s
 
@@ -162,6 +165,10 @@ After this part of code,
 
 Add the line:
 <localRepository>/Users/”your_user_name”/m2/repository</localRepository>
+
+## 2. Spinning Up Local Servers
+
+content
 
 ---
 # Front End Documentation
