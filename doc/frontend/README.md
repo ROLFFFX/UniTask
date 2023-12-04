@@ -4,9 +4,9 @@
 
 The entire frontend source code can be found in ./team_one_project from the root directory of this github repository. The general purpose of this frontend is to provide a user interface for users to interact with our web-app.
 
-Main Version:
-node v16.20.0
-npm v8.19.4
+Main Version:<br/>
+node v16.20.0 <br/>
+npm v8.19.4<br/>
 More detailed onboarding instruction can be found in OnBoarding Process.
 
 > [!IMPORTANT]
