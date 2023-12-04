@@ -1,8 +1,8 @@
 # UniTask
 
-This is a project for CS 370 Software Engineering Practicum.
-Team Name: Team One
-Team Member: Alec Berger, Jingyu(Eula) Wang, Sichen Liu, Yuxuan(ROLF) Shi, Yinshu (Salina) Cai, Zhenyan(Francis) Li, Daniel He
+This is a project for CS 370 Software Engineering Practicum.<br/>
+Team Name: Team One<br/>
+Team Member: Alec Berger, Jingyu(Eula) Wang, Sichen Liu, Yuxuan(ROLF) Shi, Yinshu (Salina) Cai, Zhenyan(Francis) Li, Daniel He<br/>
 
 ---
 # Index
@@ -15,7 +15,14 @@ Team Member: Alec Berger, Jingyu(Eula) Wang, Sichen Liu, Yuxuan(ROLF) Shi, Yinsh
 
 
 ---
-## Introduction
+# 1. Introduction
+Introduction here
+
+# 2. User Guide
+User Guide here
+
+# 3. Technical Documentation / Developer Guide
+Technical Documentation here
 
 # Technical Documentation
 Greetings. This is the technical documentation for UniTask Project.
