@@ -1,11 +1,16 @@
 # Front End Documentation
+
 ## 1. Introduction
+
 The entire frontend source code can be found in ./team_one_project from the root directory of this github repository. The general purpose of this frontend is to provide a user interface for users to interact with our web-app.
+
 > [!IMPORTANT]
 > The detailed technical JSDoc for this project is here: [unitask frontend documentation](https://unitask-frontend-docs.netlify.app/)
 
 ## 2. Architecture Overview
+
 UniTask’s front end has a traditional architecture of a React project. Let’s first have a quick runthrough on the folder structure:
+
 ```bash
 ./team_one_project
 ├── package-lock.json
@@ -13,89 +18,113 @@ UniTask’s front end has a traditional architecture of a React project. Let’s
 ├── public
 └── src
 ```
+
 #### public:
+
 public folder contains static files and assets.
-	-- index.html : home page of entire front end. Root of front end. Can be ignored.
-	-- manifest.json : information about the project in a JSON file. Can be ignored.
+-- index.html : home page of entire front end. Root of front end. Can be ignored.
+-- manifest.json : information about the project in a JSON file. Can be ignored.
+
 #### package.json & package-lock.json:
+
 these two files contains information of all dependencies used for the front end of UniTask. **Content of these two files should not be modified**
+
 #### src:
+
 src folder contains the source code of components of UniTask. It will be explained in detail in next section.
 
 ## 3. Component Documentation
+
 In this section, I will explain the components in detail.
+
 ##### Files:
+
 -- App.css (file): global css file for styling.
 -- App.test.js (file): simple unit test for the `App` component.
 -- reportWebVitals.js (file): performance testings.
 -- setupTests.js (file): test configurations.
--- index.js (file): the entry point where the React app is initialized and rendered into the DOM.	
+-- index.js (file): the entry point where the React app is initialized and rendered into the DOM.
 -- App.js (file): Routers.
+
 ##### Folders:
+
 -- components: source code for each components, actual meat of front end.
 -- context: context providers.
 -- hooks: custom hooks, mostly are global states.
 -- images: static assets of images, svgs and icons.
 
 ### Details in components folder
+
 Since components folder contains the entire source code for our front end, I will elaborate on the three most important folders.
 
 #### hooks
+
 Hooks folder contains two custom hooks.
 
--- useAuth.js: ``useAuth`` hook is used everywhere an API call is used. It utilizes context API provided by React to achieve the management of global state. More specifically, it controls the global ``auth`` state which stores the ``userEmail, userJWT``, and some config info such as currently registered workspace.
+-- useAuth.js: `useAuth` hook is used everywhere an API call is used. It utilizes context API provided by React to achieve the management of global state. More specifically, it controls the global `auth` state which stores the `userEmail, userJWT`, and some config info such as currently registered workspace.
 
--- useConfig.js: useConfig is not technically a hook. It stores the ``base endpoint url`` for our back end for both local and deployed version. It exists simply to save the pain for replacing every endpoint url in request calls during deployment.
+-- useConfig.js: useConfig is not technically a hook. It stores the `base endpoint url` for our back end for both local and deployed version. It exists simply to save the pain for replacing every endpoint url in request calls during deployment.
 
-----
+---
+
 #### context
+
 context folder contains AuthProvider that handles the authentication and authorization logic.
 
 AuthProvider.js: creates an authentication context for a React application using React's Context API and `react-cookie` for cookie management.
 
-----
+---
+
 #### components
+
 components folder contains the entire source code for all pages on front end.
+
 ```bash
 .
 ├── Account
-├── Dashboard<br/>
-├── LoginPage<br/>
-├── ManageTeam<br/>
-├── Meeting<br/>
-├── PageNotFound<br/>
-├── Review<br/>
-├── Setting<br/>
-├── SprintBoard<br/>
-└── Utilities<br/>
+├── Dashboard
+├── LoginPage
+├── ManageTeam
+├── Meeting
+├── PageNotFound
+├── Review
+├── Setting
+├── SprintBoard
+└── Utilities
 ```
 
 ##### Account
-.<br/>
-├── MainAccount.js<br/>
-└── UserProfile.js<br/>
+
+```bash
+.
+├── MainAccount.js
+└── UserProfile.js
+```
 
 MainAccount - A functional component that renders the user profile page. This component uses MUI's Grid system to create a layout for the main accounnt page. It includes a UserProfile Component centered in the middle of page. The layout is adjusted to have a left margin of 200px to save space for left side bar. The Grid system is used to divide the page into three columns. The UserProfile component is placed in the middle column, taking up half of the grid's width. The other two columns serve as padding or spacing around the UserProfile component. Note: - This component does not accept any props. The content of profile page is defined in ./UserProfile.js
 
 UserProfile - A functional component for displaying user profile information. This component renders a user's profile information, including username, email, and group information. It utilizes MUI's Box, Typography, Divider, and Button components for styling and layout. Icons from MUI are used to visually represent different sections of the profile, such as email and group information. The component also includes two buttons to change the workspace or log-out with current account.
 
 ##### Dashbaord
-.<br/>
-├── AnimatedProgressBar.js<br/>
-├── BurndownChart.js<br/>
-├── DashboardContent.js<br/>
-├── DataVisualization.js<br/>
-├── HorizontalBarChart.js<br/>
-├── MainDashboard.js<br/>
-├── PersonalChart.js<br/>
-├── ProgressBar.js<br/>
-├── TaskList.css<br/>
-├── TaskList.js<br/>
-├── TaskView.js<br/>
-├── TeamProgress.js<br/>
-└── VisualCharts.js<br/>
 
- AnimatedProgressBar - A functional component that renders a circular progress bar of task points done / (task poitns for todo + task points for doing + taskpoints for done). This component takes progress data as a prop and uses it to calculate and display the completion percentage of a task or set of tasks. It uses VictoryPie and VictoryAnimation from the Victory charting library to render the progress bar, and MUI components for layout and tooltips.
+```bash
+.
+├── AnimatedProgressBar.js
+├── BurndownChart.js
+├── DashboardContent.js
+├── DataVisualization.js
+├── HorizontalBarChart.js
+├── MainDashboard.js
+├── PersonalChart.js
+├── ProgressBar.js
+├── TaskList.css
+├── TaskList.js
+├── TaskView.js
+├── TeamProgress.js
+└── VisualCharts.js
+```
+
+AnimatedProgressBar - A functional component that renders a circular progress bar of task points done / (task poitns for todo + task points for doing + taskpoints for done). This component takes progress data as a prop and uses it to calculate and display the completion percentage of a task or set of tasks. It uses VictoryPie and VictoryAnimation from the Victory charting library to render the progress bar, and MUI components for layout and tooltips.
 
 BurndownChart - A functional component for rendering a burndown chart. This component takes processed data as a prop and renders a burndown chart that shows the progression of tasks over time. The chart is interactive, allowing users to zoom and brush over the data. It also dynamically adjusts to the window size.
 
@@ -121,24 +150,26 @@ VisualCharts - A functional component for rendering burndown charts of task prog
 
 ##### LoginPage
 
-.<br/>
-├── ForgotPassword.js<br/>
-├── LoginSignup.js<br/>
-├── LoginStyling<br/>
-│ ├── BottomSVG.js<br/>
-│ ├── TopSVG.js<br/>
-│ └── theme.js<br/>
-├── LoginWithGroup<br/>
-│ ├── CreateYourWorkspace.js<br/>
-│ ├── LoginWithGroup.js<br/>
-│ └── LoginWithWorkspace.js<br/>
-├── OnBoarding<br/>
-│ ├── OBLanding.js<br/>
-│ └── Steps<br/>
-│ ├── ChooseName.js<br/>
-│ └── ChooseRole.js<br/>
-├── PasswordInput.js<br/>
-└── SignUp.js<br/>
+```bash
+.
+├── ForgotPassword.js
+├── LoginSignup.js
+├── LoginStyling
+│ ├── BottomSVG.js
+│ ├── TopSVG.js
+│ └── theme.js
+├── LoginWithGroup
+│ ├── CreateYourWorkspace.js
+│ ├── LoginWithGroup.js
+│ └── LoginWithWorkspace.js
+├── OnBoarding
+│ ├── OBLanding.js
+│ └── Steps
+│ ├── ChooseName.js
+│ └── ChooseRole.js
+├── PasswordInput.js
+└── SignUp.js
+```
 
 BottomSVG - A functional component for rendering a custom SVG shape. The source data comes from shapedivier.app
 
@@ -154,7 +185,7 @@ LoginWithGroup - A functional component for displaying a list of workspaces for 
 
 ChooseName - A functional component for inputting a workspace name. This component presents a user interface for entering the name of a new workspace. It consists of a text field where users can type the workspace name. Workspace name is then passed up to the parent component for better state management and final POST request..
 
-ChooseRole - A functional component for selecting a user role. Second step in OBLanding stepper. This component provides a user interface for choosing a role within a team. It offers two options: 'Team Member' and 'Team Admin'. The 'Team Admin' role is described as having access to modify the status of team members, which has all control over the workspace. 
+ChooseRole - A functional component for selecting a user role. Second step in OBLanding stepper. This component provides a user interface for choosing a role within a team. It offers two options: 'Team Member' and 'Team Admin'. The 'Team Admin' role is described as having access to modify the status of team members, which has all control over the workspace.
 
 OBLanding - A functional component for the onboarding process of new users. This component presents an interface for new users to create their first workspace and choose their role within it. It uses a step-by-step approach, utilizing MUI Stepper component to guide users through the process. The steps include choosing a workspace name and selecting a user role. Input values are managed through passdown props.
 
@@ -165,10 +196,13 @@ PasswordInput - A functional component for rendering a password input field with
 SignUp - A functional component for registering new users. This component presents an interface for users to sign up their own account. It includes input fields for first name, last name, email, custom password field, and a submit button to initiate the registration process. The password input is customized and can be found in ./PasswordInput.js. It also interacts with server through API calls to register and uses custom modal to display success or error messages. Since we handle user authorization through a GET Request with JWT, it display a modal to prompt the user to click the link in email.
 
 ##### ManageTeam
+
+```bash
 .
-├── InviteNewMemberModal.js<br/>
-├── ManageTeam.js<br/>
-└── ManageTeamContent.js<br/>
+├── InviteNewMemberModal.js
+├── ManageTeam.js
+└── ManageTeamContent.js
+```
 
 InviteNewMemberModal - A functional component for inviting new members to a workspace. This component presents an interface for users to invite new members to their workspace. It includes a text field for entering the email of the new member and a submit button to initiate the invitation process. It also displays custom success/failure messages to respond the status code return by server
 
@@ -177,37 +211,48 @@ ManageTeam - A functional component for fine tuning layout of ManageTeamContent.
 ManageTeamContent - A functional component for displaying and managing team members. This component provides an interface for viewing the list of team members and managing them. It allows users to invite new members and remove existing ones. It fetches team member data from server API and displays it using react-window (FixedSizeList).
 
 ##### Meeting
-.<br/>
-├── MainMeeting.js<br/>
-├── SelectMeeting.js<br/>
-├── SelectMeetingContent.css<br/>
-├── SelectMeetingContent.js<br/>
-├── WeeklyCalendar.css<br/>
-└── WeeklyCalendar.js<br/>
+
+```bash
+.
+├── MainMeeting.js
+├── SelectMeeting.js
+├── SelectMeetingContent.css
+├── SelectMeetingContent.js
+├── WeeklyCalendar.css
+└── WeeklyCalendar.js
+```
 
 SelectMeetingContent - React component that renders the main meeting container including the calendar for selecting available times, navigation buttons for week selection, and the list of selected times. It also includes modals for confirmation and failure messages.
 
 WeeklyCalendar - rendering an interactive weekly calendar. It includes features for creating, rescheduling, renaming,deleting events, and conducting a group availability poll. Axios is used for HTTP requests, and react-router-dom for navigation. The component also uses custom hooks for authentication and configuration management.
 
 ##### PageNotFound
-.<br/>
-└── PageNotFound.js<br/>
+
+```bash
+.
+└── PageNotFound.js
+```
 
 PageNotFound - A functional component for handling 404 page not found errors. However, in the deployed version, Page Not Found is internally handled by vercel.
 
 ##### Review
-.<br/>
-└── MainReview.js<br/>
 
-MainReview - A functional component for managing reviews in a project management context. This component provides interfaces for adding new records, viewing existing records, modifying them, and deleting them. It handles all the necessary state and logic for CRUD operations on records. It also manages user interactions through modals and forms. It displays three cards, left one for a controller that renders and allows user to select records, the middle one is for displaying content, modifying content, and deleting content. The right one is for adding new content. 
+```bash
+.
+└── MainReview.js
+```
+
+MainReview - A functional component for managing reviews in a project management context. This component provides interfaces for adding new records, viewing existing records, modifying them, and deleting them. It handles all the necessary state and logic for CRUD operations on records. It also manages user interactions through modals and forms. It displays three cards, left one for a controller that renders and allows user to select records, the middle one is for displaying content, modifying content, and deleting content. The right one is for adding new content.
 
 ##### SpringBoard
 
-.<br/>
-├── MainSprintBoard.css<br/>
-├── MainSprintBoard.js<br/>
-├── MainSprintBoard_draft.js<br/>
-└── Task.js<br/>
+```bash
+.
+├── MainSprintBoard.css
+├── MainSprintBoard.js
+├── MainSprintBoard_draft.js
+└── Task.js
+```
 
 MainSprintBoard - A functional component for managing and visualizing tasks in a sprint. This component is responsible for displaying tasks categorized by their status (Not Started, To Do, Doing, Done) in a Kanban-style board. It allows users to create new tasks, update task status through drag-and-drop, and view task details. The component fetches task and team member data from an API and updates the UI accordingly. Each column should be populated by Task Objects, which is defined in Task.js
 
@@ -215,13 +260,15 @@ Task - A functional component for displaying and interacting with a task, and th
 
 ##### Utilities
 
-.<br/>
-├── LogOutButton.js<br/>
-├── PermanentDrawer.js<br/>
-├── SwipeableCarouselWindow.js<br/>
-├── TopNavBar.js<br/>
-├── WelcomePage.js<br/>
-└── barTheme.js<br/>
+```bash
+.
+├── LogOutButton.js
+├── PermanentDrawer.js
+├── SwipeableCarouselWindow.js
+├── TopNavBar.js
+├── WelcomePage.js
+└── barTheme.js
+```
 
 LogOutButton - A functional component providing a logout button. This component renders a button styled using MUI, with an icon indicating the logout action. Clicking the button triggers the logout function from the useAuth hook, which simply redirects the user to loginpage after clearing the global auth info. This button is currently placed in userprofile page. Another suitable place for it is under the left side bar.
 
@@ -234,33 +281,36 @@ TopAppBar - A functional component providing the main navigation and utility bar
 WelcomePage - A functional component that renders the landing page of the UniTask application. This component displays a welcoming message, a brief introduction to UniTask, and a 'Get Started' button leading to the signup page. It also includes a swipeable carousel window that showcases various features of the application (./SwipeableCarouselWindow.js). The page incorporates custom animations for each components.
 
 ## 4. Routing
+
 UniTask utilizes **react-router-dom v6.17.0** to achieve the routing functionality. The entire router setup can be found in App.js in src folder's root. The official documentation for react router dom can be found in: https://reactrouter.com/en/main.
 
 ## 5. API Integration
-UniTask utilizes **axios v1.6.0** for API integration. It utilizes POST, PUT, DELETE, and GET requests. The endpoints documentation can be found in the backend documentation. 
+
+UniTask utilizes **axios v1.6.0** for API integration. It utilizes POST, PUT, DELETE, and GET requests. The endpoints documentation can be found in the backend documentation.
 The official documentation for axios can be found in: https://axios-http.com/docs/intro.
 
 ## 6. Styling
+
 UniTask intensively uses **MUI ecosystem** for UI Stylings, and the Dashboard content mostly uses **Victory.js v36.6.11** for the interactive charts. There is no global theme defined for Material-UI, however, you can find several customized theme for Login cycle, Nav Bar content, and Manage Workspace content in corresponding folders.
-Versions of MUI ecosystems used:
-	- mui/icons-material: v5.14.11
-	- mui/joy: v5.0.0-beta.11
-	- mui/material: v5.14.15
+Versions of MUI ecosystems used: - mui/icons-material: v5.14.11 - mui/joy: v5.0.0-beta.11 - mui/material: v5.14.15
 The official documentations for these libraries can be found in:
 Material-UI: https://mui.com/material-ui/getting-started/
 Material-Joy-UI: https://mui.com/joy-ui/getting-started/
 Victory.js: https://formidable.com/open-source/victory/docs
 
 ## 7. Build and Deployment
+
 UniTask Front End is entirely deployed through **vercel.app**. It is deployed automatically on a mirror repository: https://github.com/ROLFFFX/UniTask_Beta_Front
 For **vercel.app**, you can find it in: https://vercel.com
 
 The static site generated by JSDoc is deployed through **netlify.app**: https://www.netlify.com/
 
 ## 8. Documentation and Comments
+
 UniTask Front End uses official JSDoc syntax for documentation and comments. The generated static site for our official documentation can be found here: https://unitask-frontend-docs.netlify.app/
 
 ## 9. Dependency Management
+
 UniTask Front End utilizes multiple dependencies, and they are fully defined in package.json. To install all of them, you only have to run `npm i` in the root directory of team_one_project.
 Here is a list of all dependencies used:
 "@daypilot/daypilot-lite-javascript": "^3.18.0",
