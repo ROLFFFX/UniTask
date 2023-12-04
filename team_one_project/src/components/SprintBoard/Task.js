@@ -214,6 +214,13 @@ function Task({ taskData, refreshTasks, users }) {
 
     return dateObject;
   }
+
+  // custom helper function to add one day, avoids timezone problem during task creation phase
+  function addOneDay(date) {
+    const result = new Date(date);
+    result.setDate(result.getDate() + 1);
+    return result;
+  }
   /* End of Helper Methods-------------------------------------------------------------------------------------------------------------------- */
 
   /* Request Declaration-------------------------------------------------------------------------------------------------------------------- */
@@ -283,6 +290,7 @@ function Task({ taskData, refreshTasks, users }) {
   const modifyTask = async () => {
     const url = `${ENDPOINT_URL}tasks/updateTask?taskId=${taskData.taskID}&username=${modifiedTask.assignee}`;
     let dateObject = new Date(modifiedTask.expectedCompleteTime);
+    dateObject = addOneDay(dateObject); // add one day to avoid timezone conflict
     let isoDateString = dateObject ? dateObject.toISOString() : null;
     const payload = {
       title: modifiedTask.title,

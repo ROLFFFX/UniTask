@@ -123,14 +123,13 @@ export default function BurndownChart({ processedData }) {
     setZoomDomain(domain);
   };
 
+  // In this modified version of aggregating data, it will process tasks done in same day correctly. Instead of
+  // summing them altogether, it will take the latest task done that day and take that b value.
   useEffect(() => {
     const aggregateData = {};
     processedData.forEach((data) => {
       const formattedKey = formatDateToMonthDay(data.key);
-      if (!aggregateData[formattedKey]) {
-        aggregateData[formattedKey] = { key: formattedKey, b: 0 };
-      }
-      aggregateData[formattedKey].b += data.b;
+      aggregateData[formattedKey] = { key: formattedKey, b: data.b };
     });
     setFormattedData(Object.values(aggregateData));
     setTrendLineData(calculateTrendLineData(Object.values(aggregateData)));
@@ -254,10 +253,12 @@ export default function BurndownChart({ processedData }) {
           standalone={true}
           interpolation="natural"
           style={{ data: { fill: "#778da9" } }}
+          // data={processedData}
           data={formattedData}
           x="key"
           y="b"
         />
+        {/* VictoryLine for trend line */}
         <VictoryLine
           data={trendLineData}
           x="key"
