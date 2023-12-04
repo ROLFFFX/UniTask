@@ -75,7 +75,7 @@ AuthProvider.js: creates an authentication context for a React application using
 
 ---
 
-#### components
+#### **components**
 
 components folder contains the entire source code for all pages on front end.
 
