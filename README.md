@@ -6,7 +6,7 @@ Team Member: Alec Berger, Jingyu(Eula) Wang, Sichen Liu, Yuxuan(ROLF) Shi, Yinsh
 ---
 # Index
 1. [Introduction](#1-introduction)
-   1. [Key Features]
+   1. [Key Features](#key-features)
 3. [User Guide](#2-user-guide)
 4. [Technical Documentation / Developer Guide](#3-technical-documentation--developer-guide)
    1. [Onboarding Process](#onboarding-process)
