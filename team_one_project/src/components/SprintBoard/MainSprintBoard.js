@@ -285,6 +285,11 @@ export function MainSprintBoard() {
     // }
   };
 
+  // Controller: controls onMouseLeave and onBlur of Popper
+  const handleLeavePopper = () => {
+    setAnchorEl(null); // This will only close the popper
+  };
+
   // convert string "YYYY-MM-DD" to Date object
   const formatDate = (date) => {
     if (!date) return null;
@@ -426,7 +431,13 @@ export function MainSprintBoard() {
                 ></img>
               </Tooltip>
             </div>
-            <Popper id={"createTaskMenu"} open={open} anchorEl={anchorEl}>
+            <Popper
+              id={"createTaskMenu"}
+              open={open}
+              anchorEl={anchorEl}
+              onBlur={handleLeavePopper}
+              onMouseLeave={handleLeavePopper}
+            >
               <Box
                 className="popupContent"
                 sx={{ fontFamily: "Inter, sans-serif", fontSize: "15px" }}
