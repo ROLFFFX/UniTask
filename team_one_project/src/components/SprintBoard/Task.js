@@ -221,6 +221,27 @@ function Task({ taskData, refreshTasks, users }) {
     result.setDate(result.getDate() + 1);
     return result;
   }
+
+  function validateTaskData(taskData) {
+    // check if task points are within the range of 1 to 377.
+    if (taskData.taskPoints < 1 || taskData.taskPoints > 377) {
+      alert(
+        "Invalid task input: The upper limit of Task Point is set to 377, which is the 14th Fibonacci Number. If a task is actually worth 377 task points, we encourage you to deconstruct it into smaller tasks."
+      );
+      return false;
+    }
+    // check if the expected completion time is within a year and no earlier than today
+    const oneYearFromNow = new Date();
+    oneYearFromNow.setFullYear(oneYearFromNow.getFullYear() + 1);
+    const expectedCompletionDate = new Date(taskData.expectedCompleteTime);
+    if (expectedCompletionDate > oneYearFromNow) {
+      alert(
+        "Invalid task input: Expected completion time should be within a year and no earlier than one week from now."
+      );
+      return false;
+    }
+    return true;
+  }
   /* End of Helper Methods-------------------------------------------------------------------------------------------------------------------- */
 
   /* Request Declaration-------------------------------------------------------------------------------------------------------------------- */
@@ -288,6 +309,12 @@ function Task({ taskData, refreshTasks, users }) {
 
   // PUT Method to update a task
   const modifyTask = async () => {
+    if (!validateTaskData(taskData)) {
+      return;
+    }
+    if (!validateTaskData(modifiedTask)) {
+      return;
+    }
     const url = `${ENDPOINT_URL}tasks/updateTask?taskId=${taskData.taskID}&username=${modifiedTask.assignee}`;
     let dateObject = new Date(modifiedTask.expectedCompleteTime);
     dateObject = addOneDay(dateObject); // add one day to avoid timezone conflict

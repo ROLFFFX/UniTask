@@ -143,6 +143,10 @@ export function MainSprintBoard() {
 
   // POST Method for adding new Task
   const createTask = (taskData) => {
+    // validates the taskData first. If false, will directly hit return and createTask will not proceed
+    if (!validateTaskData(taskData)) {
+      return;
+    }
     setBackdropOpen(true); //display loading page
     // Step 1: Format the request body to be sent
     // Modify the date here for task creation
@@ -205,6 +209,32 @@ export function MainSprintBoard() {
   /* End of request declarations-------------------------------------------------------------------------------------------------------------------- */
 
   /* Other Helper Functions-------------------------------------------------------------------------------------------------------------------- */
+  function validateTaskData(taskData) {
+    // check if task points are within the range of 1 to 377.
+    if (taskData.taskPoints < 1 || taskData.taskPoints > 377) {
+      alert(
+        "Invalid task input: The upper limit of Task Point is set to 377, which is the 14th Fibonacci Number. If a task is actually worth 377 task points, we encourage you to deconstruct it into smaller tasks."
+      );
+      return false;
+    }
+    // check if the expected completion time is within a year and no earlier than today
+    const today = new Date();
+    today.setHours(0, 0, 0, 0); // Reset time to start of the day
+    const oneYearFromNow = new Date();
+    oneYearFromNow.setFullYear(oneYearFromNow.getFullYear() + 1);
+    const expectedCompletionDate = new Date(taskData.expectedCompleteTime);
+    if (
+      expectedCompletionDate <= today.getDate() - 7 ||
+      expectedCompletionDate > oneYearFromNow
+    ) {
+      alert(
+        "Invalid task input: Expected completion time should be within a year and no earlier than one week from now."
+      );
+      return false;
+    }
+    return true;
+  }
+
   // randomize the hour / minutes / seconds of dateObject to avoid collision
   function randomizeDateObject(dateObject) {
     if (!dateObject) return null;
