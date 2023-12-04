@@ -5,11 +5,11 @@ The entire frontend source code can be found in ./team_one_project from the root
 ## 2. Architecture Overview
 UniTask’s front end has a traditional architecture of a React project. Let’s first have a quick runthrough on the folder structure:
 
-./team_one_project
-├── package-lock.json
-├── package.json
-├── public
-└── src
+./team_one_project <br/>
+├── package-lock.json<br/>
+├── package.json<br/>
+├── public<br/>
+└── src<br/>
 #### public:
 public folder contains static files and assets.
 	-- index.html : home page of entire front end. Root of front end. Can be ignored.
@@ -53,43 +53,42 @@ AuthProvider.js: creates an authentication context for a React application using
 ----
 #### components
 components folder contains the entire source code for all pages on front end.
-.
-
-├── Account
-├── Dashboard
-├── LoginPage
-├── ManageTeam
-├── Meeting
-├── PageNotFound
-├── Review
-├── Setting
-├── SprintBoard
-└── Utilities
+.<br/>
+├── Account<br/>
+├── Dashboard<br/>
+├── LoginPage<br/>
+├── ManageTeam<br/>
+├── Meeting<br/>
+├── PageNotFound<br/>
+├── Review<br/>
+├── Setting<br/>
+├── SprintBoard<br/>
+└── Utilities<br/>
 
 ##### Account
-.
-├── MainAccount.js
-└── UserProfile.js
+.<br/>
+├── MainAccount.js<br/>
+└── UserProfile.js<br/>
 
 MainAccount - A functional component that renders the user profile page. This component uses MUI's Grid system to create a layout for the main accounnt page. It includes a UserProfile Component centered in the middle of page. The layout is adjusted to have a left margin of 200px to save space for left side bar. The Grid system is used to divide the page into three columns. The UserProfile component is placed in the middle column, taking up half of the grid's width. The other two columns serve as padding or spacing around the UserProfile component. Note: - This component does not accept any props. The content of profile page is defined in ./UserProfile.js
 
 UserProfile - A functional component for displaying user profile information. This component renders a user's profile information, including username, email, and group information. It utilizes MUI's Box, Typography, Divider, and Button components for styling and layout. Icons from MUI are used to visually represent different sections of the profile, such as email and group information. The component also includes two buttons to change the workspace or log-out with current account.
 
 ##### Dashbaord
-.
-├── AnimatedProgressBar.js
-├── BurndownChart.js
-├── DashboardContent.js
-├── DataVisualization.js
-├── HorizontalBarChart.js
-├── MainDashboard.js
-├── PersonalChart.js
-├── ProgressBar.js
-├── TaskList.css
-├── TaskList.js
-├── TaskView.js
-├── TeamProgress.js
-└── VisualCharts.js
+.<br/>
+├── AnimatedProgressBar.js<br/>
+├── BurndownChart.js<br/>
+├── DashboardContent.js<br/>
+├── DataVisualization.js<br/>
+├── HorizontalBarChart.js<br/>
+├── MainDashboard.js<br/>
+├── PersonalChart.js<br/>
+├── ProgressBar.js<br/>
+├── TaskList.css<br/>
+├── TaskList.js<br/>
+├── TaskView.js<br/>
+├── TeamProgress.js<br/>
+└── VisualCharts.js<br/>
 
  AnimatedProgressBar - A functional component that renders a circular progress bar of task points done / (task poitns for todo + task points for doing + taskpoints for done). This component takes progress data as a prop and uses it to calculate and display the completion percentage of a task or set of tasks. It uses VictoryPie and VictoryAnimation from the Victory charting library to render the progress bar, and MUI components for layout and tooltips.
 
@@ -117,24 +116,24 @@ VisualCharts - A functional component for rendering burndown charts of task prog
 
 ##### LoginPage
 
-.
-├── ForgotPassword.js
-├── LoginSignup.js
-├── LoginStyling
-│ ├── BottomSVG.js
-│ ├── TopSVG.js
-│ └── theme.js
-├── LoginWithGroup
-│ ├── CreateYourWorkspace.js
-│ ├── LoginWithGroup.js
-│ └── LoginWithWorkspace.js
-├── OnBoarding
-│ ├── OBLanding.js
-│ └── Steps
-│ ├── ChooseName.js
-│ └── ChooseRole.js
-├── PasswordInput.js
-└── SignUp.js
+.<br/>
+├── ForgotPassword.js<br/>
+├── LoginSignup.js<br/>
+├── LoginStyling<br/>
+│ ├── BottomSVG.js<br/>
+│ ├── TopSVG.js<br/>
+│ └── theme.js<br/>
+├── LoginWithGroup<br/>
+│ ├── CreateYourWorkspace.js<br/>
+│ ├── LoginWithGroup.js<br/>
+│ └── LoginWithWorkspace.js<br/>
+├── OnBoarding<br/>
+│ ├── OBLanding.js<br/>
+│ └── Steps<br/>
+│ ├── ChooseName.js<br/>
+│ └── ChooseRole.js<br/>
+├── PasswordInput.js<br/>
+└── SignUp.js<br/>
 
 BottomSVG - A functional component for rendering a custom SVG shape. The source data comes from shapedivier.app
 
@@ -162,9 +161,9 @@ SignUp - A functional component for registering new users. This component presen
 
 ##### ManageTeam
 .
-├── InviteNewMemberModal.js
-├── ManageTeam.js
-└── ManageTeamContent.js
+├── InviteNewMemberModal.js<br/>
+├── ManageTeam.js<br/>
+└── ManageTeamContent.js<br/>
 
 InviteNewMemberModal - A functional component for inviting new members to a workspace. This component presents an interface for users to invite new members to their workspace. It includes a text field for entering the email of the new member and a submit button to initiate the invitation process. It also displays custom success/failure messages to respond the status code return by server
 
@@ -173,37 +172,37 @@ ManageTeam - A functional component for fine tuning layout of ManageTeamContent.
 ManageTeamContent - A functional component for displaying and managing team members. This component provides an interface for viewing the list of team members and managing them. It allows users to invite new members and remove existing ones. It fetches team member data from server API and displays it using react-window (FixedSizeList).
 
 ##### Meeting
-.
-├── MainMeeting.js
-├── SelectMeeting.js
-├── SelectMeetingContent.css
-├── SelectMeetingContent.js
-├── WeeklyCalendar.css
-└── WeeklyCalendar.js
+.<br/>
+├── MainMeeting.js<br/>
+├── SelectMeeting.js<br/>
+├── SelectMeetingContent.css<br/>
+├── SelectMeetingContent.js<br/>
+├── WeeklyCalendar.css<br/>
+└── WeeklyCalendar.js<br/>
 
 SelectMeetingContent - React component that renders the main meeting container including the calendar for selecting available times, navigation buttons for week selection, and the list of selected times. It also includes modals for confirmation and failure messages.
 
 WeeklyCalendar - rendering an interactive weekly calendar. It includes features for creating, rescheduling, renaming,deleting events, and conducting a group availability poll. Axios is used for HTTP requests, and react-router-dom for navigation. The component also uses custom hooks for authentication and configuration management.
 
 ##### PageNotFound
-.
-└── PageNotFound.js
+.<br/>
+└── PageNotFound.js<br/>
 
 PageNotFound - A functional component for handling 404 page not found errors. However, in the deployed version, Page Not Found is internally handled by vercel.
 
 ##### Review
-.
-└── MainReview.js
+.<br/>
+└── MainReview.js<br/>
 
 MainReview - A functional component for managing reviews in a project management context. This component provides interfaces for adding new records, viewing existing records, modifying them, and deleting them. It handles all the necessary state and logic for CRUD operations on records. It also manages user interactions through modals and forms. It displays three cards, left one for a controller that renders and allows user to select records, the middle one is for displaying content, modifying content, and deleting content. The right one is for adding new content. 
 
 ##### SpringBoard
 
-.
-├── MainSprintBoard.css
-├── MainSprintBoard.js
-├── MainSprintBoard_draft.js
-└── Task.js
+.<br/>
+├── MainSprintBoard.css<br/>
+├── MainSprintBoard.js<br/>
+├── MainSprintBoard_draft.js<br/>
+└── Task.js<br/>
 
 MainSprintBoard - A functional component for managing and visualizing tasks in a sprint. This component is responsible for displaying tasks categorized by their status (Not Started, To Do, Doing, Done) in a Kanban-style board. It allows users to create new tasks, update task status through drag-and-drop, and view task details. The component fetches task and team member data from an API and updates the UI accordingly. Each column should be populated by Task Objects, which is defined in Task.js
 
@@ -211,13 +210,13 @@ Task - A functional component for displaying and interacting with a task, and th
 
 ##### Utilities
 
-.
-├── LogOutButton.js
-├── PermanentDrawer.js
-├── SwipeableCarouselWindow.js
-├── TopNavBar.js
-├── WelcomePage.js
-└── barTheme.js
+.<br/>
+├── LogOutButton.js<br/>
+├── PermanentDrawer.js<br/>
+├── SwipeableCarouselWindow.js<br/>
+├── TopNavBar.js<br/>
+├── WelcomePage.js<br/>
+└── barTheme.js<br/>
 
 LogOutButton - A functional component providing a logout button. This component renders a button styled using MUI, with an icon indicating the logout action. Clicking the button triggers the logout function from the useAuth hook, which simply redirects the user to loginpage after clearing the global auth info. This button is currently placed in userprofile page. Another suitable place for it is under the left side bar.
 
