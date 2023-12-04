@@ -1,3 +1,10 @@
+/**
+ * @fileoverview This file contains the React components and logic for the SelectMeetingContent interface. 
+ *               It includes functionality for displaying a weekly calendar, selecting available time slots, 
+ *               navigating through weeks, and handling time slot selections. The components utilize Material-UI 
+ *               Dialog for modals, and Axios for HTTP requests to a backend server. 
+ *               The file also contains utility functions for date manipulation and formatting.
+ */
 import React, { useEffect, useState } from "react";
 import "./SelectMeetingContent.css";
 import Dialog from "@mui/material/Dialog";
@@ -10,6 +17,12 @@ import axios from "axios";
 import { ENDPOINT_URL } from "../../hooks/useConfig";
 import useAuth from "../../hooks/useAuth";
 
+/**
+ * Calculates the date range (start and end date) of the current week based on a reference date.
+ * 
+ * @param {Date|string} referenceDate - The date to calculate the week range from. Can be a Date object or a string that can be parsed into a Date.
+ * @returns {string} A string representing the start and end date of the week in the format "Month Day, Year - Month Day, Year".
+ */
 function getCurrentWeekDateRange(referenceDate) {
   const currentDate = new Date(referenceDate);
   const currentDay = currentDate.getDay();
@@ -35,6 +48,22 @@ function getCurrentWeekDateRange(referenceDate) {
   return `${startDateString} - ${endDateString}`;
 }
 
+/**
+ * React component that renders the main meeting container including the calendar for selecting available times, 
+ * navigation buttons for week selection, and the list of selected times. It also includes modals for confirmation 
+ * and failure messages.
+ * 
+ * State:
+ * - @state @type referenceDate: Date object representing the current reference date for the week being viewed.
+ * - @state @type fetchedSlots: Array of Date objects representing the time slots fetched from the server.
+ * - @state @type newlySelectedSlots: Array of Date objects representing newly selected time slots that have not yet been sent to the server.
+ * - @state @type selected: Boolean representing whether any time slots have been selected.
+ * - @state @type isModalOpen: Boolean controlling the visibility of the success modal.
+ * - @state @type isFailureModalOpen: Boolean controlling the visibility of the failure modal.
+ * - @state @type failureMessage: String containing the message to be displayed in the failure modal.
+ *
+ * @returns {React.Component} The SelectMeetingContent component.
+ */
 export function SelectMeetingContent() {
   const [referenceDate, setReferenceDate] = useState(new Date());
   const dateRange = getCurrentWeekDateRange(referenceDate);
