@@ -14,7 +14,7 @@ Team Member: Alec Berger, Jingyu(Eula) Wang, Sichen Liu, Yuxuan(ROLF) Shi, Yinsh
 4. [Technical Documentation / Developer Guide](#3-technical-documentation--developer-guide)
    1. [Onboarding Process](#onboarding-process)
         1. [Installations](#1-installations)
-        2. [Spinning Up Local Servers]()
+        2. [Spinning Up Local Servers](#2-spinning-up-local-servers)
    2. [Front End Documentation](#front-end-documentation)
    3. [Back End Documentation](#back-end-documentation)
 
