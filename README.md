@@ -9,6 +9,7 @@ Team Member: Alec Berger, Jingyu(Eula) Wang, Sichen Liu, Yuxuan(ROLF) Shi, Yinsh
    1. [Purpose](#purpose)
    2. [Target Audience](#target-audience)
    3. [Key Features](#key-features)
+   4. [Production Log](#production-log)
 3. [User Guide](#2-user-guide)
 4. [Technical Documentation / Developer Guide](#3-technical-documentation--developer-guide)
    1. [Onboarding Process](#onboarding-process)
@@ -46,8 +47,20 @@ UniTask includes a reflective review page where users can document and submit th
 UniTask is equipped with various other components designed to enhance user experience and project management efficiency.
 
 ## Production Log
-The UniTask project is developed by Team One in 10 scrum iterations. The production log can be found here:
-
+The UniTask project is developed by Team One in 8 scrum iterations. The production log can be found here:
+| Sprint | Date | Topics |
+| -------|------|--------|
+| 0 | 18th Sept | [Sprint 0](https://docs.google.com/presentation/d/1Egji9Zl4aP3YdsBXmURsihLaTb1vfJGryWwd2nxwH3o/edit?usp=sharing) |
+| 1 | 25th Sept | [Sprint 1](https://docs.google.com/presentation/d/1cti873_JLC_ciak0w0uyxoPFXLwqMO9_HisdmpFQEW0/edit?usp=sharing) |
+| 2 | 2nd Oct | [Sprint 2](https://docs.google.com/presentation/d/1bAWQiSEe12Wso1vX8AB5hwbMdrJ2Kf6A5U8DOfFZDY4/edit?usp=sharing) |
+| 3 | 9th Oct | Fall Break |
+| 4 | 16th Oct | [Sprint 3](https://docs.google.com/presentation/d/1R5yBMI0NuBwbEBThZDL_ITTJDL2oQV3-BzSGh1-8L3Q/edit?usp=sharing) |
+| 5 | 23rd Oct | [Sprint 4](https://docs.google.com/presentation/d/1Um9sX-BJu6FUEYe5RTGCH_cdsyDcp4nvLykQGbi5dvU/edit?usp=sharing) |
+| 6 | 30th Oct | [Sprint 5](https://docs.google.com/presentation/d/17OM73fd-ZMi0O-qJSLzxRtuBBDAVKBF5_6LV9rN_m5w/edit?usp=sharing) |
+| 7 | 6th Nov | [Sprint 6](https://docs.google.com/presentation/d/1tWUtPxFw2KfBA21nrq0c6n3mMjC2yHEdhr9prLNDol8/edit?usp=sharing) |
+| 8 | 13th Nov | [Sprint 7](https://docs.google.com/presentation/d/1mQ1yCL1uS9jNGVbMnRH4AMa3l2E4lpPz1Timh6wQVXQ/edit?usp=sharing) |
+| 9 | 20th Nov | Thanksgiving Break |
+| 10 | 27th Nov |[Sprint 8](https://docs.google.com/presentation/d/1Kg_Sx0qRTmgSgd7-NMn68o6-01klMHLoM7IiUz-JXTc/edit?usp=sharing)|
 
 ---
 # 2. User Guide
