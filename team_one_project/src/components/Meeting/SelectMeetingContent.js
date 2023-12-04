@@ -1,14 +1,14 @@
-import Button from "@mui/material/Button";
+import React, { useEffect, useState } from "react";
+import "./SelectMeetingContent.css";
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogTitle from "@mui/material/DialogTitle";
-import axios from "axios";
-import React, { useEffect, useState } from "react";
+import Button from "@mui/material/Button";
 import { useNavigate } from "react-router-dom";
-import useAuth from "../../hooks/useAuth";
+import axios from "axios";
 import { ENDPOINT_URL } from "../../hooks/useConfig";
-import "./SelectMeetingContent.css";
+import useAuth from "../../hooks/useAuth";
 
 function getCurrentWeekDateRange(referenceDate) {
   const currentDate = new Date(referenceDate);
@@ -96,6 +96,37 @@ export function SelectMeetingContent() {
     "23:00",
     "23:30",
   ];
+
+  //get time difference between the ISO string and the local time
+  const getTimeZoneOffsetInHours = () => {
+    // console.log("get time difference");
+    const currentDateTime = new Date();
+    const offsetInMinutes = currentDateTime.getTimezoneOffset();
+    return offsetInMinutes / 60;
+  };
+
+  const formatTimeForDisplay = (date) => {
+    const options = {
+      year: "numeric",
+      month: "long",
+      day: "numeric",
+      hour: "2-digit",
+      minute: "2-digit",
+      second: "2-digit",
+      hour12: false,
+    };
+    return date.toLocaleString("en-US", options);
+  };
+
+  const toSelectedRange = (slot) => {
+    const startTime = new Date(slot.getTime());
+    const endTime = new Date(slot.getTime() + 30 * 60 * 1000); // Add 30 minutes
+
+    const startTDisplay = formatTimeForDisplay(startTime);
+    const endTDisplay = formatTimeForDisplay(endTime);
+
+    return startTDisplay + " - " + endTDisplay;
+  };
 
   const deleteAllUserTimeSlots = async () => {
     try {
@@ -261,100 +292,97 @@ export function SelectMeetingContent() {
     setIsModalOpen(false); // Close the modal
   };
 
-  const handleGoBackToWeeklyCalendar = () => {
-    // Navigate to the route where your weekly calendar is located
-    navigate("/meeting");
-  };
-
   return (
     <div className="mainMeetingContainer">
       <div className="calendar">
-        <div>
-          <h1>Select Your Available Times</h1>
-        </div>
-        <div className="actions">
-          {/*<button className="button-clear" onClick={() => {
-            setNewlySelectedSlots([]); // Clear newly selected slots
-            setFetchedSlots([]); // Optionally, clear fetched slots as well
-          }}>
-            Clear Selection
-          </button>*/}
-          {selected ? (
-            <button className="button-confirm" onClick={handleGoToMainCalendar}>
-              Check Common Availability / Back To Group Events Schedule
-            </button>
-          ) : (
-            <button className="button-confirm" onClick={handleGoToMainCalendar}>
-              Back To Group Events Schedule
-            </button>
-          )}
-          <button className="button-delete" onClick={deleteAllUserTimeSlots}>
-            Clear All My Selections
-          </button>
-          <button className="button-confirm" onClick={handleConfirmSelection}>
-            Confirm Selection
-          </button>
-          <div className="selectedSlots">
-            <h3>Selected Times (in EST):</h3>
+        <div className="upper">
+          <div className="upper-left">
+            <div>
+              <h1>Select Your Available Times</h1>
+            </div>
+            <div className="actions">
+              <button className="button-page" onClick={handleGoToMainCalendar}>
+                Back To Group Schedule
+              </button>
+              <button
+                className="button-delete"
+                onClick={deleteAllUserTimeSlots}
+              >
+                Clear All My Selections
+              </button>
+              <button
+                className="button-confirm"
+                onClick={handleConfirmSelection}
+              >
+                Confirm Selection
+              </button>
+            </div>
+          </div>
+          <div className="upperright-list">
+            <h3>Selected Times:</h3>
             <ul>
               {[...fetchedSlots, ...newlySelectedSlots].map((slot, index) => (
-                <li key={index}>{slot.toLocaleString("en-US")}</li>
+                <li key={index}>{toSelectedRange(slot)}</li>
               ))}
             </ul>
           </div>
         </div>
-        <div className="week-navigation-timeslots">
-          <button className="button-prev" onClick={moveToPreviousWeek}>
-            &lt; Previous Week
-          </button>
-          <h2>{dateRange}</h2>
-          <button className="button-next" onClick={moveToNextWeek}>
-            Next Week &gt;
-          </button>
-        </div>
-        <div className="grid">
-          <div className="headerRow">
-            <div className="cell timeLabel"></div>
-            {days.map((day) => (
-              <div className="cell day" key={day}>
-                {day}
+        <div className="lower">
+          <div className="week-navigation-timeslots">
+            <button className="button-prev" onClick={moveToPreviousWeek}>
+              &lt; Previous Week
+            </button>
+            <h2>{dateRange}</h2>
+            <button className="button-next" onClick={moveToNextWeek}>
+              Next Week &gt;
+            </button>
+          </div>
+          <div className="grid">
+            <div className="headerRow">
+              <div className="cell timeLabel"></div>
+              {days.map((day) => (
+                <div className="cell day" key={day}>
+                  {day}
+                </div>
+              ))}
+            </div>
+            {times.map((time) => (
+              <div className="row" key={time}>
+                <div className="cell timeLabel">{time}</div>
+                {days.map((day) => {
+                  const startDate = new Date(referenceDate);
+                  startDate.setDate(
+                    referenceDate.getDate() -
+                      (referenceDate.getDay() === 0
+                        ? 6
+                        : referenceDate.getDay() - 1)
+                  );
+
+                  const dayNumber = days.indexOf(day);
+                  const [hours, minutes] = time.split(":").map(Number);
+                  startDate.setDate(startDate.getDate() + dayNumber);
+                  startDate.setHours(hours, minutes, 0, 0);
+
+                  const slotKey = startDate.getTime();
+                  const isSelected = [
+                    ...fetchedSlots,
+                    ...newlySelectedSlots,
+                  ].some((slot) => slot.getTime() === slotKey);
+
+                  return (
+                    <button
+                      aria-label={`Select ${time} on ${day}`}
+                      className={`cell timeSlot ${
+                        isSelected ? "selected" : ""
+                      }`}
+                      key={day}
+                      onClick={() => toggleSlotSelection(day, time)}
+                    ></button>
+                  );
+                })}
               </div>
             ))}
           </div>
-          {times.map((time) => (
-            <div className="row" key={time}>
-              <div className="cell timeLabel">{time}</div>
-              {days.map((day) => {
-                const startDate = new Date(referenceDate);
-                startDate.setDate(
-                  referenceDate.getDate() -
-                    (referenceDate.getDay() === 0
-                      ? 6
-                      : referenceDate.getDay() - 1)
-                );
-
-                const dayNumber = days.indexOf(day);
-                const [hours, minutes] = time.split(":").map(Number);
-                startDate.setDate(startDate.getDate() + dayNumber);
-                startDate.setHours(hours, minutes, 0, 0);
-
-                const slotKey = startDate.getTime();
-                const isSelected = [
-                  ...fetchedSlots,
-                  ...newlySelectedSlots,
-                ].some((slot) => slot.getTime() === slotKey);
-
-                return (
-                  <button
-                    aria-label={`Select ${time} on ${day}`}
-                    className={`cell timeSlot ${isSelected ? "selected" : ""}`}
-                    key={day}
-                    onClick={() => toggleSlotSelection(day, time)}
-                  ></button>
-                );
-              })}
-            </div>
-          ))}
         </div>
       </div>
 
@@ -363,9 +391,6 @@ export function SelectMeetingContent() {
         <DialogContent>
           <p>Your time slots have been successfully selected.</p>
         </DialogContent>
-        {/*<DialogActions>
-          <Button onClick={handleGoBackToWeeklyCalendar}>Go Back to Weekly Calendar</Button>
-        </DialogActions>*/}
       </Dialog>
 
       <Dialog
