@@ -145,7 +145,9 @@ export function MainSprintBoard() {
   const createTask = (taskData) => {
     setBackdropOpen(true); //display loading page
     // Step 1: Format the request body to be sent
+    // Modify the date here for task creation
     let dateObject = new Date(taskData.expectedCompleteTime);
+    dateObject = addOneDay(dateObject); // Add one day
     let isoDateString = dateObject
       ? randomizeDateObject(dateObject).toISOString()
       : null;
@@ -266,8 +268,15 @@ export function MainSprintBoard() {
     if (day.length < 2) day = "0" + day;
 
     // Append a default time if your backend requires LocalDateTime
-    return [year, month, day].join("-") + "T00:00:00"; // Adjust time as needed
+    return [year, month, day].join("-") + "T12:00:00"; // Adjust time as needed
   };
+
+  // custom helper function to add one day, avoids timezone problem during task creation phase
+  function addOneDay(date) {
+    const result = new Date(date);
+    result.setDate(result.getDate() + 1);
+    return result;
+  }
 
   // Drag & Drop functionality
   const onDragOver = (e) => {
