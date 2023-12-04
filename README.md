@@ -37,6 +37,10 @@ UniTask includes a reflective review page where users can document and submit th
 ### Additional Features
 UniTask is equipped with various other components designed to enhance user experience and project management efficiency.
 
+## Target Audience
+
+UniTask is specifically tailored for university students and individuals who are new to or interested in agile methodologies. Its user-friendly interface and comprehensive feature set make it an ideal choice for academic projects in school and personal task management.
+
 ---
 # 2. User Guide
 User Guide here
