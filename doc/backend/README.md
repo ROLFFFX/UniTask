@@ -10,6 +10,8 @@ hasn't been run and tested on any other system.
 
 > [!IMPORTANT]
 > The detailed technical JavaDoc for this project is here: [unitask backend documentation](https://unitask-backend-docs.netlify.app/)
+> which contains more detailed implementation of each function.
+
 
 **Versions:**
 
