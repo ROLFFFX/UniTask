@@ -17,6 +17,7 @@ Team Member: Alec Berger, Jingyu(Eula) Wang, Sichen Liu, Yuxuan(ROLF) Shi, Yinsh
         2. [Spinning Up Local Servers](#2-spinning-up-local-servers)
    2. [Front End Documentation](#front-end-documentation)
    3. [Back End Documentation](#back-end-documentation)
+   4. [Deployment](#deployment)
 
 
 ---
@@ -724,3 +725,10 @@ A full list of dependencies used are listed here:
 This file is for the backend deployment use. It configures the version
 of java JDK this backend implementation is using. For this
 implementation, the java version used is 17.
+
+--
+# Deployment
+UniTask project is deployed on both [vercel](vercel.app)(front end) and [heroku](heroku.com)(back end).<br/>
+The deployed version of code can be found in these two repositories: <br/>
+[Deployed Front End Repo](https://github.com/ROLFFFX/UniTask_Beta_Front)<br/>
+[Deployed Back End Repo](https://github.com/SichenLiu111/unitask_impl)
