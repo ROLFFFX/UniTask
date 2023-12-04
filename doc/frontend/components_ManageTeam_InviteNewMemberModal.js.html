@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: components/ManageTeam/InviteNewMemberModal.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: components/ManageTeam/InviteNewMemberModal.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/**
+ * @fileoverview This file includes the InviteNewMemberModal component, which is used for
+ * inviting new members to a workspace during in Manage Workspace page.
+ */
+
+import {
+  Box,
+  Button,
+  Modal,
+  TextField,
+  ThemeProvider,
+  Typography,
+} from "@mui/material";
+import axios from "axios";
+import React from "react";
+import useAuth from "../../hooks/useAuth";
+import theme from "../LoginPage/LoginStyling/theme";
+import { ENDPOINT_URL } from "../../hooks/useConfig";
+import Backdrop from "@mui/material/Backdrop";
+import CircularProgress from "@mui/material/CircularProgress";
+
+const modalStyle = {
+  position: "absolute",
+  top: "50%",
+  left: "50%",
+  transform: "translate(-50%, -50%)",
+  width: 400,
+  bgcolor: "background.paper",
+  border: "2px solid #000",
+  boxShadow: 24,
+  p: 4,
+};
+
+/**
+ * InviteNewMemberModal - A functional component for inviting new members to a workspace.
+ *
+ * This component presents an interface for users to invite new members to their workspace. It includes a text field
+ * for entering the email of the new member and a submit button to initiate the invitation process. It also displays
+ * custom success/failure messages to respond the status code return by server
+ *
+ * State:
+ * @state @type {string} email - Stores the email address entered for the new member.
+ * @state @type {boolean} errorModalOpen - Controls the visibility of the error modal in case of invitation failure.
+ * @state @type {boolean} backdropOpen - Boolean to control the display of the loading backdrop.
+ *
+ * Props:
+ * @prop {boolean} open - Determines if the invite modal is open.
+ * @prop {function} handleClose - Function to close the invite modal.
+ * @prop {function} onInviteSuccess - Callback function executed on successful invitation.
+ *
+ * @returns {React.ReactElement} A React element representing the member invitation interface.
+ */
+export default function InviteNewMemberModal({
+  open,
+  handleClose,
+  onInviteSuccess,
+}) {
+  const { auth } = useAuth();
+  const [email, setEmail] = React.useState("");
+  const [errorModalOpen, setErrorModalOpen] = React.useState(false); //handle user invite error
+  const [backdropOpen, setBackdropOpen] = React.useState(false); //loading page
+
+  const handleSubmit = async () => {
+    //email is already set up in text field
+    const projectTitle = auth.selectedWorkspace;
+    setBackdropOpen(true); //display loading page
+    try {
+      const response = await axios.post(
+        `${ENDPOINT_URL}projects/addUserToWorkspace/${email}/${projectTitle}`,
+        {},
+        {
+          headers: {
+            Authorization: `Bearer ${auth.user.userJWT}`,
+          },
+        }
+      );
+      if (response.status === 201) {
+        console.log("User Added Successfully.");
+        handleClose();
+        onInviteSuccess();
+      }
+      console.log(response);
+    } catch (error) {
+      console.error("Error adding user to project: ", error);
+      setErrorModalOpen(true);
+    } finally {
+      setBackdropOpen(false);
+    }
+  };
+  return (
+    &lt;React.Fragment>
+      &lt;ThemeProvider theme={theme}>
+        &lt;Backdrop
+          sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }}
+          open={backdropOpen}
+        >
+          &lt;CircularProgress color="inherit" />
+        &lt;/Backdrop>
+        &lt;Modal
+          open={open}
+          onClose={handleClose}
+          aria-labelledby="modal-modal-title"
+          aria-describedby="modal-modal-description"
+        >
+          &lt;Box sx={modalStyle}>
+            &lt;Typography
+              id="modal-modal-title"
+              variant="h6"
+              component="h2"
+              textAlign="center"
+              sx={{ fontFamily: "Inter, sans-serif" }}
+            >
+              Invite New Team Member
+            &lt;/Typography>
+            &lt;Typography
+              id="modal-modal-description"
+              sx={{ mt: 2, fontFamily: "Inter, sans-serif" }}
+            >
+              Please enter the email of team member you want to invite in the
+              textfield below. Make sure team member already registered using
+              this email.
+            &lt;/Typography>
+            &lt;TextField
+              sx={{ marginTop: 5 }}
+              required
+              id="outlined-required"
+              label="Enter Email"
+              InputLabelProps={{ style: { fontSize: "14px" } }}
+              fullWidth
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+            />
+            &lt;Button
+              variant="contained"
+              sx={{ marginTop: 5, fontSize: "12px" }}
+              fullWidth
+              onClick={handleSubmit}
+            >
+              Invite User with this Email
+            &lt;/Button>
+          &lt;/Box>
+        &lt;/Modal>
+
+        {/* Error Modal */}
+        &lt;Modal
+          open={errorModalOpen}
+          onClose={() => setErrorModalOpen(false)}
+          aria-labelledby="error-modal-title"
+          aria-describedby="error-modal-description"
+        >
+          &lt;Box sx={modalStyle}>
+            &lt;Typography
+              id="error-modal-title"
+              variant="h6"
+              component="h2"
+              textAlign="center"
+              sx={{ fontFamily: "Inter, sans-serif" }}
+            >
+              Invite User Error
+            &lt;/Typography>
+            &lt;Typography
+              id="error-modal-description"
+              sx={{ mt: 2, fontFamily: "Inter, sans-serif" }}
+            >
+              An error occurred while inviting the user. Please make sure that
+              the member you are inviting has registered with this email.
+            &lt;/Typography>
+            &lt;Button
+              variant="contained"
+              sx={{ marginTop: 5, fontSize: "12px" }}
+              fullWidth
+              onClick={() => setErrorModalOpen(false)}
+            >
+              Close
+            &lt;/Button>
+          &lt;/Box>
+        &lt;/Modal>
+      &lt;/ThemeProvider>
+    &lt;/React.Fragment>
+  );
+}
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#App">App</a></li><li><a href="global.html#AuthProvider">AuthProvider</a></li><li><a href="global.html#BottomSVG">BottomSVG</a></li><li><a href="global.html#ChooseName">ChooseName</a></li><li><a href="global.html#CustomLabel">CustomLabel</a></li><li><a href="global.html#CustomLayout">CustomLayout</a></li><li><a href="global.html#DashboardContent">DashboardContent</a></li><li><a href="global.html#InterpolationSelect">InterpolationSelect</a></li><li><a href="global.html#Layout">Layout</a></li><li><a href="global.html#LogOutButton">LogOutButton</a></li><li><a href="global.html#LoginSignup">LoginSignup</a></li><li><a href="global.html#MainAccount">MainAccount</a></li><li><a href="global.html#MainReview">MainReview</a></li><li><a href="global.html#MainSprintBoard">MainSprintBoard</a></li><li><a href="global.html#ManageTeam">ManageTeam</a></li><li><a href="global.html#OBLanding">OBLanding</a></li><li><a href="global.html#PageNotFound">PageNotFound</a></li><li><a href="global.html#PasswordInput">PasswordInput</a></li><li><a href="global.html#PersonalChart">PersonalChart</a></li><li><a href="global.html#RequireAuth">RequireAuth</a></li><li><a href="global.html#SignUp">SignUp</a></li><li><a href="global.html#Task">Task</a></li><li><a href="global.html#TeamProgress">TeamProgress</a></li><li><a href="global.html#TopAppBar">TopAppBar</a></li><li><a href="global.html#TopSVG">TopSVG</a></li><li><a href="global.html#calculateTrendLineData">calculateTrendLineData</a></li><li><a href="global.html#formatDateToMonthDay">formatDateToMonthDay</a></li><li><a href="global.html#processPersonalTaskData">processPersonalTaskData</a></li><li><a href="global.html#processTaskData">processTaskData</a></li><li><a href="global.html#renderMemberItem">renderMemberItem</a></li><li><a href="global.html#renderWorkspaceRow">renderWorkspaceRow</a></li><li><a href="global.html#theme">theme</a></li><li><a href="global.html#useAuth">useAuth</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.2</a> on Mon Dec 04 2023 07:14:04 GMT-0500 (Eastern Standard Time)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>
