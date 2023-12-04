@@ -26,6 +26,7 @@ User Guide here
 # 3. Technical Documentation / Developer Guide
 Technical Documentation here
 
+---
 # Front End Documentation
 
 ## 1. Introduction
