@@ -1,3 +1,9 @@
+/**
+ * @fileoverview This file includes the Task component, which is the Task Object populating each columns
+ * in the taskboard. Each task object handles the display and interaction of individual tasks, including
+ * modifying and deleting. It also has one layer down, which are subtasks of task.
+ */
+
 import React, { useEffect, useRef, useState } from "react";
 import calendar_icon from "../../images/calendar.png";
 import points_icon from "../../images/points.png";
@@ -65,6 +71,34 @@ const textfieldStyle = {
   },
 };
 
+/**
+ * Task - A functional component for displaying and interacting with a task, and the manipulation of subtasks
+ * of this task.
+ *
+ * This component represents a single task, displaying its title, assignee, due date, points, and subtasks.
+ * It provides functionality to edit, delete, and add subtasks to the task. The component also includes
+ * modals and menus for these interactions and uses axios for API requests to will update the task data
+ * through the API endpoint.
+ *
+ * Props:
+ * @prop {Object} taskData - Data about the task, including title, assignee, due date, points, and subtasks.
+ * @prop {Function} refreshTasks - A function to refresh the list of tasks.
+ * @prop {Array} users - An array of user names available for assigning to the task.
+ *
+ * States:
+ * @state @type {Array} subtasks - List of subtasks associated with the main task.
+ * @state @type {string} newSubtask - Title of a new subtask being added.
+ * @state @type {boolean} isAddingSubtask - Indicates if the subtask adding interface is shown.
+ * @state @type {string} AddSub - State to control the subtask addition process.
+ * @state @type {string} ShowSub - State to control the visibility of subtasks.
+ * @state @type {boolean} backdropOpen - Controls the visibility of the loading backdrop.
+ * @state @type {Object} anchorEl - Controls the anchor element for the task menu.
+ * @state @type {boolean} openDeleteConfirm - Controls the visibility of the delete confirmation modal.
+ * @state @type {boolean} openModifyTask - Controls the visibility of the modify task modal.
+ * @state @type {Object} modifiedTask - Stores the modified task data.
+ *
+ * @returns {React.ReactElement} A React element representing a single task with interaction capabilities.
+ */
 function Task({ taskData, refreshTasks, users }) {
   /* Hooks Declarations-------------------------------------------------------------------------------------------------------------------- */
   const { auth } = useAuth();

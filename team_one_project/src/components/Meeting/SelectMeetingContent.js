@@ -1,13 +1,13 @@
-import React, {useEffect, useState} from "react";
+import React, { useEffect, useState } from "react";
 import "./SelectMeetingContent.css";
-import Dialog from '@mui/material/Dialog';
-import DialogActions from '@mui/material/DialogActions';
-import DialogContent from '@mui/material/DialogContent';
-import DialogTitle from '@mui/material/DialogTitle';
-import Button from '@mui/material/Button';
-import {useNavigate} from "react-router-dom";
-import axios from 'axios';
-import {ENDPOINT_URL} from "../../hooks/useConfig";
+import Dialog from "@mui/material/Dialog";
+import DialogActions from "@mui/material/DialogActions";
+import DialogContent from "@mui/material/DialogContent";
+import DialogTitle from "@mui/material/DialogTitle";
+import Button from "@mui/material/Button";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
+import { ENDPOINT_URL } from "../../hooks/useConfig";
 import useAuth from "../../hooks/useAuth";
 
 function getCurrentWeekDateRange(referenceDate) {
@@ -30,7 +30,7 @@ function getCurrentWeekDateRange(referenceDate) {
     formatOptions
   );
   const endDateString = endOfWeek.toLocaleDateString(undefined, formatOptions);
-  console.log(endDateString)
+  console.log(endDateString);
 
   return `${startDateString} - ${endDateString}`;
 }
@@ -108,18 +108,21 @@ export function SelectMeetingContent() {
   const deleteAllUserTimeSlots = async () => {
     try {
       //deleteAll that belongs to a user
-      const response = await axios.delete(`${ENDPOINT_URL}api/test/timeslot/${projectTitle}`, {
-        headers: {
-          Authorization: `Bearer ${auth.user.userJWT}`,
+      const response = await axios.delete(
+        `${ENDPOINT_URL}api/test/timeslot/${projectTitle}`,
+        {
+          headers: {
+            Authorization: `Bearer ${auth.user.userJWT}`,
+          },
         }
-      });
+      );
 
-      console.log('All time slots for the user have been deleted successfully');
+      console.log("All time slots for the user have been deleted successfully");
       //Update the state to reflect the changes in the UI
       setFetchedSlots([]);
       setNewlySelectedSlots([]);
     } catch (error) {
-      console.error('Error deleting user time slots:', error);
+      console.error("Error deleting user time slots:", error);
     }
     window.location.reload();
   };
@@ -130,63 +133,70 @@ export function SelectMeetingContent() {
   useEffect(() => {
     const fetchBookedTimeSlots = async () => {
       try {
-        const response = await axios.get(`${ENDPOINT_URL}api/test/timeslot/${projectTitle}`, {
-        //const response = await axios.get(`http://localhost:8080/api/test/timeslot/${projectTitle}`, {
-          headers: {
-            Authorization: `Bearer ${auth.user.userJWT}`,
+        const response = await axios.get(
+          `${ENDPOINT_URL}api/test/timeslot/${projectTitle}`,
+          {
+            //const response = await axios.get(`http://localhost:8080/api/test/timeslot/${projectTitle}`, {
+            headers: {
+              Authorization: `Bearer ${auth.user.userJWT}`,
+            },
           }
-        });
+        );
 
-         // Assuming response data format is: [{ startTime: 'ISODateString', endTime: 'ISODateString' }]
-        if(response.data.length !== 0){
+        // Assuming response data format is: [{ startTime: 'ISODateString', endTime: 'ISODateString' }]
+        if (response.data.length !== 0) {
           setSelected(true);
-          const bookedTimeSlots = response.data.map(booking => {
+          const bookedTimeSlots = response.data.map((booking) => {
             // Convert startTime to Date object
-           return new Date(booking.startTime); // We only need the start time for displaying in the calendar
-         });
+            return new Date(booking.startTime); // We only need the start time for displaying in the calendar
+          });
 
-        setFetchedSlots(bookedTimeSlots);
+          setFetchedSlots(bookedTimeSlots);
         }
       } catch (error) {
-        console.error('Error fetching booked time slots:', error);
+        console.error("Error fetching booked time slots:", error);
       }
     };
-  
+
     fetchBookedTimeSlots();
   }, [referenceDate]); // Fetch data when component mounts and when referenceDate changes
-  
 
-const toggleSlotSelection = (day, time) => { 
-  const startDate = new Date(referenceDate);
+  const toggleSlotSelection = (day, time) => {
+    const startDate = new Date(referenceDate);
 
-  // Convert day to number (0 = Monday, 6 = Sunday)
-  const dayNumber = days.indexOf(day);
+    // Convert day to number (0 = Monday, 6 = Sunday)
+    const dayNumber = days.indexOf(day);
 
-  // Parse time
-  const [hours, minutes] = time.split(':').map(Number);
+    // Parse time
+    const [hours, minutes] = time.split(":").map(Number);
 
-  // Set day and time on startDate
-  startDate.setDate(startDate.getDate() - (startDate.getDay() === 0 ? 6 : startDate.getDay() - 1) + dayNumber);
-  startDate.setHours(hours, minutes, 0, 0);
-
-  // Check if the slot is already booked (exists in fetchedSlots)
-  const isAlreadyBooked = fetchedSlots.some(slot => slot.getTime() === startDate.getTime());
-
-  if (!isAlreadyBooked) {
-    // Update newly selected slots if it's not already booked
-    setNewlySelectedSlots((prevSlots) => 
-      prevSlots.some((slot) => slot.getTime() === startDate.getTime())
-        ? prevSlots.filter((slot) => slot.getTime() !== startDate.getTime())
-        : [...prevSlots, startDate]
+    // Set day and time on startDate
+    startDate.setDate(
+      startDate.getDate() -
+        (startDate.getDay() === 0 ? 6 : startDate.getDay() - 1) +
+        dayNumber
     );
-  } else {
-    setFailureMessage("This time slot is already selected");
-    setIsFailureModalOpen(true);
-    // Maybe show a message to the user that this slot is already booked
-    console.log('This time slot is already booked.');
-  }
-};
+    startDate.setHours(hours, minutes, 0, 0);
 
+    // Check if the slot is already booked (exists in fetchedSlots)
+    const isAlreadyBooked = fetchedSlots.some(
+      (slot) => slot.getTime() === startDate.getTime()
+    );
+
+    if (!isAlreadyBooked) {
+      // Update newly selected slots if it's not already booked
+      setNewlySelectedSlots((prevSlots) =>
+        prevSlots.some((slot) => slot.getTime() === startDate.getTime())
+          ? prevSlots.filter((slot) => slot.getTime() !== startDate.getTime())
+          : [...prevSlots, startDate]
+      );
+    } else {
+      setFailureMessage("This time slot is already selected");
+      setIsFailureModalOpen(true);
+      // Maybe show a message to the user that this slot is already booked
+      console.log("This time slot is already booked.");
+    }
+  };
 
   const moveToPreviousWeek = () => {
     const newDate = new Date(referenceDate);
@@ -206,13 +216,12 @@ const toggleSlotSelection = (day, time) => {
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const navigate = useNavigate();
-  
-  
+
   const [isFailureModalOpen, setIsFailureModalOpen] = useState(false);
   const [failureMessage, setFailureMessage] = useState('');
 
-
-  const handleConfirmSelection = async () => { //送后端
+  const handleConfirmSelection = async () => {
+    //送后端
     if (newlySelectedSlots.length === 0) {
       // No new slots were selected
       setFailureMessage("No new time slots were selected.");
@@ -221,40 +230,39 @@ const toggleSlotSelection = (day, time) => {
     }
     // Convert the newly selected time slots to UTC ISO strings and
     // create an object for each slot with startTime and endTime
-    const newBookings = newlySelectedSlots.map(slot => {
+    const newBookings = newlySelectedSlots.map((slot) => {
       const startTime = new Date(slot.getTime());
       const endTime = new Date(slot.getTime() + 30 * 60 * 1000); // Add 30 minutes
 
       return {
         startTime: startTime.toISOString(),
-        endTime: endTime.toISOString()
+        endTime: endTime.toISOString(),
       };
     });
-  
+
     try {
-      await axios.post(`${ENDPOINT_URL}api/test/timeslot/${projectTitle}`,
-          newBookings, {
+      await axios.post(
+        `${ENDPOINT_URL}api/test/timeslot/${projectTitle}`,
+        newBookings,
+        {
           headers: {
-            'Content-Type': 'application/json',
+            "Content-Type": "application/json",
             Authorization: `Bearer ${auth.user.userJWT}`,
-          }
-      });
-      console.log('Booking successful!');
-      
+          },
+        }
+      );
+      console.log("Booking successful!");
+
       // Update fetchedSlots with the newly selected slots
-         setFetchedSlots(prev => [...prev, ...newlySelectedSlots]);
+      setFetchedSlots((prev) => [...prev, ...newlySelectedSlots]);
       // Clear newly selected slots
       setNewlySelectedSlots([]);
       // Close the modal
       setIsModalOpen(true);
     } catch (error) {
-      console.error('Error sending booking data to backend:', error);
+      console.error("Error sending booking data to backend:", error);
     }
     window.location.reload();
-};
-
-  const handleCloseModal = () => {
-    setIsModalOpen(false);  // Close the modal
   };
 
 
@@ -323,7 +331,6 @@ const toggleSlotSelection = (day, time) => {
                   const slotKey = startDate.getTime();
                   const isSelected = [...fetchedSlots, ...newlySelectedSlots].some((slot) => slot.getTime() === slotKey);
 
-
                   return (
                     <button
                       aria-label={`Select ${time} on ${day}`}
@@ -338,7 +345,7 @@ const toggleSlotSelection = (day, time) => {
           </div>
         </div>
       </div>
-  
+
       <Dialog open={isModalOpen} onClose={handleCloseModal}>
         <DialogTitle>Selection Confirmed</DialogTitle>
         <DialogContent>
@@ -349,12 +356,12 @@ const toggleSlotSelection = (day, time) => {
       <Dialog open={isFailureModalOpen} onClose={() => setIsFailureModalOpen(false)}>
         <DialogTitle>Selection Failed</DialogTitle>
         <DialogContent>
-        <p>{failureMessage}</p>
+          <p>{failureMessage}</p>
         </DialogContent>
         <DialogActions>
-         <Button onClick={() => setIsFailureModalOpen(false)}>Close</Button>
+          <Button onClick={() => setIsFailureModalOpen(false)}>Close</Button>
         </DialogActions>
-          </Dialog>
+      </Dialog>
     </div>
   );
-    }
+}

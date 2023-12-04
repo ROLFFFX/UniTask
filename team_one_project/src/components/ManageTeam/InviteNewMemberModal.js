@@ -1,3 +1,8 @@
+/**
+ * @fileoverview This file includes the InviteNewMemberModal component, which is used for
+ * inviting new members to a workspace during in Manage Workspace page.
+ */
+
 import {
   Box,
   Button,
@@ -26,6 +31,25 @@ const modalStyle = {
   p: 4,
 };
 
+/**
+ * InviteNewMemberModal - A functional component for inviting new members to a workspace.
+ *
+ * This component presents an interface for users to invite new members to their workspace. It includes a text field
+ * for entering the email of the new member and a submit button to initiate the invitation process. It also displays
+ * custom success/failure messages to respond the status code return by server
+ *
+ * State:
+ * @state @type {string} email - Stores the email address entered for the new member.
+ * @state @type {boolean} errorModalOpen - Controls the visibility of the error modal in case of invitation failure.
+ * @state @type {boolean} backdropOpen - Boolean to control the display of the loading backdrop.
+ *
+ * Props:
+ * @prop {boolean} open - Determines if the invite modal is open.
+ * @prop {function} handleClose - Function to close the invite modal.
+ * @prop {function} onInviteSuccess - Callback function executed on successful invitation.
+ *
+ * @returns {React.ReactElement} A React element representing the member invitation interface.
+ */
 export default function InviteNewMemberModal({
   open,
   handleClose,

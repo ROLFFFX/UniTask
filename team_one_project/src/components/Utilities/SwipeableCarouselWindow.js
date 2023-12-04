@@ -1,3 +1,9 @@
+/**
+ * @fileoverview This file includes the SwipeableCarouselWindow component, which is a carousel
+ * slider used to display various features in the welcome page. It utilizes the react-slick
+ * library for carousel functionality.
+ */
+
 import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 import { Box, Grid, Typography } from "@mui/material";
@@ -90,6 +96,16 @@ const NextArrow = (props) => {
   );
 };
 
+/**
+ * SwipeableCarouselWindow - A functional component providing a swipeable carousel slider.
+ *
+ * This component is used for showcasing different features of the application like
+ * the interactive dashboard, task assignment system, meeting scheduling, report & review, and more.
+ * It uses react-slick for carousel functionality. Each slide contains an image,
+ * title, and descriptive content, and the actual content is predefined and mapped.
+ *
+ * @returns {React.ReactElement} A React element representing a carousel slider window.
+ */
 export default function SwipeableCarouselWinodw() {
   const settings = {
     infinite: true,

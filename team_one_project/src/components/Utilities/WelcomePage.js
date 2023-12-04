@@ -1,3 +1,10 @@
+/**
+ * @fileoverview This file includes the WelcomePage component, which serves as the landing page
+ * for the UniTask project. It mostly uses MUI for layout and styling, and uses react-router-dom
+ * for navigation. It has a swipeable carousel menu aside from the information based texts and logos.
+ * Each components are also animated using css.
+ */
+
 import { Avatar, Box, Button, Grid, Typography } from "@mui/material";
 import React from "react";
 import { useNavigate } from "react-router-dom";
@@ -41,6 +48,16 @@ const fadeIn = `
 }
 `;
 
+/**
+ * WelcomePage - A functional component that renders the landing page of the UniTask application.
+ *
+ * This component displays a welcoming message, a brief introduction to UniTask, and a 'Get Started' button
+ * leading to the signup page. It also includes a swipeable carousel window that showcases various features
+ * of the application (./SwipeableCarouselWindow.js). The page incorporates custom animations for each
+ * components.
+ *
+ * @returns {React.ReactElement} A React element representing the landing page of the UniTask application.
+ */
 export default function WelcomePage() {
   const navigate = useNavigate();
   const handleClick = () => {

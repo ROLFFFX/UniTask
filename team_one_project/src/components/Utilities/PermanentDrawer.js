@@ -1,3 +1,8 @@
+/**
+ * @fileoverview This file includes the PermanentDrawer component, which is a navigation drawer
+ * placed at left of all protected routes.
+ */
+
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import AssignmentIcon from "@mui/icons-material/Assignment";
 import DashboardIcon from "@mui/icons-material/Dashboard";
@@ -18,6 +23,16 @@ import barTheme from "./barTheme";
 
 const drawerWidth = 200;
 
+/**
+ * PermanentDrawer - A functional component providing a sidebar navigation drawer.
+ *
+ * This component displays a permanent drawer on the left side of all pages in protected
+ * routes, offering navigation options to different parts of the application like Dashboard,
+ *  Task Board, Meeting Schedule, etc. It maps navigation items to specific routes using
+ * react-router-dom's useNavigate hook.
+ *
+ * @returns {React.ReactElement} A React element representing the sidebar navigation drawer.
+ */
 export default function PermanentDrawer() {
   const displayIcon = (index) => {
     switch (index) {

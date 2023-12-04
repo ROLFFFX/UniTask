@@ -1,3 +1,9 @@
+/**
+ * @fileoverview This file includes the ManageTeamContent component and renderMemberItem function,
+ * which are used for managing and displaying team members within a workspace. It also includes
+ * functionality to add / remove users.
+ */
+
 import Diversity2Icon from "@mui/icons-material/Diversity2";
 import GroupAddIcon from "@mui/icons-material/GroupAdd";
 import GroupRemoveIcon from "@mui/icons-material/GroupRemove";
@@ -19,7 +25,14 @@ import useAuth from "../../hooks/useAuth";
 import { ENDPOINT_URL } from "../../hooks/useConfig";
 import InviteNewMemberModal from "./InviteNewMemberModal";
 
-//render individual member in react window
+/**
+ * Renders an individual team member item in a list using react-window to virtualize table.
+ *
+ * @param {object} props - The props passed by react-window, including index and style.
+ * @param {Array} teamMembers - An array of team member objects.
+ * @param {function} handleRemoveUser - Function to handle removal of a user.
+ * @returns {React.ReactElement} A React element representing a single team member in the list.
+ */
 function renderMemberItem(props, teamMembers, handleRemoveUser) {
   const { index, style } = props;
   const member = teamMembers[index];
@@ -28,10 +41,7 @@ function renderMemberItem(props, teamMembers, handleRemoveUser) {
       key={member.userEmail}
       style={{
         ...style,
-        // border: "1px solid black", //to add border for each inidividual member rendered
-        // borderRadius: 5,
-        // marginTop: "5px",
-        boxSizing: "border-box", // to ensure total width includes padding and borders.
+        boxSizing: "border-box",
         width: "100%",
       }}
     >
@@ -64,6 +74,20 @@ function renderMemberItem(props, teamMembers, handleRemoveUser) {
   );
 }
 
+/**
+ * ManageTeamContent - A functional component for displaying and managing team members.
+ *
+ * This component provides an interface for viewing the list of team members and managing them. It allows
+ * users to invite new members and remove existing ones. It fetches team member data from server API and displays
+ * it using react-window (FixedSizeList).
+ *
+ * State:
+ * @state @type {boolean} openModal - Controls the visibility of the invite modal.
+ * @state @type {boolean} backdropOpen - Boolean to control the display of the loading backdrop.
+ * @state @type {Array} teamMembers - An array of objects representing the team members.
+ *
+ * @returns {React.ReactElement} A React element representing the team management interface.
+ */
 export default function ManageTeamContent() {
   const [openModal, setOpenModal] = useState(false);
   const [backdropOpen, setBackdropOpen] = useState(false); //loading page

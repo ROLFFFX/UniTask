@@ -1,4 +1,11 @@
+/**
+ * @fileoverview This file includes the TopAppBar component, which serves as the primary navigation bar
+ * for a project management application. It has a LOGO displayed at left, and three functional buttons
+ * at right: a hyperlink functionality, a log-out button, and a change workspace button.
+ */
+
 import AddLinkIcon from "@mui/icons-material/AddLink";
+import Diversity3Icon from "@mui/icons-material/Diversity3";
 import LinkIcon from "@mui/icons-material/Link";
 import LogoutIcon from "@mui/icons-material/Logout";
 import { ButtonGroup, ThemeProvider } from "@mui/material";
@@ -24,20 +31,16 @@ import { useEffect, useState } from "react";
 import { ENDPOINT_URL } from "../../hooks/useConfig";
 import UniTaskLogo_new from "../../images/UniTaskLOGO.PNG";
 import barTheme from "./barTheme";
-import ChangeCircleIcon from "@mui/icons-material/ChangeCircle";
-import Diversity3Icon from "@mui/icons-material/Diversity3";
 
 import axios from "axios";
-import useAuth from "../../hooks/useAuth";
 import { useNavigate } from "react-router-dom";
+import useAuth from "../../hooks/useAuth";
 
 const LogOutButton = () => {
   const { logout } = useAuth();
-
   const handleLogout = () => {
     logout();
   };
-
   return (
     <Tooltip
       title={
@@ -67,7 +70,6 @@ const ChangeWorkspaceButton = () => {
   const handleLogoutGroup = () => {
     navigate("/login/login_with_group");
   };
-
   return (
     <Tooltip
       title={
@@ -92,6 +94,25 @@ const ChangeWorkspaceButton = () => {
   );
 };
 
+/**
+ * TopAppBar - A functional component providing the main navigation and utility bar.
+ *
+ * This component renders the top app bar of the application with logo, hyperlink drawer toggle,
+ * and change workspace and logout. It also contains logic to handle dynamic hyperlinks, allowing
+ * users to add, edit, and remove links with custom names.
+ *
+ * State:
+ * @state @type {string} projectTitle - The title of the current project/workspace.
+ * @state @type {Array} linksList - Array of hyperlink objects to be displayed in the drawer.
+ * @state @type {boolean} state - Boolean state to control the opening and closing of the drawer.
+ * @state @type {string} action - State to control the action performed on hyperlinks (e.g., add, edit).
+ * @state @type {string} itAction - State to control item-specific actions like edit or remove.
+ * @state @type {string} linkName - State to store the name of the new or edited hyperlink.
+ * @state @type {string} link - State to store the URL of the new or edited hyperlink.
+ * @state @type {Object} anchorElUser - State to manage the anchor element for user menu.
+ *
+ * @returns {React.ReactElement} A React element representing the top app bar with user interaction features.
+ */
 export function TopAppBar() {
   const { auth } = useAuth();
   const projectTitle = auth.selectedWorkspace;
