@@ -435,7 +435,7 @@ export function MainSprintBoard() {
               id={"createTaskMenu"}
               open={open}
               anchorEl={anchorEl}
-              onBlur={handleLeavePopper}
+              // onBlur={handleLeavePopper}
               onMouseLeave={handleLeavePopper}
             >
               <Box
