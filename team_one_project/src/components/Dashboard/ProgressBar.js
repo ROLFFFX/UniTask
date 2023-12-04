@@ -85,7 +85,7 @@ export default function ProgressBar(ProgressBarData) {
               align="right"
               marginTop={1}
             >
-              See You Progress in Circular/Linear View:
+              See Your Progress in Circular/Linear View:
             </Typography>
           </Grid>
           <Grid item xs={3}>

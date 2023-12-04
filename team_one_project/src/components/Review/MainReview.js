@@ -381,7 +381,7 @@ export function MainReview() {
               // fontWeight: "bold",
             }}
           >
-            Insepct & Adapt
+            Inspect & Adapt
           </Typography>
         </Grid>
         <Divider width="100%" sx={{ marginTop: "10px" }}></Divider>
