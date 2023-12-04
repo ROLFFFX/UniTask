@@ -14,12 +14,6 @@ jobs:
       uses: actions/checkout@v3
 
     - name: Build and deploy Jekyll site
-      uses: helaili/jekyll-action@2.0.4
+      uses: jekyll/actions-pages@v1
       with:
         token: ${{ secrets.GITHUB_TOKEN }}
-
-    - name: Copy frontend documentation
-      run: cp -r doc/frontend/* _site/frontend/
-
-    - name: Copy backend documentation
-      run: cp -r doc/backend/* _site/backend/
