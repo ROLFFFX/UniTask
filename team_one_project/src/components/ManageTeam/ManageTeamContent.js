@@ -133,8 +133,9 @@ export default function ManageTeamContent() {
     }
     if (userEmail === auth.user.userEmail) {
       handleOpenDeleteSelfModal();
+    } else {
+      handleOpenDeleteOthersModal();
     }
-    handleOpenDeleteOthersModal();
   };
 
   // DELETE Request for deleting the user from workspace
