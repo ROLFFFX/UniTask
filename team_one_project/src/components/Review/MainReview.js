@@ -1,3 +1,8 @@
+/**
+ * @fileoverview This file includes the MainReview component, a complex functional component
+ * that manages the creation, modification, viewing, and deletion of records.
+ */
+
 import { Box, Button, Divider, Grid, Modal, Typography } from "@mui/material";
 import List from "@mui/material/List";
 import ListItemButton from "@mui/material/ListItemButton";
@@ -99,6 +104,26 @@ const modalStyle = {
   textAlign: "center",
 };
 
+/**
+ * MainReview - A functional component for managing reviews in a project management context.
+ *
+ * This component provides interfaces for adding new records, viewing existing records, modifying them, and deleting them.
+ * It handles all the necessary state and logic for CRUD operations on records. It also manages user interactions through
+ * modals and forms. It displays three cards, left one for a controller that renders and allows user to select records,
+ * the middle one is for displaying content, modifying content, and deleting content. The right one is for adding new content.
+ *
+ * State:
+ * @state @type {Array} records - An array of record objects fetched from the database.
+ * @state @type {number} selectedIndex - Index of the currently selected record for review.
+ * @state @type {Object} selectedRecord - The record currently being viewed or modified.
+ * @state @type {boolean} backdropOpen - Controls the visibility of the loading backdrop.
+ * @state @type {Object} addNewRecord - Object to hold data for a new record to be added.
+ * @state @type {boolean} openDeleteConfirm - Controls the visibility of the delete confirmation modal.
+ * @state @type {boolean} modifyMode - Indicates whether the user is in modification mode for a record.
+ * @state @type {Object} modifiedRecord - Object to hold modified data before submitting an update.
+ *
+ * @returns {React.ReactElement} A React element representing the main interface for managing project reviews.
+ */
 export function MainReview() {
   /* Hooks Declrations-------------------------------------------------------------------------------------------------------------------- */
   const { auth } = useAuth();

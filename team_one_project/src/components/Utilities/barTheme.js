@@ -1,3 +1,7 @@
+/**
+ * @fileoverview This bartheme defines the theme for nav bars, which are used in Both sidebar and top nav bar
+ */
+
 import { createTheme } from "@mui/material/styles";
 
 const barTheme = createTheme({
@@ -9,7 +13,7 @@ const barTheme = createTheme({
     MuiDrawer: {
       styleOverrides: {
         paper: {
-          backgroundColor: "white", // This will set drawer's bgcolor
+          backgroundColor: "white",
         },
       },
     },
@@ -18,7 +22,7 @@ const barTheme = createTheme({
       styleOverrides: {
         root: {
           fontSize: 13,
-          color: "#333333", // Set text color to #2E2E2E
+          color: "#333333",
           fontFamily: "Inter, sans-serif",
         },
       },
@@ -28,7 +32,7 @@ const barTheme = createTheme({
         root: {
           fontSize: 13,
           fontFamily: "Inter, sans-serif",
-          color: "#2E2E2E", // Set text color to #2E2E2E
+          color: "#2E2E2E",
         },
       },
     },
