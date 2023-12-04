@@ -4,6 +4,11 @@
 
 The entire frontend source code can be found in ./team_one_project from the root directory of this github repository. The general purpose of this frontend is to provide a user interface for users to interact with our web-app.
 
+Main Version:
+node v16.20.0
+npm v8.19.4
+More detailed onboarding instruction can be found in OnBoarding Process.
+
 > [!IMPORTANT]
 > The detailed technical JSDoc for this project is here: [unitask frontend documentation](https://unitask-frontend-docs.netlify.app/)
 
