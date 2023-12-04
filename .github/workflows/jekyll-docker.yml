@@ -1,0 +1,30 @@
+name: Jekyll site CI
+
+on:
+  push:
+    branches: [ "DOCS" ]
+  pull_request:
+    branches: [ "DOCS" ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+
+    # Jekyll Build Step
+    - name: Build the Jekyll site
+      run: |
+        docker run \
+        -v ${{ github.workspace }}:/srv/jekyll \
+        -v ${{ github.workspace }}/_site:/srv/jekyll/_site \
+        jekyll/builder:latest /bin/bash -c "chmod -R 777 /srv/jekyll && jekyll build --future"
+
+    # Copy frontend docs to Jekyll site
+    - name: Copy frontend documentation
+      run: cp -r frontend/* _site/frontend/
+
+    # Copy backend docs to Jekyll site
+    - name: Copy backend documentation
+      run: cp -r backend/* _site/backend/
