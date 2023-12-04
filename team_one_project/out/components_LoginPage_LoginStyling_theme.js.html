@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: components/LoginPage/LoginStyling/theme.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: components/LoginPage/LoginStyling/theme.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/**
+ * @fileoverview This file defines a custom theme for MUI components, customizing
+ * the color palette, typography, and specific component styles to create custom
+ * user interface. It is frequently used for all login / signup cycles.
+ */
+
+import { createTheme } from "@mui/material/styles";
+
+/**
+ * theme - A custom theme configuration for MUI components.
+ *
+ *
+ * Configuration includes:
+ * - A default background color (#E9ECEF).
+ * - A global font family ('Inter', sans-serif). Its corresponding config can be found in the
+ *   header section of index.js
+ * - Specific color and style customizations for TextField, FormHelperText, OutlinedInput,
+ *   Typography, Button, Link, and InputLabel components. This is the unitary styling we use
+ *   for all Textfields in login/signup cycle.
+ *
+ *
+ * @returns {Object} A Material-UI theme object with customized settings.
+ */
+const theme = createTheme({
+  palette: {
+    background: {
+      default: "#E9ECEF",
+    },
+  },
+  typography: {
+    fontFamily: "'Inter', sans-serif", // Specify the Inter font here
+    h5: {
+      color: "#50589E",
+    },
+  },
+
+  components: {
+    MuiTextField: {
+      styleOverrides: {
+        root: {
+          fontFamily: '"Inter", sans-serif',
+        },
+      },
+    },
+    MuiFormHelperText: {
+      styleOverrides: {
+        root: {
+          color: "#343A40", // This sets the color of the helper text to #5A67BA
+        },
+      },
+    },
+    MuiOutlinedInput: {
+      styleOverrides: {
+        root: {
+          "&amp;:hover .MuiOutlinedInput-notchedOutline": {
+            borderColor: "#343A40", // Color when hover
+          },
+          "&amp;.Mui-focused .MuiOutlinedInput-notchedOutline": {
+            borderColor: "#343A40", // Color when focused
+          },
+        },
+      },
+    },
+    MuiTypography: {
+      styleOverrides: {
+        root: {
+          fontFamily: '"Inter", sans-serif',
+        },
+      },
+    },
+    MuiButton: {
+      styleOverrides: {
+        // This targets the root of the MuiButton component
+        root: {
+          backgroundColor: "#343A40", // This sets the background color of the button to red
+          "&amp;:hover": {
+            backgroundColor: "#6C757D", // This sets the hover color of the button to a darker red
+          },
+        },
+      },
+    },
+    MuiLink: {
+      styleOverrides: {
+        root: {
+          color: "#343A40",
+        },
+      },
+    },
+    MuiInputLabel: {
+      styleOverrides: {
+        root: {
+          // ... your existing styles for 'root' if any
+          "&amp;.Mui-focused": {
+            // targeting the focused state of the label
+            color: "#343A40", // change this color to your preferred 'red' hex code or other color
+          },
+        },
+      },
+    },
+  },
+});
+
+export default theme;
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#App">App</a></li><li><a href="global.html#AuthProvider">AuthProvider</a></li><li><a href="global.html#BottomSVG">BottomSVG</a></li><li><a href="global.html#ChooseName">ChooseName</a></li><li><a href="global.html#CustomLabel">CustomLabel</a></li><li><a href="global.html#CustomLayout">CustomLayout</a></li><li><a href="global.html#DashboardContent">DashboardContent</a></li><li><a href="global.html#InterpolationSelect">InterpolationSelect</a></li><li><a href="global.html#Layout">Layout</a></li><li><a href="global.html#LogOutButton">LogOutButton</a></li><li><a href="global.html#LoginSignup">LoginSignup</a></li><li><a href="global.html#MainAccount">MainAccount</a></li><li><a href="global.html#MainReview">MainReview</a></li><li><a href="global.html#MainSprintBoard">MainSprintBoard</a></li><li><a href="global.html#ManageTeam">ManageTeam</a></li><li><a href="global.html#OBLanding">OBLanding</a></li><li><a href="global.html#PageNotFound">PageNotFound</a></li><li><a href="global.html#PasswordInput">PasswordInput</a></li><li><a href="global.html#PersonalChart">PersonalChart</a></li><li><a href="global.html#RequireAuth">RequireAuth</a></li><li><a href="global.html#SignUp">SignUp</a></li><li><a href="global.html#Task">Task</a></li><li><a href="global.html#TeamProgress">TeamProgress</a></li><li><a href="global.html#TopAppBar">TopAppBar</a></li><li><a href="global.html#TopSVG">TopSVG</a></li><li><a href="global.html#calculateTrendLineData">calculateTrendLineData</a></li><li><a href="global.html#formatDateToMonthDay">formatDateToMonthDay</a></li><li><a href="global.html#processPersonalTaskData">processPersonalTaskData</a></li><li><a href="global.html#processTaskData">processTaskData</a></li><li><a href="global.html#renderMemberItem">renderMemberItem</a></li><li><a href="global.html#renderWorkspaceRow">renderWorkspaceRow</a></li><li><a href="global.html#theme">theme</a></li><li><a href="global.html#useAuth">useAuth</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.2</a> on Mon Dec 04 2023 07:14:04 GMT-0500 (Eastern Standard Time)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: components/Dashboard/VisualCharts.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: components/Dashboard/VisualCharts.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/**
+ * @fileoverview This file includes the VisualCharts component, used for rendering
+ * burndown charts representing the overall and personal progress of tasks in a
+ * project management application. Note that the first processing of data is done
+ * in this file, which later passed down to corresponding components respectively.
+ */
+
+import { Divider, Grid } from "@mui/material";
+import React, { useEffect, useState } from "react";
+import useAuth from "../../hooks/useAuth";
+import BurndownChart from "./BurndownChart";
+import PersonalChart from "./PersonalChart";
+
+/**
+ * processTaskData - Processes a list of tasks into a data format suitable for the BurndownChart component. The processed data is for group task
+ * progression overtime. Note that two dummy data is added, one is three days before creation with 0 points, the other one is three days after the
+ * last task data with the points of last data. This is to prevent glitches at early stages of workspace.
+ *
+ * @param {Array} tasks - The list of tasks to process.
+ * @param {string} currentDateStr - The current date as a string.
+ * @param {string} creationDateStr - The creation date of the workspace as a string.
+ * @returns {Array} An array of objects representing the processed task data.
+ */
+// process task data list to convert it into a data set that burndownchart.js accepts. key be timestamp, value be accumulated task points achieved.
+function processTaskData(tasks, currentDateStr, creationDateStr) {
+  const creationDate = new Date(creationDateStr);
+  const currentDate = new Date(currentDateStr);
+
+  // Add the first dummy data: 3 days before creation date
+  const threeDaysBeforeCreation = new Date(
+    creationDate.getTime() - 3 * 24 * 60 * 60 * 1000
+  );
+  const result = [{ key: threeDaysBeforeCreation.toISOString(), b: 0 }];
+
+  // Filter tasks by status 'Done' and sort them by their expected completion time
+  const filteredAndSortedTasks = tasks
+    .filter((task) => task.status === "Done")
+    .sort(
+      (a, b) =>
+        new Date(a.expectedCompleteTime) - new Date(b.expectedCompleteTime)
+    );
+
+  let totalTaskPoints = 0;
+  filteredAndSortedTasks.forEach((task) => {
+    totalTaskPoints += task.taskPoints;
+    result.push({
+      key: new Date(task.expectedCompleteTime).toISOString(),
+      b: totalTaskPoints,
+    });
+  });
+
+  // Add the second dummy data: 3 days after the last task's due date, if there are tasks
+  if (filteredAndSortedTasks.length > 0) {
+    const lastTaskDate = new Date(
+      filteredAndSortedTasks[
+        filteredAndSortedTasks.length - 1
+      ].expectedCompleteTime
+    );
+    const threeDaysAfterLastTask = new Date(
+      lastTaskDate.getTime() + 3 * 24 * 60 * 60 * 1000
+    );
+    result.push({
+      key: threeDaysAfterLastTask.toISOString(),
+      b: totalTaskPoints,
+    });
+  }
+
+  return result;
+}
+
+/**
+ * processPersonalTaskData - Processes a list of personal tasks into a data format suitable for the PersonalChart component. PersonalTaskData
+ * will later be passed down to the personal task component. Note that two dummy data are added as well.
+ *
+ * @param {Array} tasks - The list of tasks to process.
+ * @param {string} currentDateStr - The current date as a string.
+ * @param {string} creationDateStr - The creation date of the workspace as a string.
+ * @param {string} currentUserEmail - The email of the current user.
+ * @returns {Array} An array of objects representing the processed personal task data.
+ */
+// this function processes personal task data. similar to processtaskdata, this function will only look at task corresponds to curent user
+function processPersonalTaskData(
+  tasks,
+  currentDateStr,
+  creationDateStr,
+  currentUserEmail
+) {
+  const creationDate = new Date(creationDateStr);
+  const currentDate = new Date(currentDateStr);
+  const oneDay = 24 * 60 * 60 * 1000; // milliseconds in a day
+  const totalDays = Math.ceil((currentDate - creationDate) / oneDay);
+  const intervalDays = 3;
+  const numberOfIntervals = Math.ceil(totalDays / intervalDays);
+  let intervals = [];
+
+  for (let i = 0; i &lt; numberOfIntervals; i++) {
+    intervals.push({
+      key: new Date(creationDate.getTime() + i * intervalDays * oneDay),
+      personalPoints: 0,
+    });
+  }
+  tasks.forEach((task) => {
+    if (
+      task.status === "Done" &amp;&amp;
+      task.taskMemberAssigned.email === currentUserEmail
+    ) {
+      const taskCompleteTime = new Date(task.expectedCompleteTime);
+      if (
+        taskCompleteTime >= creationDate &amp;&amp;
+        taskCompleteTime &lt;= currentDate + 60 * 60 * 24
+      ) {
+        const intervalIndex = Math.floor(
+          (taskCompleteTime - creationDate) / (intervalDays * oneDay)
+        );
+        // Add task points to all subsequent intervals for personal total
+        for (let j = intervalIndex; j &lt; intervals.length; j++) {
+          intervals[j].personalPoints += task.taskPoints;
+        }
+      }
+    }
+  });
+  // Adjust the last interval's key to be the current date
+  // if (intervals.length > 0) {
+  //   intervals[intervals.length - 1].key = currentDate;
+  // }
+  intervals[0].b = 0;
+  return intervals;
+}
+
+function processPersonalTaskData_2(
+  tasks,
+  currentDateStr,
+  creationDateStr,
+  currentUserEmail
+) {
+  const creationDate = new Date(creationDateStr);
+  const currentDate = new Date(currentDateStr);
+
+  // Add the first dummy data: 3 days before creation date
+  const threeDaysBeforeCreation = new Date(
+    creationDate.getTime() - 3 * 24 * 60 * 60 * 1000
+  );
+  const result = [{ key: threeDaysBeforeCreation.toISOString(), b: 0 }];
+
+  // Filter tasks by status 'Done' and user email, then sort by their expected completion time
+  const filteredAndSortedTasks = tasks
+    .filter(
+      (task) =>
+        task.status === "Done" &amp;&amp;
+        task.taskMemberAssigned.email === currentUserEmail
+    )
+    .sort(
+      (a, b) =>
+        new Date(a.expectedCompleteTime) - new Date(b.expectedCompleteTime)
+    );
+
+  let totalTaskPoints = 0;
+  filteredAndSortedTasks.forEach((task) => {
+    totalTaskPoints += task.taskPoints;
+    result.push({
+      key: new Date(task.expectedCompleteTime).toISOString(),
+      b: totalTaskPoints,
+    });
+  });
+
+  // Add the second dummy data: 3 days after the last task's due date, if there are tasks
+  if (filteredAndSortedTasks.length > 0) {
+    const lastTaskDate = new Date(
+      filteredAndSortedTasks[
+        filteredAndSortedTasks.length - 1
+      ].expectedCompleteTime
+    );
+    const threeDaysAfterLastTask = new Date(
+      lastTaskDate.getTime() + 3 * 24 * 60 * 60 * 1000
+    );
+    result.push({
+      key: threeDaysAfterLastTask.toISOString(),
+      b: totalTaskPoints,
+    });
+  }
+
+  return result;
+}
+
+/**
+ * VisualCharts - A functional component for rendering burndown charts of task progress based on group / personal task contribution.
+ *
+ * This component displays two charts: one for overall task progress and another for personal task progress.
+ * It uses the BurndownChart(./BurndownChart.js) and PersonalChart(./PersonalChart.js) components to render these charts.
+ * The component processes task data and personal task data to format them appropriately for the charts.
+ *
+ * Props:
+ * @param {Object} props - The props passed to the VisualCharts component.
+ * @param {Array} props.taskData - The task data to be visualized.
+ * @param {string} props.workspaceCreationTime - The creation time of the workspace.
+ *
+ * State:
+ * @state @type {Array} processedData - The state for storing processed task data for the BurndownChart.
+ * @state @type {Array} processedPersonalData - The state for storing processed personal task data for the PersonalChart.
+ *
+ * The component renders a grid layout containing the two charts. It conditionally renders the charts
+ * only if the processed data is available.
+ *
+ * @returns {React.ReactElement} A React element representing the visual charts for task progress.
+ */
+export default function VisualCharts(props) {
+  const { auth } = useAuth();
+  const currentUserEmail = auth.user.userEmail;
+  const [formattedTasks, setFormattedTasks] = useState();
+  const [processedPersonalData, setProcessedPersonalData] = useState([]);
+
+  // map over and format tasks. formattedTasks will contain all formatted main tasks
+  useEffect(() => {
+    // format data, slicing to leave only first item
+    if (props.taskData &amp;&amp; props.taskData.length > 0) {
+      const firstItems = props.taskData.map((array) => array[0]);
+      setFormattedTasks(firstItems);
+    }
+  }, [props]);
+  const currentTime = new Date().toISOString();
+  const creationTime = props.workspaceCreationTime;
+  // At this point, we have:
+  //    currentTime: current time in ISO String
+  //    formattedTasks: list of main task JSON objects
+  //    creationTime / props.workspaceCreationTime: contains workspace creation time in ISO String
+  const [processedData, setProcessedData] = useState([]);
+
+  useEffect(() => {
+    if (formattedTasks &amp;&amp; currentTime &amp;&amp; creationTime) {
+      // IMPORTANT: in block only runs when all variables are ready.
+      const processingData = processTaskData(
+        formattedTasks,
+        currentTime,
+        creationTime
+      );
+      setProcessedData(processingData);
+      // process personal data
+      const personalData = processPersonalTaskData_2(
+        formattedTasks,
+        currentTime,
+        creationTime,
+        currentUserEmail
+      );
+      setProcessedPersonalData(personalData);
+    }
+  }, [formattedTasks, creationTime, currentUserEmail]);
+
+  return (
+    &lt;React.Fragment>
+      {/* Conditional Rendering */}
+      {processedData.length > 0 &amp;&amp; processedPersonalData.length > 0 ? (
+        &lt;Grid
+          container
+          height="calc((100vh - 64px) * 0.9)"
+          maxHeight="calc((100vh - 64px) * 0.9)"
+          style={{
+            overflow: "auto",
+            justifyContent: "center",
+            display: "flex",
+          }}
+          width="calc((100vw - 200px)*8/12)"
+        >
+          {/* Grid for Burndown Chart */}
+          &lt;Grid
+            item
+            xs={12}
+            height="calc((100vh - 64px)* 0.9 /2)"
+            maxHeight="calc((100vh - 64px)*0.9 /2)"
+            overflow="hidden"
+          >
+            &lt;BurndownChart processedData={processedData} />
+          &lt;/Grid>
+          {/* Grid for Personal Burndown Chart */}
+          &lt;Grid
+            item
+            xs={12}
+            height="calc((100vh - 64px)*0.9 /2)"
+            maxHeight="calc((100vh - 64px)*0.9 /2)"
+            overflow="hidden"
+          >
+            &lt;Divider />
+            &lt;PersonalChart processedPersonalData={processedPersonalData} />
+          &lt;/Grid>
+        &lt;/Grid>
+      ) : (
+        &lt;div>&lt;/div> // Render an empty div if condition is not met
+      )}
+    &lt;/React.Fragment>
+  );
+}
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#App">App</a></li><li><a href="global.html#AuthProvider">AuthProvider</a></li><li><a href="global.html#BottomSVG">BottomSVG</a></li><li><a href="global.html#ChooseName">ChooseName</a></li><li><a href="global.html#CustomLabel">CustomLabel</a></li><li><a href="global.html#CustomLayout">CustomLayout</a></li><li><a href="global.html#DashboardContent">DashboardContent</a></li><li><a href="global.html#InterpolationSelect">InterpolationSelect</a></li><li><a href="global.html#Layout">Layout</a></li><li><a href="global.html#LogOutButton">LogOutButton</a></li><li><a href="global.html#LoginSignup">LoginSignup</a></li><li><a href="global.html#MainAccount">MainAccount</a></li><li><a href="global.html#MainReview">MainReview</a></li><li><a href="global.html#MainSprintBoard">MainSprintBoard</a></li><li><a href="global.html#ManageTeam">ManageTeam</a></li><li><a href="global.html#OBLanding">OBLanding</a></li><li><a href="global.html#PageNotFound">PageNotFound</a></li><li><a href="global.html#PasswordInput">PasswordInput</a></li><li><a href="global.html#PersonalChart">PersonalChart</a></li><li><a href="global.html#RequireAuth">RequireAuth</a></li><li><a href="global.html#SignUp">SignUp</a></li><li><a href="global.html#Task">Task</a></li><li><a href="global.html#TeamProgress">TeamProgress</a></li><li><a href="global.html#TopAppBar">TopAppBar</a></li><li><a href="global.html#TopSVG">TopSVG</a></li><li><a href="global.html#calculateTrendLineData">calculateTrendLineData</a></li><li><a href="global.html#formatDateToMonthDay">formatDateToMonthDay</a></li><li><a href="global.html#processPersonalTaskData">processPersonalTaskData</a></li><li><a href="global.html#processTaskData">processTaskData</a></li><li><a href="global.html#renderMemberItem">renderMemberItem</a></li><li><a href="global.html#renderWorkspaceRow">renderWorkspaceRow</a></li><li><a href="global.html#theme">theme</a></li><li><a href="global.html#useAuth">useAuth</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.2</a> on Mon Dec 04 2023 07:14:04 GMT-0500 (Eastern Standard Time)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>
