@@ -169,8 +169,10 @@ Add the line:
 <localRepository>/Users/”your_user_name”/m2/repository</localRepository>
 
 ## 2. Spinning Up Local Servers
-
-content
+### Front End
+1. After everything is installed, open up project VSCode. Change directory to the root of team_one_project. (`cd team_one_project` at root directory of cloned repo folder)
+2. `npm i` to install all dependencies.
+3. `npm start` and open `http://localhost:3000/` in browser.
 
 ---
 # Front End Documentation
