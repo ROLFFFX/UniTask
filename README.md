@@ -14,30 +14,26 @@ Team Member: Alec Berger, Jingyu(Eula) Wang, Sichen Liu, Yuxuan(ROLF) Shi, Yinsh
 
 
 ---
----
 # 1. Introduction
 Introduction here
 
----
 ---
 # 2. User Guide
 User Guide here
 
 ---
----
 # 3. Technical Documentation / Developer Guide
 Technical Documentation here
 
 ---
-# Onboarding Process!
+# Onboarding Process
 
 ## React.js
 
 *1. Github Desktop*
 
-- Please download [Github Desktop], which makes your life a lot easier. After you downloaded it, sign in and clone our repo.
-- Please make sure to clone instead of downloading the zip file. Cloning ensures the connection between your local file and
-  our repo on github.
+- Please download [Github Desktop], which makes your life a lot easier. After you download it, sign in and clone our repo.
+- Please make sure to clone instead of downloading the zip file.
 - Please open up your github desktop again and click the "current branch" on the top sidebar. Create your own branch and
   select it.
 
@@ -48,7 +44,7 @@ Technical Documentation here
 - Please make sure to click the green button on your left which says "18.18.0 LTS"
 - Once you are done installing, pull up VSCode again and type ```node -v``` in the terminal. if you see "v18.18.0", we are good to go!
 
-*3. NPM, dependencies*
+*3. npm, dependencies*
 
 - In your terminal, cd to the folder "team_one_project". Make sure it's not our CS_370_TEAM_ONE folder, but "team_one_project"
   folder that's located inside of the CS_370_TEAM_ONE.
@@ -64,13 +60,6 @@ Technical Documentation here
 *5. Following Updates*
 
 Normally, ```npm install``` will do!
-
-If not, find exact pkg that's giving you squiggly and run following command accordingly.
-- for MUI
-  - ```npm install @mui/material```
-  - ```npm install @mui/icons-material```
--for react-router-dom
-  - ```npm install --save react-router-dom```
 
 ------------------------------------------------------------------------------------------------------------------------------------------------------
 ## IntelliJ IDEA
