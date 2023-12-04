@@ -29,8 +29,11 @@ public class DashboardService {
     TaskRepository taskRepository;
 
 
-    /*
-     * helper function for the "getTaskDistributionByProjectTitle" function in the controller layer;
+    /**
+     * Helper function for the "getTaskDistributionByProjectTitle" function in the controller layer.
+     *
+     * @param projectTitle The title of the project.
+     * @return HashMap with usernames as keys and completed task points as values.
      */
     public HashMap<String, Integer> getTaskDistributionByProjectTitle(String projectTitle) {
 
@@ -73,8 +76,11 @@ public class DashboardService {
         return taskDistribution;
     }
 
-    /*
-     * helper function for the "getCurProjectTeamProgress" function in the controller layer;
+    /**
+     * Helper function for the "getCurProjectTeamProgress" function in the controller layer.
+     *
+     * @param projectTitle The title of the project.
+     * @return HashMap with task status as keys and the summation of task points as values.
      */
     public HashMap<String, Integer> getTeamProgressByProjectTitle(String projectTitle) {
 

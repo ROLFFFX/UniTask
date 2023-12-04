@@ -7,6 +7,7 @@ import java.util.Set;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
+import com.teamone.unitask.exception.ResourceNotFoundException;
 import com.teamone.unitask.onboard.UserService;
 import com.teamone.unitask.onboard.confirmationtoken.ConfirmationTokenService;
 import com.teamone.unitask.onboard.email.EmailService;
@@ -40,9 +41,9 @@ import javax.validation.Valid;
 
 
 /**
- * The Controller class for the signup/login page
+ * Controller class for the signup/login page.
  */
-//@CrossOrigin(origins = "", maxAge = 3600)
+@CrossOrigin(origins = "http://localhost:3000/", maxAge = 3600, allowCredentials = "true")
 @RestController
 @RequestMapping("/api/auth")
 public class AuthController {
@@ -75,13 +76,14 @@ public class AuthController {
     UserService userService;
 
 
-    /*
-     * the sign in method to verify user by the email - password pair and generate JWT using user's email, then
-     * return user id, username, user email, the JWT, and user roles, all wrapped in a JwtResponse object;
+    /**
+     * The sign-in method to verify the user by the email - password pair and generate JWT using the user's email, then
+     * return user id, username, user email, the JWT, and user roles, all wrapped in a JwtResponse object.
+     *
+     * @param loginRequest The login request containing user email and password.
+     * @return ResponseEntity containing JwtResponse or an error message.
      */
-//    @CrossOrigin(origins = "https://uni-task-beta-front.vercel.app/", allowCredentials = "true")
     @PostMapping("/signin")
-    @CrossOrigin(origins = "http://localhost:3000", allowCredentials = "true")
     public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginRequest loginRequest) {
 
         // if user already signed up and have confirmed the user's email, return error message;
@@ -110,12 +112,13 @@ public class AuthController {
                 roles));
     }
 
-    /*
-     * the sign up method the stores user information
+    /**
+     * The sign-up method that stores user information.
+     *
+     * @param signUpRequest The signup request containing user details.
+     * @return ResponseEntity containing a success message or an error message.
      */
-//    @CrossOrigin(origins = "https://uni-task-beta-front.vercel.app/", allowCredentials = "true")
     @PostMapping("/signup")
-    @CrossOrigin(origins = "http://localhost:3000", allowCredentials = "true")
     public ResponseEntity<?> registerUser(@Valid @RequestBody SignupRequest signUpRequest) {
 
         // check if user previously registered but not confirmed email address;
@@ -195,7 +198,7 @@ public class AuthController {
             User user = userRepository.getByEmail(signUpRequest.getEmail());
 
             // update user info
-            user.setPassword(signUpRequest.getPassword());
+            user.setPassword(encoder.encode(signUpRequest.getPassword()));
             user.setUsername(signUpRequest.getUsername());
 
             userRepository.save(user);
@@ -221,23 +224,28 @@ public class AuthController {
         }
     }
 
-    /*
-     * method to confirm user's email address and enable user;
+    /**
+     * Method to confirm the user's email address and enable the user.
+     *
+     * @param token The confirmation token received via email.
+     * @return ResponseEntity containing a success message or an error message.
      */
     @GetMapping(path = "/confirmSignUp")
     @Transactional
     public ResponseEntity<?> confirmSignUp(@RequestParam("token") String token) {
         // get token;
         ConfirmationToken confirmationToken = confirmationTokenService.getToken(token)
-                .orElseThrow(() -> new RuntimeException("Error: Token is not found."));
+                .orElseThrow(() -> new ResourceNotFoundException("Token is not found."));
         // check if email is already verified;
         if (confirmationToken.getConfirmedAt() != null) {
-            throw new RuntimeException("Error: Email is already confirmed");
+            return new ResponseEntity<>(userService.generateHtmlPage("Email is already confirmed, please sign in. Returning to the log in page...", "https://uni-task.vercel.app/login"), HttpStatus.OK);
+//            throw new RuntimeException("Error: Email is already confirmed");
         }
         // check if the token is expired;
         LocalDateTime expiredAt = confirmationToken.getExpiredAt();
         if (expiredAt.isBefore(LocalDateTime.now())) {
-            throw new RuntimeException("Error: Token is expired");
+            return new ResponseEntity<>(userService.generateHtmlPage("Token is expired, please register again. Returning to the sign up page...", "https://uni-task.vercel.app/login/signup"), HttpStatus.OK);
+//            throw new RuntimeException("Error: Token is expired");
         }
 
         // update confirmation token and enable the user;
@@ -246,7 +254,7 @@ public class AuthController {
         user.setEnabled(true);
 
         // return message;
-        return ResponseEntity.ok(new MessageResponse("Email is confirmed"));
+        return ResponseEntity.ok(userService.generateHtmlPage("Email is confirmed, please log in!", "https://uni-task.vercel.app/login"));
     }
 
 
@@ -261,8 +269,10 @@ public class AuthController {
 //        return new ResponseEntity<>(userProjects, HttpStatus.OK);
 //    }
 
-    /*
-     * method to get all existing users;
+    /**
+     * Method to get all existing users.
+     *
+     * @return A list of all existing users.
      */
     @GetMapping(path = "getAllUsers")
     @PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")

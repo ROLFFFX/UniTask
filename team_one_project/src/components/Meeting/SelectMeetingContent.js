@@ -47,54 +47,30 @@ export function SelectMeetingContent() {
 
   const days = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
   const times = [
-    "00:00",
-    "00:30",
-    "01:00",
-    "01:30",
-    "02:00",
-    "02:30",
-    "03:00",
-    "03:30",
-    "04:00",
-    "04:30",
-    "05:00",
-    "05:30",
-    "06:00",
-    "06:30",
-    "07:00",
-    "07:30",
-    "08:00",
-    "08:30",
-    "09:00",
-    "09:30",
-    "10:00",
-    "10:30",
-    "11:00",
-    "11:30",
-    "12:00",
-    "12:30",
-    "13:00",
-    "13:30",
-    "14:00",
-    "14:30",
-    "15:00",
-    "15:30",
-    "16:00",
-    "16:30",
-    "17:00",
-    "17:30",
-    "18:00",
-    "18:30",
-    "19:00",
-    "19:30",
-    "20:00",
-    "20:30",
-    "21:00",
-    "21:30",
-    "22:00",
-    "22:30",
-    "23:00",
-    "23:30",
+    "00:00", "00:30",
+    "01:00", "01:30",
+    "02:00", "02:30",
+    "03:00", "03:30",
+    "04:00", "04:30",
+    "05:00", "05:30",
+    "06:00", "06:30",
+    "07:00", "07:30",
+    "08:00", "08:30",
+    "09:00", "09:30",
+    "10:00", "10:30",
+    "11:00", "11:30",
+    "12:00", "12:30",
+    "13:00", "13:30",
+    "14:00", "14:30",
+    "15:00", "15:30",
+    "16:00", "16:30",
+    "17:00", "17:30",
+    "18:00", "18:30",
+    "19:00", "19:30",
+    "20:00", "20:30",
+    "21:00", "21:30",
+    "22:00", "22:30",
+    "23:00", "23:30"
   ];
 
   //get time difference between the ISO string and the local time
@@ -119,14 +95,15 @@ export function SelectMeetingContent() {
   };
 
   const toSelectedRange = (slot) => {
+
     const startTime = new Date(slot.getTime());
     const endTime = new Date(slot.getTime() + 30 * 60 * 1000); // Add 30 minutes
 
     const startTDisplay = formatTimeForDisplay(startTime);
     const endTDisplay = formatTimeForDisplay(endTime);
 
-    return startTDisplay + " - " + endTDisplay;
-  };
+    return startTDisplay+" - "+endTDisplay;
+  }
 
   const deleteAllUserTimeSlots = async () => {
     try {
@@ -241,7 +218,7 @@ export function SelectMeetingContent() {
   const navigate = useNavigate();
 
   const [isFailureModalOpen, setIsFailureModalOpen] = useState(false);
-  const [failureMessage, setFailureMessage] = useState("");
+  const [failureMessage, setFailureMessage] = useState('');
 
   const handleConfirmSelection = async () => {
     //送后端
@@ -288,9 +265,6 @@ export function SelectMeetingContent() {
     window.location.reload();
   };
 
-  const handleCloseModal = () => {
-    setIsModalOpen(false); // Close the modal
-  };
 
   return (
     <div className="mainMeetingContainer">
@@ -302,40 +276,36 @@ export function SelectMeetingContent() {
             </div>
             <div className="actions">
               <button className="button-page" onClick={handleGoToMainCalendar}>
-                Back To Group Schedule
+                    Back To Group Schedule
               </button>
-              <button
-                className="button-delete"
-                onClick={deleteAllUserTimeSlots}
-              >
+              <button className="button-delete" onClick={deleteAllUserTimeSlots}>
                 Clear All My Selections
               </button>
-              <button
-                className="button-confirm"
-                onClick={handleConfirmSelection}
-              >
+              <button className="button-confirm" onClick={handleConfirmSelection}>
                 Confirm Selection
               </button>
             </div>
           </div>
           <div className="upperright-list">
-            <h3>Selected Times:</h3>
-            <ul>
-              {[...fetchedSlots, ...newlySelectedSlots].map((slot, index) => (
-                <li key={index}>{toSelectedRange(slot)}</li>
-              ))}
-            </ul>
+              <h3>Selected Times:</h3>
+              <ul>
+                {[...fetchedSlots, ...newlySelectedSlots].map((slot, index) => (
+                  <li key={index}>
+                    {toSelectedRange(slot)}
+                  </li>
+                ))}
+              </ul>
           </div>
         </div>
         <div className="lower">
           <div className="week-navigation-timeslots">
-            <button className="button-prev" onClick={moveToPreviousWeek}>
-              &lt; Previous Week
-            </button>
-            <h2>{dateRange}</h2>
-            <button className="button-next" onClick={moveToNextWeek}>
-              Next Week &gt;
-            </button>
+              <button className="button-prev" onClick={moveToPreviousWeek}>
+                &lt; Previous Week
+              </button>
+              <h2>{dateRange}</h2>
+              <button className="button-next" onClick={moveToNextWeek}>
+                Next Week &gt;
+              </button>
           </div>
           <div className="grid">
             <div className="headerRow">
@@ -351,30 +321,20 @@ export function SelectMeetingContent() {
                 <div className="cell timeLabel">{time}</div>
                 {days.map((day) => {
                   const startDate = new Date(referenceDate);
-                  startDate.setDate(
-                    referenceDate.getDate() -
-                      (referenceDate.getDay() === 0
-                        ? 6
-                        : referenceDate.getDay() - 1)
-                  );
+                  startDate.setDate(referenceDate.getDate() - (referenceDate.getDay() === 0 ? 6 : referenceDate.getDay() - 1));
 
                   const dayNumber = days.indexOf(day);
-                  const [hours, minutes] = time.split(":").map(Number);
+                  const [hours, minutes] = time.split(':').map(Number);
                   startDate.setDate(startDate.getDate() + dayNumber);
                   startDate.setHours(hours, minutes, 0, 0);
 
                   const slotKey = startDate.getTime();
-                  const isSelected = [
-                    ...fetchedSlots,
-                    ...newlySelectedSlots,
-                  ].some((slot) => slot.getTime() === slotKey);
+                  const isSelected = [...fetchedSlots, ...newlySelectedSlots].some((slot) => slot.getTime() === slotKey);
 
                   return (
                     <button
                       aria-label={`Select ${time} on ${day}`}
-                      className={`cell timeSlot ${
-                        isSelected ? "selected" : ""
-                      }`}
+                      className={`cell timeSlot ${isSelected ? "selected" : ""}`}
                       key={day}
                       onClick={() => toggleSlotSelection(day, time)}
                     ></button>
@@ -391,12 +351,9 @@ export function SelectMeetingContent() {
         <DialogContent>
           <p>Your time slots have been successfully selected.</p>
         </DialogContent>
-      </Dialog>
-
-      <Dialog
-        open={isFailureModalOpen}
-        onClose={() => setIsFailureModalOpen(false)}
-      >
+      </Dialog> 
+      
+      <Dialog open={isFailureModalOpen} onClose={() => setIsFailureModalOpen(false)}>
         <DialogTitle>Selection Failed</DialogTitle>
         <DialogContent>
           <p>{failureMessage}</p>

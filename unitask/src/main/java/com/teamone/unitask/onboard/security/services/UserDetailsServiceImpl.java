@@ -12,7 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 
 /**
- * The service class, implemented for the spring security
+ * Implementation of the UserDetailsService interface for loading user details during Spring Security authentication.
  */
 @Service
 public class UserDetailsServiceImpl implements UserDetailsService {
@@ -21,6 +21,13 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     UserRepository userRepository;
 
 
+    /**
+     * Loads user details by username (email in this case) from the database.
+     *
+     * @param email The email (username) of the user.
+     * @return UserDetails object representing the loaded user details.
+     * @throws UsernameNotFoundException If the user with the specified email is not found.
+     */
     @Override
     @Transactional
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {

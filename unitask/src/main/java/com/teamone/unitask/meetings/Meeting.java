@@ -8,13 +8,13 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.time.ZonedDateTime;
 
-    /**
-     * Represents a meeting within a project. This entity class stores information about a meeting, including its
-     * title, start and end times, and associated project. It is linked to the 'meeting' table in the database.
-     */
-    @Entity
-    @Table(name = "meeting")
-    public class Meeting {
+/**
+ * Represents a meeting within a project. This entity class stores information about a meeting, including its
+ * title, start and end times, and associated project. It is linked to the 'meeting' table in the database.
+ */
+@Entity
+@Table(name = "meeting")
+public class Meeting {
 
     // Fields
 

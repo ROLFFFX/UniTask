@@ -8,10 +8,16 @@ import java.util.List;
 
 
 /**
- * The repository class for the Report entity
+ * The repository class for the Report entity.
  */
 @Repository
 public interface ReportRepository extends JpaRepository<Report, Long> {
 
+    /**
+     * Find reports by project ID.
+     *
+     * @param projectId   The ID of the project for which reports are to be retrieved.
+     * @return            List of reports belonging to the specified project.
+     */
     List<Report> findReportsByProjectId(Project projectId);
 }

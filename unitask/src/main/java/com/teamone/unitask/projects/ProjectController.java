@@ -18,9 +18,9 @@ import java.util.Set;
 
 
 /**
- * The controller class for the project entity, mainly build APIs for the workspace web page
+ * Controller class for the Project entity, providing APIs for the workspace web page.
  */
-//@CrossOrigin(origins = "", maxAge = 3600)
+@CrossOrigin(origins = "http://localhost:3000/", maxAge = 3600, allowCredentials = "true")
 @RestController
 @RequestMapping("/projects")
 public class ProjectController {
@@ -37,19 +37,19 @@ public class ProjectController {
     @Autowired
     ProjectRepository projectRepository;
 
-    /*
-     * create new workspace for user;
+    /**
+     * API to create a new workspace for the user.
+     *
+     * @param requestProject The project details provided in the request body.
+     * @param header         Authorization header containing the JWT token.
+     * @return ResponseEntity with the created project and HTTP status.
      */
-    //    @CrossOrigin(origins = "https://uni-task-beta-front.vercel.app/", allowCredentials = "true")
-    @CrossOrigin(origins = "http://localhost:3000", allowCredentials = "true")
     @PostMapping("/createNewWorkspace")
     public ResponseEntity<Project> createProject(@RequestBody Project requestProject,
                                                  @RequestHeader("Authorization") String header) {
 
         // check if current workspace title already existed; if yes, throw the error status;
         if (projectRepository.existsByProjectTitle(requestProject.getProjectTitle())) {
-//            _project = projectRepository.findByProjectTitle(requestProject.getProjectTitle());
-//            curUser.addProject(_project);
             return new ResponseEntity<>(null, HttpStatus.FORBIDDEN);
         }
 
@@ -63,12 +63,13 @@ public class ProjectController {
         return new ResponseEntity<>(_project, HttpStatus.CREATED);
     }
 
-    /*
-     * get all workspaces the given user is enrolled in;
+    /**
+     * API to get all workspaces the given user is enrolled in.
+     *
+     * @param header Authorization header containing the JWT token.
+     * @return ResponseEntity with the user's projects and HTTP status.
      */
     @GetMapping(path = "/getUserWorkspaces")
-//    @CrossOrigin(origins = "https://uni-task-beta-front.vercel.app/", allowCredentials = "true")
-    @CrossOrigin(origins = "http://localhost:3000", allowCredentials = "true")
     public ResponseEntity<Set<Project>> getUserProjectList(@RequestHeader("Authorization") String header) {
 
         // get user information from the JWT;
@@ -83,12 +84,13 @@ public class ProjectController {
     }
 
 
-    /*
-     * get all users enrolled in the project;
+    /**
+     * API to get all users enrolled in the project.
+     *
+     * @param projectTitle Title of the project.
+     * @return ResponseEntity with the project members and HTTP status.
      */
     @GetMapping(path = "/workspaceMembers/{projectTitle}")
-//    @CrossOrigin(origins = "https://uni-task-beta-front.vercel.app/", allowCredentials = "true")
-    @CrossOrigin(origins = "http://localhost:3000", allowCredentials = "true")
     public ResponseEntity<List<User>> getAllUsersByProjectName(@PathVariable("projectTitle") String projectTitle) {
 
         // if project does not exist;
@@ -102,12 +104,14 @@ public class ProjectController {
         return new ResponseEntity<>(projectMember, HttpStatus.OK);
     }
 
-    /*
-     * add a user to an existing workspace by email address;
+    /**
+     * API to add a user to an existing workspace by email address.
+     *
+     * @param email         Email address of the user to be added.
+     * @param projectTitle  Title of the project.
+     * @return ResponseEntity with a message response and HTTP status.
      */
-//    @CrossOrigin(origins = "https://uni-task-beta-front.vercel.app/", allowCredentials = "true")
     @PostMapping(path = "/addUserToWorkspace/{email}/{projectTitle}")
-    @CrossOrigin(origins = "http://localhost:3000", allowCredentials = "true")
     public ResponseEntity<MessageResponse> addUserToProjectByEmail(@PathVariable("email") String email,
                                                                    @PathVariable("projectTitle") String projectTitle) {
 
@@ -131,12 +135,14 @@ public class ProjectController {
         return new ResponseEntity<>(new MessageResponse("User successfully added!"), HttpStatus.CREATED);
     }
 
-    /*
-     * delete a workspace;
+    /**
+     * API to delete a workspace.
+     *
+     * @param email         Email address of the user to be removed.
+     * @param projectTitle  Title of the project.
+     * @return ResponseEntity with a message response and HTTP status.
      */
     @DeleteMapping(path = "/deleteUserFromWorkspace/{email}/{projectTitle}")
-//    @CrossOrigin(origins = "https://uni-task-beta-front.vercel.app/", allowCredentials = "true")
-    @CrossOrigin(origins = "http://localhost:3000", allowCredentials = "true")
     public ResponseEntity<MessageResponse> deleteUserFromProjectByEmail(@PathVariable("email") String email,
                                                                         @PathVariable("projectTitle") String projectTitle) {
 
@@ -160,11 +166,12 @@ public class ProjectController {
         return new ResponseEntity<>(new MessageResponse("Successfully removed user from the project!"), HttpStatus.NO_CONTENT);
     }
 
-    /*
-     * get the workspace creation time;
+    /**
+     * API to get the workspace creation time.
+     *
+     * @param projectTitle Title of the project.
+     * @return ResponseEntity with the creation time and HTTP status.
      */
-    //    @CrossOrigin(origins = "https://uni-task-beta-front.vercel.app/", allowCredentials = "true")
-    @CrossOrigin(origins = "http://localhost:3000", allowCredentials = "true")
     @GetMapping(path = "/creationTime/{projectTitle}")
     public ResponseEntity<LocalDateTime> getWorkspaceCreationTime(@PathVariable("projectTitle") String projectTitle) {
 

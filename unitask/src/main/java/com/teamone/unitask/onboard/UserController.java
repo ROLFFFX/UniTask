@@ -8,8 +8,9 @@ import org.springframework.web.bind.annotation.*;
 
 
 /**
- * The controller class for the User entity
+ * Controller class for managing User entities.
  */
+@CrossOrigin(origins = "http://localhost:3000/", maxAge = 3600, allowCredentials = "true")
 @RestController
 @RequestMapping(path = "users")
 public class UserController {
@@ -17,9 +18,14 @@ public class UserController {
     @Autowired
     UserService userService;
 
-//    @CrossOrigin(origins = "https://uni-task-beta-front.vercel.app/", allowCredentials = "true")
-@CrossOrigin(origins = "http://localhost:3000", allowCredentials = "true")
-@GetMapping(path = "/getUsername")
+
+    /**
+     * Retrieves the username associated with the provided JWT token.
+     *
+     * @param header The Authorization header containing the JWT token.
+     * @return ResponseEntity containing the username if successful, otherwise an HTTP error status.
+     */
+    @GetMapping(path = "/getUsername")
     public ResponseEntity<String> getUsernameByJWT(@RequestHeader("Authorization") String header) {
 
         User cur_user = userService.getUserEmailFromToken(header);

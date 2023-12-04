@@ -17,7 +17,7 @@ import io.jsonwebtoken.security.Keys;
 
 
 /**
- * This class is a component class for the spring security implementation
+ * Utility class for handling JWT (JSON Web Token) in the Spring Security implementation.
  */
 @Component
 public class JwtUtils {
@@ -30,8 +30,11 @@ public class JwtUtils {
     @Value("${unitask.app.jwtExpirationMs}")
     private int jwtExpirationMs;
 
-    /*
-     * generate token;
+    /**
+     * Generates a JWT token based on the user authentication details.
+     *
+     * @param authentication The authentication details of the user.
+     * @return The generated JWT token.
      */
     public String generateJwtToken(Authentication authentication) {
 
@@ -45,18 +48,31 @@ public class JwtUtils {
                 .compact();
     }
 
+    /**
+     * Generates a key from the base64-encoded JWT secret.
+     *
+     * @return The generated key.
+     */
     private Key key() {
         return Keys.hmacShaKeyFor(Decoders.BASE64.decode(jwtSecret));
     }
 
-    // get email address;
+    /**
+     * Retrieves the email address from the JWT token.
+     *
+     * @param token The JWT token.
+     * @return The email address extracted from the token.
+     */
     public String getUserNameFromJwtToken(String token) {
         return Jwts.parserBuilder().setSigningKey(key()).build()
                 .parseClaimsJws(token).getBody().getSubject();
     }
 
-    /*
-     * check if the given token is valid and throw errors to the front end when error is detected;
+    /**
+     * Validates the given JWT token.
+     *
+     * @param authToken The JWT token to be validated.
+     * @return True if the token is valid; otherwise, false.
      */
     public boolean validateJwtToken(String authToken) {
         try {

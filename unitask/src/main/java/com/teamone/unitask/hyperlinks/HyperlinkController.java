@@ -9,9 +9,9 @@ import java.util.List;
 
 
 /**
- * The Controller class for the Hyperlink page;
+ * Controller class for the Hyperlink page.
  */
-@CrossOrigin(origins = "", maxAge = 3600)
+@CrossOrigin(origins = "http://localhost:3000/", maxAge = 3600, allowCredentials = "true")
 @RestController
 @RequestMapping("/hyperlinks")
 public class HyperlinkController {
@@ -20,13 +20,11 @@ public class HyperlinkController {
     HyperlinkService hyperlinkService;
 
 
-    /*
-     * Post method that take a Hyperlink object and the project title as input; if the project title is valid;
-     * save the Hyperlink object to the database and return the Hyperlink object with HttpStatus.CREATED, else,
-     * return null and HttpStatus.BAD_REQUEST;
+    /**
+     * POST method that takes a Hyperlink object and the project title as input.
+     * If the project title is valid, save the Hyperlink object to the database and return the Hyperlink object with
+     * HttpStatus.CREATED. Otherwise, return null and HttpStatus.BAD_REQUEST.
      */
-    //    @CrossOrigin(origins = "https://uni-task-beta-front.vercel.app/", allowCredentials = "true")
-    @CrossOrigin(origins = "http://localhost:3000", allowCredentials = "true")
     @PostMapping("/createHyperlink/{projectTitle}")
     public ResponseEntity<Hyperlink> createHyperlink(@RequestBody Hyperlink hyperlink,
                                              @PathVariable("projectTitle") String projectTitle) {
@@ -40,12 +38,11 @@ public class HyperlinkController {
         }
     }
 
-    /*
-     * Get method that takes the project title as input, return all the Hyperlinks of the given project and
-     * HttpStatus.OK if the given project title is valid; else, return null and HttpStatus.BAD_REQUEST;
+    /**
+     * GET method that takes the project title as input.
+     * Returns all the Hyperlinks of the given project and HttpStatus.OK if the given project title is valid.
+     * Otherwise, return null and HttpStatus.BAD_REQUEST.
      */
-    //    @CrossOrigin(origins = "https://uni-task-beta-front.vercel.app/", allowCredentials = "true")
-    @CrossOrigin(origins = "http://localhost:3000", allowCredentials = "true")
     @GetMapping("/getAllHyperlinks/{projectTitle}")
     public ResponseEntity<List<Hyperlink>> getAllHyperlinks(@PathVariable("projectTitle") String projectTitle) {
 
@@ -58,13 +55,11 @@ public class HyperlinkController {
         }
     }
 
-    /*
-     * Put method that take the hyperlinkId and new hyperlink object as input, modify the existing hyperlink in the
-     * database; if successfully modified, return the modified hyperlink object and HttpStatus.OK; else, throw the
-     * ResourceNotFoundException;
+    /**
+     * PUT method that takes the hyperlinkId and a new hyperlink object as input.
+     * Modifies the existing hyperlink in the database. If successfully modified, return the modified hyperlink object and
+     * HttpStatus.OK. Otherwise, throw the ResourceNotFoundException.
      */
-    //    @CrossOrigin(origins = "https://uni-task-beta-front.vercel.app/", allowCredentials = "true")
-    @CrossOrigin(origins = "http://localhost:3000", allowCredentials = "true")
     @PutMapping("/editHyperlink/{id}")
     public ResponseEntity<Hyperlink> updateHyperlink(@PathVariable("id") Long hyperlinkId, @RequestBody Hyperlink hyperlink) {
 
@@ -73,12 +68,10 @@ public class HyperlinkController {
         return new ResponseEntity<>(hyperlinkToEdit, HttpStatus.OK);
     }
 
-    /*
-     * Delete method that take a hyperlink id as the input, and remove it from the database; if the given hyperlink id
-     * in invalid, throw the ResourceNotFound exception;
+    /**
+     * DELETE method that takes a hyperlink id as the input and removes it from the database.
+     * If the given hyperlink id is invalid, throw the ResourceNotFoundException.
      */
-    //    @CrossOrigin(origins = "https://uni-task-beta-front.vercel.app/", allowCredentials = "true")
-    @CrossOrigin(origins = "http://localhost:3000", allowCredentials = "true")
     @DeleteMapping("/deleteHyperlink/{id}")
     public ResponseEntity<Hyperlink> deleteHyperlink(@PathVariable("id") Long hyperlinkId) {
 
