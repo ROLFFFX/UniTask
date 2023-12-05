@@ -973,7 +973,7 @@ This file is for the backend deployment use. It configures the version
 of java JDK this backend implementation is using. For this
 implementation, the java version used is 17.
 
---
+---
 # Database
 we use a cloud MySQL database with Microsoft Azure. The database connections and settings are configured in the application.yml file with path “./unitask/src/main/resources”.
 
@@ -1005,7 +1005,7 @@ show tables;
 
 
 
---
+---
 # Deployment
 UniTask project is deployed on both [vercel](vercel.app)(front end) and [heroku](heroku.com)(back end).<br/>
 The deployed version of code can be found in these two repositories: <br/>
