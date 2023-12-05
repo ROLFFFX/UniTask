@@ -98,7 +98,7 @@ This documentation is meant to guide end-users through a walkthrough of the prod
 6. [Meeting Schedule](#meeting-schedule)
    1. [Group Events Schedule](#group-events-schedule)
    2. [Group Availability](#group-availability)
-7. [Report & Review](#report-&-review)
+7. [Report & Review](#reportreview)
 8. [Navbar](#navbar)
 
 ## OVERVIEW 
