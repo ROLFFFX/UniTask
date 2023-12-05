@@ -23,8 +23,8 @@
 ![image7](https://github.com/ROLFFFX/CS_370_Team_One/assets/29384588/9ba1f179-afe8-4398-b8db-8c7b187536d0)
 ![image6](https://github.com/ROLFFFX/CS_370_Team_One/assets/29384588/3c4c3161-027b-4943-8a6e-b1170e65f812)
 ![image5](https://github.com/ROLFFFX/CS_370_Team_One/assets/29384588/4d453a24-5e49-4256-8292-f6dcd7e573a5)
-![image4](https://github.com/ROLFFFX/CS_370_Team_One/assets/29384588/77c3af56-d4a0-4eee-a989-44521ee9aa5e)
-![image3](https://github.com/ROLFFFX/CS_370_Team_One/assets/29384588/1a98eec0-dabe-49c6-a83f-ac9b2981783a)
+
+
 
 
 # UniTask
@@ -121,14 +121,6 @@ This documentation is meant to guide end-users through a walkthrough of the prod
    2. [Group Availability](#group-availability)
 5. [Report & Review](#report-review)
 6. [Navbar](#report-review)
-6. [Technical Documentation / Developer Guide](#3-technical-documentation--developer-guide)
-   1. [Onboarding Process](#onboarding-process)
-        1. [Installations](#1-installations)
-        2. [Spinning Up Local Servers](#2-spinning-up-local-servers)
-   2. [Front End Documentation](#front-end-documentation)
-   3. [Back End Documentation](#back-end-documentation)
-   4. [Deployment](#deployment)
-
 
 ## OVERVIEW 
 
@@ -154,13 +146,13 @@ To meet the needs of the average college student, UniTask provides the end-user 
 
 The Dashboard is a data analytics tool to monitor progress on the project. Various graphs are automatically generated to visualize the completion status of tasks. The dashboard also includes a full list of all tasks, to provide a simple view of every work item in one place.
 
-![](Aspose.Words.72bd5ad8-dbd7-4a24-8862-237c4cc5927a.003.jpeg)
+![image3](https://github.com/ROLFFFX/CS_370_Team_One/assets/29384588/1a98eec0-dabe-49c6-a83f-ac9b2981783a)
 
 ### Views
 
 The Dashboard can toggle between two different viewing modes. The “Data Visual” view shows graphs to visually portray progress on the project. The two line graphs shown in this view display the number of task points completed over time, so the team can monitor its productivity. The top graph shows tasks completed by the whole group, while the bottom graph shows tasks personally completed by the current user (note: this graph will look different for each team member). A scroll bar is provided to zoom in on smaller ranges of time. For the Personal Task graph, different interpolation options can be chosen to customize the style of the chart.
 
-![](Aspose.Words.72bd5ad8-dbd7-4a24-8862-237c4cc5927a.004.jpeg)
+![image4](https://github.com/ROLFFFX/CS_370_Team_One/assets/29384588/77c3af56-d4a0-4eee-a989-44521ee9aa5e)
 
 The “Table Task” view switches to a linear list of all tasks, with information such as title, completion status, assignee, task points, and due date.
 
@@ -311,7 +303,6 @@ The main feature included in the navbar is the Hyperlinks tab. By clicking this 
 ![](Aspose.Words.72bd5ad8-dbd7-4a24-8862-237c4cc5927a.029.png)
 
 [^1]: Since some parts of a project are bound to be more labor-intensive than others, the point system is meant to quantify how much effort each task is worth. When calculating the overall progress on the project (see Progress Checker on the Dashboard), UniTask will calculate a proportion of completed task points, not the number of tasks themselves. If a user prefers to weigh all tasks evenly, they can simply ignore the task point feature and give all tasks a default weight of 1task point.
-[ref1]: https://github.com/ROLFFFX/CS_370_Team_One/assets/29384588/913f26bd-e7ca-4ab2-91b9-5a8ec9a77251
 
 
 ---
