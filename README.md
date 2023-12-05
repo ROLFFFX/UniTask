@@ -394,7 +394,7 @@ Set up your username and password following the guide.
 ### JDK & Maven
 #### JDK
 I think everyone have this, but you may want to check this link.
-https://www.youtube.com/watch?v=43-AjOT3Hfk
+https://www.youtube.com/watch?v=mAIxIhVJ7N0
 
 #### Maven
 I compared my settings with those on the youtube videos, I am not using the newest version of maven so I think this link should be helpful for macOS users.
