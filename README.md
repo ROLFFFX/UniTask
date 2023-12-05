@@ -17,7 +17,8 @@ Team Member: Alec Berger, Jingyu(Eula) Wang, Sichen Liu, Yuxuan(ROLF) Shi, Yinsh
         2. [Spinning Up Local Servers](#2-spinning-up-local-servers)
    2. [Front End Documentation](#front-end-documentation)
    3. [Back End Documentation](#back-end-documentation)
-   4. [Deployment](#deployment)
+   4. [Database](#database)
+   5. [Deployment](#deployment)
 
 
 ---
@@ -971,6 +972,38 @@ A full list of dependencies used are listed here:
 This file is for the backend deployment use. It configures the version
 of java JDK this backend implementation is using. For this
 implementation, the java version used is 17.
+
+--
+# Database
+we use a cloud MySQL database with Microsoft Azure. The database connections and settings are configured in the application.yml file with path “./unitask/src/main/resources”.
+
+We are using the “onboard” database for the local host test, and the “unitask_deploy” database for the deployed version.
+
+We highly suggest that you continue with our selected databases. If you want to use a new database, after connected to the Azure database, use the following commands:
+
+-- create a database
+create database “name of your new database”;
+-- select you current database
+use “name of your new database”;
+
+In the application.yml file, you should also change the spring: datasource: url:
+url: jdbc:mysql://unitask-mysql.mysql.database.azure.com/the_name_of_your_database
+
+Then run the backend following the steps explained in the “Onboarding Process” -> “Spinning Up Local Server”
+
+Before test any end points, you should also add three ROLES into the roles table with the following code (Note that you must first “use” your database):
+
+INSERT INTO roles(name) VALUES('ROLE_USER');
+INSERT INTO roles(name) VALUES('ROLE_MODERATOR');
+INSERT INTO roles(name) VALUES('ROLE_ADMIN'); 
+
+To see the content in each table, run:
+select * from “table you want to check”;
+
+To see all tables in the database, run:
+show tables;
+
+
 
 --
 # Deployment
