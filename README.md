@@ -324,14 +324,14 @@ Normally, ```npm install``` will do!
   - Check for the maven homepath. This should be where your maven package stores.
   - Check your user setting file, it should be the address of your 'settings.xml' file, which is in your maven package -> conf, and select the override box.
   - Check the local repository, the path is where you create your repository in m2 locates, which should look like:
-  - '/”where_you_put_your_m2_directory”/m2/repository'
+  - '/”where_you_put_your_m2_directory”/m2/repository' or the path you have for your repository
   - Then select the override box.
 
   - For Maven
   - we are using maven with version 3.6.3
 
   - For SDK
-  - `File` -> `Project structure`
+  - `File` -> `Project structure` -> `Project` and `Modules`
   - Check your SDK version, should be 17
 
 ------------------------------------------------------------------------------------------------------------------------------------------------------
