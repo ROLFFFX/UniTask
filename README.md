@@ -96,8 +96,6 @@ The UniTask project is developed by Team One in 8 scrum iterations. The producti
 
 ---
 # 2. User Guide
-![image1](https://github.com/ROLFFFX/CS_370_Team_One/assets/29384588/77bcce01-eb63-449a-a2c3-79bbdf62e994){width="6.5in"
-height="7.361001749781278e-2in"}
 
 **UniTask**
 
@@ -107,31 +105,38 @@ Welcome to **UniTask**
 
 This documentation is meant to guide end-users through a walkthrough of the product.
 
-**OVERVIEW 2**
+## Index
+1. [Overview](#overview)
+   1. [Product Description](#product-description)
+   2. [Outline of Features](#outline-of-features)
+2. [Dashboard](#dashboard)
+   1. [Overview](#dashboard-overview)
+   2. [Views](#views)
+   3. [Task Distribution and Progress](#distribution-progress)
+3. [Taskboard](#taskboard)
+   1. [Overview](#taskboard-overview)
+   2. [Tasks](#tasks)
+4. [Meeting Schedule](#meeting-schedule)
+   1. [Group Events Schedule](#group-events)
+   2. [Group Availability](#group-availability)
+5. [Report & Review](#report-review)
+6. [Navbar](#report-review)
+6. [Technical Documentation / Developer Guide](#3-technical-documentation--developer-guide)
+   1. [Onboarding Process](#onboarding-process)
+        1. [Installations](#1-installations)
+        2. [Spinning Up Local Servers](#2-spinning-up-local-servers)
+   2. [Front End Documentation](#front-end-documentation)
+   3. [Back End Documentation](#back-end-documentation)
+   4. [Deployment](#deployment)
 
-Product Description 2 Outline of Features 2
 
-**DASHBOARD 3**
+## OVERVIEW 
 
-Overview 3 Views 3 Task Distribution and Progress 4
-
-**TASKBOARD 6**
-
-Overview 6 Tasks 6
-
-**MEETING SCHEDULE 9**
-
-Group Events Schedule 9 Group Availability 12
-
-**REPORT&REVIEW 15 NAVBAR 16**
-
-15![ref1]
-
-**OVERVIEW Product Description**
+### Product Description
 
 UniTask is a team-management application designed for college students working on a group project. Unlike most team management software, which is made for a professional environment, Unitask prioritizes students’needs by providing features specifically designed for an academic setting, while remaining simple enough for anyone to use without any professional experience.
 
-**Outline of Features**
+### Outline of Features
 
 To meet the needs of the average college student, UniTask provides the end-user with a number of features essential to academic group work. Broadly speaking, the main function of the application is to provide a team the ability to break down a project into an organized list of tasks to be completed. These tasks can be assigned to individual team members, and the team can then monitor the progress and due date of each task to keep the project on track. A number of supplemental features are provided to make UniTask an all-in-one workspace for everything a group project would need. The rest of the documentation will explain each feature in greater detail, but this outline will briefly describe the main functions:
 
@@ -143,13 +148,15 @@ To meet the needs of the average college student, UniTask provides the end-user 
 1. Calendar: A scheduling tool to help team members find meeting times. Each user can fill in the hours they are free throughout the week, and the calendar will find times when everyone is free to meet.
 1. Report &Review: A place to write periodic reviews of the group’s progress, especially for providing feedback on recent accomplishments.
 
-**DASHBOARD Overview**
+## DASHBOARD 
+
+### Overview
 
 The Dashboard is a data analytics tool to monitor progress on the project. Various graphs are automatically generated to visualize the completion status of tasks. The dashboard also includes a full list of all tasks, to provide a simple view of every work item in one place.
 
 ![](Aspose.Words.72bd5ad8-dbd7-4a24-8862-237c4cc5927a.003.jpeg)
 
-**Views**
+### Views
 
 The Dashboard can toggle between two different viewing modes. The “Data Visual” view shows graphs to visually portray progress on the project. The two line graphs shown in this view display the number of task points completed over time, so the team can monitor its productivity. The top graph shows tasks completed by the whole group, while the bottom graph shows tasks personally completed by the current user (note: this graph will look different for each team member). A scroll bar is provided to zoom in on smaller ranges of time. For the Personal Task graph, different interpolation options can be chosen to customize the style of the chart.
 
@@ -159,7 +166,7 @@ The “Table Task” view switches to a linear list of all tasks, with informati
 
 ![](Aspose.Words.72bd5ad8-dbd7-4a24-8862-237c4cc5927a.005.jpeg)
 
-**Task Distribution and Progress**
+### Task Distribution and Progress
 
 The Dashboard also includes a pie chart showing the proportion of task points completed by each team member. This helps teams make sure work on the progress is distributed evenly, and that each member is pulling their weight. When hovering the mouse over a section of the chart, a tooltip displays which team member is currently selected.
 
@@ -167,13 +174,15 @@ Below this pie chart, a progress bar calculates the percentage of completed task
 
 ![](Aspose.Words.72bd5ad8-dbd7-4a24-8862-237c4cc5927a.006.jpeg)
 
-**TASKBOARD Overview**
+## TASK BOARD 
+
+### Overview
 
 The Task Board is a three-column, Scrum-style task board where users can create a list of work items to be completed in a project, and then organize these items into columns according to the progress made on each task. Each column of the board corresponds to one of three discrete completion statuses: To Do, Doing, or Done. Tasks can be moved across the board from left to right, until every task is eventually marked done, and the project is deemed complete.
 
 ![](Aspose.Words.72bd5ad8-dbd7-4a24-8862-237c4cc5927a.007.jpeg)
 
-**Tasks**
+### Tasks
 
 A “Task” is simply any work item that must be completed during a project. It is up to the user how to break down their project into smaller parts, so what exactly counts as a task is fairly open-ended and largely depends on the nature of the project.
 
@@ -199,11 +208,11 @@ When hovering over a task, three buttons will appear in the upper right corner. 
 
 The chevron button to the left of the plus button is used to expand and collapse the subtask checklist for easier viewing. Clicking the ellipsis button will reveal options to edit or delete the task.
 
-**MEETING SCHEDULE**
+## MEETING SCHEDULE
 
 The Weekly Calendar component is composed of two separate calendars. Namely, **Group Events Schedule** and **Select YourAvailable Times.**
 
-**Group Events Schedule**
+### Group Events Schedule
 
 The UniTask calendar is a dynamic interface that allows group members to **schedule meetings** efficiently based on **common availability**.
 
@@ -251,13 +260,13 @@ Similarly, the meeting can be moved to **anotherday ortime** by **dragging** the
 
 allows the user to input a new title for the meeting.
 
-**Group Availability**
+### Group Availability
 
-The **Select YourAvailable Times** is a user-friendly interface designed for scheduling and managing meeting time slots. It provides a visual calendar to select available times for meetings within a week.
+The **Select Your Available Times** is a user-friendly interface designed for scheduling and managing meeting time slots. It provides a visual calendar to select available times for meetings within a week.
 
-**How to Use the Select YourAvailable Times Calendar**
+**How to Use the Select Your Available Times Calendar**
 
-1\.Click on **Start A Group Availability Pol** button. Once users click on it, a modal will pop up. It includes tips for the **Group Event** component. After reading the tips, users may proceed to poll.
+1\.Click on **Start A Group Availability Poll** button. Once users click on it, a modal will pop up. It includes tips for the **Group Event** component. After reading the tips, users may proceed to poll.
 
 ![](Aspose.Words.72bd5ad8-dbd7-4a24-8862-237c4cc5927a.023.png)
 
@@ -265,7 +274,7 @@ The **Select YourAvailable Times** is a user-friendly interface designed for sch
 
 2\. Select Available Time Slots
 
-Once users proceed to poll, they are directed to the **Select YourAvailable Time** calendar.
+Once users proceed to poll, they are directed to the **Select Your Available Time** calendar.
 
 To access the Interface, ensure users are logged into their account, as the component integrates with user authentication.
 
@@ -285,17 +294,17 @@ Users can clear their selections by clicking the **ClearAll My Selections** butt
 
 After users have confirmed their selection, they can click on the **Schedule New Events / Check Common Availability** button. This button allows users to schedule new events or check for common availability times within their group.
 
-**REPORT&REVIEW**
+## REPORT&REVIEW
 
 In the Report &Review page, users can write brief reports about the group’s progress. This can be used to log significant milestones in the project, and take notes on feedback or comments made about these accomplishments. Keeping records in this section is entirely optional, but this feature is perfect for long-term projects that might require reviewing periodic progress reports.
 
 ![](Aspose.Words.72bd5ad8-dbd7-4a24-8862-237c4cc5927a.028.jpeg)
 
-**NAVBAR**
+## NAVBAR
 
 The navbar on the top of the page has a few buttons to aid in project management. Besides buttons to log out and switch projects, the navbar also includes the Hyperlinks button.
 
-**Hyperlinks**
+### Hyperlinks
 
 The main feature included in the navbar is the Hyperlinks tab. By clicking this button, users can embed hyperlinks directly into the project workspace. This allows users to save relevant resources for the project (Google drive, docs, Github, etc.)in one place for easy access.
 
