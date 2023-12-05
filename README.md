@@ -80,8 +80,8 @@ This documentation is meant to guide end-users through a walkthrough of the prod
 1. [Overview](#overview)
    1. [Product Description](#product-description)
    2. [Outline of Features](#outline-of-features)
-2. Onboarding
-3. Workspace
+2. [Onboarding](#onboarding)
+3. [Workspace](#workspace)
 4. [Dashboard](#dashboard)
    1. [Dashboard Overview](#dashboard-overview)
    2. [Views](#views)
