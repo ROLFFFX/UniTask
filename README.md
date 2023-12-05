@@ -1001,10 +1001,10 @@ We are using the “onboard” database for the local host test, and the “unit
 
 We highly suggest that you continue with our selected databases. If you want to use a new database, after connected to the Azure database, use the following commands:
 
--- create a database
-create database “name of your new database”;
--- select you current database
-use “name of your new database”;
+-- create a database <br/>
+create database “name of your new database”;<br/>
+-- select you current database<br/>
+use “name of your new database”;<br/>
 
 In the application.yml file, you should also change the spring: datasource: url:
 url: jdbc:mysql://unitask-mysql.mysql.database.azure.com/the_name_of_your_database
@@ -1013,14 +1013,14 @@ Then run the backend following the steps explained in the “Onboarding Process�
 
 Before test any end points, you should also add three ROLES into the roles table with the following code (Note that you must first “use” your database):
 
-INSERT INTO roles(name) VALUES('ROLE_USER');
-INSERT INTO roles(name) VALUES('ROLE_MODERATOR');
-INSERT INTO roles(name) VALUES('ROLE_ADMIN'); 
+INSERT INTO roles(name) VALUES('ROLE_USER');<br/>
+INSERT INTO roles(name) VALUES('ROLE_MODERATOR');<br/>
+INSERT INTO roles(name) VALUES('ROLE_ADMIN'); <br/>
 
-To see the content in each table, run:
+To see the content in each table, run:<br/>
 select * from “table you want to check”;
 
-To see all tables in the database, run:
+To see all tables in the database, run:<br/>
 show tables;
 
 
