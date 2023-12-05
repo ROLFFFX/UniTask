@@ -413,6 +413,7 @@ Go to your setting.xml file, which is in apache-maven-x.x.x -> conf,
 After this part of code,
 
 
+
 Add the line:
 <localRepository>/Users/”your_user_name”/m2/repository</localRepository>
 
@@ -424,8 +425,27 @@ To fully enter development environment, we need to spin up servers for both Reac
 3. `npm start` and open `http://localhost:3000/` in browser.
 
 ### Back End
+1. After opening the “unitask” folder in the IntelliJ IDEA and completed the Onboarding process for the backend, go to the “UnitaskApplication” file and click on the start button as circled in the following picture.
+![WechatIMG5710](https://github.com/ROLFFFX/CS_370_Team_One/assets/90660901/639181dd-a254-402d-8fc2-477ddea036f2)
+
+3. After clicking on the start button, if the backend runs successfully, you should see the following output in the console.
+![WechatIMG5711](https://github.com/ROLFFFX/CS_370_Team_One/assets/90660901/60b0ecc7-bdc6-4899-9620-736742c28878)
+
+4. The port for the backend is http://localhost:8080/ <br/>
+To test each endpoint, download the postman application. The server and database are protected by the spring web security. To access the user content, you will need to include the JWT with each request.<br/>
+You first need to register an user account and confirm your email address. After you have the user the account, use the sign in API. This will return you your user information and an “accessToken”. You will need to all an “Bearer “ in front of this token, then copy and paste this into the following area and add “Authorization” in the key field, and check the box in front of it:
+![WechatIMG5712](https://github.com/ROLFFFX/CS_370_Team_One/assets/90660901/18b0b81c-ca5d-4249-859f-b58324abd80b)
+
+5. How to view the data:<br/>
+To view the data in the database, we recommend you to download the MySQL Workbench.
+
+After you have it installed, connect with our cloud database with the following steps:
+
+![WechatIMG5713](https://github.com/ROLFFFX/CS_370_Team_One/assets/90660901/0e8381b7-2abb-4f1d-a2c5-b22c5127372f)
+![WechatIMG5714](https://github.com/ROLFFFX/CS_370_Team_One/assets/90660901/29509ad5-049a-4e61-acfa-15f683b9e987)
 
 ---
+
 # Front End Documentation
 
 ## 1. Introduction
