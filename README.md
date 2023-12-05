@@ -1,32 +1,3 @@
-![image29](https://github.com/ROLFFFX/CS_370_Team_One/assets/29384588/1e5d1486-4978-42f4-ac73-1f550951aec3)
-![image28](https://github.com/ROLFFFX/CS_370_Team_One/assets/29384588/63cb2373-86dc-4aac-8ec7-ed7c7923e245)
-![image27](https://github.com/ROLFFFX/CS_370_Team_One/assets/29384588/1bdb8f41-dcd9-496e-a98e-8e2d070fca49)
-![image26](https://github.com/ROLFFFX/CS_370_Team_One/assets/29384588/0ede2ef4-374f-489b-bbcc-efba7c4a1c33)
-![image25](https://github.com/ROLFFFX/CS_370_Team_One/assets/29384588/8d6e6914-413a-492e-bc0e-e5b985b3dbb3)
-![image24](https://github.com/ROLFFFX/CS_370_Team_One/assets/29384588/f7938b46-1b27-4b72-beb5-beaa9b95215b)
-![image23](https://github.com/ROLFFFX/CS_370_Team_One/assets/29384588/d12e67d1-047d-4eab-88ef-6521429eabcf)
-![image22](https://github.com/ROLFFFX/CS_370_Team_One/assets/29384588/55f2e140-b09f-4fe9-bc8b-4afd4f3ffc16)
-![image21](https://github.com/ROLFFFX/CS_370_Team_One/assets/29384588/f36a5767-273e-40f0-a495-4ec6483fb6aa)
-![image20](https://github.com/ROLFFFX/CS_370_Team_One/assets/29384588/cfb7a6be-1a65-4730-a3ab-52a8a083fcaf)
-![image19](https://github.com/ROLFFFX/CS_370_Team_One/assets/29384588/6bdd3324-360e-4ea0-81ff-0e0a712c6c2b)
-![image18](https://github.com/ROLFFFX/CS_370_Team_One/assets/29384588/0115b19c-2e13-49a0-93cb-89eac4e7955d)
-![image17](https://github.com/ROLFFFX/CS_370_Team_One/assets/29384588/e24b0d18-994a-431a-b2e4-0016a8d93fb4)
-![image16](https://github.com/ROLFFFX/CS_370_Team_One/assets/29384588/4987208e-8ba4-42ea-a7b6-1e9afc62d265)
-![image15](https://github.com/ROLFFFX/CS_370_Team_One/assets/29384588/8b200a2e-d7b6-4b2d-824b-9cd790565420)
-![image14](https://github.com/ROLFFFX/CS_370_Team_One/assets/29384588/9ccb3b3b-230b-4e55-84d3-d58905d3f89a)
-![image13](https://github.com/ROLFFFX/CS_370_Team_One/assets/29384588/8f13cfba-67fc-4421-aeb4-3ff0e323593a)
-![image12](https://github.com/ROLFFFX/CS_370_Team_One/assets/29384588/96d0aeca-4d1d-46a4-9263-29c0107076ea)
-![image11](https://github.com/ROLFFFX/CS_370_Team_One/assets/29384588/ec34ba60-9166-46ce-bc01-0fcc0a8f178b)
-![image10](https://github.com/ROLFFFX/CS_370_Team_One/assets/29384588/2da6d269-3f16-4f00-ab82-42194a7f1a4a)
-![image9](https://github.com/ROLFFFX/CS_370_Team_One/assets/29384588/0078ecf0-c0bd-405c-9782-12d1e1837c6c)
-![image8](https://github.com/ROLFFFX/CS_370_Team_One/assets/29384588/c6c0242e-da7b-44f2-8fdb-35468953aff8)
-![image7](https://github.com/ROLFFFX/CS_370_Team_One/assets/29384588/9ba1f179-afe8-4398-b8db-8c7b187536d0)
-![image6](https://github.com/ROLFFFX/CS_370_Team_One/assets/29384588/3c4c3161-027b-4943-8a6e-b1170e65f812)
-![image5](https://github.com/ROLFFFX/CS_370_Team_One/assets/29384588/4d453a24-5e49-4256-8292-f6dcd7e573a5)
-
-
-
-
 # UniTask
 
 This is a project for CS 370 Software Engineering Practicum at Emory University.<br/>
@@ -110,17 +81,17 @@ This documentation is meant to guide end-users through a walkthrough of the prod
    1. [Product Description](#product-description)
    2. [Outline of Features](#outline-of-features)
 2. [Dashboard](#dashboard)
-   1. [Overview](#dashboard-overview)
+   1. [Overview](#overview)
    2. [Views](#views)
-   3. [Task Distribution and Progress](#distribution-progress)
+   3. [Task Distribution and Progress](#task-distribution-and-progress)
 3. [Taskboard](#taskboard)
-   1. [Overview](#taskboard-overview)
+   1. [Overview](#overview)
    2. [Tasks](#tasks)
 4. [Meeting Schedule](#meeting-schedule)
-   1. [Group Events Schedule](#group-events)
+   1. [Group Events Schedule](#group-events-schedule)
    2. [Group Availability](#group-availability)
-5. [Report & Review](#report-review)
-6. [Navbar](#report-review)
+5. [Report & Review](#report-&-review)
+6. [Navbar](#navbar)
 
 ## OVERVIEW 
 
@@ -156,7 +127,7 @@ The Dashboard can toggle between two different viewing modes. The “Data Visual
 
 The “Table Task” view switches to a linear list of all tasks, with information such as title, completion status, assignee, task points, and due date.
 
-![](Aspose.Words.72bd5ad8-dbd7-4a24-8862-237c4cc5927a.005.jpeg)
+![image5](https://github.com/ROLFFFX/CS_370_Team_One/assets/29384588/4d453a24-5e49-4256-8292-f6dcd7e573a5)
 
 ### Task Distribution and Progress
 
@@ -164,7 +135,7 @@ The Dashboard also includes a pie chart showing the proportion of task points co
 
 Below this pie chart, a progress bar calculates the percentage of completed task points out of total task points. This provides a simple way to quantify progress on the project.
 
-![](Aspose.Words.72bd5ad8-dbd7-4a24-8862-237c4cc5927a.006.jpeg)
+![image6](https://github.com/ROLFFFX/CS_370_Team_One/assets/29384588/3c4c3161-027b-4943-8a6e-b1170e65f812)
 
 ## TASK BOARD 
 
@@ -172,7 +143,7 @@ Below this pie chart, a progress bar calculates the percentage of completed task
 
 The Task Board is a three-column, Scrum-style task board where users can create a list of work items to be completed in a project, and then organize these items into columns according to the progress made on each task. Each column of the board corresponds to one of three discrete completion statuses: To Do, Doing, or Done. Tasks can be moved across the board from left to right, until every task is eventually marked done, and the project is deemed complete.
 
-![](Aspose.Words.72bd5ad8-dbd7-4a24-8862-237c4cc5927a.007.jpeg)
+![image7](https://github.com/ROLFFFX/CS_370_Team_One/assets/29384588/9ba1f179-afe8-4398-b8db-8c7b187536d0)
 
 ### Tasks
 
@@ -182,21 +153,21 @@ Tasks are designed to reflect the “divide and conquer” method typical of sch
 
 weight of the given task.[^1]A task can also include a list of “subtasks”, which are displayed as a checklist of smaller items.
 
-![](Aspose.Words.72bd5ad8-dbd7-4a24-8862-237c4cc5927a.008.png)
+![image8](https://github.com/ROLFFFX/CS_370_Team_One/assets/29384588/c6c0242e-da7b-44f2-8fdb-35468953aff8)
 
 To create a new task, press the plus button on the left side of the page, next to the word Tasks. This will create a popup menu where all the fields of the task can be specified:
 
-![](Aspose.Words.72bd5ad8-dbd7-4a24-8862-237c4cc5927a.009.jpeg)
+![image9](https://github.com/ROLFFFX/CS_370_Team_One/assets/29384588/0078ecf0-c0bd-405c-9782-12d1e1837c6c)
 
 Once submitted, this will create the Task card in the Tasks column:
 
-![](Aspose.Words.72bd5ad8-dbd7-4a24-8862-237c4cc5927a.010.png)
+![image10](https://github.com/ROLFFFX/CS_370_Team_One/assets/29384588/2da6d269-3f16-4f00-ab82-42194a7f1a4a)
 
 All newly created tasks will remain in the Task column, indicating that work on these items has not yet started. Each task card can be dragged and dropped into any of the three progress columns (To Do, Doing, Done)to track its completion status.
 
 When hovering over a task, three buttons will appear in the upper right corner. The plus button can be used to add subtasks to the given task. These will appear as a checklist below the task title. Users may break down a task into as many subtasks as they’d like.
 
-![](Aspose.Words.72bd5ad8-dbd7-4a24-8862-237c4cc5927a.011.png)
+![image11](https://github.com/ROLFFFX/CS_370_Team_One/assets/29384588/ec34ba60-9166-46ce-bc01-0fcc0a8f178b)
 
 The chevron button to the left of the plus button is used to expand and collapse the subtask checklist for easier viewing. Clicking the ellipsis button will reveal options to edit or delete the task.
 
@@ -210,19 +181,19 @@ The UniTask calendar is a dynamic interface that allows group members to **sched
 
 **Common Available Time Display**
 
-![](Aspose.Words.72bd5ad8-dbd7-4a24-8862-237c4cc5927a.012.jpeg)
+![image12](https://github.com/ROLFFFX/CS_370_Team_One/assets/29384588/96d0aeca-4d1d-46a4-9263-29c0107076ea)
 
 Once all group members submit their available time slots through the '**Select YourAvailable Time**' feature, the backend system calculates the overlapping time slots. These **common available times** are displayed on the group events calendar in green. It represents the potential windows when all group members are free to meet.
 
 **Selecting a Meeting Time**
 
-![](Aspose.Words.72bd5ad8-dbd7-4a24-8862-237c4cc5927a.013.jpeg)
+![image13](https://github.com/ROLFFFX/CS_370_Team_One/assets/29384588/8f13cfba-67fc-4421-aeb4-3ff0e323593a)
 
 To schedule a meeting, a member selects a **specific time slot (purple)** within the common available times. This selection is then subject to group confirmation.
 
 **Create a Meeting**
 
-![](Aspose.Words.72bd5ad8-dbd7-4a24-8862-237c4cc5927a.014.jpeg) ![](Aspose.Words.72bd5ad8-dbd7-4a24-8862-237c4cc5927a.015.jpeg)
+![image14](https://github.com/ROLFFFX/CS_370_Team_One/assets/29384588/9ccb3b3b-230b-4e55-84d3-d58905d3f89a) ![image15](https://github.com/ROLFFFX/CS_370_Team_One/assets/29384588/8b200a2e-d7b6-4b2d-824b-9cd790565420)
 
 After confirming the time and duration for the meeting, the member can proceed to **create an event** by clicking the **"CREATEEVENT"**button located at the top of the calendar, which triggers
 
@@ -230,23 +201,23 @@ a prompt asking for the meeting's title. Once provided, clicking "OK" leads to a
 
 **Ending the Poll**
 
-![](Aspose.Words.72bd5ad8-dbd7-4a24-8862-237c4cc5927a.016.jpeg) ![](Aspose.Words.72bd5ad8-dbd7-4a24-8862-237c4cc5927a.017.png)
+![image16](https://github.com/ROLFFFX/CS_370_Team_One/assets/29384588/4987208e-8ba4-42ea-a7b6-1e9afc62d265) ![image17](https://github.com/ROLFFFX/CS_370_Team_One/assets/29384588/e24b0d18-994a-431a-b2e4-0016a8d93fb4)
 
 After the meeting is created, a user can choose to end the availability poll by clicking the **"End Poll"**button. This action clears all submitted available time slots from the calendar. Once the poll ends and the available time slots are cleared, the calendar **only** displays the **newly created meetings**, devoid of the green slots that represent common availability.
 
 **Modifying an Event**
 
-![](Aspose.Words.72bd5ad8-dbd7-4a24-8862-237c4cc5927a.018.jpeg) ![](Aspose.Words.72bd5ad8-dbd7-4a24-8862-237c4cc5927a.019.jpeg)
+![image18](https://github.com/ROLFFFX/CS_370_Team_One/assets/29384588/0115b19c-2e13-49a0-93cb-89eac4e7955d) ![image19](https://github.com/ROLFFFX/CS_370_Team_One/assets/29384588/6bdd3324-360e-4ea0-81ff-0e0a712c6c2b)
 
 Users can **modify the length** of an existing meeting by clicking, holding, and dragging the edges of the meeting block to **resize** it. The calendar will then prompt a confirmation message with the new meeting duration for the user to confirm.
 
-![](Aspose.Words.72bd5ad8-dbd7-4a24-8862-237c4cc5927a.020.jpeg) ![](Aspose.Words.72bd5ad8-dbd7-4a24-8862-237c4cc5927a.021.jpeg)
+![image20](https://github.com/ROLFFFX/CS_370_Team_One/assets/29384588/cfb7a6be-1a65-4730-a3ab-52a8a083fcaf) ![image21](https://github.com/ROLFFFX/CS_370_Team_One/assets/29384588/f36a5767-273e-40f0-a495-4ec6483fb6aa)
 
 Similarly, the meeting can be moved to **anotherday ortime** by **dragging** the meeting block to the desired slot, with a confirmation prompt following this action as well.
 
 **Event Management Options**
 
-![](Aspose.Words.72bd5ad8-dbd7-4a24-8862-237c4cc5927a.022.jpeg)
+![image22](https://github.com/ROLFFFX/CS_370_Team_One/assets/29384588/55f2e140-b09f-4fe9-bc8b-4afd4f3ffc16)
 
 **Right-clicking** on a meeting block presents users with options to "**Delete**" or "**Rename**" the event. Selecting "Delete" removes the event from the calendar after confirmation, while "Rename"
 
@@ -260,9 +231,9 @@ The **Select Your Available Times** is a user-friendly interface designed for sc
 
 1\.Click on **Start A Group Availability Poll** button. Once users click on it, a modal will pop up. It includes tips for the **Group Event** component. After reading the tips, users may proceed to poll.
 
-![](Aspose.Words.72bd5ad8-dbd7-4a24-8862-237c4cc5927a.023.png)
+![image23](https://github.com/ROLFFFX/CS_370_Team_One/assets/29384588/d12e67d1-047d-4eab-88ef-6521429eabcf)
 
-![](Aspose.Words.72bd5ad8-dbd7-4a24-8862-237c4cc5927a.024.png)
+![image24](https://github.com/ROLFFFX/CS_370_Team_One/assets/29384588/f7938b46-1b27-4b72-beb5-beaa9b95215b)
 
 2\. Select Available Time Slots
 
@@ -270,7 +241,7 @@ Once users proceed to poll, they are directed to the **Select Your Available Tim
 
 To access the Interface, ensure users are logged into their account, as the component integrates with user authentication.
 
-![](Aspose.Words.72bd5ad8-dbd7-4a24-8862-237c4cc5927a.025.jpeg)
+![image25](https://github.com/ROLFFFX/CS_370_Team_One/assets/29384588/8d6e6914-413a-492e-bc0e-e5b985b3dbb3)
 
 Users can navigate the calendar. The interface displays the current week's date range at the top. Use the **Previous Week** and **Next Week** buttons to navigate through different weeks.
 
@@ -278,11 +249,11 @@ Users can view all available times as they are displayed in a grid format with d
 
 displayed under the **Selected Times** section in Eastern Standard Time (EST).
 
-![](Aspose.Words.72bd5ad8-dbd7-4a24-8862-237c4cc5927a.026.jpeg)
+![image26](https://github.com/ROLFFFX/CS_370_Team_One/assets/29384588/0ede2ef4-374f-489b-bbcc-efba7c4a1c33)
 
 Users can clear their selections by clicking the **ClearAll My Selections** button. Clicking this button will remove all the current time slot selections. If an error occurs or a time slot is already booked, a notification will appear, informing you of the issue.
 
-![](Aspose.Words.72bd5ad8-dbd7-4a24-8862-237c4cc5927a.027.png)
+![image27](https://github.com/ROLFFFX/CS_370_Team_One/assets/29384588/1bdb8f41-dcd9-496e-a98e-8e2d070fca49)
 
 After users have confirmed their selection, they can click on the **Schedule New Events / Check Common Availability** button. This button allows users to schedule new events or check for common availability times within their group.
 
@@ -290,7 +261,7 @@ After users have confirmed their selection, they can click on the **Schedule New
 
 In the Report &Review page, users can write brief reports about the group’s progress. This can be used to log significant milestones in the project, and take notes on feedback or comments made about these accomplishments. Keeping records in this section is entirely optional, but this feature is perfect for long-term projects that might require reviewing periodic progress reports.
 
-![](Aspose.Words.72bd5ad8-dbd7-4a24-8862-237c4cc5927a.028.jpeg)
+![image28](https://github.com/ROLFFFX/CS_370_Team_One/assets/29384588/63cb2373-86dc-4aac-8ec7-ed7c7923e245)
 
 ## NAVBAR
 
@@ -300,9 +271,9 @@ The navbar on the top of the page has a few buttons to aid in project management
 
 The main feature included in the navbar is the Hyperlinks tab. By clicking this button, users can embed hyperlinks directly into the project workspace. This allows users to save relevant resources for the project (Google drive, docs, Github, etc.)in one place for easy access.
 
-![](Aspose.Words.72bd5ad8-dbd7-4a24-8862-237c4cc5927a.029.png)
+![image29](https://github.com/ROLFFFX/CS_370_Team_One/assets/29384588/1e5d1486-4978-42f4-ac73-1f550951aec3)
 
-[^1]: Since some parts of a project are bound to be more labor-intensive than others, the point system is meant to quantify how much effort each task is worth. When calculating the overall progress on the project (see Progress Checker on the Dashboard), UniTask will calculate a proportion of completed task points, not the number of tasks themselves. If a user prefers to weigh all tasks evenly, they can simply ignore the task point feature and give all tasks a default weight of 1task point.
+[^1]: Since some parts of a project are bound to be more labor-intensive than others, the point system is meant to quantify how much effort each task is worth. When calculating the overall progress on the project (see Progress Checker on the Dashboard), UniTask will calculate a proportion of completed task points, not the number of tasks themselves. If a user prefers to weigh all tasks evenly, they can simply ignore the task point feature and give all tasks a default weight of 1 task point.
 
 
 ---
