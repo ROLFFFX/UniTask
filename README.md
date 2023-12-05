@@ -81,11 +81,11 @@ This documentation is meant to guide end-users through a walkthrough of the prod
    1. [Product Description](#product-description)
    2. [Outline of Features](#outline-of-features)
 2. [Dashboard](#dashboard)
-   1. [Overview](#overview)
+   1. [Overview](#dashboard-overview)
    2. [Views](#views)
    3. [Task Distribution and Progress](#task-distribution-and-progress)
-3. [Taskboard](#taskboard)
-   1. [Overview](#overview)
+3. [Task Board](#task-board)
+   1. [Task Board Overview](#task-board-overview)
    2. [Tasks](#tasks)
 4. [Meeting Schedule](#meeting-schedule)
    1. [Group Events Schedule](#group-events-schedule)
@@ -113,7 +113,7 @@ To meet the needs of the average college student, UniTask provides the end-user 
 
 ## DASHBOARD 
 
-### Overview
+### Dashboard Overview
 
 The Dashboard is a data analytics tool to monitor progress on the project. Various graphs are automatically generated to visualize the completion status of tasks. The dashboard also includes a full list of all tasks, to provide a simple view of every work item in one place.
 
@@ -139,7 +139,7 @@ Below this pie chart, a progress bar calculates the percentage of completed task
 
 ## TASK BOARD 
 
-### Overview
+### Task Board Overview
 
 The Task Board is a three-column, Scrum-style task board where users can create a list of work items to be completed in a project, and then organize these items into columns according to the progress made on each task. Each column of the board corresponds to one of three discrete completion statuses: To Do, Doing, or Done. Tasks can be moved across the board from left to right, until every task is eventually marked done, and the project is deemed complete.
 
