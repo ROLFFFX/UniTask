@@ -80,18 +80,20 @@ This documentation is meant to guide end-users through a walkthrough of the prod
 1. [Overview](#overview)
    1. [Product Description](#product-description)
    2. [Outline of Features](#outline-of-features)
-2. [Dashboard](#dashboard)
+2. Onboarding
+3. Workspace
+4. [Dashboard](#dashboard)
    1. [Dashboard Overview](#dashboard-overview)
    2. [Views](#views)
    3. [Task Distribution and Progress](#task-distribution-and-progress)
-3. [Task Board](#task-board)
+5. [Task Board](#task-board)
    1. [Task Board Overview](#task-board-overview)
    2. [Tasks](#tasks)
-4. [Meeting Schedule](#meeting-schedule)
+6. [Meeting Schedule](#meeting-schedule)
    1. [Group Events Schedule](#group-events-schedule)
    2. [Group Availability](#group-availability)
-5. [Report & Review](#report-&-review)
-6. [Navbar](#navbar)
+7. [Report & Review](#report-&-review)
+8. [Navbar](#navbar)
 
 ## OVERVIEW 
 
@@ -104,18 +106,55 @@ UniTask is a team-management application designed for college students working o
 To meet the needs of the average college student, UniTask provides the end-user with a number of features essential to academic group work. Broadly speaking, the main function of the application is to provide a team the ability to break down a project into an organized list of tasks to be completed. These tasks can be assigned to individual team members, and the team can then monitor the progress and due date of each task to keep the project on track. A number of supplemental features are provided to make UniTask an all-in-one workspace for everything a group project would need. The rest of the documentation will explain each feature in greater detail, but this outline will briefly describe the main functions:
 
 1. Onboarding process: When a user first signs up, they are prompted to create a new project or join an existing project. Users can be members of multiple projects at the same time. Once a user has selected a project, the workspace will be created.
-1. Dashboard: The front page of the project workspace is a read-only dashboard showing analytics regarding the project. Information displayed on the dashboard includes:
+2. Dashboard: The front page of the project workspace is a read-only dashboard showing analytics regarding the project. Information displayed on the dashboard includes:
    1. Graphs to visualize data, such as percentage of completed tasks, a pie chart of team member contribution, and a line graph of tasks completed over time
    1. A list of all tasks, which shows the progress status of each task, who the tasks are assigned to, and the due date of each task
-1. Task Board: A Scum-style three-column task board for organizing the tasks by status (“To Do”, “Doing”, and “Done”). This is where the user will create tasks for the project and track the progress of each work item.
-1. Calendar: A scheduling tool to help team members find meeting times. Each user can fill in the hours they are free throughout the week, and the calendar will find times when everyone is free to meet.
-1. Report &Review: A place to write periodic reviews of the group’s progress, especially for providing feedback on recent accomplishments.
+3. Task Board: A Scum-style three-column task board for organizing the tasks by status (“To Do”, “Doing”, and “Done”). This is where the user will create tasks for the project and track the progress of each work item.
+4. Calendar: A scheduling tool to help team members find meeting times. Each user can fill in the hours they are free throughout the week, and the calendar will find times when everyone is free to meet.
+5. Report &Review: A place to write periodic reviews of the group’s progress, especially for providing feedback on recent accomplishments.
+
+## ONBOARDING
+
+### Sign Up Process
+We ask users to fill in their first name, last name, email address, and password. For security, passwords must fulfill our criteria. The “SIGN UP” button is not enabled until all fields are filled and all password criteria are met.<br/>
+Once a user clicks “SIGN UP”, one of two pop-ups will show up depending on whether there is a sign up error. Sign up errors include the four scenarios specified in the “Sign Up Error” pop-up window.<br/>
+If the email address is valid, once a user sign up, they will receive a confirmation email to the email address they registered with. As long as users click on the link within 15 minutes, it will take them to a page containing the below message, and the registration process is completed.<br/>
+
+### Sign In Process
+Similar to Sign Up, the “SIGN IN” button is disabled until user has filled out both fields. Upon failure, one of two customized pop up windows might show up:<br/>
+1. If user has put in wrong combination of email & password, it will prompt bad credentials.<br/>
+2. If user has signed up but hasn't confirmed the email through the link we send, it will prompt credentials are correct but account is currently disabled.<br/>
+
+Once logged in, user can either choose to create a new workspace (project) or log into an existing workspace (project) they are in.
+
+## WORKSPACE
+
+### Overview
+The Workspace serves as a public environment within Unitask where users can perform tasks, organize information, or collaborate with others. It acts as an individualized or team-specific space for users to work within the application.<br/>
+
+### Create Workspace
+Users need to have at least one workspace to use the app. If the list on their right is empty, they should proceed to click the button “Create Workspace” to establish their own workspace. If they are currently awaiting invitations from teammates to join their workspace, it is advised to refresh the page periodically.
+
+### Log in to Workspace 
+Once created, the workspace will be saved under the user’s account and they can login to it upon login.
+
+### Manage Workspace(View, Add & Delete Members)
+The Manage Workspace section allows the userto invite new team members through their registered emails, or remove them from the workspace.<br/>
+
+Upon deletion, there will be a validation process and warning prompts. <br/>
+1. If user is removing other team member, he will be warned with a custom pop up window.
+2. If user is removing himself, he will be warned that he is exiting this workspace.
+3. If user is removing himself while he is the last team member, he will be unable to do so since every workspace must contain at least one user.<br/>
+
+
+After a user is being removed, his progress will be saved on both Dashbaord and Taskboard. He can also be invited and rejoin the workspace anytime.
 
 ## DASHBOARD 
 
 ### Dashboard Overview
 
-The Dashboard is a data analytics tool to monitor progress on the project. Various graphs are automatically generated to visualize the completion status of tasks. The dashboard also includes a full list of all tasks, to provide a simple view of every work item in one place.
+The Dashboard is a data analytics tool to monitor progress on the project. Various graphs are automatically generated to visualize the completion status of tasks. The dashboard also includes a full list of all tasks, to provide a simple view of every work item in one place. <br/>
+Once a user clicks “SIGN UP”, one of these two pop-ups will show up depending on whether there is a sign up error. Sign up errors include the four scenarios specified in the “Sign Up Error” pop-up below:
 
 ![image3](https://github.com/ROLFFFX/CS_370_Team_One/assets/29384588/1a98eec0-dabe-49c6-a83f-ac9b2981783a)
 
