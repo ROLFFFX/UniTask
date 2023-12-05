@@ -60,6 +60,11 @@ export function LoginSignup() {
   const [showFailureAlert, setShowFailureAlert] = useState(false);
   const [showBadCredential, setBadCredential] = useState(false);
   const [backdropOpen, setBackdropOpen] = useState(false); //loading page
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  const handleEmailChange = (e) => setEmail(e.target.value);
+  const handlePasswordChange = (e) => setPassword(e.target.value);
 
   const handleClose = () => {
     setShowFailureAlert(false);
@@ -215,6 +220,7 @@ export function LoginSignup() {
               autoComplete="email"
               autoFocus
               InputLabelProps={{ style: { fontSize: "14px" } }}
+              onChange={handleEmailChange}
             />
             <TextField
               margin="normal"
@@ -226,12 +232,14 @@ export function LoginSignup() {
               id="password"
               autoComplete="current-password"
               InputLabelProps={{ style: { fontSize: "14px" } }}
+              onChange={handlePasswordChange}
             />
             <Button
               type="submit"
               fullWidth
               variant="contained"
               sx={{ mt: 3, mb: 2 }}
+              disabled={!email || !password}
             >
               Sign In
             </Button>
