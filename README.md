@@ -81,7 +81,7 @@ This documentation is meant to guide end-users through a walkthrough of the prod
    1. [Product Description](#product-description)
    2. [Outline of Features](#outline-of-features)
 2. [Dashboard](#dashboard)
-   1. [Overview](#dashboard-overview)
+   1. [Dashboard Overview](#dashboard-overview)
    2. [Views](#views)
    3. [Task Distribution and Progress](#task-distribution-and-progress)
 3. [Task Board](#task-board)
