@@ -117,7 +117,7 @@ To meet the needs of the average college student, UniTask provides the end-user 
 
 The Dashboard is a data analytics tool to monitor progress on the project. Various graphs are automatically generated to visualize the completion status of tasks. The dashboard also includes a full list of all tasks, to provide a simple view of every work item in one place.
 
-![image3](https://github.com/ROLFFFX/CS_370_Team_One/assets/29384588/1a98eec0-dabe-49c6-a83f-ac9b2981783a)
+![image3](https://github.com/ROLFFFX/CS_370_Team_One/assets/29384588/1a98eec0-dabe-49c6-a83f-ac9b2981783a){width="6.030555555555556in" height="3.1041666666666665in"}
 
 ### Views
 
@@ -149,9 +149,7 @@ The Task Board is a three-column, Scrum-style task board where users can create 
 
 A “Task” is simply any work item that must be completed during a project. It is up to the user how to break down their project into smaller parts, so what exactly counts as a task is fairly open-ended and largely depends on the nature of the project.
 
-Tasks are designed to reflect the “divide and conquer” method typical of school group projects, where each team member is assigned to work on various small parts of the project. Each task is presented on notecard with information such as task Title, Assignee (the team member expected to complete the task), Due Date, and the number of “Task Points”, which designates the value or
-
-weight of the given task.[^1]A task can also include a list of “subtasks”, which are displayed as a checklist of smaller items.
+Tasks are designed to reflect the “divide and conquer” method typical of school group projects, where each team member is assigned to work on various small parts of the project. Each task is presented on notecard with information such as task Title, Assignee (the team member expected to complete the task), Due Date, and the number of “Task Points”, which designates the value or weight of the given task. Since some parts of a project are bound to be more labor-intensive than others, the point system is meant to quantify how much effort each task is worth. When calculating the overall progress on the project (see Progress Checker on the Dashboard), UniTask will calculate a proportion of completed task points, not the number of tasks themselves. If a user prefers to weigh all tasks evenly, they can simply ignore the task point feature and give all tasks a default weight of 1 task point.A task can also include a list of “subtasks”, which are displayed as a checklist of smaller items.
 
 ![image8](https://github.com/ROLFFFX/CS_370_Team_One/assets/29384588/c6c0242e-da7b-44f2-8fdb-35468953aff8)
 
@@ -272,8 +270,6 @@ The navbar on the top of the page has a few buttons to aid in project management
 The main feature included in the navbar is the Hyperlinks tab. By clicking this button, users can embed hyperlinks directly into the project workspace. This allows users to save relevant resources for the project (Google drive, docs, Github, etc.)in one place for easy access.
 
 ![image29](https://github.com/ROLFFFX/CS_370_Team_One/assets/29384588/1e5d1486-4978-42f4-ac73-1f550951aec3)
-
-[^1]: Since some parts of a project are bound to be more labor-intensive than others, the point system is meant to quantify how much effort each task is worth. When calculating the overall progress on the project (see Progress Checker on the Dashboard), UniTask will calculate a proportion of completed task points, not the number of tasks themselves. If a user prefers to weigh all tasks evenly, they can simply ignore the task point feature and give all tasks a default weight of 1 task point.
 
 
 ---
